@@ -49,6 +49,7 @@ import { habitica } from "./commands/habitica";
 import { trivia } from "./commands/trivia";
 import { fact } from "./commands/fact";
 import { privacy } from "./commands/privacy";
+import { config } from "./commands/config";
 
 export const COMMANDS = [
   kick,
@@ -102,4 +103,5 @@ export const COMMANDS = [
   trivia,
   fact,
   privacy,
+  config,
 ];
