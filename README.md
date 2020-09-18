@@ -12,7 +12,7 @@
 
 Welcome to the repository for my discord bot, seen as `nhbot` in my [Discord Server](https://discord.gg/PHqDbkg).
 
-[You can invite this bot to your own server!](https://discord.com/oauth2/authorize?client_id=716707753090875473&scope=bot)
+[You can invite this bot to your own server!](https://discord.com/oauth2/authorize?client_id=716707753090875473&scope=bot&permissions=268495990)
 
 ## Join Our Team!
 
