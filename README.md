@@ -12,6 +12,8 @@
 
 Welcome to the repository for my discord bot, seen as `nhbot` in my [Discord Server](https://discord.gg/PHqDbkg).
 
+[You can invite this bot to your own server!](https://discord.com/oauth2/authorize?client_id=716707753090875473&scope=bot)
+
 ## Join Our Team!
 
 Are you interested in contributing to the development of this bot? We welcome all who want to assist! If you would like to contribute, you are welcome to fork the repository and make your changes. Submit a pull request when you are ready for us to review your changes. You can also submit issues for various purposes. For more information, please review our [contributing guidelines](./CONTRIBUTING.md).
