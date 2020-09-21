@@ -15,7 +15,7 @@
     "mongoose": "^5.10.5",
     "mtgsdk": "^0.4.3",
     "node-fetch": "^2.6.1",
-    "typescript": "^4.0.2"
+    "typescript": "^4.0.3"
   },
   "main": "./prod/main.js",
   "scripts": {
