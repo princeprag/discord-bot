@@ -11,9 +11,9 @@ import fetch from "node-fetch";
 export const challenge: CommandInt = {
   prefix: "challenge",
   description:
-    "Gets a programming challenge. Use the `start` function to begin, the `request` function to get a riddle, and the `solve` function to answer the riddle.",
+    "Gets a programming challenge. Use the `start` function to begin, the `request` function to get a challenge, and the `solve` function to answer the challenge.",
   parameters:
-    "`<function>` - determines how the command will run | `<id>` - the riddle id | `<answer?>` - the riddle answer",
+    "`<function>` - determines how the command will run | `<id>` - the challenge id | `<answer?>` - the challenge answer",
   command: async (message) => {
     const functionArg = message.content.split(" ")[1];
     const idArg = message.content.split(" ")[2];
@@ -37,7 +37,7 @@ export const challenge: CommandInt = {
       );
       const parsed: ChallengeInt = await data.json();
       const challengeEmbed = new MessageEmbed()
-        .setTitle("Riddle")
+        .setTitle("Challenge")
         .setDescription(parsed.message);
       Object.entries(parsed).forEach((el) => {
         if (el[0] === "message") {
