@@ -26,7 +26,7 @@ export const riddle: CommandInt = {
           headers: {
             "content-type": "application/json",
           },
-          body: JSON.stringify({ login: "nhbot" }),
+          body: JSON.stringify({ login: message.author.username }),
         }
       );
       const parsed: RiddleStartInt = await data.json();
