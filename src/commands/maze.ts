@@ -9,7 +9,7 @@ export const maze: CommandInt = {
   description:
     "Gets a random maze. Use the `request` function to get a random maze, and the `solve` function to <answer> the maze <id>.",
   parameters:
-    "`<function>` - determines how the command will run | `<id>` - the riddle id | `<answer?>` - the riddle answer",
+    "`<function>` - determines how the command will run | `<id>` - the maze id | `<answer?>` - the maze directions answer",
   command: async (message) => {
     const functionArg = message.content.split(" ")[1];
     const idArg = message.content.split(" ")[2];
