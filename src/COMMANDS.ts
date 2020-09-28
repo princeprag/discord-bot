@@ -53,6 +53,7 @@ import { config } from "./commands/config";
 import { riddle } from "./commands/riddle";
 import { title } from "./commands/title";
 import { challenge } from "./commands/challenge";
+import { maze } from "./commands/maze";
 
 export const COMMANDS = [
   kick,
@@ -110,4 +111,5 @@ export const COMMANDS = [
   riddle,
   title,
   challenge,
+  maze,
 ];
