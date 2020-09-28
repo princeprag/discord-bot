@@ -52,6 +52,7 @@ import { privacy } from "./commands/privacy";
 import { config } from "./commands/config";
 import { riddle } from "./commands/riddle";
 import { title } from "./commands/title";
+import { challenge } from "./commands/challenge";
 
 export const COMMANDS = [
   kick,
@@ -108,4 +109,5 @@ export const COMMANDS = [
   config,
   riddle,
   title,
+  challenge,
 ];
