@@ -73,7 +73,7 @@ client.on("guildMemberAdd", (member) => {
     .setColor("#ab47e6")
     .setTitle("A new user has joined! 🙃")
     .setDescription(
-      `Hello everyone! Let us give a warm welcome to <@!${member.user}>!`
+      `Hello everyone! Let us give a warm welcome to \`${member.user?.username}\`!`
     );
   const welcomeChannel = member.guild.channels.cache.find(
     (channel) => channel.name === config.join_leave_channel
