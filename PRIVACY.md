@@ -12,7 +12,7 @@ Data is stored in a MongoDB database. The database is secured to prevent externa
 
 ## User Rights
 
-At any time, you have the right to request to view the Data pertaining to your Discord account. You may submit a request through a Discord message or email to `@nhcarrigan`. You have the right to request the removal of relevant Data. You also have the right to "opt out" of Data collection - please note that this will disable specific features of the bot such as the `level` feature for your account.
+At any time, you have the right to request to view the Data pertaining to your Discord account. You may submit a request through a Discord message or [email to `@nhcarrigan`](mailto:nhcarrigan@gmail.com?Subject=Discord%20Privacy). You have the right to request the removal of relevant Data. You also have the right to "opt out" of Data collection - please note that this will disable specific features of the bot such as the `level` feature for your account.
 
 ## Underage Users
 
