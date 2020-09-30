@@ -12,7 +12,7 @@ export const ping: CommandInt = {
       .setDescription("One moment please.");
     const pingMessage = await message.channel.send(msg);
     const pingTime = Math.round(
-      pingMessage.createdTimestamp - message.createdTimestamp
+      pingMessage.createdTimestamp - message.createdTimestamp - 3000
     );
     const color = pingTime < 90 ? "#21ed4a" : "#f02222";
     const msgEdit = new MessageEmbed()
