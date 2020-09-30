@@ -1,208 +1,92 @@
-import { Client, TextChannel, MessageEmbed, WebhookClient } from "discord.js";
-import config from "../config.json";
-const prefix = config.prefix;
-import dotenv from "dotenv";
-import Mongoose from "mongoose";
-import packageInfo from "../package.json";
-import { configureClient } from "./configureClient";
+import "module-alias/register";
+import { Client, WebhookClient } from "discord.js";
+import connectDatabase from "@Database";
+import ClientInt from "@Interfaces/ClientInt";
+import extendsClientToClientInt from "@Utils/extendsClientToClientInt";
 
-dotenv.config();
+// Events
+import onReady from "@Events/onReady";
+import onGuildCreate from "@Events/onGuildCreate";
+import onGuildDelete from "@Events/onGuildDelete";
+import onMessage from "@Events/onMessage";
+import onMessageDelete from "@Events/onMessageDelete";
+import onMessageUpdate from "@Events/onMessageUpdate";
 
-const client: Client = configureClient();
-const URI: string = process.env.MONGO_URI || "";
+async function botConnect(): Promise<void> {
+  // Get the node_env from the environment.
+  const node_env = process.env.NODE_ENV || "development";
 
-import { COMMANDS } from "./COMMANDS";
-import { hearts } from "./listeners/heartsListen";
-import { levelListen } from "./listeners/levelsListen";
-import { usageListen } from "./listeners/usageListen";
+  // Check if the node_env is not production and load the .env file.
+  if (node_env !== "production") {
+    // Import `dotenv` package.
+    const dotenv = await import("dotenv");
 
-const hook = new WebhookClient(
-  process.env.WH_ID || "none",
-  process.env.WH_TOKEN || "none"
-);
-
-export const uptimeTimestamp = Date.now();
-
-client.on("ready", () => {
-  console.log("Activate the Omega");
-  hook.send(
-    `I, \`${client.user?.username}\`, am awake! I am in ${process.env.PRODDEV} mode, and version ${packageInfo.version}.`
-  );
-  client.user?.setActivity(`for commands! Try ${prefix}help`, {
-    type: "WATCHING",
-  });
-  return;
-});
-
-Mongoose.connect(URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).catch((err) => console.log("Database connection failed.", err));
-
-client.on("guildCreate", (guild) => {
-  hook.send(
-    `I, \`${client.user?.username}\`, have joined the ${guild.name} server!`
-  );
-});
-
-client.on("guildDelete", (guild) => {
-  hook.send(
-    `I, \`${client.user?.username}\`, have left the ${guild.name} server...`
-  );
-});
-
-client.on("guildMemberAdd", (member) => {
-  const welcomeLogEmbed = new MessageEmbed()
-    .setColor("#ab47e6")
-    .setTitle("A new user has joined! 🙃")
-    .setDescription(
-      `Hello everyone! Let us give a warm welcome to \`${member.user?.username}\`!`
-    );
-  const welcomeChannel = member.guild.channels.cache.find(
-    (channel) => channel.name === config.join_leave_channel
-  ) as TextChannel;
-  if (!welcomeChannel) {
-    console.error("welcome channel not found.");
-    return;
+    // Load `.env` configuration.
+    dotenv.config();
   }
-  welcomeChannel.startTyping();
-  setTimeout(() => {
-    welcomeChannel.stopTyping();
-    welcomeChannel.send(welcomeLogEmbed).catch((err) => console.error(err));
-  }, 3000);
-});
 
-client.on("guildMemberRemove", (member) => {
-  const goodbyeChannel = member.guild.channels.cache.find(
-    (channel) => channel.name === config.join_leave_channel
-  ) as TextChannel;
-  const departEmbed = new MessageEmbed()
-    .setColor("#ab47e6")
-    .setTitle("A user has left us! 😦")
-    .setDescription(
-      `Sad day... ${
-        member.nickname || member.user?.username
-      } has left us. You will be missed!`
+  // Debug channel hook (Send messages here when is debugging).
+  let debugChannelHook: WebhookClient | null = null;
+
+  // Check if `WH_ID` and `WH_TOKEN` are configured in the environment.
+  if (process.env.WH_ID && process.env.WH_TOKEN) {
+    debugChannelHook = new WebhookClient(
+      process.env.WH_ID,
+      process.env.WH_TOKEN
     );
-  if (!goodbyeChannel) {
-    console.error("depart channel not found.");
-    return;
   }
-  goodbyeChannel.startTyping();
-  setTimeout(() => {
-    goodbyeChannel.stopTyping();
-    goodbyeChannel.send(departEmbed).catch((err) => console.error(err));
-  }, 3000);
-});
 
-client.on("message", (message) => {
-  if (message.channel.type === "dm" && message.author.id !== client.user?.id) {
-    message.channel.startTyping();
-    setTimeout(() => {
-      message.channel.stopTyping();
-      message.channel.send(
-        "Sorry, but would you please talk to me in a server, not a private message? If you need a server to join, check out my home! https://discord.gg/PHqDbkg"
+  // Connect to the MongoDB database.
+  await connectDatabase(debugChannelHook);
+
+  // Create a new Discord bot object.
+  const client: ClientInt = extendsClientToClientInt(new Client());
+
+  // On bot ready event.
+  client.on(
+    "ready",
+    async () => await onReady(client, debugChannelHook, node_env)
+  );
+
+  // On guild create event.
+  client.on(
+    "guildCreate",
+    async (guild) => await onGuildCreate(guild, debugChannelHook, client)
+  );
+
+  // On guild delete event.
+  client.on(
+    "guildDelete",
+    async (guild) => await onGuildDelete(guild, debugChannelHook, client)
+  );
+
+  // On bot message event.
+  client.on("message", async (message) => await onMessage(message, client));
+
+  // On message delete event.
+  client.on(
+    "messageDelete",
+    async (message) => await onMessageDelete(message, client)
+  );
+
+  // On message update event.
+  client.on(
+    "messageUpdate",
+    async (oldMessage, newMessage) =>
+      await onMessageUpdate(oldMessage, newMessage, client)
+  );
+
+  // Log the bot with the Discord token.
+  await client.login(process.env.DISCORD_TOKEN);
+
+  // Send a debug log before turn off the bot.
+  process.once("beforeExit", () => {
+    if (debugChannelHook) {
+      debugChannelHook.send(
+        `I, ${client.user?.username}, am off to sleep. Goodbye.`
       );
-    }, 3000);
-    return;
-  }
-  levelListen.listener(message);
-  hearts.listener(message);
-  if (message.attachments.array().length > 0) {
-    if (!message.attachments.array()[0].height) {
-      message.delete();
-      message.channel.startTyping();
-      setTimeout(() => {
-        message.channel.stopTyping();
-        message.channel.send(
-          "Sorry, but please do not upload files. Only images and videos are allowed."
-        );
-      }, 3000);
     }
-  }
-  for (const command of COMMANDS) {
-    if (message.content.split(" ")[0] === prefix + command.prefix) {
-      message.channel.startTyping();
-      usageListen.listener(message);
-      setTimeout(() => {
-        message.channel.stopTyping();
-        command.command(message, client);
-      }, 3000);
-      break;
-    }
-  }
-});
+  });
+}
 
-client.on("messageDelete", (message) => {
-  const logChannel = message.guild?.channels.cache.find(
-    (channel) => channel.name === config.log_channel
-  ) as TextChannel;
-  const deleteEmbed = new MessageEmbed()
-    .setTitle("A message was deleted.")
-    .setColor("#ff0000")
-    .setDescription("Here is the record of that message.")
-    .addFields(
-      {
-        name: "Message author:",
-        value: message.author,
-      },
-      {
-        name: "Channel:",
-        value: message.channel,
-      },
-      {
-        name: "Content:",
-        value:
-          message.content ||
-          "Sorry, but I could not tell what the message said.",
-      }
-    );
-  if (!logChannel) {
-    console.error("logging channel not found");
-    return;
-  }
-  logChannel.startTyping();
-  setTimeout(() => {
-    logChannel.stopTyping();
-    logChannel.send(deleteEmbed);
-  }, 3000);
-});
-
-client.on("messageUpdate", (oldMessage, message) => {
-  const logChannel = message.guild?.channels.cache.find(
-    (channel) => channel.name === config.log_channel
-  ) as TextChannel;
-  if (message.author?.bot) {
-    return;
-  }
-  const editEmbed = new MessageEmbed()
-    .setTitle("A message was updated!")
-    .addFields(
-      {
-        name: "Old Content",
-        value:
-          oldMessage.content || "Sorry, but I could not find that message.",
-      },
-      {
-        name: "New Content",
-        value: message.content || "Sorry, but I could not find that message.",
-      },
-      {
-        name: "Author",
-        value: message.author || "Sorry, but I could not find that user.",
-      }
-    );
-  if (!logChannel) {
-    console.error("logging channel not found");
-    return;
-  }
-  logChannel.startTyping();
-  setTimeout(() => {
-    logChannel.stopTyping();
-    logChannel.send(editEmbed);
-  }, 3000);
-});
-
-process.once("beforeExit", () => {
-  hook.send(`I, ${client.user?.username}, am off to sleep. Goodbye.`);
-});
+botConnect().catch(console.log);
