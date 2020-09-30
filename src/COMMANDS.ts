@@ -55,6 +55,7 @@ import { title } from "./commands/title";
 import { challenge } from "./commands/challenge";
 import { maze } from "./commands/maze";
 import { adventure } from "./commands/adventure";
+import { report } from "./commands/report";
 
 export const COMMANDS = [
   kick,
@@ -114,4 +115,5 @@ export const COMMANDS = [
   challenge,
   maze,
   adventure,
+  report,
 ];
