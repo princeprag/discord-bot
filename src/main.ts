@@ -50,25 +50,6 @@ client.on("guildDelete", (guild) => {
 });
 
 client.on("guildMemberAdd", (member) => {
-  const welcomeEmbed = new MessageEmbed()
-    .setColor("#00ff00")
-    .setTitle(`Welcome to ${member.guild.name}`)
-    .setDescription("Thank you for joining us!")
-    .addFields(
-      {
-        name: "Rules:",
-        value: "Please read the rules in our Welcome channel!",
-      },
-      {
-        name: "My Commands:",
-        value: `Use the ${prefix} prefix to get my attention! Try '${prefix}help' to see what I can do!`,
-      },
-      {
-        name: "Privacy Policy",
-        value: `Use the \`${prefix}privacy\` command or [view my privacy policy](https://github.com/nhcarrigan/discord-bot/blob/main/PRIVACY.md)`,
-      }
-    );
-  member.send(welcomeEmbed).catch((err) => console.error(err));
   const welcomeLogEmbed = new MessageEmbed()
     .setColor("#ab47e6")
     .setTitle("A new user has joined! 🙃")
