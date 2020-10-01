@@ -16,14 +16,17 @@ async function onMessageUpdate(
   newMessage: Message | PartialMessage,
   client: ClientInt
 ): Promise<void> {
+  // Ge the author and the current server from the new message.
+  const { author, guild } = newMessage;
+
   // Check if the message is sended in a Discord server.
-  if (!newMessage.guild) {
+  if (!guild) {
     return;
   }
 
   // Send an embed message to the logs channel.
   await client.sendMessageToLogsChannel(
-    newMessage.guild,
+    guild,
     new MessageEmbed().setTitle("A message was updated!").addFields(
       {
         name: "Old content",
@@ -37,7 +40,7 @@ async function onMessageUpdate(
       },
       {
         name: "Author",
-        value: newMessage.author || "Sorry, but I could not find that user.",
+        value: author || "Sorry, but I could not find that user.",
       }
     )
   );

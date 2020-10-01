@@ -20,9 +20,11 @@ async function onMessage(
   // Create a new message interface using the `MessageInt`.
   const message: MessageInt = extendsMessageToMessageInt(message_discord);
 
+  const { attachments, author, channel, content, guild } = message;
+
   // Check if the message is sended to a private channel (Direct Message)
   // and send a warning to the current channel.
-  if (message.channel.type === "dm" && message.author.id !== client.user?.id) {
+  if (channel.type === "dm" && author.id !== client.user?.id) {
     message.showTypingAndSendMessage(
       "Sorry, but would you please talk to me in a server, not a private message? If you need a server to join, check out my home! https://discord.gg/PHqDbkg",
       3000
@@ -32,16 +34,16 @@ async function onMessage(
   }
 
   // Check if the message is sended in a Discord server.
-  if (!message.guild) {
+  if (!guild) {
     return;
   }
 
   // Check if the file has attachments (Files, images or videos).
-  if (message.attachments.array().length) {
+  if (attachments.array().length) {
     let haveAFile = false;
 
     // Check if the attachments has a valid height.
-    for (const attachment of message.attachments.array()) {
+    for (const attachment of attachments.array()) {
       if (!attachment.height) {
         haveAFile = true;
         break;
@@ -64,7 +66,7 @@ async function onMessage(
   }
 
   // Get the current Discord server id.
-  const server_id = message.guild.id;
+  const server_id = guild.id;
 
   // Get the default prefix.
   let prefix: string = defaultPrefix;
@@ -81,7 +83,7 @@ async function onMessage(
   }
 
   // Check if the content of the message starts with the server prefix.
-  if (!message.content.startsWith(prefix)) {
+  if (!content.startsWith(prefix)) {
     return;
   }
 

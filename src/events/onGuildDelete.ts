@@ -16,9 +16,18 @@ async function onGuildDelete(
   client: Client
 ): Promise<void> {
   if (debugChannelHook) {
-    await debugChannelHook.send(
-      `I, ${client.user?.username}, have left the ${guild.name} server!`
-    );
+    // Get the user from the bot client.
+    const { user } = client;
+
+    if (user) {
+      // Get the server name from the current guild.
+      const { name } = guild;
+
+      // Send a message to the debug channel.
+      await debugChannelHook.send(
+        `I, ${user.username}, have left the ${name} server!`
+      );
+    }
   }
 }
 

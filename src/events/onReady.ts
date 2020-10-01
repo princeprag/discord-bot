@@ -16,9 +16,15 @@ async function onReady(
   console.log("Activate the Omega");
 
   if (debugChannelHook) {
-    await debugChannelHook.send(
-      `I, \`${client.user?.username}\`, am awake! I am in ${node_env} mode, and version ${version}.`
-    );
+    // Get the user from the bot client.
+    const { user } = client;
+
+    if (user) {
+      // Send a message to the debug channel.
+      await debugChannelHook.send(
+        `I, \`${user.username}\`, am awake! I am in ${node_env} mode, and version ${version}.`
+      );
+    }
   }
 }
 

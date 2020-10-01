@@ -8,9 +8,11 @@ import extendsClientToClientInt from "@Utils/extendsClientToClientInt";
 import onReady from "@Events/onReady";
 import onGuildCreate from "@Events/onGuildCreate";
 import onGuildDelete from "@Events/onGuildDelete";
+import onGuildMemberAdd from "@Events/onGuildMemberAdd";
 import onMessage from "@Events/onMessage";
 import onMessageDelete from "@Events/onMessageDelete";
 import onMessageUpdate from "@Events/onMessageUpdate";
+import onGuildMemberRemove from "@Events/onGuildMemberRemode";
 
 async function botConnect(): Promise<void> {
   // Get the node_env from the environment.
@@ -42,7 +44,7 @@ async function botConnect(): Promise<void> {
   // Create a new Discord bot object.
   const client: ClientInt = extendsClientToClientInt(new Client());
 
-  // On bot ready event.
+  // When the bot is logged.
   client.on(
     "ready",
     async () => await onReady(client, debugChannelHook, node_env)
@@ -60,16 +62,28 @@ async function botConnect(): Promise<void> {
     async (guild) => await onGuildDelete(guild, debugChannelHook, client)
   );
 
-  // On bot message event.
+  // When a member joins to a server.
+  client.on(
+    "guildMemberAdd",
+    async (member) => await onGuildMemberAdd(member, client)
+  );
+
+  // When a member left a server.
+  client.on(
+    "guildMemberRemove",
+    async (member) => await onGuildMemberRemove(member, client)
+  );
+
+  // When an user sends a message to a channel.
   client.on("message", async (message) => await onMessage(message, client));
 
-  // On message delete event.
+  // When an user deletes a message from a channel.
   client.on(
     "messageDelete",
     async (message) => await onMessageDelete(message, client)
   );
 
-  // On message update event.
+  // When an user edits a message.
   client.on(
     "messageUpdate",
     async (oldMessage, newMessage) =>
