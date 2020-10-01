@@ -32,6 +32,7 @@
     "@Database": "prod/src/database/main.js",
     "@Events": "prod/src/events",
     "@Interfaces": "prod/src/interfaces",
+    "@Listeners": "prod/src/listeners",
     "@Models": "prod/src/database/models",
     "@Utils": "prod/src/utils"
   },
