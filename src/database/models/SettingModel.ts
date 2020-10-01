@@ -1,6 +1,6 @@
 import { Schema, Document, model } from "mongoose";
 
-export interface ISettingModel extends Document {
+export interface SettingModelInt extends Document {
   server_id: string;
   key: string;
   value: string;
@@ -18,4 +18,4 @@ const setting = new Schema({
   value: String,
 });
 
-export default model<ISettingModel>("setting", setting);
+export default model<SettingModelInt>("setting", setting);

@@ -16,6 +16,7 @@
       "@Database": ["database/main.ts"],
       "@Events/*": ["events/*"],
       "@Interfaces/*": ["interfaces/*"],
+      "@Listeners/*": ["listeners/*"],
       "@Models/*": ["database/models/*"],
       "@Utils/*": ["utils/*"]
     },

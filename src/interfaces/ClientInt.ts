@@ -1,5 +1,9 @@
 import { Client, Guild, MessageEmbed, TextChannel } from "discord.js";
 
+/**
+ * Client interface extended by Client of discord.js.
+ * @interface
+ */
 interface ClientInt extends Client {
   /**
    * Get a text channel from the database by its id.

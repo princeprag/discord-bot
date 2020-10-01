@@ -3,6 +3,7 @@ import SettingModel from "@Models/SettingModel";
 import MessageInt from "@Interfaces/MessageInt";
 import { prefix as defaultPrefix } from "../../default_config.json";
 import extendsMessageToMessageInt from "@Utils/extendsMessageToMessageInt";
+import ListenerInt from "@Interfaces/ListenerInt";
 
 /**
  * Execute when a user sends a message in a channel.
@@ -11,11 +12,13 @@ import extendsMessageToMessageInt from "@Utils/extendsMessageToMessageInt";
  * @function
  * @param { Message } message_discord
  * @param { Client } client
+ * @param { { [key: string]: ListenerInt } } listeners
  * @returns { Promise<void> }
  */
 async function onMessage(
   message_discord: Message,
-  client: Client
+  client: Client,
+  listeners: { [key: string]: ListenerInt }
 ): Promise<void> {
   // Create a new message interface using the `MessageInt`.
   const message: MessageInt = extendsMessageToMessageInt(message_discord);
@@ -36,6 +39,18 @@ async function onMessage(
   // Check if the message is sended in a Discord server.
   if (!guild) {
     return;
+  }
+
+  // Get the heartsListener and levelsListener from the listeners list.
+  const { heartsListener, levelsListener } = listeners;
+
+  // Check if the heartsListener and levelsListener exists.
+  if (heartsListener && levelsListener) {
+    // Run the hearts listener.
+    await heartsListener.run(message);
+
+    // Run the levels listener.
+    await levelsListener.run(message);
   }
 
   // Check if the file has attachments (Files, images or videos).
