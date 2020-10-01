@@ -14,14 +14,18 @@ async function onMessageDelete(
   message: Message | PartialMessage,
   client: ClientInt
 ): Promise<void> {
+  // Get the author, current channel, content and current server
+  // from the deleted message.
+  const { author, channel, content, guild } = message;
+
   // Check if the message is sended in a Discord server.
-  if (!message.guild) {
+  if (!guild) {
     return;
   }
 
   // Send an embed message to the logs channel.
   await client.sendMessageToLogsChannel(
-    message.guild,
+    guild,
     new MessageEmbed()
       .setTitle("A message was deleted")
       .setColor("#FF0000")
@@ -29,17 +33,16 @@ async function onMessageDelete(
       .addFields(
         {
           name: "Message author",
-          value: message.author || "Sorry, but I could not find that user.",
+          value: author || "Sorry, but I could not find that user.",
         },
         {
           name: "Channel",
-          value: message.channel.toString(),
+          value: channel.toString(),
         },
         {
           name: "Content",
           value:
-            message.content ||
-            "Sorry, but i Could not tell what the message said.",
+            content || "Sorry, but i Could not tell what the message said.",
         }
       )
   );
