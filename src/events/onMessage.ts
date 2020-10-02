@@ -4,7 +4,6 @@ import MessageInt from "@Interfaces/MessageInt";
 import { prefix as defaultPrefix } from "../../default_config.json";
 import extendsMessageToMessageInt from "@Utils/extendsMessageToMessageInt";
 import ListenerInt from "@Interfaces/ListenerInt";
-import CommandInt from "@Interfaces/CommandInt";
 import ClientInt from "@Interfaces/ClientInt";
 
 /**
@@ -14,14 +13,12 @@ import ClientInt from "@Interfaces/ClientInt";
  * @function
  * @param { Message } message_discord
  * @param { ClientInt } client
- * @param { { [key: string]: CommandInt } } commands
  * @param { { [key: string]: ListenerInt } } listeners
  * @returns { Promise<void> }
  */
 async function onMessage(
   message_discord: Message,
   client: ClientInt,
-  commands: { [key: string]: CommandInt },
   listeners: { [key: string]: ListenerInt }
 ): Promise<void> {
   // Create a new message interface using the `MessageInt`.
@@ -126,7 +123,7 @@ async function onMessage(
   message.commandName = message.commandName.slice(prefix.length);
 
   // Get the command by its name.
-  const command = commands[message.commandName.toLowerCase()];
+  const command = client.commands[message.commandName.toLowerCase()];
 
   // Check if the command exists.
   if (command) {

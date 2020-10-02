@@ -27,7 +27,7 @@ interface CommandInt {
    * Parameters of the command.
    * @property
    */
-  parameters?: string;
+  parameters?: string[];
 
   /**
    * Execute the command.

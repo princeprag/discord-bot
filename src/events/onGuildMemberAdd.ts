@@ -56,7 +56,7 @@ async function onGuildMemberAdd(
   }
 
   // Replace the custom elements.
-  welcomeMessage
+  welcomeMessage = welcomeMessage
     .replace(/{@username}/gi, user.username)
     .replace(/{@servername}/gi, guild.name);
 

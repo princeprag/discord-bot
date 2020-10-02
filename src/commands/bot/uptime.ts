@@ -26,6 +26,7 @@ const uptime: CommandInt = {
     // Send an embed message to the current channel.
     await channel.send(
       new MessageEmbed()
+        .setColor(bot.color)
         .setTitle("Bot uptime")
         .setDescription(
           `I have been awake for... ${~~hours} hour${

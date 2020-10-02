@@ -12,14 +12,14 @@ const about: CommandInt = {
     // Get the bot client and the current channel from the message.
     const { bot, channel } = message;
 
-    // Get the commands length and the version of the bot.
-    const { users, commands_length, guilds, version } = bot;
+    // Get the commands and the version of the bot.
+    const { color, commands, guilds, users, version } = bot;
 
     // Create a new empty embed.
     const aboutEmbed = new MessageEmbed();
 
     // Add light purple color.
-    aboutEmbed.setColor("#AB47E6");
+    aboutEmbed.setColor(color);
 
     // Add the title.
     aboutEmbed.setTitle("Grettings! My name is nhbot!");
@@ -43,7 +43,11 @@ const about: CommandInt = {
     aboutEmbed.addField("Users", users.cache.size, true);
 
     // Add the available commands length.
-    aboutEmbed.addField("Available commands", `${commands_length} 🙃`, true);
+    aboutEmbed.addField(
+      "Available commands",
+      `${Object.keys(commands).length} 🙃`,
+      true
+    );
 
     // Add the favourite color.
     aboutEmbed.addField("Favourite color", "PURPLE! 💜", true);

@@ -3,7 +3,14 @@ import { MessageEmbed } from "discord.js";
 
 const config: CommandInt = {
   name: "config",
-  description: "Returns the bot configuration for this server.",
+  description:
+    "Returns the bot configuration for this server. (The parameters are only for server administrators)",
+  parameters: [
+    "`<?set>`: set a channel, role or the prefix to the bot server configuration",
+    "`<?channel/role/prefix>`: use this with `{@prefix}config set`",
+    "`<?mention>`: channel or role mention, use this with `{@prefix}config set channel` or `{@prefix}config set role`",
+    "`<?prefix>`: the new prefix, use this with `{@prefix}config set prefix`",
+  ],
   run: async (message) => {
     // Get the bot client, current channel, command arguments and current guild, mentions and member of the message.
     const { bot, channel, commandArguments, guild, mentions, member } = message;
