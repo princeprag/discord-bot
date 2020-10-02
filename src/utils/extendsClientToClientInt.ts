@@ -6,8 +6,43 @@ import {
   TextChannel,
 } from "discord.js";
 import ClientInt from "@Interfaces/ClientInt";
-import SettingModel from "@Models/SettingModel";
+import SettingModel, { SettingModelInt } from "@Models/SettingModel";
 import { sleep } from "./extendsMessageToMessageInt";
+
+/**
+ * See `./src/interfaces/ClientInt.ts` for more information.
+ *
+ * @async
+ * @function
+ * @param { string } server_id
+ * @param { string } key
+ * @param { string } value
+ * @returns { Promise<SettingModelInt> }
+ */
+async function setSetting(
+  server_id: string,
+  key: string,
+  value: string
+): Promise<SettingModelInt> {
+  const setting = await SettingModel.findOne({
+    server_id,
+    key,
+  });
+
+  if (!setting) {
+    return await SettingModel.create({
+      server_id,
+      key,
+      value,
+    });
+  }
+
+  setting.value = value;
+
+  await setting.save();
+
+  return setting;
+}
 
 /**
  * See `./src/interfaces/ClientInt.ts` for more information.
@@ -72,7 +107,7 @@ async function sendMessageToLogsChannel(
   }
 
   // Start typing.
-  await logsChannel.startTyping();
+  logsChannel.startTyping();
 
   // Sleep 3 seconds.
   await sleep(3000);
@@ -94,6 +129,7 @@ async function sendMessageToLogsChannel(
 function extendsClientToClientInt(client: Client): ClientInt {
   const new_client = client as ClientInt;
 
+  new_client.setSetting = setSetting;
   new_client.getTextChannelFromSettings = getTextChannelFromSettings;
   new_client.sendMessageToLogsChannel = sendMessageToLogsChannel;
 

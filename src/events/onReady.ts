@@ -1,5 +1,5 @@
-import { Client, WebhookClient } from "discord.js";
-import { version } from "../../package.json";
+import ClientInt from "@Interfaces/ClientInt";
+import { WebhookClient } from "discord.js";
 
 /**
  * Send logs messages when the bot is ready.
@@ -9,7 +9,7 @@ import { version } from "../../package.json";
  * @returns { Promise<void> }
  */
 async function onReady(
-  client: Client,
+  client: ClientInt,
   debugChannelHook: WebhookClient | null,
   node_env: string
 ): Promise<void> {
@@ -17,7 +17,7 @@ async function onReady(
 
   if (debugChannelHook) {
     // Get the user from the bot client.
-    const { user } = client;
+    const { user, version } = client;
 
     if (user) {
       // Send a message to the debug channel.
