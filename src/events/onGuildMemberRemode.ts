@@ -25,7 +25,7 @@ async function onGuildMemberRemove(
     return;
   }
 
-  await goodbyeChannel.startTyping();
+  goodbyeChannel.startTyping();
   await sleep(3000);
 
   goodbyeChannel.stopTyping();

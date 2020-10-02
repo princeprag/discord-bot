@@ -1,9 +1,11 @@
-import { Client, Message } from "discord.js";
+import { Message } from "discord.js";
 import SettingModel from "@Models/SettingModel";
 import MessageInt from "@Interfaces/MessageInt";
 import { prefix as defaultPrefix } from "../../default_config.json";
 import extendsMessageToMessageInt from "@Utils/extendsMessageToMessageInt";
 import ListenerInt from "@Interfaces/ListenerInt";
+import CommandInt from "@Interfaces/CommandInt";
+import ClientInt from "@Interfaces/ClientInt";
 
 /**
  * Execute when a user sends a message in a channel.
@@ -11,19 +13,28 @@ import ListenerInt from "@Interfaces/ListenerInt";
  * @async
  * @function
  * @param { Message } message_discord
- * @param { Client } client
+ * @param { ClientInt } client
+ * @param { { [key: string]: CommandInt } } commands
  * @param { { [key: string]: ListenerInt } } listeners
  * @returns { Promise<void> }
  */
 async function onMessage(
   message_discord: Message,
-  client: Client,
+  client: ClientInt,
+  commands: { [key: string]: CommandInt },
   listeners: { [key: string]: ListenerInt }
 ): Promise<void> {
   // Create a new message interface using the `MessageInt`.
   const message: MessageInt = extendsMessageToMessageInt(message_discord);
 
+  // Add the bot client to the message.
+  message.bot = client;
+
+  // Get the attachments, author, current channel, content and current guild from the message.
   const { attachments, author, channel, content, guild } = message;
+
+  // Separate the message content by whitespaces.
+  message.commandArguments = content.split(" ");
 
   // Check if the message is sended to a private channel (Direct Message)
   // and send a warning to the current channel.
@@ -41,15 +52,15 @@ async function onMessage(
     return;
   }
 
-  // Get the heartsListener and levelsListener from the listeners list.
-  const { heartsListener, levelsListener } = listeners;
+  // Get the heartsListener, levelsListener and usageListener from the listeners list.
+  const { heartsListener, levelsListener, usageListener } = listeners;
 
   // Check if the heartsListener and levelsListener exists.
   if (heartsListener && levelsListener) {
-    // Run the hearts listener.
+    // Execute the hearts listener.
     await heartsListener.run(message);
 
-    // Run the levels listener.
+    // Execute the levels listener.
     await levelsListener.run(message);
   }
 
@@ -102,7 +113,31 @@ async function onMessage(
     return;
   }
 
-  // TODO: Commands.
+  // Get the first argument as the command name.
+  message.commandName = message.commandArguments.shift() || prefix;
+
+  // Remove the prefix of the command name.
+  message.commandName = message.commandName.slice(prefix.length);
+
+  // Get the command by its name.
+  const command = commands[message.commandName.toLowerCase()];
+
+  // Check if the command exists.
+  if (command) {
+    channel.startTyping();
+
+    // Check if the usage listener exists.
+    if (usageListener) {
+      // Execute the usage listener.
+      await usageListener.run(message);
+    }
+
+    await message.sleep(3000);
+    channel.stopTyping();
+
+    // Execute the command.
+    await command.run(message);
+  }
 }
 
 export default onMessage;

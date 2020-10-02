@@ -3,7 +3,7 @@ import { Client, WebhookClient } from "discord.js";
 import connectDatabase from "@Database";
 import ClientInt from "@Interfaces/ClientInt";
 import extendsClientToClientInt from "@Utils/extendsClientToClientInt";
-import { getListeners } from "@Utils/readDirectory";
+import { getCommands, getListeners } from "@Utils/readDirectory";
 
 // Events
 import onReady from "@Events/onReady";
@@ -45,6 +45,9 @@ async function botConnect(): Promise<void> {
   // Create a new Discord bot object.
   const client: ClientInt = extendsClientToClientInt(new Client());
 
+  // Load the commands.
+  const commands = await getCommands();
+
   // Load the listeners.
   const listeners = await getListeners();
 
@@ -81,7 +84,7 @@ async function botConnect(): Promise<void> {
   // When an user sends a message to a channel.
   client.on(
     "message",
-    async (message) => await onMessage(message, client, listeners)
+    async (message) => await onMessage(message, client, commands, listeners)
   );
 
   // When an user deletes a message from a channel.

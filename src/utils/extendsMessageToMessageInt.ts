@@ -7,7 +7,7 @@ import { Message, MessageEmbed } from "discord.js";
  * @async
  * @function
  * @param { number } miliseconds
- * @returns { Promis<void> }
+ * @returns { Promise<void> }
  */
 export function sleep(miliseconds: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, miliseconds));
@@ -28,7 +28,7 @@ async function showTypingAndSendMessage(
   message: string | MessageEmbed,
   miliseconds: number
 ): Promise<void> {
-  await this.channel.startTyping();
+  this.channel.startTyping();
   await this.sleep(miliseconds);
   this.channel.stopTyping();
   await this.channel.send(message);
@@ -42,10 +42,12 @@ async function showTypingAndSendMessage(
  * @returns { MessageInt }
  */
 function extendsMessageToMessageInt(message: Message): MessageInt {
-  return Object.assign(message, {
-    sleep,
-    showTypingAndSendMessage,
-  });
+  const new_message = message as MessageInt;
+
+  new_message.sleep = sleep;
+  new_message.showTypingAndSendMessage = showTypingAndSendMessage;
+
+  return new_message;
 }
 
 export default extendsMessageToMessageInt;

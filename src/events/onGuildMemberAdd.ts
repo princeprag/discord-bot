@@ -60,7 +60,7 @@ async function onGuildMemberAdd(
     .replace(/{@username}/gi, user.username)
     .replace(/{@servername}/gi, guild.name);
 
-  await welcomesChannel.startTyping();
+  welcomesChannel.startTyping();
   await sleep(3000);
 
   welcomesChannel.stopTyping();
