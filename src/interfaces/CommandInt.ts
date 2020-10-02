@@ -1,24 +1,30 @@
 import MessageInt from "./MessageInt";
 
 /**
- * Listener object interface.
+ * Command object interface.
  * @interface
  */
-interface ListenerInt {
+interface CommandInt {
   /**
-   * Name of the listener.
+   * Name of the command.
    * @property
    */
   name: string;
 
   /**
-   * Description of the listener.
+   * Description of the command.
    * @property
    */
   description: string;
 
   /**
-   * Run the listener.
+   * Parameters of the command.
+   * @property
+   */
+  parameters?: string;
+
+  /**
+   * Execute the command.
    *
    * @async
    * @function
@@ -28,4 +34,4 @@ interface ListenerInt {
   run(message: MessageInt): Promise<void>;
 }
 
-export default ListenerInt;
+export default CommandInt;

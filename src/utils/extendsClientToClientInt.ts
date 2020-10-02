@@ -92,10 +92,12 @@ async function sendMessageToLogsChannel(
  * @returns { ClientInt }
  */
 function extendsClientToClientInt(client: Client): ClientInt {
-  return Object.assign(client, {
-    getTextChannelFromSettings,
-    sendMessageToLogsChannel,
-  });
+  const new_client = client as ClientInt;
+
+  new_client.getTextChannelFromSettings = getTextChannelFromSettings;
+  new_client.sendMessageToLogsChannel = sendMessageToLogsChannel;
+
+  return new_client;
 }
 
 export default extendsClientToClientInt;

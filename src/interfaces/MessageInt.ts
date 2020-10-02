@@ -1,10 +1,29 @@
 import { Message, MessageEmbed } from "discord.js";
+import ClientInt from "./ClientInt";
 
 /**
  * Message interface extended by Message of discord.js.
  * @interface
  */
 interface MessageInt extends Message {
+  /**
+   * Bot client.
+   * @property
+   */
+  bot: ClientInt;
+
+  /**
+   * Name of the command.
+   * @property
+   */
+  commandName: string;
+
+  /**
+   * Arguments of the command (Message content split by whitespaces).
+   * @property
+   */
+  commandArguments: string[];
+
   /**
    * Asynchronous setTimeout.
    *

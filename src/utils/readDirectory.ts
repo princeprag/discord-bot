@@ -1,3 +1,4 @@
+import CommandInt from "@Interfaces/CommandInt";
 import ListenerInt from "@Interfaces/ListenerInt";
 import { promises } from "fs";
 import { resolve } from "path";
@@ -8,10 +9,12 @@ import { resolve } from "path";
  * @async
  * @function
  * @param { string } directory
+ * @param { boolean } is_commands_directory
  * @returns { Promise<{ [key: string]: T }> }
  */
 async function readDirectory<T>(
-  directory: string
+  directory: string,
+  is_commands_directory = false
 ): Promise<{ [key: string]: T }> {
   let objects: { [key: string]: T } = {};
 
@@ -23,11 +26,6 @@ async function readDirectory<T>(
 
   if (filesNames.length) {
     for await (const fileName of filesNames) {
-      // Ignore files without `.js` or `.ts`.
-      if (!fileName.endsWith(".js") && !fileName.endsWith(".ts")) {
-        continue;
-      }
-
       // Get the file path.
       const filePath = `${directory}/${fileName}`;
 
@@ -47,6 +45,11 @@ async function readDirectory<T>(
       }
       // Check if the current path is a file.
       else if (pathStat.isFile()) {
+        // Ignore files without `.js` or `.ts`.
+        if (!fileName.endsWith(".js") && !fileName.endsWith(".ts")) {
+          continue;
+        }
+
         // Import the module.
         const mod = await import(filePath);
 
@@ -57,8 +60,16 @@ async function readDirectory<T>(
           // Remove the file extension.
           fileNameParts.pop();
 
+          // Get the file name.
+          let name = fileNameParts.join(".");
+
+          // Check if is commands directory.
+          if (is_commands_directory) {
+            name = mod.default.name;
+          }
+
           // Append the module to the objects list.
-          objects[fileNameParts.join(".")] = mod.default;
+          objects[name] = mod.default;
         }
       }
     }
@@ -68,7 +79,19 @@ async function readDirectory<T>(
 }
 
 /**
- * Get all listeners from the `./listeners/` directory.
+ * Get all commands from the `./src/commands/` directory.
+ *
+ * @exports
+ * @async
+ * @function
+ * @returns { Promise<{ [key: string]: CommandInt }> }
+ */
+export async function getCommands(): Promise<{ [key: string]: CommandInt }> {
+  return readDirectory<CommandInt>(resolve(__dirname, "../commands/"), true);
+}
+
+/**
+ * Get all listeners from the `./src/isteners/` directory.
  *
  * @exports
  * @async
