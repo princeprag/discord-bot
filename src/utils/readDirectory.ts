@@ -35,7 +35,10 @@ async function readDirectory<T>(
       // Check if the current path is a directory.
       if (pathStat.isDirectory()) {
         // Get the objects from the sub directory.
-        const subDirObjects = await readDirectory<T>(filePath);
+        const subDirObjects = await readDirectory<T>(
+          filePath,
+          is_commands_directory
+        );
 
         // Append the new objects to the objects list.
         objects = {
@@ -65,7 +68,18 @@ async function readDirectory<T>(
 
           // Check if is commands directory.
           if (is_commands_directory) {
-            name = mod.default.name;
+            if (mod.default.name) {
+              name = mod.default.name;
+            } else if (mod.default.names) {
+              for (name of mod.default.names) {
+                objects[name] = mod.default;
+              }
+
+              continue;
+            } else {
+              console.log(`'${filePath}' is not a valid command.`);
+              continue;
+            }
           }
 
           // Append the module to the objects list.
