@@ -4,6 +4,7 @@ import connectDatabase from "@Database";
 import ClientInt from "@Interfaces/ClientInt";
 import extendsClientToClientInt from "@Utils/extendsClientToClientInt";
 import { getCommands, getListeners } from "@Utils/readDirectory";
+import { version } from "../package.json";
 
 // Events
 import onReady from "@Events/onReady";
@@ -45,8 +46,14 @@ async function botConnect(): Promise<void> {
   // Create a new Discord bot object.
   const client: ClientInt = extendsClientToClientInt(new Client());
 
+  // Add the bot version to the bot client.
+  client.version = version;
+
   // Load the commands.
   const commands = await getCommands();
+
+  // Add the commands length to the bot client.
+  client.commands_length = Object.keys(commands).length;
 
   // Load the listeners.
   const listeners = await getListeners();
