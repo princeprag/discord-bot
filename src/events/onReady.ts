@@ -19,6 +19,9 @@ async function onReady(
     // Get the user from the bot client.
     const { user, version } = client;
 
+    // Add the bot updtime timestamp.
+    client.uptime_timestamp = Date.now();
+
     if (user) {
       // Send a message to the debug channel.
       await debugChannelHook.send(

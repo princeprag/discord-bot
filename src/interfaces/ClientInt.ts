@@ -19,6 +19,12 @@ interface ClientInt extends Client {
   version: string;
 
   /**
+   * Get the last uptime timestamp of the bot.
+   * @property
+   */
+  uptime_timestamp: number;
+
+  /**
    * Available commands amount.
    * @property
    */
