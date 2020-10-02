@@ -14,7 +14,7 @@ const ban: CommandInt = {
 
     const { user } = bot;
 
-    // Check if the member has the administrator permission.
+    // Check if the member has the ban members permission.
     if (!guild || !user || !member || !member.hasPermission("BAN_MEMBERS")) {
       await message.reply(
         "sorry, but this command is retricted to moderators."
