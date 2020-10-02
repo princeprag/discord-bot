@@ -50,10 +50,7 @@ async function botConnect(): Promise<void> {
   client.version = version;
 
   // Load the commands.
-  const commands = await getCommands();
-
-  // Add the commands length to the bot client.
-  client.commands_length = Object.keys(commands).length;
+  client.commands = await getCommands();
 
   // Load the listeners.
   const listeners = await getListeners();
@@ -91,7 +88,7 @@ async function botConnect(): Promise<void> {
   // When an user sends a message to a channel.
   client.on(
     "message",
-    async (message) => await onMessage(message, client, commands, listeners)
+    async (message) => await onMessage(message, client, listeners)
   );
 
   // When an user deletes a message from a channel.

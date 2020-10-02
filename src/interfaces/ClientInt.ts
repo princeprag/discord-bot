@@ -1,11 +1,18 @@
 import { SettingModelInt } from "@Models/SettingModel";
 import { Client, Guild, MessageEmbed, TextChannel } from "discord.js";
+import CommandInt from "./CommandInt";
 
 /**
  * Client interface extended by Client of discord.js.
  * @interface
  */
 interface ClientInt extends Client {
+  /**
+   * Light purple color.
+   * @property
+   */
+  color: string;
+
   /**
    * Prefix of the messages.
    * @property
@@ -25,10 +32,10 @@ interface ClientInt extends Client {
   uptime_timestamp: number;
 
   /**
-   * Available commands amount.
+   * Available commands.
    * @property
    */
-  commands_length: number;
+  commands: { [key: string]: CommandInt };
 
   /**
    * Update a setting of the database or create one if not exists.

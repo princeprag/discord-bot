@@ -6,7 +6,7 @@ import { MessageEmbed } from "discord.js";
 const github: CommandInt = {
   names: ["github", "gh"],
   description: "Gets information on the <user>'s GitHub profile.",
-  parameters: "`<user>`: The user to look for on GitHub",
+  parameters: ["`<user>`: The user to look for on GitHub"],
   run: async (message) => {
     // Get the current channel and the command arguments of the message.
     const { channel, commandArguments } = message;
