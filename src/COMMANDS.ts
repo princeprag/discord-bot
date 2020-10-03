@@ -56,6 +56,7 @@ import { challenge } from "./commands/challenge";
 import { maze } from "./commands/maze";
 import { adventure } from "./commands/adventure";
 import { report } from "./commands/report";
+import { trackingOptOut } from "./commands/trackingOptOut";
 
 export const COMMANDS = [
   kick,
@@ -116,4 +117,5 @@ export const COMMANDS = [
   maze,
   adventure,
   report,
+  trackingOptOut,
 ];

@@ -1,12 +1,12 @@
 import { Client } from "discord.js";
 
-export const configureClient = async (baseClient: ?Client): Promise<Client> => {
+export const configureClient = (baseClient?: Client): Client => {
   const client = baseClient ? baseClient : new Client();
   const token = process.env.DISCORD_TOKEN ?? "";
-  await client
+  client
     .login(token)
     .then(() => {
-      console.info(`Successfully logged in`);
+      console.info("Discored Client Successfully Logged In");
     })
     .catch((e) => console.error(e));
   return client;
