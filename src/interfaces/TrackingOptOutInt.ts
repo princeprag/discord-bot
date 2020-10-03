@@ -10,4 +10,7 @@ export const trackingOptOutSchema = new Schema({
   optOutDate: String,
 });
 
-export const trackingOptOut = model<TrackingOptOutInt>("trackingOptOut", trackingOptOutSchema);
+export const trackingOptOut = model<TrackingOptOutInt>(
+  "trackingOptOut",
+  trackingOptOutSchema
+);
