@@ -31,25 +31,29 @@ describe("client listeners", () => {
   before(() => {
     overrideDotEnvWithConfig();
   });
-  it("should login with token in env", async () => {
+  it("should login with token in env", () => {
     const clientStub = buildStubbedClient();
+    clientStub.login.resolves("");
 
-    const testClient = await configureClient(clientStub as Client);
+    const testClient = configureClient(clientStub as Client);
 
     expect(testClient.login).calledOnceWith(testDT);
   });
+
   it("should log error if error occurs", async () => {
     const clientStub = buildStubbedClient();
     const logErrorSpy = sandbox.spy(console, "error");
-
     clientStub.login.rejects("FetchError");
+
     try {
-      await configureClient(clientStub as Client);
+      testClient = configureClient(clientStub as Client);
       expect.fail("We should have an error thrown");
     } catch (error: Error) {
-      expect(logErrorSpy).to.have.been.calledOnce;
+      await setTimeout(() => {
+        expect(logErrorSpy).to.have.been.calledOnce;
+      }, 10)
     }
   });
 
-  describe.skip("on ready", () => {});
+  describe.skip("on ready", () => { });
 });

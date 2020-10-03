@@ -8,7 +8,7 @@ import { configureClient } from "./configureClient";
 
 dotenv.config();
 
-const client = configureClient(null);
+const client = configureClient();
 const URI: string = process.env.MONGO_URI || "";
 
 import { COMMANDS } from "./COMMANDS";
