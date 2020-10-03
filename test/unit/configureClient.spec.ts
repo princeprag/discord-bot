@@ -4,9 +4,11 @@ import { expect } from "chai";
 import { Client } from "discord.js";
 import { createSandbox } from "sinon";
 
+chai.use(sinonChai);
+
 import { configureClient } from "../../src/configureClient";
 
-chai.use(sinonChai);
+
 
 const testDT = "discord_token";
 const testWhId = "wh_id";
@@ -27,10 +29,11 @@ const buildStubbedClient = (): sinon.SinonStubbedInstance<Client> => {
   return clientStub;
 };
 
-describe("client listeners", () => {
+describe("client base configuration", () => {
   before(() => {
     overrideDotEnvWithConfig();
   });
+  afterEach(() => sandbox.restore())
   it("should login with token in env", () => {
     const clientStub = buildStubbedClient();
     clientStub.login.resolves("");
@@ -54,6 +57,4 @@ describe("client listeners", () => {
       }, 10)
     }
   });
-
-  describe.skip("on ready", () => { });
 });
