@@ -1,12 +1,19 @@
 import { Client, TextChannel, MessageEmbed, WebhookClient } from "discord.js";
-const client = new Client();
 import config from "../config.json";
 const prefix = config.prefix;
 import dotenv from "dotenv";
 import Mongoose from "mongoose";
 import packageInfo from "../package.json";
 dotenv.config();
-client.login(process.env.DISCORD_TOKEN).catch((e) => console.error(e));
+
+export const configureClient = (doLogin = true): Client => {
+  const client = new Client();
+  if (doLogin) {
+    client.login(process.env.DISCORD_TOKEN).catch((e) => console.error(e));
+  }
+  return client;
+};
+const client = configureClient();
 const URI: string = process.env.MONGO_URI || "";
 
 import { COMMANDS } from "./COMMANDS";
