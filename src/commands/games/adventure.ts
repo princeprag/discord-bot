@@ -47,7 +47,7 @@ const adventure: CommandInt = {
   run: async (message) => {
     const { author, bot, channel, commandArguments } = message;
 
-    const { prefix } = bot;
+    const { color, prefix } = bot;
 
     // Get the next argument as the action.
     const action = commandArguments.shift();
@@ -63,6 +63,9 @@ const adventure: CommandInt = {
 
     // Create a new empty embed.
     let adventureEmbed = new MessageEmbed();
+
+    // Add the light purple color.
+    adventureEmbed.setColor(color);
 
     // Set the title.
     adventureEmbed.setTitle(`${author.username}'s adventure!`);

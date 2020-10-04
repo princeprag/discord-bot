@@ -1,5 +1,5 @@
 import CommandInt from "@Interfaces/CommandInt";
-import DndMonInt from "@Interfaces/commands/DndMonInt";
+import DndMonInt from "@Interfaces/commands/dnd/DndMonInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 

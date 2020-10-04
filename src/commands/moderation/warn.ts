@@ -79,17 +79,25 @@ const warn: CommandInt = {
     // Create a new empty embed.
     const warnLogEmbed = new MessageEmbed();
 
+    // Add the embed color.
     warnLogEmbed.setColor("#FFFF00");
+
+    // Add the embed title.
     warnLogEmbed.setTitle("Warning!");
 
+    // Add the moderator to an embed field.
     warnLogEmbed.addField("Moderator", author.toString(), true);
+
+    // Add the user warned to an embed field.
     warnLogEmbed.addField("User", userToWarnMentioned.toString(), true);
 
+    // Add the reason to an embed field.
     warnLogEmbed.addField("Reason", reason);
 
+    // Add the current timestamp to the embed.
     warnLogEmbed.setTimestamp();
 
-    // Send the embed to the current channel.
+    // Send the embed to the logs channel.
     await bot.sendMessageToLogsChannel(guild, warnLogEmbed);
 
     // Send a message to the user.
