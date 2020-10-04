@@ -11,7 +11,7 @@ export const MESSAGE_SUBCOMMAND_INVALID = `Sorry, I did not get that. Try: ${VAL
   " or "
 )}.`;
 
-export const saveCallBack = (message: Message, authorName: string) => (
+export const addCallBack = (message: Message, authorName: string) => (
   err?: Error,
   data?: TrackingOptOutInt
 ): Promise<TrackingOptOutInt> => {
@@ -29,7 +29,7 @@ export const saveCallBack = (message: Message, authorName: string) => (
   return Promise.reject(err);
 };
 
-export const deleteCallback = (message: Message) => (err?: Error): void => {
+export const removeCallback = (message: Message) => (err?: Error): void => {
   const authorName = message?.author?.username;
   if (!err) {
     message.channel.send(`@${authorName}, you are now opted into tracking.`);
@@ -39,6 +39,18 @@ export const deleteCallback = (message: Message) => (err?: Error): void => {
       `Oops, @${authorName}, something went wrong. Please try again in a few minutes.`
     );
   }
+};
+
+const statusResolve = (
+  message: Message,
+  authorName: string,
+  subcommand: string
+) => (data?: TrackingOptOutInt) => {
+  const optStatus: string = data === null || data === undefined ? "in" : "out";
+  if (subcommand === "status") {
+    message.channel.send(`@${authorName} is currently opted-${optStatus}`);
+  }
+  return data;
 };
 
 export const trackingOptOut: CommandInt = {
@@ -68,24 +80,23 @@ export const trackingOptOut: CommandInt = {
       console.debug(`Author: ${JSON.stringify(message.author)}`);
     }
     const userId = message?.author?.id;
+    const authorName = message?.author?.username;
+    const found = await TrackingOptOut.findOne({ userId })
+      .then(statusResolve(message, authorName, subcommand))
+      .catch((err) => {
+        console.error(err);
+        message?.channel?.send(
+          `Oops, @${authorName}, something went wrong. Please try again in a few minutes.`
+        );
+      });
     if (subcommand === "add") {
       const newOptOutUser = new TrackingOptOut({
         userId,
       });
-      const authorName = message?.author?.username;
-      await newOptOutUser.save(saveCallBack(message, authorName));
+      await newOptOutUser.save(addCallBack(message, authorName));
     }
     if (subcommand === "remove") {
-      const userId = message?.author?.id;
-      if (process.env.PRODDEV === "development") {
-        await TrackingOptOut.find({ userId })
-          .then((data) =>
-            console.debug(`Matching Records: ${JSON.stringify(data)}`)
-          )
-          .catch((err) => console.error(err));
-      }
-
-      await TrackingOptOut.deleteMany({ userId }, deleteCallback(message));
+      await TrackingOptOut.deleteMany({ userId }, removeCallback(message));
     }
   },
 };
