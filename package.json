@@ -38,8 +38,6 @@
   },
   "dependencies": {
     "discord.js": "^12.3.1",
-    "mathjs": "^7.3.0",
-    "mathsteps": "^0.2.0",
     "module-alias": "^2.2.2",
     "mongoose": "^5.10.7",
     "mtgsdk": "^0.4.3"
