@@ -29,6 +29,18 @@ export const saveCallBack = (message: Message, authorName: string) => (
   return Promise.reject(err);
 };
 
+export const deleteCallback = (message: Message) => (err?: Error): void => {
+  const authorName = message?.author?.username;
+  if (!err) {
+    message.channel.send(`@${authorName}, you are now opted into tracking.`);
+  } else {
+    console.error(err);
+    message.channel.send(
+      `Oops, @${authorName}, something went wrong. Please try again in a few minutes.`
+    );
+  }
+};
+
 export const trackingOptOut: CommandInt = {
   prefix: "optOut",
   description:
@@ -45,7 +57,7 @@ export const trackingOptOut: CommandInt = {
       message.channel.send(MESSAGE_COMMAND_INVALID);
       return;
     }
-    if (!VALID_SUBCOMMAND.includes(subcommand?.toLowerCase())) {
+    if (!VALID_SUBCOMMAND.includes(subcommand)) {
       console.debug(`SubCommand invalid: ${subcommand}`);
       message.channel.send(MESSAGE_SUBCOMMAND_INVALID);
       return;
@@ -62,6 +74,18 @@ export const trackingOptOut: CommandInt = {
       });
       const authorName = message?.author?.username;
       await newOptOutUser.save(saveCallBack(message, authorName));
+    }
+    if (subcommand === "remove") {
+      const userId = message?.author?.id;
+      if (process.env.PRODDEV === "development") {
+        await TrackingOptOut.find({ userId })
+          .then((data) =>
+            console.debug(`Matching Records: ${JSON.stringify(data)}`)
+          )
+          .catch((err) => console.error(err));
+      }
+
+      await TrackingOptOut.deleteMany({ userId }, deleteCallback(message));
     }
   },
 };

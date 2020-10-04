@@ -2,21 +2,13 @@ import { expect } from "chai";
 import { createSandbox } from "sinon";
 import { Message, TextChannel, User } from "discord.js";
 import * as TOO from "../../../src/interfaces/TrackingOptOutInt";
-import {
-  mock,
-  resetCalls,
-} from "ts-mockito";
-import { ImportMock } from "ts-mock-imports";
+import { mock } from "ts-mockito";
+import { ImportMock, MockManager } from "ts-mock-imports";
 
 const sandbox = createSandbox();
-const TrackingOptOutDbMock = mock<TOO.TrackingOptOutInt>();
-const TrackingOptOutMock = ImportMock.mockFunction(
-  TOO,
-  "TrackingOptOut",
-  TrackingOptOutDbMock
-);
 
 import {
+  deleteCallback,
   MESSAGE_COMMAND_INVALID,
   MESSAGE_SUBCOMMAND_INVALID,
   saveCallBack,
@@ -39,6 +31,24 @@ const buildMessageWithContent = (
 };
 
 describe("command opt-out", () => {
+  let TrackingOptOutDocumentMock;
+  let TrackingOptOutMock: MockManager<TOO.TrackingOptOutInt>;
+  let TrackingOptOutModelMock;
+
+  beforeEach(() => {
+    TrackingOptOutDocumentMock = mock<TOO.TrackingOptOutInt>();
+    TrackingOptOutMock = ImportMock.mockFunction(
+      TOO,
+      "TrackingOptOut",
+      TrackingOptOutDocumentMock
+    );
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+    ImportMock.restore();
+  });
+
   context("when command invalid", () => {
     it("return error message", async () => {
       const testMessage: Message = buildMessageWithContent(
@@ -68,11 +78,9 @@ describe("command opt-out", () => {
       );
     });
   });
+
   context("when subcommand add", () => {
     context("database available", () => {
-      afterEach(() => {
-        resetCalls(TrackingOptOutDbMock);
-      });
       describe("command: !optOut add", () => {
         describe("user not in database", () => {
           it("attempt to add user id to database", async () => {
@@ -87,7 +95,9 @@ describe("command opt-out", () => {
 
             await trackingOptOut.command(testMessage);
 
-            expect(TrackingOptOutMock).calledOnceWith({ userId: "123456789" });
+            expect(TrackingOptOutMock).calledOnceWith({
+              userId: "123456789",
+            });
           });
           it("should notify user they are now opt-out", async () => {
             const testMessage: Message = buildMessageWithContent(
@@ -123,6 +133,52 @@ describe("command opt-out", () => {
                 `Oops, @author, something went wrong. Please try again in a few minutes.`
               );
             }
+          });
+        });
+        describe("user is in the database", () => {
+          beforeEach(() => {
+            ImportMock.restore();
+            sandbox.stub(TOO.TrackingOptOut, "find");
+            sandbox.stub(TOO.TrackingOptOut, "deleteMany");
+          });
+          it("call deleteMany to ensure record not in db", async () => {
+            const testMessage: Message = buildMessageWithContent(
+              "   |optOut remove   ",
+              "123456789",
+              "author"
+            );
+
+            await trackingOptOut.command(testMessage);
+
+            expect(TOO.TrackingOptOut.deleteMany).calledWith({
+              userId: "123456789",
+            });
+          });
+          it("warn user if error occured", async () => {
+            const testMessage: Message = buildMessageWithContent(
+              "   |optOut remove   ",
+              "123456789",
+              "author"
+            );
+
+            await deleteCallback(testMessage)(new Error());
+
+            expect(testMessage.channel.send).calledWith(
+              `Oops, @author, something went wrong. Please try again in a few minutes.`
+            );
+          });
+          it("notify user of status change", async () => {
+            const testMessage: Message = buildMessageWithContent(
+              "   |optOut remove   ",
+              "123456789",
+              "author"
+            );
+
+            await deleteCallback(testMessage)(null);
+
+            expect(testMessage.channel.send).calledWith(
+              `@author, you are now opted into tracking.`
+            );
           });
         });
       });
