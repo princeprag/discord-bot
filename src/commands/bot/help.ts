@@ -84,7 +84,8 @@ const help: CommandInt = {
 
     const commandNames: string[] = [];
 
-    for (const command of Object.values(commands)) {
+    // Get the unique commands.
+    for (const command of new Set(Object.values(commands)).values()) {
       if (command.name) {
         commandNames.push(`\`${command.name}\``);
       } else if (command.names) {

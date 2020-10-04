@@ -45,7 +45,7 @@ const about: CommandInt = {
     // Add the available commands length.
     aboutEmbed.addField(
       "Available commands",
-      `${Object.keys(commands).length} 🙃`,
+      `${new Set(Object.values(commands)).size} 🙃`,
       true
     );
 
