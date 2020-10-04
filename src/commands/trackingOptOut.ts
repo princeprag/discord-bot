@@ -32,13 +32,12 @@ export const saveCallBack = (message: Message, authorName: string) => (
 export const trackingOptOut: CommandInt = {
   prefix: "optOut",
   description:
-    "Add or remove self from being recorded as part of usage statistics",
-  parameters: `\`<opt-out>\` - [add|remove|status]
-    \n\tadd\tadd username to set of opt-out users (disable tracking)
-    \n\tremove\tremove username to set of opt-out users (enable tracking)
-    \n\tstatus\tsee if your current tracking status
-    \n
-    `,
+    "**Add** or **remove** self from being recorded as part of usage statistics",
+  parameters: `\`<action>\` - Actions available add, remove, or status
+    \nadd - add username to set of opt-out users (disable tracking)
+    \nremove - remove username to set of opt-out users (enable tracking)
+    \nstatus - see if your current tracking status
+    \n`,
   command: async (message: Message) => {
     const [command, subcommand] = message?.content?.trim().split(/\s{1,}/, 2);
     if (!command?.match(/.{1}optOut/)) {
