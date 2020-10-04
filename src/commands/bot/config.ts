@@ -6,8 +6,8 @@ const config: CommandInt = {
   description:
     "Returns the bot configuration for this server. (The parameters are only for server administrators)",
   parameters: [
-    "`<?set>`: set a channel, role or the prefix to the bot server configuration",
-    "`<?channel/role/prefix>`: use this with `{@prefix}config set`",
+    "`<?action (set)>`: set a channel, role or the prefix to the bot server configuration",
+    "`<?sub-action (channel/role/prefix)>`: use this with `{@prefix}config <action>`",
     "`<?mention>`: channel or role mention, use this with `{@prefix}config set channel` or `{@prefix}config set role`",
     "`<?prefix>`: the new prefix, use this with `{@prefix}config set prefix`",
   ],
