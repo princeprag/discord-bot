@@ -2,15 +2,13 @@ import { Document, Schema, model } from "mongoose";
 
 export interface TrackingOptOutInt extends Document {
   userId: string;
-  optOutDate: string;
 }
 
-export const trackingOptOutSchema = new Schema({
+export const TrackingOptOutSchema = new Schema({
   userId: String,
-  optOutDate: String,
 });
 
-export const trackingOptOut = model<TrackingOptOutInt>(
+export const TrackingOptOut = model<TrackingOptOutInt>(
   "trackingOptOut",
-  trackingOptOutSchema
+  TrackingOptOutSchema
 );
