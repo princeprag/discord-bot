@@ -1,13 +1,24 @@
 import { expect } from "chai";
 import { createSandbox } from "sinon";
-import { Message } from "discord.js";
+import { Message, TextChannel, User } from "discord.js";
 import * as TOO from "../../../src/interfaces/TrackingOptOutInt";
-import { mock, when, verify, anyFunction, anything, resetCalls } from "ts-mockito";
+import {
+  mock,
+  when,
+  verify,
+  anyFunction,
+  anything,
+  resetCalls,
+} from "ts-mockito";
 import { ImportMock } from "ts-mock-imports";
 
 const sandbox = createSandbox();
 const TrackingOptOutDbMock = mock<TOO.TrackingOptOutInt>();
-const TrackingOptOutMock = ImportMock.mockFunction(TOO, "TrackingOptOut", TrackingOptOutDbMock);
+const TrackingOptOutMock = ImportMock.mockFunction(
+  TOO,
+  "TrackingOptOut",
+  TrackingOptOutDbMock
+);
 
 import {
   MESSAGE_COMMAND_INVALID,
@@ -16,13 +27,29 @@ import {
   trackingOptOut,
 } from "../../../src/commands/trackingOptOut";
 
+const buildMessageWithContent = (
+  content: string,
+  userId: string,
+  authorName: string
+): Message => {
+  const author: User = { id: userId, username: authorName } as User;
+  const channel: TextChannel = { send: sandbox.stub() } as Text;
+  const msg: Partial<Message> = {
+    author,
+    content,
+    channel,
+  };
+  return msg as Message;
+};
+
 describe("command opt-out", () => {
   context("when command invalid", () => {
     it("return error message", async () => {
-      const testMessage: Message = {
-        content: "|hi",
-        channel: { send: sandbox.stub() },
-      } as Message;
+      const testMessage: Message = buildMessageWithContent(
+        "|outOut add",
+        "123456789",
+        "author"
+      );
 
       await trackingOptOut.command(testMessage);
 
@@ -32,10 +59,11 @@ describe("command opt-out", () => {
 
   context("when subcommand invalid", () => {
     it("return error message", async () => {
-      const testMessage: Message = {
-        content: "|optOut",
-        channel: { send: sandbox.stub() },
-      } as Message;
+      const testMessage: Message = buildMessageWithContent(
+        "|optOut",
+        "123456789",
+        "author"
+      );
 
       await trackingOptOut.command(testMessage);
 
@@ -52,11 +80,11 @@ describe("command opt-out", () => {
       describe("command: !optOut add", () => {
         describe("user not in database", () => {
           it("attempt to add user id to database", async () => {
-            const testMessage: Message = {
-              author: { id: "123456789", username: "author" },
-              content: "|optOut add",
-              channel: { send: sandbox.stub() },
-            } as Message;
+            const testMessage: Message = buildMessageWithContent(
+              "|optOut add",
+              "123456789",
+              "author"
+            );
             const document: TOO.TrackingOptOutInt = {
               userId: "123456789",
             } as TOO.TrackingOptOutInt;
@@ -67,12 +95,11 @@ describe("command opt-out", () => {
             expect(TrackingOptOutMock).calledOnceWith({ userId: "123456789" });
           });
           it("should notify user they are now opt-out", async () => {
-            const testMessage: Message = {
-              author: { id: "123456789", username: "author" },
-              content: "|optOut add",
-              channel: { send: sandbox.stub() },
-            } as Message;
-
+            const testMessage: Message = buildMessageWithContent(
+              "|optOut add",
+              "123456789",
+              "author"
+            );
             testMessage.content = "|optOut add";
             const document: TOO.TrackingOptOutInt = {
               userId: "123456789",
@@ -84,22 +111,23 @@ describe("command opt-out", () => {
             );
           });
           it("should notify user if opt-out failed", async () => {
-            const testMessage: Message = {
-              author: { id: "123456789", username: "author" },
-              content: "|optOut add",
-              channel: { send: sandbox.stub() },
-            } as Message;
-
-            testMessage.content = "|optOut add";
+            const testMessage: Message = buildMessageWithContent(
+              "|optOut add",
+              "123456789",
+              "author"
+            );
             const document: TOO.TrackingOptOutInt = {
               userId: "123456789",
             } as TOO.TrackingOptOutInt;
             try {
-            await saveCallBack(testMessage, "author")(new Error("Something"), null);
-            } catch(error){
-            expect(testMessage.channel.send).calledWith(
-              `Oops, @author, something went wrong. Please try again in a few minutes.`
-            );
+              await saveCallBack(testMessage, "author")(
+                new Error("Something"),
+                null
+              );
+            } catch (error) {
+              expect(testMessage.channel.send).calledWith(
+                `Oops, @author, something went wrong. Please try again in a few minutes.`
+              );
             }
           });
         });
