@@ -40,7 +40,7 @@ export const trackingOptOut: CommandInt = {
     \n
     `,
   command: async (message: Message) => {
-    const [command, subcommand] = message?.content?.trim().split(" ", 2);
+    const [command, subcommand] = message?.content?.trim().split(/\s{1,}/, 2);
     if (!command?.match(/.{1}optOut/)) {
       console.debug(`Command invalid: ${command}`);
       message.channel.send(MESSAGE_COMMAND_INVALID);

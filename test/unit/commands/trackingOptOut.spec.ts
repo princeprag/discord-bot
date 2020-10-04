@@ -4,10 +4,6 @@ import { Message, TextChannel, User } from "discord.js";
 import * as TOO from "../../../src/interfaces/TrackingOptOutInt";
 import {
   mock,
-  when,
-  verify,
-  anyFunction,
-  anything,
   resetCalls,
 } from "ts-mockito";
 import { ImportMock } from "ts-mock-imports";
@@ -81,14 +77,13 @@ describe("command opt-out", () => {
         describe("user not in database", () => {
           it("attempt to add user id to database", async () => {
             const testMessage: Message = buildMessageWithContent(
-              "|optOut add",
+              "   |optOut                  add   ",
               "123456789",
               "author"
             );
             const document: TOO.TrackingOptOutInt = {
               userId: "123456789",
             } as TOO.TrackingOptOutInt;
-            testMessage.content = "|optOut add";
 
             await trackingOptOut.command(testMessage);
 
@@ -100,7 +95,6 @@ describe("command opt-out", () => {
               "123456789",
               "author"
             );
-            testMessage.content = "|optOut add";
             const document: TOO.TrackingOptOutInt = {
               userId: "123456789",
             } as TOO.TrackingOptOutInt;
