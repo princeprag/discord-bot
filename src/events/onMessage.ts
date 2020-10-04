@@ -3,7 +3,6 @@ import SettingModel from "@Models/SettingModel";
 import MessageInt from "@Interfaces/MessageInt";
 import { prefix as defaultPrefix } from "../../default_config.json";
 import extendsMessageToMessageInt from "@Utils/extendsMessageToMessageInt";
-import ListenerInt from "@Interfaces/ListenerInt";
 import ClientInt from "@Interfaces/ClientInt";
 
 /**
@@ -13,13 +12,11 @@ import ClientInt from "@Interfaces/ClientInt";
  * @function
  * @param { Message } message_discord
  * @param { ClientInt } client
- * @param { { [key: string]: ListenerInt } } listeners
  * @returns { Promise<void> }
  */
 async function onMessage(
   message_discord: Message,
-  client: ClientInt,
-  listeners: { [key: string]: ListenerInt }
+  client: ClientInt
 ): Promise<void> {
   // Create a new message interface using the `MessageInt`.
   const message: MessageInt = extendsMessageToMessageInt(message_discord);
@@ -50,7 +47,11 @@ async function onMessage(
   }
 
   // Get the heartsListener, levelsListener and usageListener from the listeners list.
-  const { heartsListener, levelsListener, usageListener } = listeners;
+  const {
+    heartsListener,
+    levelsListener,
+    usageListener,
+  } = client.customListeners;
 
   // Check if the heartsListener and levelsListener exists.
   if (heartsListener && levelsListener) {

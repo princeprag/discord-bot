@@ -46,6 +46,7 @@ const challenge: CommandInt = {
         // Send an embed to the current channel.
         await channel.send(
           new MessageEmbed()
+            .setColor(bot.color)
             .setTitle("Start the challenge!")
             .setDescription(
               `Welcome to the challenge game! To get your first challenge, call this command: \`${prefix}challenge request ${
@@ -66,6 +67,9 @@ const challenge: CommandInt = {
         }
 
         const challengeEmbed = new MessageEmbed();
+
+        // Add the light purple color.
+        challengeEmbed.setColor(bot.color);
 
         // Check if the action is `request`.
         if (action === "request") {

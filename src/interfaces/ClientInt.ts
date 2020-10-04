@@ -1,6 +1,7 @@
 import { SettingModelInt } from "@Models/SettingModel";
 import { Client, Guild, MessageEmbed, TextChannel } from "discord.js";
 import CommandInt from "./CommandInt";
+import ListenerInt from "./ListenerInt";
 
 /**
  * Client interface extended by Client of discord.js.
@@ -36,6 +37,12 @@ interface ClientInt extends Client {
    * @property
    */
   commands: { [key: string]: CommandInt };
+
+  /**
+   * Available listeners.
+   * @property
+   */
+  customListeners: { [key: string]: ListenerInt };
 
   /**
    * Update a setting of the database or create one if not exists.

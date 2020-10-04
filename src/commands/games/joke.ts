@@ -7,7 +7,7 @@ const joke: CommandInt = {
   name: "joke",
   description: "Returns a random joke.",
   run: async (message) => {
-    const { channel } = message;
+    const { bot, channel } = message;
 
     try {
       // Get the data from the joke API.
@@ -28,7 +28,10 @@ const joke: CommandInt = {
 
       // Send an embed message to the current channel.
       await channel.send(
-        new MessageEmbed().setTitle("Haha!").setDescription(joke)
+        new MessageEmbed()
+          .setColor(bot.color)
+          .setTitle("Haha!")
+          .setDescription(joke)
       );
     } catch (error) {
       console.log(

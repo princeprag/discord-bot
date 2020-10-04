@@ -7,7 +7,7 @@ const fact: CommandInt = {
   name: "fact",
   description: "Returns a fun fact!",
   run: async (message) => {
-    const { channel } = message;
+    const { bot, channel } = message;
 
     // Get the data information from the random API.
     const data = await axios.get<FactInt>(
@@ -19,6 +19,7 @@ const fact: CommandInt = {
     // Send the embed to the current channel.
     await channel.send(
       new MessageEmbed()
+        .setColor(bot.color)
         .setTitle("Fun fact!")
         .setURL(source_url)
         .setDescription(text)

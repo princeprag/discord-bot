@@ -53,7 +53,7 @@ async function botConnect(): Promise<void> {
   client.commands = await getCommands();
 
   // Load the listeners.
-  const listeners = await getListeners();
+  client.customListeners = await getListeners();
 
   // When the bot is logged.
   client.on(
@@ -86,10 +86,7 @@ async function botConnect(): Promise<void> {
   );
 
   // When an user sends a message to a channel.
-  client.on(
-    "message",
-    async (message) => await onMessage(message, client, listeners)
-  );
+  client.on("message", async (message) => await onMessage(message, client));
 
   // When an user deletes a message from a channel.
   client.on(
