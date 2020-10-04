@@ -8,7 +8,7 @@ const config = {
   "enable-source-maps": true,
   "extensions": ["ts"],
   "recursive": true,
-  "require": ["ts-node/register"],
+  "require": ["ts-node/register", "./test/testSetup.ts"],
   "throw-deprecation": true,
   "timeout": timeout,
 }
