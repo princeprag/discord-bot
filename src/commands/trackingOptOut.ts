@@ -1,11 +1,34 @@
 import { Message } from "discord.js";
 import { CommandInt } from "../interfaces/CommandInt";
+import {
+  TrackingOptOut,
+  TrackingOptOutInt,
+} from "../interfaces/TrackingOptOutInt";
 
 export const VALID_SUBCOMMAND = ["add", "remove", "status"];
 export const MESSAGE_COMMAND_INVALID = `Sorry, I did not get that.`;
 export const MESSAGE_SUBCOMMAND_INVALID = `Sorry, I did not get that. Try: ${VALID_SUBCOMMAND.join(
   " or "
 )}.`;
+
+export const saveCallBack = (message: Message, authorName: string) => (
+  err?: Error,
+  data?: TrackingOptOutInt
+): Promise<TrackingOptOutInt> => {
+  console.debug(`${data}`);
+  if (data) {
+    message.channel.send(`@${authorName}, you are now opt-out of tracking.`);
+    return Promise.resolve(data);
+  }
+  if (err) {
+    console.error(err);
+    message.channel.send(
+      `Oops, @${authorName}, something went wrong. Please try again in a few minutes.`
+    );
+  }
+  return Promise.reject(err);
+};
+
 export const trackingOptOut: CommandInt = {
   prefix: "optOut",
   description:
@@ -33,6 +56,13 @@ export const trackingOptOut: CommandInt = {
       console.debug(`Sub-Command: ${subcommand}`);
       console.debug(`Author: ${JSON.stringify(message.author)}`);
     }
-    message.channel.send("Hold on I'm still trying to make this work");
+    const userId = message?.author?.id;
+    if (subcommand === "add") {
+      const newOptOutUser = new TrackingOptOut({
+        userId,
+      });
+      const authorName = message?.author?.username;
+      await newOptOutUser.save(saveCallBack(message, authorName));
+    }
   },
 };
