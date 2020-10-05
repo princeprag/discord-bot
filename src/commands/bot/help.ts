@@ -56,9 +56,8 @@ const help: CommandInt = {
         `${prefix}${commandName}${
           command.parameters
             ? ` ${command.parameters
-                .join(" ")
-                .match(/<[a-z?/()]*>/g)
-                ?.join(" ")}`
+                .map((el) => el.split(":")[0].replace(/`/g, ""))
+                .join(" ")}`
             : ""
         }`
       );

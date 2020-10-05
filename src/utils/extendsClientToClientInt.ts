@@ -1,10 +1,4 @@
-import {
-  Client,
-  Guild,
-  GuildChannel,
-  MessageEmbed,
-  TextChannel,
-} from "discord.js";
+import { Client, Guild, MessageEmbed, Role, TextChannel } from "discord.js";
 import ClientInt from "@Interfaces/ClientInt";
 import SettingModel, { SettingModelInt } from "@Models/SettingModel";
 import { sleep } from "./extendsMessageToMessageInt";
@@ -69,11 +63,41 @@ async function getTextChannelFromSettings(
     const channel = guild.channels.cache.get(channelSetting.value);
 
     // Check if the channel exists and is a text channel.
-    if (
-      channel &&
-      ((o: GuildChannel): o is TextChannel => o.type === "text")(channel)
-    ) {
-      return channel;
+    if (channel && channel.type === "text") {
+      return channel as TextChannel;
+    }
+  }
+
+  return null;
+}
+
+/**
+ * See `./src/interfaces/ClientInt.ts` for more information.
+ *
+ * @async
+ * @function
+ * @param { string } key
+ * @param { Guild } guild
+ * @returns { Promise<Role | null> }
+ */
+async function getRoleFromSettings(
+  key: string,
+  guild: Guild
+): Promise<Role | null> {
+  // Get the role id of the server from the database.
+  const roleSetting = await SettingModel.findOne({
+    server_id: guild.id,
+    key,
+  });
+
+  // Check if the role exists in the database.
+  if (roleSetting) {
+    // Get the role from the server roles.
+    const role = guild.roles.cache.get(roleSetting.value);
+
+    // Check if the role exists.
+    if (role) {
+      return role;
     }
   }
 
@@ -133,6 +157,7 @@ function extendsClientToClientInt(client: Client): ClientInt {
 
   new_client.setSetting = setSetting;
   new_client.getTextChannelFromSettings = getTextChannelFromSettings;
+  new_client.getRoleFromSettings = getRoleFromSettings;
   new_client.sendMessageToLogsChannel = sendMessageToLogsChannel;
 
   return new_client;
