@@ -21,7 +21,7 @@ const heartsListener: ListenerInt = {
     }
 
     // Set the default loves user ids.
-    const authors = defaultLovesIDs;
+    let authors = defaultLovesIDs;
 
     // Get the custom loves from the database.
     const lovesSetting = await SettingModel.findOne({
@@ -31,7 +31,7 @@ const heartsListener: ListenerInt = {
 
     // Check if the custom loves are valid.
     if (lovesSetting) {
-      authors.concat(lovesSetting.value.split(","));
+      authors = authors.concat(lovesSetting.value.split(","));
     }
 
     // Check if the message author id is in the loves user ids.

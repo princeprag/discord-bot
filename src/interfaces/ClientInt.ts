@@ -1,5 +1,5 @@
 import { SettingModelInt } from "@Models/SettingModel";
-import { Client, Guild, MessageEmbed, TextChannel } from "discord.js";
+import { Client, Guild, MessageEmbed, Role, TextChannel } from "discord.js";
 import CommandInt from "./CommandInt";
 import ListenerInt from "./ListenerInt";
 
@@ -73,6 +73,17 @@ interface ClientInt extends Client {
     key: string,
     guild: Guild
   ): Promise<TextChannel | null>;
+
+  /**
+   * Get a role from the database by its id.
+   *
+   * @async
+   * @function
+   * @param { string } key
+   * @param { Guild } guild
+   * @returns { Promise<Role | null> }
+   */
+  getRoleFromSettings(key: string, guild: Guild): Promise<Role | null>;
 
   /**
    * Send a message to the logs channel.
