@@ -45,12 +45,12 @@ const statusResolve = (
   message: Message,
   authorName: string,
   subcommand: string
-) => (data?: TrackingOptOutInt) => {
+) => (data: TrackingOptOutInt | null): TrackingOptOutInt | null => {
   const optStatus: string = data === null || data === undefined ? "in" : "out";
   if (subcommand === "status") {
     message.channel.send(`@${authorName} is currently opted-${optStatus}`);
   }
-  return data;
+  return data ?? null;
 };
 
 export const trackingOptOut: CommandInt = {
@@ -79,13 +79,14 @@ export const trackingOptOut: CommandInt = {
     }
     const userId = message?.author?.id;
     const authorName = message?.author?.username;
-    const found: ?TrackingOptOutInt = await TrackingOptOut.findOne({ userId })
+    const found = await TrackingOptOut.findOne({ userId })
       .then(statusResolve(message, authorName, subcommand))
       .catch((err) => {
         console.error(err);
         message?.channel?.send(
           `Oops, @${authorName}, something went wrong. Please try again in a few minutes.`
         );
+        return null;
       });
 
     const recordExists = !!found;
@@ -98,13 +99,13 @@ export const trackingOptOut: CommandInt = {
       await newOptOutUser.save(addCallBack(message, authorName));
     }
     if (subcommand === "add" && recordExists) {
-      await statusResolve(message, authorName, "status")(found);
+      statusResolve(message, authorName, "status")(found);
     }
     if (subcommand === "remove" && recordExists) {
       await TrackingOptOut.deleteMany({ userId }, removeCallback(message));
     }
     if (subcommand === "remove" && !recordExists) {
-      await statusResolve(message, authorName, "status")(found);
+      statusResolve(message, authorName, "status")(found);
     }
   },
 };
