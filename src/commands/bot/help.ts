@@ -24,7 +24,7 @@ const help: CommandInt = {
       // Check if the command does not exist.
       if (!command) {
         await message.reply(
-          `sorry, but I could not find the \`${prefix}${commandName}\` command. Try \`${prefix}help\` for a list of available commands.`
+          `Sorry, but I could not find the \`${prefix}${commandName}\` command. Try \`${prefix}help\` for a list of available commands.`
         );
 
         return;
@@ -93,7 +93,7 @@ const help: CommandInt = {
     }
 
     // Add the available commands.
-    helpEmbed.addField("Available commands", commandNames.join(" | "));
+    helpEmbed.addField("Available commands", commandNames.sort().join(" | "));
 
     // Add the footer.
     helpEmbed.setFooter("I hope I could help!");

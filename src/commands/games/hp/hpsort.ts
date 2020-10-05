@@ -79,7 +79,7 @@ const hpsort: CommandInt = {
         error?.response?.data?.message ?? "Unknown error."
       );
 
-      await message.reply("sorry, but I could not find anything...");
+      await message.reply("Sorry, but I could not find anything...");
     }
   },
 };

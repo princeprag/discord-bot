@@ -22,7 +22,7 @@ const about: CommandInt = {
     aboutEmbed.setColor(color);
 
     // Add the title.
-    aboutEmbed.setTitle("Grettings! My name is nhbot!");
+    aboutEmbed.setTitle("Greetings! My name is nhbot!");
 
     // Add the description.
     aboutEmbed.setDescription(

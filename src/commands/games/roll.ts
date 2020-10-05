@@ -14,13 +14,13 @@ const roll: CommandInt = {
 
     // Check if the num is valid.
     if (!num) {
-      await message.reply("sorry, but what die did you want me to roll?");
+      await message.reply("Sorry, but what die did you want me to roll?");
       return;
     }
 
     // Check if the num starts with `d`.
     if (!num.startsWith("d")) {
-      await message.reply("sorry, but that is not a valid die.");
+      await message.reply("Sorry, but that is not a valid die.");
       return;
     }
 
@@ -29,7 +29,7 @@ const roll: CommandInt = {
 
     // Check if the number is NaN.
     if (isNaN(numValue)) {
-      await message.reply(`sorry, but ${num} is not a valid number.`);
+      await message.reply(`Sorry, but ${num} is not a valid number.`);
       return;
     }
 

@@ -19,7 +19,7 @@ const purge: CommandInt = {
       !member.hasPermission("MANAGE_MESSAGES")
     ) {
       await message.reply(
-        "sorry, but this command is retricted to moderators."
+        "Sorry, but this command is restricted to moderators."
       );
 
       return;
@@ -30,7 +30,7 @@ const purge: CommandInt = {
 
     // Check if the number is empty or not valid.
     if (!num || isNaN(Number(num))) {
-      await message.reply("sorry, but that is not a valid number.");
+      await message.reply("Sorry, but that is not a valid number.");
       return;
     }
 
@@ -39,7 +39,7 @@ const purge: CommandInt = {
     // Check if the number is higher than 100.
     if (limit > 100) {
       await message.reply(
-        "sorry, but I can only delete up to 100 messages at once"
+        "Sorry, but I can only delete up to 100 messages at once"
       );
 
       return;
@@ -47,7 +47,7 @@ const purge: CommandInt = {
 
     // Send the an advertisement about the action.
     const botMessage = await message.reply(
-      "wait! This action is irreversible. To proceed, react with '✅'."
+      "Wait! This action is irreversible. To proceed, react with '✅'."
     );
 
     if (!botMessage.deleted) {
@@ -97,7 +97,7 @@ const purge: CommandInt = {
           );
         }
       } catch (error) {
-        await message.reply("okay, I will hold off on this action for now.");
+        await message.reply("Okay, I will hold off on this action for now.");
       }
     }
   },

@@ -15,9 +15,9 @@ const pokenum: CommandInt = {
     // Get the next argument as the pokemon number.
     const numberArg = commandArguments.shift();
 
-    // Check if the pokenom number is not valid.
+    // Check if the pokemon number is not valid.
     if (!numberArg || (isNaN(Number(numberArg)) && numberArg !== "random")) {
-      await message.reply("sorry, but what did you want me to search for?");
+      await message.reply("Sorry, but what did you want me to search for?");
       return;
     }
 

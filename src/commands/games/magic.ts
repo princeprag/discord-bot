@@ -15,7 +15,7 @@ const magic: CommandInt = {
 
     // Check if the query is empty.
     if (!query) {
-      await message.reply("sorry, but what did you want me to search for?");
+      await message.reply("Sorry, but what did you want me to search for?");
       return;
     }
 
@@ -75,7 +75,7 @@ const magic: CommandInt = {
         error?.response?.data?.message ?? "Unknown error."
       );
 
-      await message.reply("sorry, but I could not find anything...");
+      await message.reply("Sorry, but I could not find anything...");
     }
   },
 };

@@ -1,5 +1,5 @@
 import CommandInt from "@Interfaces/CommandInt";
-import { GithubInt, GithubRepoInt } from "@Interfaces/GitHubInt";
+import { GithubInt, GithubRepoInt } from "@Interfaces/commands/GitHubInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 
@@ -16,7 +16,7 @@ const github: CommandInt = {
 
     // Check if the user exists.
     if (!user) {
-      await message.reply("you must enter an username.");
+      await message.reply("Sorry, but you must enter an username.");
       return;
     }
 
