@@ -13,7 +13,11 @@ const maze: CommandInt = {
     "`<?answer>`: the maze directions answer",
   ],
   run: async (message) => {
-    const { bot, channel, commandArguments } = message;
+    const { bot, channel, commandArguments, guild } = message;
+
+    if (!guild) {
+      return;
+    }
 
     // Get the next argument as the action.
     const action = commandArguments.shift();
@@ -53,7 +57,7 @@ const maze: CommandInt = {
       mazeEmbed.setTitle(name);
 
       mazeEmbed.setDescription(
-        `When you have finished, use \`${bot.prefix}maze solve ${
+        `When you have finished, use \`${bot.prefix[guild.id]}maze solve ${
           mazePath.split("/").reverse()[0]
         } <answer>\`, where answer is a null-spaced string of cardinal directions.`
       );

@@ -88,7 +88,9 @@ const config: CommandInt = {
               channelConfigured = "welcomes";
             } else {
               await message.reply(
-                `'${channelType}' is not a valid channel for \`${prefix}config set channel\`.`
+                `'${channelType}' is not a valid channel for \`${
+                  prefix[guild.id]
+                }config set channel\`.`
               );
 
               return;
@@ -143,7 +145,9 @@ const config: CommandInt = {
               roleConfigured = "moderator";
             } else {
               await message.reply(
-                `'${roleType}' is not a valid role for \`${prefix}config set role\`.`
+                `'${roleType}' is not a valid role for \`${
+                  prefix[guild.id]
+                }config set role\`.`
               );
 
               return;
@@ -169,7 +173,7 @@ const config: CommandInt = {
           if (!newPrefix) {
             await message.reply("you must enter the new prefix.");
           } else {
-            message.bot.prefix = newPrefix;
+            message.bot.prefix[guild.id] = newPrefix;
             await setSetting(guild.id, "prefix", newPrefix);
 
             await message.reply(
@@ -268,7 +272,9 @@ const config: CommandInt = {
       }
 
       await message.reply(
-        `'${setType}' is not a valid configuration for \`${prefix}config ${configType}\`.`
+        `'${setType}' is not a valid configuration for \`${
+          prefix[guild.id]
+        }config ${configType}\`.`
       );
 
       return;
@@ -291,7 +297,9 @@ const config: CommandInt = {
       "Logs channel",
       logsChannel
         ? `Moderation activity, such as kicks, bans, warnings, and deleted messages will go to the ${logsChannel.toString()} channel.`
-        : `Please configure a logs channel using \`${prefix}config set channel logs #logs-channel)\`.`
+        : `Please configure a logs channel using \`${
+            prefix[guild.id]
+          }config set channel logs #logs-channel)\`.`
     );
 
     // Get the welcomes channel from the database.
@@ -305,7 +313,9 @@ const config: CommandInt = {
       "Welcomes channel",
       welcomesChannel
         ? `Members will be welcomed (and member departures will be mentioned) in the ${welcomesChannel.toString()} channel.`
-        : `Please configure a welcomes channel using \`${prefix}config set channel welcomes #welcomes-channel)\`.`
+        : `Please configure a welcomes channel using \`${
+            prefix[guild.id]
+          }config set channel welcomes #welcomes-channel)\`.`
     );
 
     // Send the embed to the current channel.

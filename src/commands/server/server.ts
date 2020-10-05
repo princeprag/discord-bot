@@ -40,7 +40,7 @@ const server: CommandInt = {
     serverEmbed.addField("Owner", guild.owner, true);
 
     // Add the server commands prefix to an embed field.
-    serverEmbed.addField("Command prefix", prefix, true);
+    serverEmbed.addField("Command prefix", prefix[guild.id], true);
 
     // Add the server members count to an embed field.
     serverEmbed.addField("Member count", guild.memberCount, true);
@@ -120,7 +120,9 @@ const server: CommandInt = {
     );
 
     // Add the footer.
-    serverEmbed.setFooter(`Use '${prefix}help' to see more commands.`);
+    serverEmbed.setFooter(
+      `Use '${prefix[guild.id]}help' to see more commands.`
+    );
 
     // Send the server embed to the current channel.
     await channel.send(serverEmbed);

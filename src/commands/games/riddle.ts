@@ -17,7 +17,11 @@ const riddle: CommandInt = {
     "`<?answer>`: the riddle answer",
   ],
   run: async (message) => {
-    const { author, bot, channel, commandArguments } = message;
+    const { author, bot, channel, commandArguments, guild } = message;
+
+    if (!guild) {
+      return;
+    }
 
     // Get the next argument as the riddle action.
     const action = commandArguments.shift();
@@ -58,7 +62,7 @@ const riddle: CommandInt = {
 
       riddleEmbed.setDescription(
         `Welcome to the riddles game! To get your first riddle, call this command: \`${
-          bot.prefix
+          bot.prefix[guild.id]
         }riddle request ${start.riddlePath.split("/").reverse()[0]}\``
       );
     }

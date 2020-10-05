@@ -9,9 +9,13 @@ const help: CommandInt = {
     "`<?command>`: name of the command to get more information about",
   ],
   run: async (message) => {
-    const { bot, channel, commandArguments } = message;
+    const { bot, channel, commandArguments, guild } = message;
 
     const { color, commands, prefix } = bot;
+
+    if (!guild) {
+      return;
+    }
 
     // Get the next argument as the command name.
     const commandName = commandArguments.shift();
@@ -24,7 +28,11 @@ const help: CommandInt = {
       // Check if the command does not exist.
       if (!command) {
         await message.reply(
-          `sorry, but I could not find the \`${prefix}${commandName}\` command. Try \`${prefix}help\` for a list of available commands.`
+          `sorry, but I could not find the \`${
+            prefix[guild.id]
+          }${commandName}\` command. Try \`${
+            prefix[guild.id]
+          }help\` for a list of available commands.`
         );
 
         return;
@@ -46,14 +54,16 @@ const help: CommandInt = {
       if (command.parameters) {
         commandEmbed.addField(
           "Parameters",
-          command.parameters.join("\r\n").replace(/{@prefix}/gi, prefix)
+          command.parameters
+            .join("\r\n")
+            .replace(/{@prefix}/gi, prefix[guild.id])
         );
       }
 
       // Add the command usage.
       commandEmbed.addField(
         "Usage",
-        `${prefix}${commandName}${
+        `${prefix[guild.id]}${commandName}${
           command.parameters
             ? ` ${command.parameters
                 .map((el) => el.split(":")[0].replace(/`/g, ""))
@@ -78,7 +88,13 @@ const help: CommandInt = {
 
     // Add the description.
     helpEmbed.setDescription(
-      `My available commands include the following. The command name must be prefixed with \`${prefix}\`, just like the \`${prefix}help\` command used to get this message. For information on a specific command, use \`${prefix}help <command>\`.`
+      `My available commands include the following. The command name must be prefixed with \`${
+        prefix[guild.id]
+      }\`, just like the \`${
+        prefix[guild.id]
+      }help\` command used to get this message. For information on a specific command, use \`${
+        prefix[guild.id]
+      }help <command>\`.`
     );
 
     const commandNames: string[] = [];
