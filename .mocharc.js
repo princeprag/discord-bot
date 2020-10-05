@@ -4,7 +4,6 @@ if (process.env.MOCHA_TIMEOUT) {
 }
 
 const config = {
-  "bail": true,
   "enable-source-maps": true,
   "extensions": ["ts"],
   "recursive": true,
