@@ -23,8 +23,7 @@
     "build": "tsc",
     "develop": "npm run build && npm run start",
     "lint": "npx eslint src",
-    "test:unit": "cross-env DOT_CONFIG_PATH=./test/test.env mocha './test/unit/**/*spec*.ts'",
-    "test:unit:watch": "npm run test:unit -- --watch --watch-files './src,./test'"
+    "test:unit": "cross-env DOT_CONFIG_PATH=./test/test.env mocha './test/unit/**/*spec*.ts'"
   },
   "devDependencies": {
     "@types/chai": "^4.2.12",
