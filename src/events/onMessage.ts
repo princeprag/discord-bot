@@ -93,7 +93,7 @@ async function onMessage(
   const server_id = guild.id;
 
   // Get the default prefix.
-  let prefix: string = client.prefix || "";
+  let prefix: string = client.prefix[server_id] || "";
 
   if (!prefix.length) {
     // Get the custom prefix for the server from the database.
@@ -104,12 +104,12 @@ async function onMessage(
 
     // Check if the server has a custom prefix.
     if (prefixSetting) {
-      client.prefix = prefixSetting.value;
+      client.prefix[server_id] = prefixSetting.value;
     } else {
-      client.prefix = defaultPrefix;
+      client.prefix[server_id] = defaultPrefix;
     }
 
-    prefix = client.prefix;
+    prefix = client.prefix[server_id];
   }
 
   // Check if the content of the message starts with the server prefix.

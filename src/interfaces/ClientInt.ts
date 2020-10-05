@@ -18,7 +18,7 @@ interface ClientInt extends Client {
    * Prefix of the messages.
    * @property
    */
-  prefix: string;
+  prefix: { [serverID: string]: string };
 
   /**
    * Version of the.
