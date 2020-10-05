@@ -24,9 +24,10 @@ const leave: CommandInt = {
 
     // Check if the server id is empty.
     if (!serverID || !serverID.length) {
+      let count = 0;
       await channel.send(
         `**Available servers:**\r\n${guilds.cache
-          .map((guild, i) => `**${i + 1}.** ${guild.id} - ${guild.name}`)
+          .map((guild) => `**${++count}.** ${guild.id} - ${guild.name}`)
           .join("\r\n")}`
       );
 
@@ -39,7 +40,7 @@ const leave: CommandInt = {
     // Check if the target guild is not valid.
     if (!targetGuild) {
       await message.reply(
-        `sorry, but the \`${serverID}\` server id does not exist.`
+        `Sorry, but the \`${serverID}\` is not a valid server ID.`
       );
 
       return;

@@ -13,7 +13,7 @@ const invite: CommandInt = {
         .setColor(bot.color)
         .setTitle("Bot invitation")
         .setDescription(
-          "Thank for your interest in addding this bot to your server, invite the bot to your server by [clicking here](https://discord.com/api/oauth2/authorize?client_id=716707753090875473&permissions=268511254&scope=bot)."
+          "Thank for your interest in adding this bot to your server, invite the bot to your server by [clicking here](https://discord.com/api/oauth2/authorize?client_id=716707753090875473&permissions=268511254&scope=bot)."
         )
         .setFooter("I feel so happy! 💜")
     );

@@ -4,9 +4,8 @@ import { evaluate } from "mathjs";
 
 const maths: CommandInt = {
   name: "maths",
-  description:
-    "Performs the **function** on the **problem** - will either calculate an expression, or solve an equation.",
-  parameters: ["`<problem>`: expression or equation to process"],
+  description: "Returns the result of evaluating the expression.",
+  parameters: ["`<problem>`: expression to process"],
   run: async (message) => {
     const { bot, channel, commandArguments } = message;
 
@@ -14,12 +13,17 @@ const maths: CommandInt = {
     const problem = commandArguments.join(" ");
 
     // Get the answer of the problem.
-    const answer = evaluate(problem);
+    let answer;
+    try {
+      answer = evaluate(problem);
+    } catch (err) {
+      console.log(err);
+    }
 
     // Check if the problem is empty.
     if (!answer || !problem) {
       await message.reply(
-        "sorry, but that does not appear to be a valid math expression."
+        "Sorry, but that does not appear to be a valid math expression."
       );
 
       return;

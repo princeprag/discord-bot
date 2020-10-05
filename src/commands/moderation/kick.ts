@@ -17,36 +17,36 @@ const kick: CommandInt = {
     // Check if the member has the kick members permission.
     if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
       await message.reply(
-        "sorry, but this command is retricted to moderators."
+        "Sorry, but this command is restricted to moderators."
       );
 
       return;
     }
 
     // Get the next argument as the user to kick mention.
-    let usertToKickMention = commandArguments.shift();
+    let userToKickMention = commandArguments.shift();
 
     // Get the first user mention.
     const userToKickMentioned = mentions.users.first();
 
     // Check if the user mention is valid.
-    if (!usertToKickMention || !userToKickMentioned || !mentions.members) {
+    if (!userToKickMention || !userToKickMentioned || !mentions.members) {
       await message.reply("you must mention an user to kick.");
       return;
     }
 
     // Remove the `<@!` and `>` from the mention to get the id.
-    usertToKickMention = usertToKickMention.replace(/[<@!>]/gi, "");
+    userToKickMention = userToKickMention.replace(/[<@!>]/gi, "");
 
     // Check if the user mention string and the first user mention id are equals.
-    if (usertToKickMention !== userToKickMentioned.id) {
-      await message.reply("the user mentioned is not valid.");
+    if (userToKickMention !== userToKickMentioned.id) {
+      await message.reply("Sorry, but the user mentioned is not valid.");
       return;
     }
 
     // Check if trying to kick itself.
     if (userToKickMentioned.id === author.id) {
-      await message.reply("you cannot kick yourself!");
+      await message.reply("Sorry, but you cannot kick yourself!");
       return;
     }
 
@@ -55,7 +55,7 @@ const kick: CommandInt = {
 
     // Check if the member mention exists.
     if (!memberToKickMentioned) {
-      await message.reply("you must mention a valid user to kick.");
+      await message.reply("Sorry, but you must mention a valid user to kick.");
       return;
     }
 
@@ -64,7 +64,7 @@ const kick: CommandInt = {
       userToKickMentioned.id === user.id ||
       memberToKickMentioned.id === user.id
     ) {
-      await message.reply("why are you trying to kick me? I am sad now.");
+      await message.reply("Why are you trying to kick me? I am sad now.");
       return;
     }
 
@@ -116,7 +116,7 @@ const kick: CommandInt = {
     } catch (error) {
       console.log("Kick Command", error);
 
-      await message.reply("sorry, but you cannot kick this user.");
+      await message.reply("Sorry, but you cannot kick this user.");
     }
   },
 };

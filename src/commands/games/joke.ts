@@ -40,7 +40,7 @@ const joke: CommandInt = {
       );
 
       await message.reply(
-        "sorry, but I am not really in the mood for a joke right now..."
+        "Sorry, but I am not really in the mood for a joke right now..."
       );
     }
   },

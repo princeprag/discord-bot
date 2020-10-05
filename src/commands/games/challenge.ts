@@ -72,7 +72,7 @@ const challenge: CommandInt = {
 
         // Check if the id is not valid.
         if (!id) {
-          await message.reply("sorry, but you must enter the challenge id.");
+          await message.reply("Sorry, but you must enter the challenge id.");
           return;
         }
 
@@ -111,7 +111,7 @@ const challenge: CommandInt = {
           // Check if the answer is not valid.
           if (!answer) {
             await message.reply(
-              "sorry, but you must enter the challenge answer."
+              "Sorry, but you must enter the challenge answer."
             );
 
             return;
@@ -160,7 +160,7 @@ const challenge: CommandInt = {
       );
 
       await message.reply(
-        `sorry, but I cannot execute the \`${action}\` action inside the challenge.`
+        `Sorry, but I cannot execute the \`${action}\` action inside the challenge.`
       );
 
       return;

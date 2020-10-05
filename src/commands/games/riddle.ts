@@ -73,7 +73,7 @@ const riddle: CommandInt = {
 
       // Check if the riddle id is empty.
       if (!id) {
-        await message.reply("sorry, you must enter the riddle id.");
+        await message.reply("Sorry, you must enter the riddle id.");
         return;
       }
 
@@ -98,7 +98,7 @@ const riddle: CommandInt = {
 
         // Check if the riddle answer is empty.
         if (!answer) {
-          await message.reply("sorry, you must enter the riddle answer.");
+          await message.reply("Sorry, you must enter the riddle answer.");
           return;
         }
 

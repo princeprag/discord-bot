@@ -108,7 +108,7 @@ const adventure: CommandInt = {
 
         // Check if the room is not valid.
         if (!room) {
-          await message.reply("sorry, but you must enter the room id.");
+          await message.reply("Sorry, but you must enter the room id.");
           return;
         }
 
@@ -117,7 +117,7 @@ const adventure: CommandInt = {
 
         // Check if the direction is not valid.
         if (!direction) {
-          await message.reply("sorry, but you must enter the direction.");
+          await message.reply("Sorry, but you must enter the direction.");
           return;
         }
 
@@ -147,7 +147,7 @@ const adventure: CommandInt = {
 
       // Send an error message to the current channel.
       await message.reply(
-        `sorry, but I cannot execute the \`${action}\` action inside the adventure.`
+        `Sorry, but I cannot execute the \`${action}\` action inside the adventure.`
       );
 
       return;

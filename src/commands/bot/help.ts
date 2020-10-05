@@ -109,7 +109,7 @@ const help: CommandInt = {
     }
 
     // Add the available commands.
-    helpEmbed.addField("Available commands", commandNames.join(" | "));
+    helpEmbed.addField("Available commands", commandNames.sort().join(" | "));
 
     // Add the footer.
     helpEmbed.setFooter("I hope I could help!");
