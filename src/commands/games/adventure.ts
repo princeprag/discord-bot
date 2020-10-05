@@ -45,9 +45,13 @@ const adventure: CommandInt = {
     "`<direction>`: the direction you want to move",
   ],
   run: async (message) => {
-    const { author, bot, channel, commandArguments } = message;
+    const { author, bot, channel, commandArguments, guild } = message;
 
     const { color, prefix } = bot;
+
+    if (!guild) {
+      return;
+    }
 
     // Get the next argument as the action.
     const action = commandArguments.shift();
@@ -55,7 +59,11 @@ const adventure: CommandInt = {
     // Check if the action is not `start` and `move`.
     if (action !== "start" && action !== "move") {
       await message.reply(
-        `Sorry, but I only recognize \`${prefix}adventure start\` or \`${prefix}adventure move <room> <direction>\`.`
+        `sorry, but I just recognize \`${
+          prefix[guild.id]
+        }adventure start\` or \`${
+          prefix[guild.id]
+        }adventure move <room> <direction>\`.`
       );
 
       return;
@@ -87,7 +95,11 @@ const adventure: CommandInt = {
         );
 
         // Add the adventure information to the embed.
-        adventureEmbed = addInfoToEmbed(prefix, data.data, adventureEmbed);
+        adventureEmbed = addInfoToEmbed(
+          prefix[guild.id],
+          data.data,
+          adventureEmbed
+        );
       }
       // Otherwise, the action is `move`.
       else {
@@ -121,7 +133,11 @@ const adventure: CommandInt = {
         );
 
         // Add the adventure information to the embed.
-        adventureEmbed = addInfoToEmbed(prefix, data.data, adventureEmbed);
+        adventureEmbed = addInfoToEmbed(
+          prefix[guild.id],
+          data.data,
+          adventureEmbed
+        );
       }
     } catch (error) {
       console.log(

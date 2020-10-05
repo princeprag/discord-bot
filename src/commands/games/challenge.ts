@@ -16,9 +16,13 @@ const challenge: CommandInt = {
     "`<?answer>`: the challenge answer",
   ],
   run: async (message) => {
-    const { bot, channel, commandArguments } = message;
+    const { bot, channel, commandArguments, guild } = message;
 
     const { prefix } = bot;
+
+    if (!guild) {
+      return;
+    }
 
     // Get the next argument as the action.
     const action = commandArguments.shift();
@@ -26,7 +30,13 @@ const challenge: CommandInt = {
     // Check if the action is not `start`, `request` and `solve`.
     if (action !== "start" && action !== "request" && action !== "solve") {
       await message.reply(
-        `Sorry, but I only recognize \`${prefix}challenge start\`, \`${prefix}challenge request <id>\` or \`${prefix}challenge solve <id> <answer>\`.`
+        `sorry, but I just recognize \`${
+          prefix[guild.id]
+        }challenge start\`, \`${
+          prefix[guild.id]
+        }challenge request <id>\` or \`${
+          prefix[guild.id]
+        }challenge solve <id> <answer>\`.`
       );
 
       return;
@@ -49,9 +59,9 @@ const challenge: CommandInt = {
             .setColor(bot.color)
             .setTitle("Start the challenge!")
             .setDescription(
-              `Welcome to the challenge game! To get your first challenge, call this command: \`${prefix}challenge request ${
-                nextQuestion.split("/").reverse()[0]
-              }\``
+              `Welcome to the challenge game! To get your first challenge, call this command: \`${
+                prefix[guild.id]
+              }challenge request ${nextQuestion.split("/").reverse()[0]}\``
             )
         );
       }

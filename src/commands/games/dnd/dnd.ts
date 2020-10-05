@@ -5,9 +5,13 @@ const dnd: CommandInt = {
   name: "dnd",
   description: "List of the available Dungeons and Dragons commands",
   run: async (message) => {
-    const { bot, channel } = message;
+    const { bot, channel, guild } = message;
 
     const { commands, prefix } = bot;
+
+    if (!guild) {
+      return;
+    }
 
     // Create a new empty embed.
     const dndEmbed = new MessageEmbed();
@@ -31,7 +35,7 @@ const dnd: CommandInt = {
     if (dndCommands.length) {
       for (const dndCommand of dndCommands) {
         dndEmbed.addField(
-          prefix +
+          prefix[guild.id] +
             (dndCommand.names ? dndCommand.names.join("/") : dndCommand.name) +
             (dndCommand.parameters
               ? ` ${dndCommand.parameters

@@ -43,7 +43,7 @@ const usage: CommandInt = {
     await channel.send(
       new MessageEmbed()
         .setColor(bot.color)
-        .setTitle(bot.prefix + command)
+        .setTitle(bot.prefix[guild.id] + command)
         .setDescription(`BEEP BOOP: This command has been used ${uses} times!`)
         .setFooter(
           `The command was last called by ${last_caller} on ${last_called}`
