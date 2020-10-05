@@ -108,7 +108,7 @@ describe("command opt-out", () => {
             userId: "123456789",
           });
           expect(testMessage.channel.send).calledWith(
-            `@author is currently opted-out`
+            `<@123456789> is currently opted-out`
           );
         });
       });
@@ -138,10 +138,10 @@ describe("command opt-out", () => {
           const document: TOO.TrackingOptOutInt = {
             userId: "123456789",
           } as TOO.TrackingOptOutInt;
-          await addCallBack(testMessage, "author")(null, document);
+          await addCallBack(testMessage, "123456789")(null, document);
 
           expect(testMessage.channel.send).calledWith(
-            `@author, you are now opt-out of tracking.`
+            `<@123456789>, you are now opt-out of tracking.`
           );
         });
         it("should notify user if opt-out failed", async () => {
@@ -154,13 +154,13 @@ describe("command opt-out", () => {
             userId: "123456789",
           } as TOO.TrackingOptOutInt;
           try {
-            await addCallBack(testMessage, "author")(
+            await addCallBack(testMessage, "123456789")(
               new Error("Something"),
               null
             );
           } catch (error) {
             expect(testMessage.channel.send).calledWith(
-              `Oops, @author, something went wrong. Please try again in a few minutes.`
+              `Oops, <@123456789>, something went wrong. Please try again in a few minutes.`
             );
           }
         });
@@ -194,7 +194,7 @@ describe("command opt-out", () => {
           await removeCallback(testMessage)(new Error());
 
           expect(testMessage.channel.send).calledWith(
-            `Oops, @author, something went wrong. Please try again in a few minutes.`
+            `Oops, <@123456789>, something went wrong. Please try again in a few minutes.`
           );
         });
         it("notify user of status change", async () => {
@@ -207,7 +207,7 @@ describe("command opt-out", () => {
           await removeCallback(testMessage)(null);
 
           expect(testMessage.channel.send).calledWith(
-            `@author, you are now opted into tracking.`
+            `<@123456789>, you are now opted into tracking.`
           );
         });
       });
@@ -236,7 +236,7 @@ describe("command opt-out", () => {
           await trackingOptOut.command(testMessage);
 
           expect(testMessage.channel.send).calledWith(
-            `@author is currently opted-in`
+            `<@123456789> is currently opted-in`
           );
         });
       });
@@ -252,7 +252,7 @@ describe("command opt-out", () => {
           await trackingOptOut.command(testMessage);
 
           expect(testMessage.channel.send).calledWith(
-            `@author is currently opted-out`
+            `<@123456789> is currently opted-out`
           );
         });
       });
@@ -268,7 +268,7 @@ describe("command opt-out", () => {
           await trackingOptOut.command(testMessage);
 
           expect(testMessage.channel.send).calledWith(
-            `Oops, @author, something went wrong. Please try again in a few minutes.`
+            `Oops, <@123456789>, something went wrong. Please try again in a few minutes.`
           );
         });
       });

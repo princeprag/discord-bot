@@ -11,32 +11,32 @@ export const MESSAGE_SUBCOMMAND_INVALID = `Sorry, I did not get that. Try: ${VAL
   " or "
 )}.`;
 
-export const addCallBack = (message: Message, authorName: string) => (
+export const addCallBack = (message: Message, authorId: string) => (
   err?: Error,
   data?: TrackingOptOutInt
 ): Promise<TrackingOptOutInt> => {
   console.debug(`${data}`);
   if (data) {
-    message.channel.send(`@${authorName}, you are now opt-out of tracking.`);
+    message.channel.send(`<@${authorId}>, you are now opt-out of tracking.`);
     return Promise.resolve(data);
   }
   if (err) {
     console.error(err);
     message.channel.send(
-      `Oops, @${authorName}, something went wrong. Please try again in a few minutes.`
+      `Oops, <@${authorId}>, something went wrong. Please try again in a few minutes.`
     );
   }
   return Promise.reject(err);
 };
 
 export const removeCallback = (message: Message) => (err?: Error): void => {
-  const authorName = message?.author?.username;
+  const authorId = message?.author?.id;
   if (!err) {
-    message.channel.send(`@${authorName}, you are now opted into tracking.`);
+    message.channel.send(`<@${authorId}>, you are now opted into tracking.`);
   } else {
     console.error(err);
     message.channel.send(
-      `Oops, @${authorName}, something went wrong. Please try again in a few minutes.`
+      `Oops, <@${authorId}>, something went wrong. Please try again in a few minutes.`
     );
   }
 };
@@ -48,7 +48,7 @@ const statusResolve = (
 ) => (data: TrackingOptOutInt | null): TrackingOptOutInt | null => {
   const optStatus: string = data === null || data === undefined ? "in" : "out";
   if (subcommand === "status") {
-    message.channel.send(`@${authorName} is currently opted-${optStatus}`);
+    message.channel.send(`<@${authorName}> is currently opted-${optStatus}`);
   }
   return data ?? null;
 };
@@ -78,13 +78,12 @@ export const trackingOptOut: CommandInt = {
       console.debug(`Author: ${JSON.stringify(message.author)}`);
     }
     const userId = message?.author?.id;
-    const authorName = message?.author?.username;
     const found = await TrackingOptOut.findOne({ userId })
-      .then(statusResolve(message, authorName, subcommand))
+      .then(statusResolve(message, userId, subcommand))
       .catch((err) => {
         console.error(err);
         message?.channel?.send(
-          `Oops, @${authorName}, something went wrong. Please try again in a few minutes.`
+          `Oops, <@${userId}>, something went wrong. Please try again in a few minutes.`
         );
         return null;
       });
@@ -96,16 +95,16 @@ export const trackingOptOut: CommandInt = {
       const newOptOutUser = new TrackingOptOut({
         userId,
       });
-      await newOptOutUser.save(addCallBack(message, authorName));
+      await newOptOutUser.save(addCallBack(message, userId));
     }
     if (subcommand === "add" && recordExists) {
-      statusResolve(message, authorName, "status")(found);
+      statusResolve(message, userId, "status")(found);
     }
     if (subcommand === "remove" && recordExists) {
       await TrackingOptOut.deleteMany({ userId }, removeCallback(message));
     }
     if (subcommand === "remove" && !recordExists) {
-      statusResolve(message, authorName, "status")(found);
+      statusResolve(message, userId, "status")(found);
     }
   },
 };
