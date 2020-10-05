@@ -65,12 +65,10 @@ export const trackingOptOut: CommandInt = {
   command: async (message: Message) => {
     const [command, subcommand] = message?.content?.trim().split(/\s{1,}/, 2);
     if (!command?.match(/.{1}optOut/)) {
-      console.debug(`Command invalid: ${command}`);
       message.channel.send(MESSAGE_COMMAND_INVALID);
       return;
     }
     if (!VALID_SUBCOMMAND.includes(subcommand)) {
-      console.debug(`SubCommand invalid: ${subcommand}`);
       message.channel.send(MESSAGE_SUBCOMMAND_INVALID);
       return;
     }
@@ -81,7 +79,7 @@ export const trackingOptOut: CommandInt = {
     }
     const userId = message?.author?.id;
     const authorName = message?.author?.username;
-    const found = await TrackingOptOut.findOne({ userId })
+    const found: ?TrackingOptOutInt = await TrackingOptOut.findOne({ userId })
       .then(statusResolve(message, authorName, subcommand))
       .catch((err) => {
         console.error(err);
@@ -89,14 +87,24 @@ export const trackingOptOut: CommandInt = {
           `Oops, @${authorName}, something went wrong. Please try again in a few minutes.`
         );
       });
-    if (subcommand === "add") {
+
+    const recordExists = !!found;
+    console.log(`${JSON.stringify(found)} ${recordExists}`);
+
+    if (subcommand === "add" && !recordExists) {
       const newOptOutUser = new TrackingOptOut({
         userId,
       });
       await newOptOutUser.save(addCallBack(message, authorName));
     }
-    if (subcommand === "remove") {
+    if (subcommand === "add" && recordExists) {
+      await statusResolve(message, authorName, "status")(found);
+    }
+    if (subcommand === "remove" && recordExists) {
       await TrackingOptOut.deleteMany({ userId }, removeCallback(message));
+    }
+    if (subcommand === "remove" && !recordExists) {
+      await statusResolve(message, authorName, "status")(found);
     }
   },
 };

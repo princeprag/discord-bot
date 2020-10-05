@@ -34,15 +34,20 @@ describe("command opt-out", () => {
   let TrackingOptOutDocumentMock;
   let TrackingOptOutMock: MockManager<TOO.TrackingOptOutInt>;
   let findOne: sinon.SinonStub;
+  let deleteMany: sinon.SinonStub;
   const userRec = {
     userId: "123456789",
   };
 
   beforeEach(() => {
     findOne = sandbox.stub();
-    findOne.resolves(null);
+    findOne.resolves();
+
+    deleteMany = sandbox.stub();
+    deleteMany.resolves();
 
     sandbox.replace(TOO.TrackingOptOut, "findOne", findOne);
+    sandbox.replace(TOO.TrackingOptOut, "deleteMany", deleteMany);
     TrackingOptOutDocumentMock = mock<TOO.TrackingOptOutInt>();
     TrackingOptOutMock = ImportMock.mockFunction(
       TOO,
@@ -52,8 +57,8 @@ describe("command opt-out", () => {
   });
 
   afterEach(() => {
-    sandbox.restore();
     ImportMock.restore();
+    sandbox.restore();
   });
 
   context("when command invalid", () => {
@@ -88,20 +93,39 @@ describe("command opt-out", () => {
 
   context("when subcommand valid", () => {
     describe("command: !optOut add", () => {
-      it("attempt to add user id to database", async () => {
-        const testMessage: Message = buildMessageWithContent(
-          "   |optOut                  add   ",
-          "123456789",
-          "author"
-        );
-        const document: TOO.TrackingOptOutInt = {
-          userId: "123456789",
-        } as TOO.TrackingOptOutInt;
+      context("user already exists", () => {
+        it("invoke call back without actually adding", async () => {
+          const testMessage: Message = buildMessageWithContent(
+            "   |optOut                  add   ",
+            "123456789",
+            "author"
+          );
+          findOne.resolves(userRec);
 
-        await trackingOptOut.command(testMessage);
+          await trackingOptOut.command(testMessage);
 
-        expect(TrackingOptOutMock).calledOnceWith({
-          userId: "123456789",
+          expect(TrackingOptOutMock).not.calledOnceWith({
+            userId: "123456789",
+          });
+          expect(testMessage.channel.send).calledWith(
+            `@author is currently opted-out`
+          );
+        });
+      });
+      context("user does not exist in db", () => {
+        it("attempt to add user id to database", async () => {
+          const testMessage: Message = buildMessageWithContent(
+            "   |optOut                  add   ",
+            "123456789",
+            "author"
+          );
+          findOne.resolves();
+
+          await trackingOptOut.command(testMessage);
+
+          expect(TrackingOptOutMock).calledOnceWith({
+            userId: "123456789",
+          });
         });
       });
       describe("addCallBack called", () => {
@@ -143,22 +167,19 @@ describe("command opt-out", () => {
       });
     });
     describe("command: !optOut remove", () => {
-      beforeEach(() => {
-        ImportMock.restore();
-        findOne.resolves(userRec);
-        sandbox.stub(TOO.TrackingOptOut, "find");
-        sandbox.stub(TOO.TrackingOptOut, "deleteMany");
-      });
       it("call deleteMany to remove records", async () => {
         const testMessage: Message = buildMessageWithContent(
           "   |optOut remove   ",
           "123456789",
           "author"
         );
+        findOne.resolves(userRec);
+        deleteMany.resolves();
 
         await trackingOptOut.command(testMessage);
 
-        expect(TOO.TrackingOptOut.deleteMany).calledWith({
+        expect(TOO.TrackingOptOut.deleteMany).called;
+        expect(deleteMany).calledWith({
           userId: "123456789",
         });
       });
@@ -192,26 +213,26 @@ describe("command opt-out", () => {
       });
     });
     describe("command: !optOut status", () => {
-      it("call find to recieve records", async () => {
-        const testMessage: Message = buildMessageWithContent(
-          "   |optOut status   ",
-          "123456789",
-          "author"
-        );
-        findOne.resolves(userRec);
-
-        await trackingOptOut.command(testMessage);
-
-        expect(TOO.TrackingOptOut.findOne).calledWith(userRec);
-      });
       context("user not found", () => {
+        it("call find to recieve records", async () => {
+          const testMessage: Message = buildMessageWithContent(
+            "   |optOut status   ",
+            "123456789",
+            "author"
+          );
+          findOne.resolves();
+
+          await trackingOptOut.command(testMessage);
+
+          expect(TOO.TrackingOptOut.deleteMany).not.calledWith(userRec);
+        });
         it("notify user they are opt-in", async () => {
           const testMessage: Message = buildMessageWithContent(
             "   |optOut status   ",
             "123456789",
             "author"
           );
-          findOne.resolves(null);
+          findOne.resolves();
           await trackingOptOut.command(testMessage);
 
           expect(testMessage.channel.send).calledWith(
