@@ -153,6 +153,7 @@ async function sendMessageToLogsChannel(
 function extendsClientToClientInt(client: Client): ClientInt {
   const new_client = client as ClientInt;
 
+  new_client.prefix = {};
   new_client.color = "#AB47E6";
 
   new_client.setSetting = setSetting;
