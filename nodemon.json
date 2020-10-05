@@ -1,0 +1,8 @@
+{
+  "ignore": [
+    "node_modules/*",
+    "prod/*"
+  ],
+  "exec": "npm run dev:command",
+  "ext": "ts"
+}

@@ -1,0 +1,52 @@
+import CommandInt from "@Interfaces/CommandInt";
+import { MessageEmbed } from "discord.js";
+
+const dnd: CommandInt = {
+  name: "dnd",
+  description: "List of the available Dungeons and Dragons commands",
+  run: async (message) => {
+    const { bot, channel } = message;
+
+    const { commands, prefix } = bot;
+
+    // Create a new empty embed.
+    const dndEmbed = new MessageEmbed();
+
+    // Add the title.
+    dndEmbed.setTitle("Dungeons and Dragons!");
+
+    // Add the description.
+    dndEmbed.setDescription("Search complete. Displaying available commands!");
+
+    // Get the available dnd commands.
+    const dndCommands: CommandInt[] = Object.values(commands).filter(
+      (command) =>
+        (command.name &&
+          command.name.startsWith("dnd") &&
+          command.name !== "dnd") ||
+        (command.names && command.names.find((el) => el.startsWith("dnd")))
+    );
+
+    // Add the dnd commands to embed fields.
+    if (dndCommands.length) {
+      for (const dndCommand of dndCommands) {
+        dndEmbed.addField(
+          prefix +
+            (dndCommand.names ? dndCommand.names.join("/") : dndCommand.name) +
+            (dndCommand.parameters
+              ? ` ${dndCommand.parameters
+                  .join(" ")
+                  .match(/<[a-z?/()]*>/g)
+                  ?.join(" ")}`
+              : ""),
+          dndCommand.description
+        );
+      }
+    }
+
+    // Send the embed to the current channel.
+    await channel.send(dndEmbed);
+  },
+};
+
+export default dnd;

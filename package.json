@@ -1,46 +1,63 @@
 {
   "name": "discord_bot",
   "author": "Nicholas Carrigan",
-  "version": "4.21.1",
+  "main": "./prod/src/main.js",
+  "version": "4.22.0",
   "license": "GPL-3.0",
+  "private": false,
   "engines": {
     "node": "14.2.0"
   },
+  "keywords": [
+    "DiscordJS",
+    "Discord",
+    "bot",
+    "discord-bot"
+  ],
   "repository": "https://github.com/nhcarrigan/discord-bot",
+  "bugs": {
+    "url": "https://github.com/nhcarrigan/discord-bot/issues"
+  },
+  "homepage": "https://github.com/nhcarrigan/discord-bot#readme",
+  "scripts": {
+    "build": "rm -rf ./prod && tsc",
+    "dev": "nodemon",
+    "dev:command": "npm run build && npm run start:ts",
+    "lint": "eslint src --fix",
+    "start": "node ./prod/src/main.js",
+    "start:ts": "ts-node -r ./src/main.ts"
+  },
+  "_moduleAliases": {
+    "@Commands": "prod/src/commands",
+    "@Database": "prod/src/database/main.js",
+    "@Events": "prod/src/events",
+    "@Interfaces": "prod/src/interfaces",
+    "@Listeners": "prod/src/listeners",
+    "@Models": "prod/src/database/models",
+    "@Utils": "prod/src/utils"
+  },
   "dependencies": {
     "discord.js": "^12.3.1",
-    "dotenv": "^8.2.0",
     "mathjs": "^7.3.0",
-    "mathsteps": "^0.2.0",
-    "mongoose": "^5.10.7",
-    "mtgsdk": "^0.4.3",
-    "node-fetch": "^2.6.1",
-    "typescript": "^4.0.3"
-  },
-  "main": "./prod/main.js",
-  "scripts": {
-    "start": "node ./prod/src/main.js",
-    "build": "tsc",
-    "develop": "npm run build && npm run start",
-    "lint": "npx eslint src"
+    "module-alias": "^2.2.2",
+    "mongoose": "^5.10.7"
   },
   "devDependencies": {
     "@types/mathjs": "^6.0.5",
     "@types/mongoose": "^5.7.36",
     "@types/node": "^14.11.2",
-    "@types/node-fetch": "^2.5.7",
+    "@types/ws": "^7.2.7",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@typescript-eslint/parser": "^4.3.0",
+    "axios": "^0.20.0",
+    "dotenv": "^8.2.0",
     "eslint": "^7.10.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.3.0",
+    "nodemon": "^2.0.4",
     "prettier": "^2.1.2",
-    "ts-node": "^9.0.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npx eslint src --fix"
-    }
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
   }
 }
