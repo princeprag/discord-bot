@@ -20,9 +20,12 @@ Are you interested in contributing to the development of this bot? We welcome al
 
 ## Contributors
 
-[Nicholas Carrigan](https://github.com/nhcarrigan) - Project Owner
-
-[Joshua Pelealu](https://github.com/JoshuaPelealu) - Revised `ping` command
+* [Nicholas Carrigan](https://github.com/nhcarrigan) - Project Owner
+* [Joshua Pelealu](https://github.com/JoshuaPelealu) - Revised `ping` command
+* [Daniel Solarte](https://github.com/danielsolartech) - Complete code refactor, invite command, server based configurations
+* [Landon Lloyd](https://github.com/LandonLloyd) - `ping` command fix, documentation updates
+* [Kartik V](https://github.com/zephy20) - remove welcome DM, add `report` command.
+* [shadowtime2000](https://github.com/shadowtime2000) - fix departure message feature.
 
 ## License
 
