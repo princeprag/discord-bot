@@ -1,8 +1,43 @@
-import { Message, Client } from "discord.js";
+import MessageInt from "./MessageInt";
 
-export interface CommandInt {
-  prefix: string;
+/**
+ * Command object interface.
+ * @interface
+ */
+interface CommandInt {
+  /**
+   * Name of the command.
+   * @property
+   */
+  name?: string;
+
+  /**
+   * Multiple names for the command.
+   * @property
+   */
+  names?: string[];
+
+  /**
+   * Description of the command.
+   * @property
+   */
   description: string;
-  parameters?: string;
-  command: (message: Message, bot?: Client) => void;
+
+  /**
+   * Parameters of the command.
+   * @property
+   */
+  parameters?: string[];
+
+  /**
+   * Execute the command.
+   *
+   * @async
+   * @function
+   * @param { MessageInt } message
+   * @returns { Promise<void> }
+   */
+  run(message: MessageInt): Promise<void>;
 }
+
+export default CommandInt;
