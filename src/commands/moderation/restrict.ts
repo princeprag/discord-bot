@@ -17,7 +17,7 @@ const restrict: CommandInt = {
     // Check if the member has the kick members permission.
     if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
       await message.reply(
-        "sorry, but this command is retricted to moderators."
+        "Sorry, but this command is restricted to moderators."
       );
 
       return;
@@ -31,7 +31,7 @@ const restrict: CommandInt = {
 
     // Check if the moderator role does not exist.
     if (!moderatorRole) {
-      await message.reply("sorry, but I could not find the moderator role.");
+      await message.reply("Sorry, but I could not find the moderator role.");
       return;
     }
 
@@ -43,7 +43,7 @@ const restrict: CommandInt = {
 
     // Check if the restricted role does not exist.
     if (!restrictedRole) {
-      await message.reply("sorry, but I could not find the restricted role.");
+      await message.reply("Sorry, but I could not find the restricted role.");
       return;
     }
 
@@ -84,14 +84,14 @@ const restrict: CommandInt = {
     }
 
     // Get the next argument as the user to restrict mention.
-    let usertToRestrictMention = commandArguments.shift();
+    let userToRestrictMention = commandArguments.shift();
 
     // Get the first user mention.
     const userToRestrictMentioned = mentions.users.first();
 
     // Check if the user mention is valid.
     if (
-      !usertToRestrictMention ||
+      !userToRestrictMention ||
       !userToRestrictMentioned ||
       !mentions.members
     ) {
@@ -100,17 +100,17 @@ const restrict: CommandInt = {
     }
 
     // Remove the `<@!` and `>` from the mention to get the id.
-    usertToRestrictMention = usertToRestrictMention.replace(/[<@!>]/gi, "");
+    userToRestrictMention = userToRestrictMention.replace(/[<@!>]/gi, "");
 
     // Check if the user mention string and the first user mention id are equals.
-    if (usertToRestrictMention !== userToRestrictMentioned.id) {
-      await message.reply("the user mentioned is not valid.");
+    if (userToRestrictMention !== userToRestrictMentioned.id) {
+      await message.reply("Sorry, but the user mentioned is not valid.");
       return;
     }
 
     // Check if trying to restrict itself.
     if (userToRestrictMentioned.id === author.id) {
-      await message.reply("you cannot restrict yourself!");
+      await message.reply("Sorry, but you cannot restrict yourself!");
       return;
     }
 
@@ -119,7 +119,9 @@ const restrict: CommandInt = {
 
     // Check if the member mention exists.
     if (!memberToRestrictMentioned) {
-      await message.reply("you must mention a valid user to restrict.");
+      await message.reply(
+        "Sorry, but you must mention a valid user to restrict."
+      );
       return;
     }
 
@@ -128,14 +130,14 @@ const restrict: CommandInt = {
       userToRestrictMentioned.id === user.id ||
       memberToRestrictMentioned.id === user.id
     ) {
-      await message.reply("why are you trying to restrict me? I am sad now.");
+      await message.reply("Why are you trying to restrict me? I am sad now.");
       return;
     }
 
     // Check if the user is already restricted.
     if (memberToRestrictMentioned.roles.cache.has(restrictedRole.id)) {
       await message.reply(
-        `sorry, but ${userToRestrictMentioned.toString()} is already restricted.`
+        `Sorry, but ${userToRestrictMentioned.toString()} is already restricted.`
       );
 
       return;
@@ -200,7 +202,7 @@ const restrict: CommandInt = {
     } catch (error) {
       console.log(error);
 
-      await message.reply("sorry, you cannot restrict that user.");
+      await message.reply("Sorry, you cannot restrict that user.");
     }
   },
 };

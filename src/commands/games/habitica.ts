@@ -211,7 +211,7 @@ const habitica: CommandInt = {
         error?.response?.data?.message ?? "Unknown error."
       );
 
-      await message.reply("sorry, but I could not find that user...");
+      await message.reply("Sorry, but I could not find that user...");
     }
   },
 };

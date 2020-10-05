@@ -21,7 +21,7 @@ const usageListener: ListenerInt = {
       server_id: guild.id,
     });
 
-    // Check if the command log does not exists and create one.
+    // Check if the command log does not exist and create one.
     if (!commandLog) {
       await CommandLogModel.create<CommandLogIntRequired>({
         command: commandName,

@@ -32,7 +32,7 @@ const profile: CommandInt = {
         "ig",
       ].includes(website)
     ) {
-      await message.reply("sorry, but I cannot access that website...");
+      await message.reply("Sorry, but I cannot access that website...");
       return;
     }
 
@@ -41,7 +41,7 @@ const profile: CommandInt = {
 
     // Check if the user is empty.
     if (!user) {
-      await message.reply("sorry, but who did you want me to search for?");
+      await message.reply("Sorry, but who did you want me to search for?");
       return;
     }
 

@@ -12,7 +12,7 @@ const wiki: CommandInt = {
 
     // Check if the query is empty.
     if (!query || !query.length) {
-      await message.reply("sorry, but what did you want me to search for?");
+      await message.reply("Sorry, but what did you want me to search for?");
       return;
     }
 

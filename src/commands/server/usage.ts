@@ -16,7 +16,7 @@ const usage: CommandInt = {
     // Check if the command name is empty.
     if (!guild || !command) {
       await message.reply(
-        "sorry, but what command did you want me to look for?"
+        "Sorry, but what command did you want me to look for?"
       );
 
       return;
@@ -31,7 +31,7 @@ const usage: CommandInt = {
     // Check if the command log does not exist.
     if (!commandLog) {
       await message.reply(
-        "sorry, but it appears no one has use that command yet."
+        "Sorry, but it appears no one has use that command yet."
       );
 
       return;

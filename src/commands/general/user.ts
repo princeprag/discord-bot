@@ -47,7 +47,7 @@ const user: CommandInt = {
         // Add the user name to the embed title.
         userEmbed.setTitle(member.displayName);
 
-        // Add the user avataar to the embed thumbnail.
+        // Add the user avatar to the embed thumbnail.
         userEmbed.setThumbnail(author.displayAvatarURL({ dynamic: true }));
 
         // Add the description.

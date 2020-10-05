@@ -26,7 +26,7 @@ const challenge: CommandInt = {
     // Check if the action is not `start`, `request` and `solve`.
     if (action !== "start" && action !== "request" && action !== "solve") {
       await message.reply(
-        `sorry, but I just recognize \`${prefix}challenge start\`, \`${prefix}challenge request <id>\` or \`${prefix}challenge solve <id> <answer>\`.`
+        `Sorry, but I only recognize \`${prefix}challenge start\`, \`${prefix}challenge request <id>\` or \`${prefix}challenge solve <id> <answer>\`.`
       );
 
       return;
@@ -62,7 +62,7 @@ const challenge: CommandInt = {
 
         // Check if the id is not valid.
         if (!id) {
-          await message.reply("sorry, but you must enter the challenge id.");
+          await message.reply("Sorry, but you must enter the challenge id.");
           return;
         }
 
@@ -101,7 +101,7 @@ const challenge: CommandInt = {
           // Check if the answer is not valid.
           if (!answer) {
             await message.reply(
-              "sorry, but you must enter the challenge answer."
+              "Sorry, but you must enter the challenge answer."
             );
 
             return;
@@ -150,7 +150,7 @@ const challenge: CommandInt = {
       );
 
       await message.reply(
-        `sorry, but I cannot execute the \`${action}\` action inside the challenge.`
+        `Sorry, but I cannot execute the \`${action}\` action inside the challenge.`
       );
 
       return;

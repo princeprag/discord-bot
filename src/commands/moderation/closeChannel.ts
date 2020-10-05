@@ -18,7 +18,7 @@ const closeChannel: CommandInt = {
       !member.hasPermission("MANAGE_CHANNELS")
     ) {
       await message.reply(
-        "sorry, but this command is retricted to moderators."
+        "Sorry, but this command is restricted to moderators."
       );
 
       return;
