@@ -24,7 +24,12 @@ const config: CommandInt = {
     }
 
     // Get `getTextChannelFromSettings`, the prefix and `setSetting` from the bot client.
-    const { getTextChannelFromSettings, prefix, setSetting } = bot;
+    const {
+      getTextChannelFromSettings,
+      prefix,
+      setSetting,
+      getRoleFromSettings,
+    } = bot;
 
     // Get the next argument as the config type.
     const configType = commandArguments.shift();
@@ -288,7 +293,7 @@ const config: CommandInt = {
 
     // Add the logs channel to an embed field.
     configEmbed.addField(
-      "Logs channel",
+      "Log channel",
       logsChannel
         ? `Moderation activity, such as kicks, bans, warnings, and deleted messages will go to the ${logsChannel.toString()} channel.`
         : `Please configure a logs channel using \`${prefix}config set channel logs #logs-channel)\`.`
@@ -302,12 +307,33 @@ const config: CommandInt = {
 
     // Add the welcomes channel to an embed field.
     configEmbed.addField(
-      "Welcomes channel",
+      "Welcome Channel",
       welcomesChannel
         ? `Members will be welcomed (and member departures will be mentioned) in the ${welcomesChannel.toString()} channel.`
         : `Please configure a welcomes channel using \`${prefix}config set channel welcomes #welcomes-channel)\`.`
     );
 
+    // Get the restricted role from the database
+    const restrictRole = await getRoleFromSettings("restricted_role", guild);
+
+    // Add the restricted role to an embed field.
+    configEmbed.addField(
+      "Restricted Role",
+      restrictRole
+        ? `The restrict and unrestrict role for the server is ${restrictRole.toString()}`
+        : `Please configure a restrict role using \`${prefix}config set role restricted @role\`.`
+    );
+
+    // Get the moderator role from the database
+    const modRole = await getRoleFromSettings("moderator_role", guild);
+
+    // Add the moderator role to an embed field.
+    configEmbed.addField(
+      "Moderator Role",
+      modRole
+        ? `The moderator role for the restrict command is ${modRole.toString()}`
+        : `Please configure a moderator role using \`${prefix}config set role moderator @role\`.`
+    );
     // Send the embed to the current channel.
     await channel.send(configEmbed);
   },

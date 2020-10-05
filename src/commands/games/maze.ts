@@ -81,7 +81,7 @@ const maze: CommandInt = {
 
       // Check if the maze id is empty.
       if (!id) {
-        await message.reply("sorry, but you must enter the maze id.");
+        await message.reply("Sorry, but you must enter the maze id.");
         return;
       }
 

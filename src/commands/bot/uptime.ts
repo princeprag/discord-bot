@@ -8,10 +8,10 @@ const uptime: CommandInt = {
     // Get the channel and the bot client of the message.
     const { channel, bot } = message;
 
-    // Get the time differece.
+    // Get the time difference.
     let uptime_now = Date.now() - bot.uptime_timestamp;
 
-    // Change from miliseconds to seconds.
+    // Change from milliseconds to seconds.
     uptime_now = ~~(uptime_now / 1000);
 
     // Get the uptime hours.

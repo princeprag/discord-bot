@@ -16,7 +16,7 @@ const dndspell: CommandInt = {
 
     // Check if the query is not empty.
     if (!query || !query.length) {
-      await message.reply("sorry, but what did you want me to search for?");
+      await message.reply("Sorry, but what did you want me to search for?");
       return;
     }
 
@@ -27,7 +27,7 @@ const dndspell: CommandInt = {
 
     // Check if the dnd spell is not valid.
     if (!data.data || data.data.error) {
-      await message.reply("sorry, but I was unable to find anything...");
+      await message.reply("Sorry, but I was unable to find anything...");
       return;
     }
 

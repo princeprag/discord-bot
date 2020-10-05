@@ -14,7 +14,7 @@ import onGuildMemberAdd from "@Events/onGuildMemberAdd";
 import onMessage from "@Events/onMessage";
 import onMessageDelete from "@Events/onMessageDelete";
 import onMessageUpdate from "@Events/onMessageUpdate";
-import onGuildMemberRemove from "@Events/onGuildMemberRemode";
+import onGuildMemberRemove from "@Events/onGuildMemberRemove";
 
 async function botConnect(): Promise<void> {
   // Get the node_env from the environment.

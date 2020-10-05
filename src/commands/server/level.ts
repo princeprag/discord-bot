@@ -62,7 +62,7 @@ const level: CommandInt = {
     levelEmbed.setTitle(`${username}'s ranking`);
 
     // Add the description.
-    levelEmbed.setDescription("Here is where you stand!");
+    levelEmbed.setDescription(`Here is where you stand in \`${guild.name}!\``);
 
     // Add the user experiencie.
     levelEmbed.addField("Experience points", userInfo.points, true);

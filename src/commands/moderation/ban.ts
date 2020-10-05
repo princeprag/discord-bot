@@ -17,7 +17,7 @@ const ban: CommandInt = {
     // Check if the member has the ban members permission.
     if (!guild || !user || !member || !member.hasPermission("BAN_MEMBERS")) {
       await message.reply(
-        "sorry, but this command is retricted to moderators."
+        "sorry, but this command is restricted to moderators."
       );
 
       return;
@@ -31,7 +31,7 @@ const ban: CommandInt = {
 
     // Check if the user mention is valid.
     if (!userToBanMention || !userToBanMentioned || !mentions.members) {
-      await message.reply("you must mention an user to ban.");
+      await message.reply("Sorry, but you must mention an user to ban.");
       return;
     }
 
@@ -40,13 +40,13 @@ const ban: CommandInt = {
 
     // Check if the user mention string and the first user mention id are equals.
     if (userToBanMention !== userToBanMentioned.id) {
-      await message.reply("the user mentioned is not valid.");
+      await message.reply("Sorry, but the user mentioned is not valid.");
       return;
     }
 
     // Check if trying to ban itself.
     if (userToBanMentioned.id === author.id) {
-      await message.reply("you cannot ban yourself!");
+      await message.reply("Sorry but you cannot ban yourself!");
       return;
     }
 
@@ -55,7 +55,7 @@ const ban: CommandInt = {
 
     // Check if the member mention exists.
     if (!memberToBanMentioned) {
-      await message.reply("you must mention a valid user to ban.");
+      await message.reply("Sorry but you must mention a valid user to ban.");
       return;
     }
 
@@ -64,13 +64,13 @@ const ban: CommandInt = {
       userToBanMentioned.id === user.id ||
       memberToBanMentioned.id === user.id
     ) {
-      await message.reply("why are you trying to ban me? I am sad now.");
+      await message.reply("Why are you trying to ban me? I am sad now.");
       return;
     }
 
     // Check if the user is bannable.
     if (!memberToBanMentioned.bannable) {
-      await message.reply("you cannot ban this user.");
+      await message.reply("Sorry but you cannot ban this user.");
       return;
     }
 

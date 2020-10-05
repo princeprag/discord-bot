@@ -35,14 +35,14 @@ const star: CommandInt = {
 
     // Check if the user mention string and the first user mention id are equals.
     if (userToStarMention !== userToStarMentioned.id) {
-      await message.reply("the user mentioned is not valid.");
+      await message.reply("Sorry, but the user mentioned is not valid.");
       return;
     }
 
     // Check if trying to star itself.
     if (userToStarMentioned.id === author.id) {
       await message.reply(
-        "sorry, but you cannot give yourself a star! I still love you though."
+        "Sorry, but you cannot give yourself a star! I still love you though."
       );
 
       return;
@@ -72,7 +72,7 @@ const star: CommandInt = {
 
     // Send a success message to the current channel.
     await channel.send(
-      `Okay, I sent to ${userToStarMentioned.toString()} a gold star!`
+      `Okay, I sent ${userToStarMentioned.toString()} a gold star!`
     );
   },
 };

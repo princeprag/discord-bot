@@ -17,7 +17,7 @@ const warn: CommandInt = {
     // Check if the member has the kick members permission.
     if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
       await message.reply(
-        "sorry, but this command is retricted to moderators."
+        "Sorry, but this command is restricted to moderators."
       );
 
       return;
@@ -31,7 +31,7 @@ const warn: CommandInt = {
 
     // Check if the user mention is valid.
     if (!userToWarnMention || !userToWarnMentioned || !mentions.members) {
-      await message.reply("you must mention an user to warn.");
+      await message.reply("Sorry, but you must mention an user to warn.");
       return;
     }
 
@@ -40,13 +40,13 @@ const warn: CommandInt = {
 
     // Check if the user mention string and the first user mention id are equals.
     if (userToWarnMention !== userToWarnMentioned.id) {
-      await message.reply("the user mentioned is not valid.");
+      await message.reply("Sorry, but the user mentioned is not valid.");
       return;
     }
 
     // Check if trying to warn itself.
     if (userToWarnMentioned.id === author.id) {
-      await message.reply("you cannot warn yourself!");
+      await message.reply("Sorry, but you cannot warn yourself!");
       return;
     }
 
@@ -55,7 +55,7 @@ const warn: CommandInt = {
 
     // Check if the member mention exists.
     if (!memberToWarnMentioned) {
-      await message.reply("you must mention a valid user to warn.");
+      await message.reply("Sorry, but you must mention a valid user to warn.");
       return;
     }
 
@@ -64,7 +64,7 @@ const warn: CommandInt = {
       userToWarnMentioned.id === user.id ||
       memberToWarnMentioned.id === user.id
     ) {
-      await message.reply("why are you trying to warn me? I am sad now.");
+      await message.reply("Why are you trying to warn me? I am sad now.");
       return;
     }
 
