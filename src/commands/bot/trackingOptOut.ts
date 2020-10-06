@@ -88,22 +88,26 @@ export const trackingOptOut: CommandInt = {
       });
 
     const recordExists = !!found;
-    console.log(`${JSON.stringify(found)} ${recordExists}`);
 
     if (subcommand === "add" && !recordExists) {
       const newOptOutUser = new TrackingOptOut({
         user_id: userId,
       });
       await newOptOutUser.save(addCallBack(message, userId));
+      return; // exit run fn
     }
     if (subcommand === "add" && recordExists) {
       statusResolve(message, userId, "status")(found);
+      return; // exit run fn
     }
     if (subcommand === "remove" && recordExists) {
       await TrackingOptOut.deleteMany({ user_id: userId }, removeCallback(message));
+
+      return; // exit run fn
     }
     if (subcommand === "remove" && !recordExists) {
       statusResolve(message, userId, "status")(found);
+      return; // exit run fn
     }
   },
 };
