@@ -106,7 +106,7 @@ const challenge: CommandInt = {
         // Otherwise, the action is `solve`.
         else {
           // Get the next argument as the answer.
-          const answer = commandArguments.shift();
+          const answer = commandArguments.slice(0).join(" ");
 
           // Check if the answer is not valid.
           if (!answer) {
@@ -116,7 +116,7 @@ const challenge: CommandInt = {
 
             return;
           }
-
+          console.log({ answer });
           // Get the challenge information from the noops challenge api.
           const data = await axios.post<ChallengeSolveInt>(
             `https://api.noopschallenge.com/fizzbot/questions/${id}`,
