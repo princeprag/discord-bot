@@ -53,7 +53,8 @@ const statusResolve = (
 
 export const trackingOptOut: CommandInt = {
   name: "optout",
-  description: "**Add** or **remove** self from being recorded as part of usage statistics",
+  description:
+    "**Add** or **remove** self from being recorded as part of usage statistics",
   parameters: [
     `\`<action>\` - Actions available add, remove, or status
     \nadd - add username to set of opt-out users (disable tracking)
@@ -101,7 +102,10 @@ export const trackingOptOut: CommandInt = {
       return; // exit run fn
     }
     if (subcommand === "remove" && recordExists) {
-      await TrackingOptOut.deleteMany({ user_id: userId }, removeCallback(message));
+      await TrackingOptOut.deleteMany(
+        { user_id: userId },
+        removeCallback(message)
+      );
 
       return; // exit run fn
     }
