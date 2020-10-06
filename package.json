@@ -26,12 +26,14 @@
     "lint": "eslint src --fix",
     "start": "node ./prod/src/main.js",
     "start:ts": "ts-node -r ./src/main.ts",
+    "pretest:unit": "npm run build",
     "test:unit": "mocha './test/unit/**/*spec*.ts'"
   },
   "_moduleAliases": {
     "@Commands": "prod/src/commands",
     "@Database": "prod/src/database/main.js",
     "@Events": "prod/src/events",
+    "@Interceptors": "prod/src/interceptors",
     "@Interfaces": "prod/src/interfaces",
     "@Listeners": "prod/src/listeners",
     "@Models": "prod/src/database/models",

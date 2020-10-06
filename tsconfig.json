@@ -18,6 +18,7 @@
       "@Commands/*": ["commands/*"],
       "@Database": ["database/main.ts"],
       "@Events/*": ["events/*"],
+      "@Interceptors": ["interceptors/*"],
       "@Interfaces/*": ["interfaces/*"],
       "@Listeners/*": ["listeners/*"],
       "@Models/*": ["database/models/*"],
