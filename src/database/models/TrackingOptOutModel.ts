@@ -5,7 +5,10 @@ export interface TrackingOptOutInt extends Document {
 }
 
 export const TrackingOptOutSchema = new Schema({
-  userId: String,
+  user_id: {
+    type: String,
+    required: true,
+  },
 });
 
 export const TrackingOptOut: Model<TrackingOptOutInt> = model<

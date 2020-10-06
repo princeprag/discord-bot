@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { createSandbox } from "sinon";
 import { Message, TextChannel, User } from "discord.js";
-import * as TOO from "../../../src/interfaces/TrackingOptOutInt";
+import * as TOO from "@Models/TrackingOptOutModel";
 import { mock } from "ts-mockito";
 import { ImportMock, MockManager } from "ts-mock-imports";
 
@@ -13,7 +13,7 @@ import {
   MESSAGE_SUBCOMMAND_INVALID,
   addCallBack,
   trackingOptOut,
-} from "../../../src/commands/trackingOptOut";
+} from "@Commands/bot/trackingOptOut";
 
 const buildMessageWithContent = (
   content: string,
@@ -36,7 +36,7 @@ describe("command opt-out", () => {
   let findOne: sinon.SinonStub;
   let deleteMany: sinon.SinonStub;
   const userRec = {
-    userId: "123456789",
+    user_id: "123456789",
   };
 
   beforeEach(() => {
@@ -69,7 +69,7 @@ describe("command opt-out", () => {
         "author"
       );
 
-      await trackingOptOut.command(testMessage);
+      await trackingOptOut.run(testMessage);
 
       expect(testMessage.channel.send).calledOnceWith(MESSAGE_COMMAND_INVALID);
     });
@@ -78,12 +78,12 @@ describe("command opt-out", () => {
   context("when subcommand invalid", () => {
     it("return error message", async () => {
       const testMessage: Message = buildMessageWithContent(
-        "|optOut",
+        "|optout",
         "123456789",
         "author"
       );
 
-      await trackingOptOut.command(testMessage);
+      await trackingOptOut.run(testMessage);
 
       expect(testMessage.channel.send).calledOnceWith(
         MESSAGE_SUBCOMMAND_INVALID
@@ -92,20 +92,20 @@ describe("command opt-out", () => {
   });
 
   context("when subcommand valid", () => {
-    describe("command: !optOut add", () => {
+    describe("command: !optout add", () => {
       context("user already exists", () => {
         it("invoke call back without actually adding", async () => {
           const testMessage: Message = buildMessageWithContent(
-            "   |optOut                  add   ",
+            "   |optout                  add   ",
             "123456789",
             "author"
           );
           findOne.resolves(userRec);
 
-          await trackingOptOut.command(testMessage);
+          await trackingOptOut.run(testMessage);
 
           expect(TrackingOptOutMock).not.calledOnceWith({
-            userId: "123456789",
+            user_id: "123456789",
           });
           expect(testMessage.channel.send).calledWith(
             `<@123456789> is currently opted-out`
@@ -115,28 +115,28 @@ describe("command opt-out", () => {
       context("user does not exist in db", () => {
         it("attempt to add user id to database", async () => {
           const testMessage: Message = buildMessageWithContent(
-            "   |optOut                  add   ",
+            "   |optout                  add   ",
             "123456789",
             "author"
           );
           findOne.resolves();
 
-          await trackingOptOut.command(testMessage);
+          await trackingOptOut.run(testMessage);
 
           expect(TrackingOptOutMock).calledOnceWith({
-            userId: "123456789",
+            user_id: "123456789",
           });
         });
       });
       describe("addCallBack called", () => {
         it("should notify user they are now opt-out", async () => {
           const testMessage: Message = buildMessageWithContent(
-            "|optOut add",
+            "|optout add",
             "123456789",
             "author"
           );
           const document: TOO.TrackingOptOutInt = {
-            userId: "123456789",
+            user_id: "123456789",
           } as TOO.TrackingOptOutInt;
           await addCallBack(testMessage, "123456789")(null, document);
 
@@ -146,12 +146,12 @@ describe("command opt-out", () => {
         });
         it("should notify user if opt-out failed", async () => {
           const testMessage: Message = buildMessageWithContent(
-            "|optOut add",
+            "|optout add",
             "123456789",
             "author"
           );
           const document: TOO.TrackingOptOutInt = {
-            userId: "123456789",
+            user_id: "123456789",
           } as TOO.TrackingOptOutInt;
           try {
             await addCallBack(testMessage, "123456789")(
@@ -166,27 +166,27 @@ describe("command opt-out", () => {
         });
       });
     });
-    describe("command: !optOut remove", () => {
+    describe("command: !optout remove", () => {
       it("call deleteMany to remove records", async () => {
         const testMessage: Message = buildMessageWithContent(
-          "   |optOut remove   ",
+          "   |optout remove   ",
           "123456789",
           "author"
         );
         findOne.resolves(userRec);
         deleteMany.resolves();
 
-        await trackingOptOut.command(testMessage);
+        await trackingOptOut.run(testMessage);
 
         expect(TOO.TrackingOptOut.deleteMany).called;
         expect(deleteMany).calledWith({
-          userId: "123456789",
+          user_id: "123456789",
         });
       });
       describe("removeCallBack called", () => {
         it("warn user if error occured", async () => {
           const testMessage: Message = buildMessageWithContent(
-            "   |optOut remove   ",
+            "   |optout remove   ",
             "123456789",
             "author"
           );
@@ -199,7 +199,7 @@ describe("command opt-out", () => {
         });
         it("notify user of status change", async () => {
           const testMessage: Message = buildMessageWithContent(
-            "   |optOut remove   ",
+            "   |optout remove   ",
             "123456789",
             "author"
           );
@@ -212,28 +212,28 @@ describe("command opt-out", () => {
         });
       });
     });
-    describe("command: !optOut status", () => {
+    describe("command: !optout status", () => {
       context("user not found", () => {
         it("call find to recieve records", async () => {
           const testMessage: Message = buildMessageWithContent(
-            "   |optOut status   ",
+            "   |optout status   ",
             "123456789",
             "author"
           );
           findOne.resolves();
 
-          await trackingOptOut.command(testMessage);
+          await trackingOptOut.run(testMessage);
 
           expect(TOO.TrackingOptOut.deleteMany).not.calledWith(userRec);
         });
         it("notify user they are opt-in", async () => {
           const testMessage: Message = buildMessageWithContent(
-            "   |optOut status   ",
+            "   |optout status   ",
             "123456789",
             "author"
           );
           findOne.resolves();
-          await trackingOptOut.command(testMessage);
+          await trackingOptOut.run(testMessage);
 
           expect(testMessage.channel.send).calledWith(
             `<@123456789> is currently opted-in`
@@ -243,13 +243,13 @@ describe("command opt-out", () => {
       context("user found", () => {
         it("notify user they are opt-out", async () => {
           const testMessage: Message = buildMessageWithContent(
-            "   |optOut status   ",
+            "   |optout status   ",
             "123456789",
             "author"
           );
           findOne.resolves(userRec);
 
-          await trackingOptOut.command(testMessage);
+          await trackingOptOut.run(testMessage);
 
           expect(testMessage.channel.send).calledWith(
             `<@123456789> is currently opted-out`
@@ -259,13 +259,13 @@ describe("command opt-out", () => {
       context("error occured", () => {
         it("notify user an error occured", async () => {
           const testMessage: Message = buildMessageWithContent(
-            "   |optOut status   ",
+            "   |optout status   ",
             "123456789",
             "author"
           );
           findOne.rejects("Fake Error");
 
-          await trackingOptOut.command(testMessage);
+          await trackingOptOut.run(testMessage);
 
           expect(testMessage.channel.send).calledWith(
             `Oops, <@123456789>, something went wrong. Please try again in a few minutes.`

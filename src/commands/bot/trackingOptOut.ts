@@ -1,9 +1,7 @@
 import { Message } from "discord.js";
-import { CommandInt } from "../interfaces/CommandInt";
-import {
-  TrackingOptOut,
-  TrackingOptOutInt,
-} from "../interfaces/TrackingOptOutInt";
+import CommandInt from "@Interfaces/CommandInt";
+import { TrackingOptOut, TrackingOptOutInt } from "@Models/TrackingOptOutModel";
+import MessageInt from "@Interfaces/MessageInt";
 
 export const VALID_SUBCOMMAND = ["add", "remove", "status"];
 export const MESSAGE_COMMAND_INVALID = `Sorry, I did not get that.`;
@@ -54,17 +52,18 @@ const statusResolve = (
 };
 
 export const trackingOptOut: CommandInt = {
-  prefix: "optOut",
-  description:
-    "**Add** or **remove** self from being recorded as part of usage statistics",
-  parameters: `\`<action>\` - Actions available add, remove, or status
+  name: "optout",
+  description: "**Add** or **remove** self from being recorded as part of usage statistics",
+  parameters: [
+    `\`<action>\` - Actions available add, remove, or status
     \nadd - add username to set of opt-out users (disable tracking)
     \nremove - remove username to set of opt-out users (enable tracking)
     \nstatus - see if your current tracking status
     \n`,
-  command: async (message: Message) => {
+  ],
+  run: async (message: MessageInt) => {
     const [command, subcommand] = message?.content?.trim().split(/\s{1,}/, 2);
-    if (!command?.match(/.{1}optOut/)) {
+    if (!command?.match(/.{1}optout/)) {
       message.channel.send(MESSAGE_COMMAND_INVALID);
       return;
     }
@@ -78,9 +77,9 @@ export const trackingOptOut: CommandInt = {
       console.debug(`Author: ${JSON.stringify(message.author)}`);
     }
     const userId = message?.author?.id;
-    const found = await TrackingOptOut.findOne({ userId })
+    const found = await TrackingOptOut.findOne({ user_id: userId })
       .then(statusResolve(message, userId, subcommand))
-      .catch((err) => {
+      .catch((err: Error) => {
         console.error(err);
         message?.channel?.send(
           `Oops, <@${userId}>, something went wrong. Please try again in a few minutes.`
@@ -93,7 +92,7 @@ export const trackingOptOut: CommandInt = {
 
     if (subcommand === "add" && !recordExists) {
       const newOptOutUser = new TrackingOptOut({
-        userId,
+        user_id: userId,
       });
       await newOptOutUser.save(addCallBack(message, userId));
     }
@@ -101,10 +100,12 @@ export const trackingOptOut: CommandInt = {
       statusResolve(message, userId, "status")(found);
     }
     if (subcommand === "remove" && recordExists) {
-      await TrackingOptOut.deleteMany({ userId }, removeCallback(message));
+      await TrackingOptOut.deleteMany({ user_id: userId }, removeCallback(message));
     }
     if (subcommand === "remove" && !recordExists) {
       statusResolve(message, userId, "status")(found);
     }
   },
 };
+
+export default trackingOptOut;
