@@ -148,7 +148,7 @@ const riddle: CommandInt = {
       errorEmbed.setColor(bot.color);
       errorEmbed.setTitle("Riddle Error");
       errorEmbed.setDescription(
-        "Error happened while working on your riddle. Please, try again, or wait a bit."
+        error?.response?.data?.message ?? "Unknown error"
       );
 
       await message.reply(errorEmbed);
