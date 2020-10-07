@@ -159,11 +159,14 @@ const challenge: CommandInt = {
         error?.response?.data?.message ?? "Unknown error."
       );
 
-      await message.reply(
-        `Sorry, but I cannot execute the \`${action}\` action inside the challenge.`
+      const errorEmbed = new MessageEmbed();
+      errorEmbed.setColor(bot.color);
+      errorEmbed.setTitle("Challenge Error");
+      errorEmbed.setDescription(
+        "Error happened while working with your challenge. Please, try again, or wait a bit."
       );
 
-      return;
+      await message.reply(errorEmbed);
     }
   },
 };
