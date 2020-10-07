@@ -1,22 +1,24 @@
 import {
   InterceptInt,
-  InterceptIntNext,
+  InterceptorAction,
+  interceptorFactory,
 } from "@Interfaces/interceptor/InterceptInt";
+import {isTrackableUser} from "@Utils/commands/trackingList";
 import { Message } from "discord.js";
 
-export const trackingOptOutInterceptor: InterceptInt = {
-  setNext: function (next?: InterceptIntNext) {
-    this.next = next;
-  },
-  intercept: async function (message: Message) {
-    if (typeof this.next === "function") {
-      return await this.next(message);
-    }
-    if (typeof this.next?.next === "function") {
-      return await this.next.intercept(message);
-    }
-    return Promise.resolve();
-  },
+export const trackingOptOutInterceptorAction: InterceptorAction = async function (
+  message: Message
+): Promise<boolean> {
+  const { author } = message;
+  const canTrackUser: boolean = isTrackableUser(author?.id);
+  if (canTrackUser) {
+    return await Promise.resolve(true);
+  }
+  return await Promise.resolve(false);
 };
+
+export const trackingOptOutInterceptor: InterceptInt = interceptorFactory(
+  trackingOptOutInterceptorAction
+);
 
 export default trackingOptOutInterceptor;

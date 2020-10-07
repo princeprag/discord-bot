@@ -1,21 +1,31 @@
 import { expect } from "chai";
 import { Message } from "discord.js";
 import { createSandbox } from "sinon";
+import { ImportMock } from "ts-mock-imports";
 
+import * as TrackingList from "@Utils/commands/trackingList";
 import { trackingOptOutInterceptor } from "@Interceptors/trackingOptOutInterceptor";
 import { InterceptInt } from "@Interfaces/interceptor/InterceptInt";
 
 const sandbox = createSandbox();
+const isTrackableUser = sandbox.stub();
+before(() => {
+  sandbox.replace(TrackingList, "isTrackableUser", isTrackableUser);
+});
 
 describe("TrackingOptOutInterceptor", () => {
   afterEach(() => {
-    trackingOptOutInterceptor.setNext();
-  });
+    isTrackableUser.resetHistory();
+  })
   describe("next()", () => {
+    beforeEach(() => {
+      isTrackableUser.returns(true);
+    });
     context("when next is undefined", () => {
       it("should resolve", async () => {
+        const message = sandbox.createStubInstance<Message>(Message);
         trackingOptOutInterceptor.setNext(undefined);
-        const val = await trackingOptOutInterceptor.intercept(null);
+        const val = await trackingOptOutInterceptor.intercept(message);
 
         expect(val).to.be.undefined;
         expect(trackingOptOutInterceptor.next).to.be.undefined;
@@ -55,7 +65,29 @@ describe("TrackingOptOutInterceptor", () => {
     });
   });
   describe("intercept", () => {
-    context.skip("user not in opt-out global", () => {});
-    context.skip("user in opt-out global", () => {});
+    context("user in opt-out global", () => {
+      it("should not call next fn", async () => {
+        const messageStub = sandbox.createStubInstance<Message>(Message);
+        const listenerStub = sandbox.stub();
+        isTrackableUser.returns(false);
+
+        trackingOptOutInterceptor.setNext(listenerStub);
+        await trackingOptOutInterceptor.intercept(messageStub);
+
+        expect(listenerStub).not.called;
+      });
+    });
+    context("user not in opt-out global", () => {
+      it("should call next fn", async () => {
+        const messageStub = sandbox.createStubInstance<Message>(Message);
+        const listenerStub = sandbox.stub();
+        isTrackableUser.returns(true);
+
+        trackingOptOutInterceptor.setNext(listenerStub);
+        await trackingOptOutInterceptor.intercept(messageStub);
+
+        expect(listenerStub).calledWith(messageStub);
+      });
+    });
   });
 });
