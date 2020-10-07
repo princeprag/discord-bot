@@ -117,36 +117,49 @@ const challenge: CommandInt = {
             return;
           }
           console.log({ answer });
-          // Get the challenge information from the noops challenge api.
-          const data = await axios.post<ChallengeSolveInt>(
-            `https://api.noopschallenge.com/fizzbot/questions/${id}`,
-            { answer },
-            {
-              headers: {
-                "content-type": "application/json",
-              },
-            }
-          );
 
-          // Get the next question and the result from the data.
-          const { nextQuestion, result } = data.data;
-
-          // Add the title.
-          challengeEmbed.setTitle("Challenge solution");
-
-          // Add the description.
-          challengeEmbed.setDescription(data.data.message);
-
-          // Add the result field.
-          challengeEmbed.addField("Result", result);
-
-          // Check if the next question exists.
-          if (nextQuestion && nextQuestion.length) {
-            // Add the next question field.
-            challengeEmbed.addField(
-              "Next challenge ID",
-              nextQuestion.split("/").reverse()[0]
+          try {
+            // Get the challenge information from the noops challenge api.
+            const data = await axios.post<ChallengeSolveInt>(
+              `https://api.noopschallenge.com/fizzbot/questions/${id}`,
+              { answer },
+              {
+                headers: {
+                  "content-type": "application/json",
+                },
+              }
             );
+
+            // Get the next question and the result from the data.
+            const { nextQuestion, result } = data.data;
+
+            // Add the title.
+            challengeEmbed.setTitle("Challenge solution");
+
+            // Add the description.
+            challengeEmbed.setDescription(data.data.message);
+
+            // Add the result field.
+            challengeEmbed.addField("Result", result);
+
+            // Check if the next question exists.
+            if (nextQuestion && nextQuestion.length) {
+              // Add the next question field.
+              challengeEmbed.addField(
+                "Next challenge ID",
+                nextQuestion.split("/").reverse()[0]
+              );
+            }
+          } catch (error) {
+            // if error not in answer, throw it to higher try catch
+            if (error?.status !== 400) {
+              throw error;
+            }
+
+            // Add the data to the embed.
+            challengeEmbed.setTitle("Challenge solution");
+            challengeEmbed.setDescription(error.data.message);
+            challengeEmbed.addField("Result", error.data.result);
           }
         }
 
@@ -159,11 +172,14 @@ const challenge: CommandInt = {
         error?.response?.data?.message ?? "Unknown error."
       );
 
-      await message.reply(
-        `Sorry, but I cannot execute the \`${action}\` action inside the challenge.`
+      const errorEmbed = new MessageEmbed();
+      errorEmbed.setColor(bot.color);
+      errorEmbed.setTitle("Challenge Error");
+      errorEmbed.setDescription(
+        error?.response?.data?.message ?? "Unknown error"
       );
 
-      return;
+      await message.reply(errorEmbed);
     }
   },
 };

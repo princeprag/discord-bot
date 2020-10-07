@@ -35,76 +35,20 @@ const riddle: CommandInt = {
       return;
     }
 
-    // Create a new empty embed.
-    const riddleEmbed = new MessageEmbed();
+    try {
+      // Create a new empty embed.
+      const riddleEmbed = new MessageEmbed();
 
-    // Add the light purple color.
-    riddleEmbed.setColor(bot.color);
+      // Add the light purple color.
+      riddleEmbed.setColor(bot.color);
 
-    // Check if the action is `start`.
-    if (action === "start") {
-      const data = await axios.post<RiddleStartInt>(
-        "https://api.noopschallenge.com/riddlebot/start",
-        {
-          login: author.username,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
+      // Check if the action is `start`.
+      if (action === "start") {
+        const data = await axios.post<RiddleStartInt>(
+          "https://api.noopschallenge.com/riddlebot/start",
+          {
+            login: author.username,
           },
-        }
-      );
-
-      const start = data.data;
-
-      // Add the riddle data to the embed.
-      riddleEmbed.setTitle("Start the riddle!");
-
-      riddleEmbed.setDescription(
-        `Welcome to the riddles game! To get your first riddle, call this command: \`${
-          bot.prefix[guild.id]
-        }riddle request ${start.riddlePath.split("/").reverse()[0]}\``
-      );
-    }
-    // Otherwise, the action is `request` or `solve`.
-    else {
-      // Get the next argument as the riddle id.
-      const id = commandArguments.shift();
-
-      // Check if the riddle id is empty.
-      if (!id) {
-        await message.reply("Sorry, you must enter the riddle id.");
-        return;
-      }
-
-      // Check if the action is `request`.
-      if (action === "request") {
-        const data = await axios.get<RiddleGetInt>(
-          `https://api.noopschallenge.com/riddlebot/riddles/${id}`
-        );
-
-        const request = data.data;
-
-        // Add the data to the embed.
-        riddleEmbed.setTitle("Riddle");
-        riddleEmbed.setDescription(request.message);
-        riddleEmbed.addField("Type", request.riddleType);
-        riddleEmbed.addField("Riddle", request.riddleText);
-      }
-      // Otherwise, the action is `solve`.
-      else {
-        // Get the next argument as the riddle answer.
-        const answer = commandArguments.shift();
-
-        // Check if the riddle answer is empty.
-        if (!answer) {
-          await message.reply("Sorry, you must enter the riddle answer.");
-          return;
-        }
-
-        const data = await axios.post<RiddleSolveInt>(
-          `https://api.noopschallenge.com/riddlebot/riddles/${id}`,
-          { answer },
           {
             headers: {
               "Content-Type": "application/json",
@@ -112,23 +56,103 @@ const riddle: CommandInt = {
           }
         );
 
-        const solved = data.data;
+        const start = data.data;
 
-        // Add the data to the embed.
-        riddleEmbed.setTitle("Riddle solution");
-        riddleEmbed.addField("Result", solved.result);
+        // Add the riddle data to the embed.
+        riddleEmbed.setTitle("Start the riddle!");
 
-        if (solved.nextRiddlePath) {
-          riddleEmbed.addField(
-            "Next Riddle ID",
-            solved.nextRiddlePath.split("/").reverse()[0]
+        riddleEmbed.setDescription(
+          `Welcome to the riddles game! To get your first riddle, call this command: \`${
+            bot.prefix[guild.id]
+          }riddle request ${start.riddlePath.split("/").reverse()[0]}\``
+        );
+      }
+      // Otherwise, the action is `request` or `solve`.
+      else {
+        // Get the next argument as the riddle id.
+        const id = commandArguments.shift();
+
+        // Check if the riddle id is empty.
+        if (!id) {
+          await message.reply("Sorry, you must enter the riddle id.");
+          return;
+        }
+
+        // Check if the action is `request`.
+        if (action === "request") {
+          const data = await axios.get<RiddleGetInt>(
+            `https://api.noopschallenge.com/riddlebot/riddles/${id}`
           );
+
+          const request = data.data;
+
+          // Add the data to the embed.
+          riddleEmbed.setTitle("Riddle");
+          riddleEmbed.setDescription(request.message);
+          riddleEmbed.addField("Type", request.riddleType);
+          riddleEmbed.addField("Riddle", request.riddleText);
+        }
+        // Otherwise, the action is `solve`.
+        else {
+          // Get the next argument as the riddle answer.
+          const answer = commandArguments.join(" ");
+
+          // Check if the riddle answer is empty.
+          if (!answer) {
+            await message.reply("Sorry, you must enter the riddle answer.");
+            return;
+          }
+
+          try {
+            const data = await axios.post<RiddleSolveInt>(
+              `https://api.noopschallenge.com/riddlebot/riddles/${id}`,
+              { answer },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+            const solved = data.data;
+
+            // Add the data to the embed.
+            riddleEmbed.setTitle("Riddle solution");
+            riddleEmbed.addField("Result", solved.result);
+            riddleEmbed.addField(
+              "Next Riddle ID",
+              solved.nextRiddlePath.split("/").reverse()[0]
+            );
+          } catch (error) {
+            // if error not in answer, throw it to higher try catch
+            if (error?.status !== 400) {
+              throw error;
+            }
+
+            // Add the data to the embed.
+            riddleEmbed.setTitle("Riddle solution");
+            riddleEmbed.addField("Result", "incorrect");
+            riddleEmbed.setDescription(error.data.message);
+          }
         }
       }
-    }
 
-    // Send the riddle embed to the current channel.
-    await channel.send(riddleEmbed);
+      // Send the riddle embed to the current channel.
+      await channel.send(riddleEmbed);
+    } catch (error) {
+      console.log(
+        "Riddle command:",
+        error?.response?.data?.message ?? "Unknown error"
+      );
+
+      const errorEmbed = new MessageEmbed();
+      errorEmbed.setColor(bot.color);
+      errorEmbed.setTitle("Riddle Error");
+      errorEmbed.setDescription(
+        error?.response?.data?.message ?? "Unknown error"
+      );
+
+      await message.reply(errorEmbed);
+    }
   },
 };
 
