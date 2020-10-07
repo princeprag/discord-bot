@@ -3,7 +3,7 @@ import {
   InterceptorAction,
   interceptorFactory,
 } from "@Interfaces/interceptor/InterceptInt";
-import {isTrackableUser} from "@Utils/commands/trackingList";
+import { isTrackableUser } from "@Utils/commands/trackingList";
 import { Message } from "discord.js";
 
 export const trackingOptOutInterceptorAction: InterceptorAction = async function (

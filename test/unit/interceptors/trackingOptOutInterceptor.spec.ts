@@ -1,7 +1,6 @@
 import { expect } from "chai";
 import { Message } from "discord.js";
 import { createSandbox } from "sinon";
-import { ImportMock } from "ts-mock-imports";
 
 import * as TrackingList from "@Utils/commands/trackingList";
 import { trackingOptOutInterceptor } from "@Interceptors/trackingOptOutInterceptor";
