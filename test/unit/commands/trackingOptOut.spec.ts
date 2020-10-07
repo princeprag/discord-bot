@@ -4,9 +4,6 @@ import { Message, TextChannel, User } from "discord.js";
 import * as TOO from "@Models/TrackingOptOutModel";
 import { mock } from "ts-mockito";
 import { ImportMock, MockManager } from "ts-mock-imports";
-
-const sandbox = createSandbox();
-
 import {
   removeCallback,
   MESSAGE_COMMAND_INVALID,
@@ -15,28 +12,30 @@ import {
   trackingOptOut,
 } from "@Commands/bot/trackingOptOut";
 
-const buildMessageWithContent = (
-  content: string,
-  userId: string,
-  authorName: string
-): Message => {
-  const author: User = { id: userId, username: authorName } as User;
-  const channel: TextChannel = { send: sandbox.stub() } as Text;
-  const msg: Partial<Message> = {
-    author,
-    content,
-    channel,
-  };
-  return msg as Message;
-};
 
 describe("command opt-out", () => {
+  const sandbox = createSandbox();
   let TrackingOptOutDocumentMock;
   let TrackingOptOutMock: MockManager<TOO.TrackingOptOutInt>;
   let findOne: sinon.SinonStub;
   let deleteMany: sinon.SinonStub;
   const userRec = {
     user_id: "123456789",
+  };
+
+  const buildMessageWithContent = (
+    content: string,
+    userId: string,
+    authorName: string
+  ): Message => {
+    const author: User = { id: userId, username: authorName } as User;
+    const channel: TextChannel = { send: sandbox.stub() } as TextChannel;
+    const msg: Partial<Message> = {
+      author,
+      content,
+      channel,
+    };
+    return msg as Message;
   };
 
   beforeEach(() => {

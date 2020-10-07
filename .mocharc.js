@@ -8,6 +8,7 @@ const config = {
   "extensions": ["ts"],
   "recursive": true,
   "require": ["ts-node/register", "module-alias/register", "chai", "sinon", "./test/testSetup.ts"],
+  "spec": "test/**/*.spec.ts",
   "throw-deprecation": true,
   "timeout": timeout,
 }

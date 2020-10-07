@@ -1,21 +1,25 @@
 import { expect } from "chai";
 import { Message } from "discord.js";
-import { createSandbox } from "sinon";
+import Sinon, { createSandbox } from "sinon";
 
 import * as TrackingList from "@Utils/commands/trackingList";
 import { trackingOptOutInterceptor } from "@Interceptors/trackingOptOutInterceptor";
 import { InterceptInt } from "@Interfaces/interceptor/InterceptInt";
 
-const sandbox = createSandbox();
-const isTrackableUser = sandbox.stub();
-before(() => {
-  sandbox.replace(TrackingList, "isTrackableUser", isTrackableUser);
-});
-
 describe("TrackingOptOutInterceptor", () => {
+  let sandbox: Sinon.SinonSandbox;
+  let isTrackableUser: Sinon.SinonStub;
+
+  beforeEach(() => {
+    sandbox = createSandbox();
+    isTrackableUser = sandbox.stub();
+    sandbox.replace(TrackingList, "isTrackableUser", isTrackableUser);
+  });
+
   afterEach(() => {
     isTrackableUser.resetHistory();
-  })
+    sandbox.restore();
+  });
   describe("next()", () => {
     beforeEach(() => {
       isTrackableUser.returns(true);
