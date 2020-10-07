@@ -95,7 +95,7 @@ const riddle: CommandInt = {
         // Otherwise, the action is `solve`.
         else {
           // Get the next argument as the riddle answer.
-          const answer = commandArguments.shift();
+          const answer = commandArguments.join(" ");
 
           // Check if the riddle answer is empty.
           if (!answer) {
