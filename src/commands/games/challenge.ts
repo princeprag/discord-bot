@@ -176,7 +176,7 @@ const challenge: CommandInt = {
       errorEmbed.setColor(bot.color);
       errorEmbed.setTitle("Challenge Error");
       errorEmbed.setDescription(
-        "Error happened while working with your challenge. Please, try again, or wait a bit."
+        error?.response?.data?.message ?? "Unknown error"
       );
 
       await message.reply(errorEmbed);
