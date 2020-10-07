@@ -103,27 +103,35 @@ const riddle: CommandInt = {
             return;
           }
 
-          const data = await axios.post<RiddleSolveInt>(
-            `https://api.noopschallenge.com/riddlebot/riddles/${id}`,
-            { answer },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
+          try {
+            const data = await axios.post<RiddleSolveInt>(
+              `https://api.noopschallenge.com/riddlebot/riddles/${id}`,
+              { answer },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+            const solved = data.data;
 
-          const solved = data.data;
-
-          // Add the data to the embed.
-          riddleEmbed.setTitle("Riddle solution");
-          riddleEmbed.addField("Result", solved.result);
-
-          if (solved.nextRiddlePath) {
+            // Add the data to the embed.
+            riddleEmbed.setTitle("Riddle solution");
+            riddleEmbed.addField("Result", solved.result);
             riddleEmbed.addField(
               "Next Riddle ID",
               solved.nextRiddlePath.split("/").reverse()[0]
             );
+          } catch (error) {
+            // if error not in answer, throw it to higher try catch
+            if (error?.status !== 400) {
+              throw error;
+            }
+
+            // Add the data to the embed.
+            riddleEmbed.setTitle("Riddle solution");
+            riddleEmbed.addField("Result", "incorrect");
+            riddleEmbed.setDescription(error.data.message);
           }
         }
       }
