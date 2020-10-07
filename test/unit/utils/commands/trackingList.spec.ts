@@ -1,23 +1,46 @@
 import { expect } from "chai";
 import Sinon, { createSandbox } from "sinon";
-import * as TL from "@Utils/commands/trackingList";
+import * as TOO from "@Models/TrackingOptOutModel";
 import {
   initializeTrackingArray,
   getTrackingOptOutIdArray,
   isTrackableUser,
+  loadCurrentTrackingOptOutList,
 } from "@Utils/commands/trackingList";
-
-
 
 describe("trackingList", () => {
   let sandbox: Sinon.SinonSandbox;
+  let find: sinon.SinonStub;
+  const userRec = {
+    user_id: "123456789",
+  };
+
+  const buildMessageWithContent = (
+    content: string,
+    userId: string,
+    authorName: string
+  ): Message => {
+    const author: User = { id: userId, username: authorName } as User;
+    const channel: TextChannel = { send: sandbox.stub() } as TextChannel;
+    const msg: Partial<Message> = {
+      author,
+      content,
+      channel,
+    };
+    return msg as Message;
+  };
+
   beforeEach(() => {
     sandbox = createSandbox();
     initializeTrackingArray(new Array<string>(), true);
+
+    find = sandbox.stub();
+    find.resolves();
+
+    sandbox.replace(TOO.TrackingOptOut, "find", find);
   });
-  
+
   afterEach(() => {
-    
     sandbox.restore();
   });
 
@@ -49,6 +72,27 @@ describe("trackingList", () => {
     });
   });
 
-  describe.skip("loadCurrentTrackingOptOutList", () => {});
-}
-);
+  describe("loadCurrentTrackingOptOutList", () => {
+    it("should get the current set of optOutUsers and load them into TRACKING_OPT_OUT", async () => {
+      const optOutUsers = new Array<TOO>();
+      find.resolves(optOutUsers);
+
+      await loadCurrentTrackingOptOutList();
+
+      expect(find).called;
+      expect(getTrackingOptOutIdArray()).to.deep.equal(optOutUsers);
+    });
+    context("exception occurs", () => {
+      it("should log error", async () => {
+        const errorLog = sandbox.spy(console, "error");
+        find.rejects();
+
+        await loadCurrentTrackingOptOutList();
+
+        expect(find).called;
+        expect(getTrackingOptOutIdArray()).to.be.empty;
+        expect(errorLog).called;
+      });
+    });
+  });
+});

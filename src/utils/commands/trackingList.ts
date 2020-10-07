@@ -1,7 +1,21 @@
+import { TrackingOptOut, TrackingOptOutInt } from "@Models/TrackingOptOutModel";
+
 export let TRACKING_OPT_OUT: Array<string>;
 
 export const loadCurrentTrackingOptOutList = async (): Promise<void> => {
-  return Promise.reject();
+  return TrackingOptOut.find()
+    .then((data: TrackingOptOutInt[]) => {
+      const trackingOptOutIds = data.map(
+        (user: TrackingOptOutInt) => user.userId
+      );
+      initializeTrackingArray(trackingOptOutIds);
+    })
+    .catch((error: Error) => {
+      console.error(
+        `Error occured when fetching current set of opt-out users`,
+        error
+      );
+    });
 };
 
 export const initializeTrackingArray = (
