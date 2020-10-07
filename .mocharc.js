@@ -1,4 +1,4 @@
-let timeout = 5000;
+let timeout = 1000;
 if (process.env.MOCHA_TIMEOUT) {
   timeout = MOCHA_TIMEOUT;
 }

@@ -11,24 +11,6 @@ import {
 describe("trackingList", () => {
   let sandbox: Sinon.SinonSandbox;
   let find: sinon.SinonStub;
-  const userRec = {
-    user_id: "123456789",
-  };
-
-  const buildMessageWithContent = (
-    content: string,
-    userId: string,
-    authorName: string
-  ): Message => {
-    const author: User = { id: userId, username: authorName } as User;
-    const channel: TextChannel = { send: sandbox.stub() } as TextChannel;
-    const msg: Partial<Message> = {
-      author,
-      content,
-      channel,
-    };
-    return msg as Message;
-  };
 
   beforeEach(() => {
     sandbox = createSandbox();

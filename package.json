@@ -24,8 +24,8 @@
     "dev": "nodemon",
     "dev:command": "npm run build && npm run start:ts",
     "lint": "eslint src --fix",
-    "start": "node ./prod/src/main.js",
-    "start:ts": "ts-node -r ./src/main.ts",
+    "start": "node ./prod/src/serve.js",
+    "start:ts": "ts-node -r ./src/serve.ts",
     "pretest:unit": "npm run build",
     "test:unit": "mocha './test/unit/**/*spec.ts'"
   },
