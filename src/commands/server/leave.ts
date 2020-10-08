@@ -1,4 +1,3 @@
-import user from "@Commands/general/user";
 import CommandInt from "@Interfaces/CommandInt";
 
 const leave: CommandInt = {
