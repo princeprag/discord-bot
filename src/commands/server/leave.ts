@@ -1,3 +1,4 @@
+import user from "@Commands/general/user";
 import CommandInt from "@Interfaces/CommandInt";
 
 const leave: CommandInt = {
@@ -27,7 +28,12 @@ const leave: CommandInt = {
       let count = 0;
       await channel.send(
         `**Available servers:**\r\n${guilds.cache
-          .map((guild) => `**${++count}.** ${guild.id} - ${guild.name}`)
+          .map(
+            (guild) =>
+              `**${++count}.** ${guild.id} - ${guild.name} - Owned by ${
+                guild.owner?.user.username
+              } (${guild.ownerID})`
+          )
           .join("\r\n")}`
       );
 
