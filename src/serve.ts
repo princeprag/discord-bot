@@ -1,3 +1,3 @@
-import { botConnect } from "botConnect";
+import { botConnect } from "./botConnect";
 
 botConnect().catch(console.log);
