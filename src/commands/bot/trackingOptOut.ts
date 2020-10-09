@@ -79,8 +79,6 @@ export const trackingOptOut: CommandInt = {
     const userId = message?.author?.id;
     const canTrackableUser = isTrackableUser(userId);
 
-    console.log(`Record Exists: ${canTrackableUser}`);
-
     if (subcommand === "status") {
       await statusResolve(message, userId, "status")(canTrackableUser);
       return;

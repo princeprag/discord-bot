@@ -1,5 +1,4 @@
 import { TrackingOptOut, TrackingOptOutInt } from "@Models/TrackingOptOutModel";
-import { isNegative } from "mathjs";
 
 export let TRACKING_OPT_OUT: Array<string> = new Array<string>();
 
@@ -22,7 +21,7 @@ export const loadCurrentTrackingOptOutList = async (): Promise<void> => {
 export const initializeTrackingArray = function (
   startArray: Array<string>,
   clear?: boolean
-) {
+): void {
   if (clear || typeof TRACKING_OPT_OUT === "undefined") {
     TRACKING_OPT_OUT = new Array<string>();
   }

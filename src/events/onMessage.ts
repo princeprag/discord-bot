@@ -49,8 +49,10 @@ async function onMessage(
   // Get the heartsListener, levelsListener and usageListener from the listeners list.
   const {
     heartsListener,
-    levelsListener,
-    usageListener,
+    interceptedLevelsListener: levelsListener,
+    interceptedUsageListener: usageListener,
+//    levelsListener,
+//    usageListener,
   } = client.customListeners;
 
   // Check if the heartsListener and levelsListener exists.
