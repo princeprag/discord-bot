@@ -51,8 +51,6 @@ async function onMessage(
     heartsListener,
     interceptedLevelsListener: levelsListener,
     interceptedUsageListener: usageListener,
-//    levelsListener,
-//    usageListener,
   } = client.customListeners;
 
   // Check if the heartsListener and levelsListener exists.
