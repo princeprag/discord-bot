@@ -14,7 +14,6 @@ export const addCallBack = (message: Message, authorId: string) => (
   err?: Error,
   data?: TrackingOptOutInt
 ): Promise<TrackingOptOutInt> => {
-  console.debug(`${data}`);
   if (data) {
     trackUser(data.user_id, false);
     message.channel.send(`<@${authorId}>, you are now opt-out of tracking.`);
