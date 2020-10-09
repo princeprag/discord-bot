@@ -6,6 +6,7 @@ import {
   getTrackingOptOutIdArray,
   isTrackableUser,
   loadCurrentTrackingOptOutList,
+  trackUser,
 } from "@Utils/commands/trackingList";
 
 describe("trackingList", () => {
@@ -76,4 +77,21 @@ describe("trackingList", () => {
       });
     });
   });
+  describe("trackUser", () => {
+    context("attempting to add user to opt out list", () => {
+      it("should update", () => {
+        trackUser("userId", false);
+
+        expect(getTrackingOptOutIdArray()).to.deep.equal(["userId"]);
+      })
+    })
+    context("attempting to remove user from opt out list", () => {
+      it("should update", () => {
+        initializeTrackingArray(["userId", "userId", "notUserId"]);
+        trackUser("userId", true);
+
+        expect(getTrackingOptOutIdArray()).to.deep.equal(["notUserId"]);
+      })
+    })
+  })
 });

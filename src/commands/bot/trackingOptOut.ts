@@ -2,7 +2,7 @@ import { Message } from "discord.js";
 import CommandInt from "@Interfaces/CommandInt";
 import { TrackingOptOut, TrackingOptOutInt } from "@Models/TrackingOptOutModel";
 import MessageInt from "@Interfaces/MessageInt";
-import { isTrackableUser } from "@Utils/commands/trackingList";
+import { isTrackableUser, trackUser } from "@Utils/commands/trackingList";
 
 export const VALID_SUBCOMMAND = ["add", "remove", "status"];
 export const MESSAGE_COMMAND_INVALID = `Sorry, I did not get that.`;
@@ -16,6 +16,7 @@ export const addCallBack = (message: Message, authorId: string) => (
 ): Promise<TrackingOptOutInt> => {
   console.debug(`${data}`);
   if (data) {
+    trackUser(data.user_id, false);
     message.channel.send(`<@${authorId}>, you are now opt-out of tracking.`);
     return Promise.resolve(data);
   }
@@ -31,6 +32,7 @@ export const addCallBack = (message: Message, authorId: string) => (
 export const removeCallback = (message: Message) => (err?: Error): void => {
   const authorId = message?.author?.id;
   if (!err) {
+    trackUser(authorId, true);
     message.channel.send(`<@${authorId}>, you are now opted into tracking.`);
   } else {
     console.error(err);

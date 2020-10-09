@@ -1,6 +1,7 @@
 import { TrackingOptOut, TrackingOptOutInt } from "@Models/TrackingOptOutModel";
+import { isNegative } from "mathjs";
 
-export let TRACKING_OPT_OUT: Array<string>;
+export let TRACKING_OPT_OUT: Array<string> = new Array<string>();
 
 export const loadCurrentTrackingOptOutList = async (): Promise<void> => {
   return TrackingOptOut.find()
@@ -18,10 +19,10 @@ export const loadCurrentTrackingOptOutList = async (): Promise<void> => {
     });
 };
 
-export const initializeTrackingArray = (
+export const initializeTrackingArray = function (
   startArray: Array<string>,
   clear?: boolean
-): void => {
+) {
   if (clear || typeof TRACKING_OPT_OUT === "undefined") {
     TRACKING_OPT_OUT = new Array<string>();
   }
@@ -34,6 +35,17 @@ export const isTrackableUser = (id: string): boolean => {
     TRACKING_OPT_OUT = new Array<string>();
   }
   return TRACKING_OPT_OUT.includes(id) === false;
+};
+
+export const trackUser = (id: string, remove: boolean): void => {
+  if (typeof TRACKING_OPT_OUT === "undefined") {
+    TRACKING_OPT_OUT = new Array<string>();
+  }
+  if (remove) {
+    TRACKING_OPT_OUT = TRACKING_OPT_OUT?.filter((item: string) => item !== id);
+  } else {
+    TRACKING_OPT_OUT.push(id);
+  }
 };
 
 export function getTrackingOptOutIdArray(): Array<string> {

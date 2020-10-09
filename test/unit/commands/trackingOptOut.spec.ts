@@ -19,6 +19,7 @@ describe("command opt-out", () => {
   let TrackingOptOutDocumentMock;
   let TrackingOptOutMock: MockManager<TOO.TrackingOptOutInt>;
   let isTrackableUser: SinonStub;
+  let trackUser: SinonStub;
   let deleteMany: SinonStub;
   const userRec = {
     user_id: "123456789",
@@ -40,12 +41,15 @@ describe("command opt-out", () => {
   };
 
   beforeEach(() => {
+    trackUser = sandbox.stub();
+
     isTrackableUser = sandbox.stub();
     isTrackableUser.returns(false);
 
     deleteMany = sandbox.stub();
     deleteMany.resolves();
 
+    sandbox.replace(TrackingList, "trackUser", trackUser);
     sandbox.replace(TrackingList, "isTrackableUser", isTrackableUser);
     sandbox.replace(TOO.TrackingOptOut, "deleteMany", deleteMany);
     TrackingOptOutDocumentMock = mock<TOO.TrackingOptOutInt>();
@@ -138,6 +142,7 @@ describe("command opt-out", () => {
           } as TOO.TrackingOptOutInt;
           await addCallBack(testMessage, "123456789")(null, document);
 
+          expect(trackUser).calledWith("123456789", false);
           expect(testMessage.channel.send).calledWith(
             `<@123456789>, you are now opt-out of tracking.`
           );
@@ -157,6 +162,7 @@ describe("command opt-out", () => {
               null
             );
           } catch (error) {
+            expect(trackUser).not.called;
             expect(testMessage.channel.send).calledWith(
               `Oops, <@123456789>, something went wrong. Please try again in a few minutes.`
             );
@@ -204,6 +210,7 @@ describe("command opt-out", () => {
 
           await removeCallback(testMessage)(null);
 
+          expect(trackUser).calledWith("123456789", true);
           expect(testMessage.channel.send).calledWith(
             `<@123456789>, you are now opted into tracking.`
           );
