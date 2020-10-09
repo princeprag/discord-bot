@@ -1,6 +1,7 @@
 import "module-alias/register";
 import { Client, WebhookClient } from "discord.js";
 import connectDatabase from "@Database";
+import { loadCurrentTrackingOptOutList } from "@Utils/commands/trackingList";
 import ClientInt from "@Interfaces/ClientInt";
 import extendsClientToClientInt from "@Utils/extendsClientToClientInt";
 import { getCommands, getListeners } from "@Utils/readDirectory";
@@ -16,7 +17,7 @@ import onMessageDelete from "@Events/onMessageDelete";
 import onMessageUpdate from "@Events/onMessageUpdate";
 import onGuildMemberRemove from "@Events/onGuildMemberRemove";
 
-async function botConnect(): Promise<void> {
+export async function botConnect(): Promise<void> {
   // Get the node_env from the environment.
   const node_env = process.env.NODE_ENV || "development";
 
@@ -41,7 +42,7 @@ async function botConnect(): Promise<void> {
   }
 
   // Connect to the MongoDB database.
-  await connectDatabase(debugChannelHook);
+  await connectDatabase(debugChannelHook).then(loadCurrentTrackingOptOutList);
 
   // Create a new Discord bot object.
   const client: ClientInt = extendsClientToClientInt(new Client());
@@ -113,5 +114,3 @@ async function botConnect(): Promise<void> {
     }
   });
 }
-
-botConnect().catch(console.log);
