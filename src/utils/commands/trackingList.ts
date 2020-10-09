@@ -30,6 +30,9 @@ export const initializeTrackingArray = (
 };
 
 export const isTrackableUser = (id: string): boolean => {
+  if (typeof TRACKING_OPT_OUT === "undefined") {
+    TRACKING_OPT_OUT = new Array<string>();
+  }
   return TRACKING_OPT_OUT.includes(id) === false;
 };
 

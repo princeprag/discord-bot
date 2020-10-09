@@ -2,6 +2,7 @@ import { Message } from "discord.js";
 import CommandInt from "@Interfaces/CommandInt";
 import { TrackingOptOut, TrackingOptOutInt } from "@Models/TrackingOptOutModel";
 import MessageInt from "@Interfaces/MessageInt";
+import { isTrackableUser } from "@Utils/commands/trackingList";
 
 export const VALID_SUBCOMMAND = ["add", "remove", "status"];
 export const MESSAGE_COMMAND_INVALID = `Sorry, I did not get that.`;
@@ -43,12 +44,12 @@ const statusResolve = (
   message: Message,
   authorName: string,
   subcommand: string
-) => (data: TrackingOptOutInt | null): TrackingOptOutInt | null => {
-  const optStatus: string = data === null || data === undefined ? "in" : "out";
+) => (canTrackUser: boolean | null): boolean | null => {
+  const optStatus: string = canTrackUser ? "in" : "out";
   if (subcommand === "status") {
     message.channel.send(`<@${authorName}> is currently opted-${optStatus}`);
   }
-  return data ?? null;
+  return canTrackUser ?? null;
 };
 
 export const trackingOptOut: CommandInt = {
@@ -72,36 +73,29 @@ export const trackingOptOut: CommandInt = {
       message.channel.send(MESSAGE_SUBCOMMAND_INVALID);
       return;
     }
-    if (process.env.PRODDEV === "development") {
-      console.debug(`Command: ${command}`);
-      console.debug(`Sub-Command: ${subcommand}`);
-      console.debug(`Author: ${JSON.stringify(message.author)}`);
-    }
+
     const userId = message?.author?.id;
-    const found = await TrackingOptOut.findOne({ user_id: userId })
-      .then(statusResolve(message, userId, subcommand))
-      .catch((err: Error) => {
-        console.error(err);
-        message?.channel?.send(
-          `Oops, <@${userId}>, something went wrong. Please try again in a few minutes.`
-        );
-        return null;
-      });
+    const canTrackableUser = isTrackableUser(userId);
 
-    const recordExists = !!found;
+    console.log(`Record Exists: ${canTrackableUser}`);
 
-    if (subcommand === "add" && !recordExists) {
+    if (subcommand === "status") {
+      await statusResolve(message, userId, "status")(canTrackableUser);
+      return;
+    }
+
+    if (subcommand === "add" && canTrackableUser) {
       const newOptOutUser = new TrackingOptOut({
         user_id: userId,
       });
       await newOptOutUser.save(addCallBack(message, userId));
       return; // exit run fn
     }
-    if (subcommand === "add" && recordExists) {
-      statusResolve(message, userId, "status")(found);
+    if (subcommand === "add" && !canTrackableUser) {
+      statusResolve(message, userId, "status")(canTrackableUser);
       return; // exit run fn
     }
-    if (subcommand === "remove" && recordExists) {
+    if (subcommand === "remove" && !canTrackableUser) {
       await TrackingOptOut.deleteMany(
         { user_id: userId },
         removeCallback(message)
@@ -109,8 +103,8 @@ export const trackingOptOut: CommandInt = {
 
       return; // exit run fn
     }
-    if (subcommand === "remove" && !recordExists) {
-      statusResolve(message, userId, "status")(found);
+    if (subcommand === "remove" && canTrackableUser) {
+      statusResolve(message, userId, "status")(canTrackableUser);
       return; // exit run fn
     }
   },

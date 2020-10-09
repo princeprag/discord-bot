@@ -53,7 +53,6 @@ describe("trackingList", () => {
       });
     });
   });
-
   describe("loadCurrentTrackingOptOutList", () => {
     it("should get the current set of optOutUsers and load them into TRACKING_OPT_OUT", async () => {
       const optOutUsers = new Array<TOO>();

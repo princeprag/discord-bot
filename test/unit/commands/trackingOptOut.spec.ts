@@ -1,7 +1,8 @@
 import { expect } from "chai";
-import { createSandbox } from "sinon";
+import { createSandbox, SinonStub } from "sinon";
 import { Message, TextChannel, User } from "discord.js";
 import * as TOO from "@Models/TrackingOptOutModel";
+import * as TrackingList from "@Utils/commands/trackingList";
 import { mock } from "ts-mockito";
 import { ImportMock, MockManager } from "ts-mock-imports";
 import {
@@ -17,8 +18,8 @@ describe("command opt-out", () => {
   const sandbox = createSandbox();
   let TrackingOptOutDocumentMock;
   let TrackingOptOutMock: MockManager<TOO.TrackingOptOutInt>;
-  let findOne: sinon.SinonStub;
-  let deleteMany: sinon.SinonStub;
+  let isTrackableUser: SinonStub;
+  let deleteMany: SinonStub;
   const userRec = {
     user_id: "123456789",
   };
@@ -39,13 +40,13 @@ describe("command opt-out", () => {
   };
 
   beforeEach(() => {
-    findOne = sandbox.stub();
-    findOne.resolves();
+    isTrackableUser = sandbox.stub();
+    isTrackableUser.returns(false);
 
     deleteMany = sandbox.stub();
     deleteMany.resolves();
 
-    sandbox.replace(TOO.TrackingOptOut, "findOne", findOne);
+    sandbox.replace(TrackingList, "isTrackableUser", isTrackableUser);
     sandbox.replace(TOO.TrackingOptOut, "deleteMany", deleteMany);
     TrackingOptOutDocumentMock = mock<TOO.TrackingOptOutInt>();
     TrackingOptOutMock = ImportMock.mockFunction(
@@ -99,26 +100,24 @@ describe("command opt-out", () => {
             "123456789",
             "author"
           );
-          findOne.resolves(userRec);
+          isTrackableUser.returns(false);
 
           await trackingOptOut.run(testMessage);
 
-          expect(TrackingOptOutMock).not.calledOnceWith({
-            user_id: "123456789",
-          });
+          expect(TrackingOptOutMock).not.called;
           expect(testMessage.channel.send).calledWith(
             `<@123456789> is currently opted-out`
           );
         });
       });
-      context("user does not exist in db", () => {
+      context("user does not exist", () => {
         it("attempt to add user id to database", async () => {
           const testMessage: Message = buildMessageWithContent(
             "   |optout                  add   ",
             "123456789",
             "author"
           );
-          findOne.resolves();
+          isTrackableUser.returns(true);
 
           await trackingOptOut.run(testMessage);
 
@@ -172,7 +171,7 @@ describe("command opt-out", () => {
           "123456789",
           "author"
         );
-        findOne.resolves(userRec);
+        isTrackableUser.returns(false);
         deleteMany.resolves();
 
         await trackingOptOut.run(testMessage);
@@ -219,7 +218,7 @@ describe("command opt-out", () => {
             "123456789",
             "author"
           );
-          findOne.resolves();
+          isTrackableUser.returns(true);
 
           await trackingOptOut.run(testMessage);
 
@@ -231,7 +230,8 @@ describe("command opt-out", () => {
             "123456789",
             "author"
           );
-          findOne.resolves();
+          isTrackableUser.returns(true);
+
           await trackingOptOut.run(testMessage);
 
           expect(testMessage.channel.send).calledWith(
@@ -246,28 +246,12 @@ describe("command opt-out", () => {
             "123456789",
             "author"
           );
-          findOne.resolves(userRec);
+          isTrackableUser.returns(false);
 
           await trackingOptOut.run(testMessage);
 
           expect(testMessage.channel.send).calledWith(
             `<@123456789> is currently opted-out`
-          );
-        });
-      });
-      context("error occured", () => {
-        it("notify user an error occured", async () => {
-          const testMessage: Message = buildMessageWithContent(
-            "   |optout status   ",
-            "123456789",
-            "author"
-          );
-          findOne.rejects("Fake Error");
-
-          await trackingOptOut.run(testMessage);
-
-          expect(testMessage.channel.send).calledWith(
-            `Oops, <@123456789>, something went wrong. Please try again in a few minutes.`
           );
         });
       });
