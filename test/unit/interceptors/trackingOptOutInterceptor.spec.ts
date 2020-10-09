@@ -3,17 +3,19 @@ import { Message } from "discord.js";
 import Sinon, { createSandbox } from "sinon";
 
 import * as TrackingList from "@Utils/commands/trackingList";
-import { trackingOptOutInterceptor } from "@Interceptors/trackingOptOutInterceptor";
+import { getTrackingInterceptor } from "@Interceptors/trackingOptOutInterceptor";
 import { InterceptInt } from "@Interfaces/interceptor/InterceptInt";
 
 describe("TrackingOptOutInterceptor", () => {
   let sandbox: Sinon.SinonSandbox;
   let isTrackableUser: Sinon.SinonStub;
+  let trackingOptOutInterceptor: InterceptInt;
 
   beforeEach(() => {
     sandbox = createSandbox();
     isTrackableUser = sandbox.stub();
     sandbox.replace(TrackingList, "isTrackableUser", isTrackableUser);
+    trackingOptOutInterceptor = getTrackingInterceptor();
   });
 
   afterEach(() => {

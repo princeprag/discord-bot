@@ -1,14 +1,14 @@
-import { Message } from "discord.js";
+import MessageInt from "@Interfaces/MessageInt";
 
-export type MessageListenerHandler = (message: Message) => Promise<void>;
-export type InterceptorAction = (message: Message) => Promise<boolean>;
+export type MessageListenerHandler = (message: MessageInt) => Promise<void>;
+export type InterceptorAction = (message: MessageInt) => Promise<boolean>;
 export type InterceptIntNext = MessageListenerHandler | InterceptInt;
 
 export interface InterceptInt {
   setNext(next?: InterceptIntNext): void;
   next?: InterceptIntNext;
   action: InterceptorAction;
-  intercept(message: Message): Promise<void>;
+  intercept(message: MessageInt): Promise<void>;
 }
 
 export const interceptorFactory = (action: InterceptorAction): InterceptInt => {
@@ -17,7 +17,7 @@ export const interceptorFactory = (action: InterceptorAction): InterceptInt => {
     setNext: function (next?: InterceptIntNext) {
       this.next = next;
     },
-    intercept: async function (message: Message) {
+    intercept: async function (message: MessageInt) {
       const shouldCallNext = await this.action(message);
       if (shouldCallNext && typeof this?.next === "function") {
         return await this.next(message);

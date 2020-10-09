@@ -11,14 +11,12 @@ export const trackingOptOutInterceptorAction: InterceptorAction = async function
 ): Promise<boolean> {
   const { author } = message;
   const canTrackUser: boolean = isTrackableUser(author?.id);
-  if (canTrackUser) {
-    return await Promise.resolve(true);
-  }
-  return await Promise.resolve(false);
+
+  return Promise.resolve(canTrackUser);
 };
 
-export const trackingOptOutInterceptor: InterceptInt = interceptorFactory(
-  trackingOptOutInterceptorAction
-);
+export function getTrackingInterceptor(): InterceptInt {
+  return interceptorFactory(trackingOptOutInterceptorAction);
+}
 
-export default trackingOptOutInterceptor;
+export default getTrackingInterceptor;

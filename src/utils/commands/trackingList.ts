@@ -6,7 +6,7 @@ export const loadCurrentTrackingOptOutList = async (): Promise<void> => {
   return TrackingOptOut.find()
     .then((data: TrackingOptOutInt[]) => {
       const trackingOptOutIds = data.map(
-        (user: TrackingOptOutInt) => user.userId
+        (user: TrackingOptOutInt) => user.user_id
       );
       initializeTrackingArray(trackingOptOutIds);
     })
