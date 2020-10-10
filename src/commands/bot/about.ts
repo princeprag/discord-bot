@@ -1,6 +1,15 @@
 import CommandInt from "@Interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
 
+const ABOUT_CONSTANT = {
+  title: "Greetings! My name is nhbot!",
+  description: `I am a discord bot created by [nhcarrigan](https://www.nhcarrigan.com), with help from a few contributors.  You can view my [source code and contributor list](https://github.com/nhcarrigan/discord-bot) online.\r\n\r\nView the [official repository](https://github.com/nhcarrigan/discord-bot) or you can join to the [official Discord server](https://discord.gg/PHqDbkg).`,
+  creationDate: `Sun May 31 2020`,
+  commandSuffix: " 🙃",
+  favouriteColor: "PURPLE! 💜",
+  footerMessage: "It is nice to meet you!",
+};
+
 /**
  * See the bot information.
  * @constant
@@ -22,19 +31,16 @@ const about: CommandInt = {
     aboutEmbed.setColor(color);
 
     // Add the title.
-    aboutEmbed.setTitle("Greetings! My name is nhbot!");
+    aboutEmbed.setTitle(ABOUT_CONSTANT.title);
 
     // Add the description.
-    aboutEmbed.setDescription(
-      "I am a discord bot created by [nhcarrigan](https://www.nhcarrigan.com), with help from a few contributors.  You can view my [source code and contributor list](https://github.com/nhcarrigan/discord-bot) online.\r\n" +
-        "\r\nView the [official repository](https://github.com/nhcarrigan/discord-bot) or you can join to the [official Discord server](https://discord.gg/PHqDbkg)."
-    );
+    aboutEmbed.setDescription(ABOUT_CONSTANT.description);
 
     // Add the bot version.
     aboutEmbed.addField("Version", version, true);
 
     // Add the bot creation date.
-    aboutEmbed.addField("Creation date", "Sun May 31 2020", true);
+    aboutEmbed.addField("Creation date", ABOUT_CONSTANT.creationDate, true);
 
     // Add the bot servers count.
     aboutEmbed.addField("Servers", guilds.cache.size, true);
@@ -45,15 +51,15 @@ const about: CommandInt = {
     // Add the available commands length.
     aboutEmbed.addField(
       "Available commands",
-      `${new Set(Object.values(commands)).size} 🙃`,
+      `${new Set(Object.values(commands)).size}${ABOUT_CONSTANT.commandSuffix}`,
       true
     );
 
     // Add the favourite color.
-    aboutEmbed.addField("Favourite color", "PURPLE! 💜", true);
+    aboutEmbed.addField("Favourite color", ABOUT_CONSTANT.favouriteColor, true);
 
     // Add the footer.
-    aboutEmbed.setFooter("It is nice to meet you!");
+    aboutEmbed.setFooter(ABOUT_CONSTANT.footerMessage);
 
     // Add the current timestamp.
     aboutEmbed.setTimestamp();
