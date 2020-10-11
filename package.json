@@ -21,7 +21,8 @@
   "homepage": "https://github.com/nhcarrigan/discord-bot#readme",
   "scripts": {
     "build": "rm -rf ./prod && tsc",
-    "coverage": "nyc",
+    "precoverage": "rm -rf ./coverage ./nyc_output",
+    "coverage": "nyc npm run test:unit",
     "dev": "nodemon",
     "dev:command": "npm run build && npm run start:ts",
     "lint": "eslint src --fix",

@@ -140,23 +140,18 @@ describe("onMessage event", () => {
     it("should return without calling command", async () => {
       const aboutStub = sandbox.stub().resolves();
       const client = mock<discordjs.Client>();
-      const msg = mock<discordjs.Message>();
+      const msg: discordjs.Message & { guild } = mock<discordjs.Message>();
       const author = mock<discordjs.User>();
       author.id = "1";
       msg.author = author;
       msg.content = `${testPrefix}about`;
       msg.attachments = new discordjs.Collection();
+      msg.guild = null;
 
       const clientInt = extendsClientToClientInt(client);
       clientInt.prefix = { server_id: testPrefix };
       clientInt.user = mock<discordjs.User>();
       clientInt.commands = { about: mockCmd("about", aboutStub) };
-      clientInt.customListeners = await getListeners();
-      Object.keys(clientInt.customListeners).forEach((key) => {
-        const stub = sandbox.stub();
-        stub.resolves();
-        clientInt.customListeners[key] = mockListener(key, stub);
-      });
 
       await onMessage(msg, clientInt);
 
