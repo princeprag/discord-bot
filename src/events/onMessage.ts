@@ -45,13 +45,10 @@ async function onMessage(
   if (!guild) {
     return;
   }
-
   // Get the heartsListener, levelsListener and usageListener from the listeners list.
-  const {
-    heartsListener,
-    interceptedLevelsListener: levelsListener,
-    interceptedUsageListener: usageListener,
-  } = client.customListeners;
+  const { heartsListener } = client.customListeners;
+  const levelsListener = client.customListeners.interceptableLevelsListener;
+  const usageListener = client.customListeners.interceptableUsageListener;
 
   // Check if the heartsListener and levelsListener exists.
   if (heartsListener && levelsListener) {
@@ -61,7 +58,6 @@ async function onMessage(
     // Execute the levels listener.
     await levelsListener.run(message);
   }
-
   // Check if the file has attachments (Files, images or videos).
   if (attachments.array().length) {
     let haveAFile = false;
@@ -88,7 +84,6 @@ async function onMessage(
       return;
     }
   }
-
   // Get the current Discord server id.
   const server_id = guild.id;
 
@@ -111,12 +106,10 @@ async function onMessage(
 
     prefix = client.prefix[server_id];
   }
-
   // Check if the content of the message starts with the server prefix.
   if (!content.startsWith(prefix)) {
     return;
   }
-
   // Get the first argument as the command name.
   message.commandName = message.commandArguments.shift() || prefix;
 
@@ -129,7 +122,6 @@ async function onMessage(
   // Check if the command exists.
   if (command) {
     channel.startTyping();
-
     // Check if the usage listener exists.
     if (usageListener) {
       // Execute the usage listener.
