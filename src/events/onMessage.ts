@@ -81,7 +81,7 @@ async function onMessage(
         3000
       );
 
-      return Promise.resolve();
+      return;
     }
   }
   // Get the current Discord server id.
