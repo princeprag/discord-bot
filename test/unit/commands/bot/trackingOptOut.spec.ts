@@ -12,10 +12,10 @@ import {
   addCallBack,
   trackingOptOut,
 } from "@Commands/bot/trackingOptOut";
-
+import { buildMessageInt } from "../../../testSetup";
 
 describe("command opt-out", () => {
-  const sandbox = createSandbox();
+  let sandbox = createSandbox();
   let TrackingOptOutDocumentMock;
   let TrackingOptOutMock: MockManager<TOO.TrackingOptOutInt>;
   let isTrackableUser: SinonStub;
@@ -25,22 +25,8 @@ describe("command opt-out", () => {
     user_id: "123456789",
   };
 
-  const buildMessageWithContent = (
-    content: string,
-    userId: string,
-    authorName: string
-  ): Message => {
-    const author: User = { id: userId, username: authorName } as User;
-    const channel: TextChannel = { send: sandbox.stub() } as TextChannel;
-    const msg: Partial<Message> = {
-      author,
-      content,
-      channel,
-    };
-    return msg as Message;
-  };
-
   beforeEach(() => {
+    sandbox = createSandbox();
     trackUser = sandbox.stub();
 
     isTrackableUser = sandbox.stub();
@@ -67,7 +53,8 @@ describe("command opt-out", () => {
 
   context("when command invalid", () => {
     it("return error message", async () => {
-      const testMessage: Message = buildMessageWithContent(
+      const testMessage: Message = buildMessageInt(
+        sandbox,
         "|outOut add",
         "123456789",
         "author"
@@ -81,7 +68,8 @@ describe("command opt-out", () => {
 
   context("when subcommand invalid", () => {
     it("return error message", async () => {
-      const testMessage: Message = buildMessageWithContent(
+      const testMessage: Message = buildMessageInt(
+        sandbox,
         "|optout",
         "123456789",
         "author"
@@ -99,7 +87,8 @@ describe("command opt-out", () => {
     describe("command: !optout add", () => {
       context("user already exists", () => {
         it("invoke call back without actually adding", async () => {
-          const testMessage: Message = buildMessageWithContent(
+          const testMessage: Message = buildMessageInt(
+            sandbox,
             "   |optout                  add   ",
             "123456789",
             "author"
@@ -116,7 +105,8 @@ describe("command opt-out", () => {
       });
       context("user does not exist", () => {
         it("attempt to add user id to database", async () => {
-          const testMessage: Message = buildMessageWithContent(
+          const testMessage: Message = buildMessageInt(
+            sandbox,
             "   |optout                  add   ",
             "123456789",
             "author"
@@ -132,7 +122,8 @@ describe("command opt-out", () => {
       });
       describe("addCallBack called", () => {
         it("should notify user they are now opt-out", async () => {
-          const testMessage: Message = buildMessageWithContent(
+          const testMessage: Message = buildMessageInt(
+            sandbox,
             "|optout add",
             "123456789",
             "author"
@@ -148,7 +139,8 @@ describe("command opt-out", () => {
           );
         });
         it("should notify user if opt-out failed", async () => {
-          const testMessage: Message = buildMessageWithContent(
+          const testMessage: Message = buildMessageInt(
+            sandbox,
             "|optout add",
             "123456789",
             "author"
@@ -172,7 +164,8 @@ describe("command opt-out", () => {
     });
     describe("command: !optout remove", () => {
       it("call deleteMany to remove records", async () => {
-        const testMessage: Message = buildMessageWithContent(
+        const testMessage: Message = buildMessageInt(
+          sandbox,
           "   |optout remove   ",
           "123456789",
           "author"
@@ -189,7 +182,8 @@ describe("command opt-out", () => {
       });
       describe("removeCallBack called", () => {
         it("warn user if error occured", async () => {
-          const testMessage: Message = buildMessageWithContent(
+          const testMessage: Message = buildMessageInt(
+            sandbox,
             "   |optout remove   ",
             "123456789",
             "author"
@@ -202,7 +196,8 @@ describe("command opt-out", () => {
           );
         });
         it("notify user of status change", async () => {
-          const testMessage: Message = buildMessageWithContent(
+          const testMessage: Message = buildMessageInt(
+            sandbox,
             "   |optout remove   ",
             "123456789",
             "author"
@@ -220,7 +215,8 @@ describe("command opt-out", () => {
     describe("command: !optout status", () => {
       context("user not found", () => {
         it("call find to recieve records", async () => {
-          const testMessage: Message = buildMessageWithContent(
+          const testMessage: Message = buildMessageInt(
+            sandbox,
             "   |optout status   ",
             "123456789",
             "author"
@@ -232,7 +228,8 @@ describe("command opt-out", () => {
           expect(TOO.TrackingOptOut.deleteMany).not.calledWith(userRec);
         });
         it("notify user they are opt-in", async () => {
-          const testMessage: Message = buildMessageWithContent(
+          const testMessage: Message = buildMessageInt(
+            sandbox,
             "   |optout status   ",
             "123456789",
             "author"
@@ -248,7 +245,8 @@ describe("command opt-out", () => {
       });
       context("user found", () => {
         it("notify user they are opt-out", async () => {
-          const testMessage: Message = buildMessageWithContent(
+          const testMessage: Message = buildMessageInt(
+            sandbox,
             "   |optout status   ",
             "123456789",
             "author"
