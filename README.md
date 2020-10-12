@@ -1,6 +1,6 @@
 # My Discord Bot
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![License: GPL-3.0](https://img.shields.io/github/license/nhcarrigan/discord-bot?color=purple)](https://opensource.org/licenses/MIT)
@@ -44,6 +44,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/Andreybest"><img src="https://avatars0.githubusercontent.com/u/20759487?v=4" width="100px;" alt=""/><br /><sub><b>Andrew</b></sub></a><br /><a href="https://github.com/nhcarrigan/discord-bot/commits?author=Andreybest" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/zephy20"><img src="https://avatars2.githubusercontent.com/u/7047892?v=4" width="100px;" alt=""/><br /><sub><b>Kartik V</b></sub></a><br /><a href="https://github.com/nhcarrigan/discord-bot/commits?author=zephy20" title="Code">💻</a></td>
     <td align="center"><a href="https://shadowtime2000.github.io"><img src="https://avatars1.githubusercontent.com/u/66655515?v=4" width="100px;" alt=""/><br /><sub><b>shadowtime2000</b></sub></a><br /><a href="https://github.com/nhcarrigan/discord-bot/issues?q=author%3Ashadowtime2000" title="Bug reports">🐛</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="http://catalactics.now.sh"><img src="https://avatars1.githubusercontent.com/u/45566099?v=4" width="100px;" alt=""/><br /><sub><b>Joshua Pelealu</b></sub></a><br /><a href="https://github.com/nhcarrigan/discord-bot/commits?author=JoshuaPelealu" title="Code">💻</a></td>
   </tr>
 </table>
 
