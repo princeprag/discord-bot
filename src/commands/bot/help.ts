@@ -1,6 +1,13 @@
 import CommandInt from "@Interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
 
+const HELP_CONSTANTS = {
+  title: "Bot commands",
+  description: (prefix: string) =>
+    `My available commands include the following. The command name must be prefixed with \`${prefix}\`, just like the \`${prefix}help\` command used to get this message. For information on a specific command, use \`${prefix}help <command>\`.`,
+  footer: "I hope I could help!",
+};
+
 const help: CommandInt = {
   name: "help",
   description:
@@ -84,18 +91,10 @@ const help: CommandInt = {
     helpEmbed.setColor(color);
 
     // Add the title.
-    helpEmbed.setTitle("Bot commands");
+    helpEmbed.setTitle(HELP_CONSTANTS.title);
 
     // Add the description.
-    helpEmbed.setDescription(
-      `My available commands include the following. The command name must be prefixed with \`${
-        prefix[guild.id]
-      }\`, just like the \`${
-        prefix[guild.id]
-      }help\` command used to get this message. For information on a specific command, use \`${
-        prefix[guild.id]
-      }help <command>\`.`
-    );
+    helpEmbed.setDescription(HELP_CONSTANTS.description(prefix[guild.id]));
 
     const commandNames: string[] = [];
 
@@ -112,7 +111,7 @@ const help: CommandInt = {
     helpEmbed.addField("Available commands", commandNames.sort().join(" | "));
 
     // Add the footer.
-    helpEmbed.setFooter("I hope I could help!");
+    helpEmbed.setFooter(HELP_CONSTANTS.footer);
 
     // Send the embed to the current channel.
     await channel.send(helpEmbed);

@@ -1,12 +1,12 @@
 import { SinonSandbox, createSandbox, SinonStub, clock } from "sinon";
 import { mock, reset } from "ts-mockito";
+import { expect } from "chai";
+import * as discordjs from "discord.js";
+import extendsClientToClientInt from "@Utils/extendsClientToClientInt";
 import CommandInt from "@Interfaces/CommandInt";
 import ListenerInt from "@Interfaces/ListenerInt";
 import onMessage from "@Events/onMessage";
-import extendsClientToClientInt from "@Utils/extendsClientToClientInt";
 import { getListeners } from "@Utils/readDirectory";
-import { expect } from "chai";
-import * as discordjs from "discord.js";
 
 describe("onMessage event", () => {
   const testPrefix = "☂";
