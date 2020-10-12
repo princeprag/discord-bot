@@ -102,6 +102,88 @@ describe("command: help", () => {
       });
     });
   });
+
+  context("when called with existing commandName", () => {
+    let msg: discordjs.Message & MessageInt;
+    const mockCommand = mock<CommandInt>();
+    mockCommand.name = "mock";
+    mockCommand.description = "mock description";
+    mockCommand.parameters = [
+      "{@prefix}mock hello - prints hello world",
+      "{@prefix}mock bye - prints goodbye world",
+    ];
+    beforeEach(() => {
+      const content = `${testPrefix}help mock`;
+      msg = mock<discordjs.Message>();
+      const bot: discordjs.Client & ClientInt = mock<discordjs.Client>();
+      msg.channel.send = sandbox.stub();
+      msg.content = content;
+      msg.guild.id = "server_id";
+      msg.commandArguments = ["mock"];
+      msg.bot = bot;
+      msg.bot.color = botColor;
+      msg.bot.prefix = { server_id: testPrefix };
+      msg.bot.commands = {
+        mock: mockCommand,
+      };
+    });
+    it("send an embeded message", async () => {
+      await help.run(msg);
+
+      expect(msg.channel.send).to.be.calledOnce;
+    });
+    [
+      { name: "color", value: parseInt(botColor, 16) },
+      { name: "title", value: "mock" },
+      {
+        name: "description",
+        value: mockCommand.description,
+      },
+    ].forEach(({ name, value }) => {
+      it(`should set property ${name} to provided value`, async () => {
+        await help.run(msg);
+        const firstArg = (msg.channel.send as SinonStub).firstCall.firstArg;
+
+        expect(firstArg[name]).to.equal(value);
+      });
+    });
+    it(`should set parameter field based on command`, async () => {
+      const expectedParamString = `${testPrefix}mock hello - prints hello world\r\n${testPrefix}mock bye - prints goodbye world`;
+      await help.run(msg);
+      const firstArg = (msg.channel.send as SinonStub).firstCall.firstArg;
+      const field = (firstArg as discordjs.MessageEmbed).fields.find(
+        (field) => field.name === "Parameters"
+      );
+
+      expect(field.value).to.equal(expectedParamString);
+    });
+  });
+
+  context("when called with non-existing command name", () => {
+    it("should set footer text", async () => {
+      const content = `${testPrefix}help yooo`;
+      const mockCommand = mock<CommandInt>();
+      const msg: discordjs.Message & MessageInt = mock<discordjs.Message>();
+      const bot: discordjs.Client & ClientInt = mock<discordjs.Client>();
+      msg.reply = sandbox.stub();
+      msg.content = content;
+      msg.guild.id = "server_id";
+      msg.commandArguments = ["yooo"];
+      msg.bot = bot;
+      msg.bot.color = botColor;
+      msg.bot.prefix = { server_id: testPrefix };
+      msg.bot.commands = {
+        mock: mockCommand,
+      };
+
+      await help.run(msg);
+      const reply = (msg.reply as SinonStub).firstCall.firstArg;
+
+      expect(reply).to.equal(
+        `sorry, but I could not find the \`${testPrefix}yooo\` command. Try \`${testPrefix}help\` for a list of available commands.`
+      );
+    });
+  });
   it("should set footer text", async () => {
     const content = `${testPrefix}help`;
     const mockCommand = mock<CommandInt>();

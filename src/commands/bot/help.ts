@@ -6,6 +6,8 @@ const HELP_CONSTANTS = {
   description: (prefix: string) =>
     `My available commands include the following. The command name must be prefixed with \`${prefix}\`, just like the \`${prefix}help\` command used to get this message. For information on a specific command, use \`${prefix}help <command>\`.`,
   footer: "I hope I could help!",
+  notFound: (prefix: string, commandName: string) =>
+    `sorry, but I could not find the \`${prefix}${commandName}\` command. Try \`${prefix}help\` for a list of available commands.`,
 };
 
 const help: CommandInt = {
@@ -35,13 +37,8 @@ const help: CommandInt = {
       // Check if the command does not exist.
       if (!command) {
         await message.reply(
-          `sorry, but I could not find the \`${
-            prefix[guild.id]
-          }${commandName}\` command. Try \`${
-            prefix[guild.id]
-          }help\` for a list of available commands.`
+          HELP_CONSTANTS.notFound(prefix[guild.id], commandName)
         );
-
         return;
       }
 
