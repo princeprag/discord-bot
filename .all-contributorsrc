@@ -70,6 +70,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "JoshuaPelealu",
+      "name": "Joshua Pelealu",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/45566099?v=4",
+      "profile": "http://catalactics.now.sh",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
