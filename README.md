@@ -1,6 +1,6 @@
 # My Discord Bot
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![License: GPL-3.0](https://img.shields.io/github/license/nhcarrigan/discord-bot?color=purple)](https://opensource.org/licenses/MIT)
@@ -38,6 +38,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="http://www.nhcarrigan.com"><img src="https://avatars1.githubusercontent.com/u/63889819?v=4" width="100px;" alt=""/><br /><sub><b>Nicholas Carrigan (he/him)</b></sub></a><br /><a href="#projectManagement-nhcarrigan" title="Project Management">📆</a> <a href="https://github.com/nhcarrigan/discord-bot/commits?author=nhcarrigan" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/adprasad"><img src="https://avatars2.githubusercontent.com/u/2387136?v=4" width="100px;" alt=""/><br /><sub><b>adprasad</b></sub></a><br /><a href="https://github.com/nhcarrigan/discord-bot/commits?author=adprasad" title="Code">💻</a> <a href="https://github.com/nhcarrigan/discord-bot/commits?author=adprasad" title="Tests">⚠️</a></td>
   </tr>
 </table>
 
