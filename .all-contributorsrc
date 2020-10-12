@@ -24,6 +24,16 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "danielsolartech",
+      "name": "Daniel Solarte",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/66956234?v=4",
+      "profile": "https://www.danielsolartech.com/",
+      "contributions": [
+        "code",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
