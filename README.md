@@ -18,15 +18,6 @@ Welcome to the repository for my discord bot, seen as `nhbot` in my [Discord Ser
 
 Are you interested in contributing to the development of this bot? We welcome all who want to assist! If you would like to contribute, you are welcome to fork the repository and make your changes. Submit a pull request when you are ready for us to review your changes. You can also submit issues for various purposes. For more information, please review our [contributing guidelines](./CONTRIBUTING.md).
 
-## Contributors
-
-* [Nicholas Carrigan](https://github.com/nhcarrigan) - Project Owner
-* [Joshua Pelealu](https://github.com/JoshuaPelealu) - Revised `ping` command
-* [Daniel Solarte](https://github.com/danielsolartech) - Complete code refactor, invite command, server based configurations
-* [Landon Lloyd](https://github.com/LandonLloyd) - `ping` command fix, documentation updates
-* [Kartik V](https://github.com/zephy20) - remove welcome DM, add `report` command.
-* [shadowtime2000](https://github.com/shadowtime2000) - fix departure message feature.
-
 ## License
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fnhcarrigan%2Fdiscord-bot.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fnhcarrigan%2Fdiscord-bot?ref=badge_large)
