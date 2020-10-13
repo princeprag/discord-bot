@@ -1,10 +1,10 @@
-import { CommandInt } from "../interfaces/CommandInt";
+import CommandInt from "@Interfaces/CommandInt";
+import { MessageEmbed } from "discord.js";
 
-export const sus: CommandInt = {
-  prefix: "sus",
+const sus: CommandInt = {
+  name: "sus",
   description: "Returns a color is sus",
-  parameters: "*none*",
-  command: async (message) => {
+  run: async (message) => {
     const array = [
       "red",
       "blue",
@@ -28,3 +28,5 @@ export const sus: CommandInt = {
     message.channel.send(embed);
   },
 };
+
+export default sus;
