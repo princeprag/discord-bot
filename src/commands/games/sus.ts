@@ -5,7 +5,7 @@ const sus: CommandInt = {
   name: "sus",
   description: "Returns a color is sus",
   run: async (message) => {
-    const array = [
+    const names = [
       "red",
       "blue",
       "green",
@@ -19,11 +19,25 @@ const sus: CommandInt = {
       "cyan",
       "lime",
     ];
-    let i = Math.floor(Math.random() * array.length);
-    const color = array[i];
+    const colours = [
+      "#f50101",
+      "#021edb",
+      "#147d2a",
+      "#ee52b9",
+      "#f07d07",
+      "#f2f254",
+      "#3d464c",
+      "#d9e2ef",
+      "#6a1bcb",
+      "#70491e",
+      "#28feee",
+      "#4def3b",
+    ];
+    let i = Math.floor(Math.random() * names.length);
     const embed = new MessageEmbed();
     embed.setTitle(`Emergency Meeting!`);
-    embed.setDescription(`${color} is sus`);
+    embed.setDescription(`${names[i]} is sus`);
+    embed.setColor(colours[i]);
 
     message.channel.send(embed);
   },
