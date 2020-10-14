@@ -2,12 +2,14 @@ import { config } from "dotenv";
 import chai from "chai";
 import sinonChai from "sinon-chai";
 import {
+  Client,
   Message,
   User,
   TextChannel,
   GuildManager,
   Collection,
   UserManager,
+  Channel,
 } from "discord.js";
 import { mock } from "ts-mockito";
 import ClientInt from "@Interfaces/ClientInt";
@@ -55,24 +57,51 @@ export const buildMessage = (content: string): Message => {
   return msg;
 };
 
+export const buildClientInt = ({
+  version,
+  botColor,
+  channel,
+  users,
+  guilds,
+}: {
+  version: string;
+  botColor: string;
+  channel?: Channel;
+  users?: UserManager;
+  guilds?: GuildManager;
+}) => {
+  const client: Client & ClientInt = mock<Client>();
+  client.color = `#${botColor}`;
+  client.version = version;
+  if (channel) {
+    client.channel = channel;
+  }
+  if (users) {
+    client.users = users;
+  }
+  if (guilds) {
+    client.guilds = guilds;
+  }
+  return client;
+};
+
 export const buildMessageInt = (
   content: string,
   userId: string,
   authorName: string,
   botColor = "000000"
-): Message => {
+): MessageInt => {
   const author: User = buildUser(userId, authorName);
   const channel: TextChannel = buildTextChannel();
   const guilds: GuildManager = buildGuildManager();
   const users: UserManager = buildUserManager();
-  const bot: ClientInt = {
-    author,
-    guilds,
-    users,
+  const bot: ClientInt = buildClientInt({
     version: "test-1.0",
-    color: `#${botColor}`,
-    commands: {},
-  };
+    botColor,
+    channel,
+    users,
+    guilds,
+  });
   const msg: Message & MessageInt = buildMessage(content);
   msg.author = author;
   msg.channel = channel;
