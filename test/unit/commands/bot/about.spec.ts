@@ -21,7 +21,8 @@ describe("command: about", () => {
   });
 
   it("should send", async () => {
-    const message = buildMessageInt(sandbox, "", "", "", botColor);
+    const message = buildMessageInt( "", "", "", botColor);
+    message.channel.send = sandbox.stub();
 
     await about.run(message);
 
@@ -29,7 +30,8 @@ describe("command: about", () => {
   });
 
   it(`should set footer message text`, async () => {
-    const message = buildMessageInt(sandbox, "", "", "", botColor);
+    const message = buildMessageInt( "", "", "", botColor);
+    message.channel.send = sandbox.stub();
 
     await about.run(message);
 
@@ -40,7 +42,8 @@ describe("command: about", () => {
   });
 
   it(`should set timestamp`, async () => {
-    const message = buildMessageInt(sandbox, "", "", "", botColor);
+    const message = buildMessageInt( "", "", "", botColor);
+    message.channel.send = sandbox.stub();
 
     await about.run(message);
 
@@ -59,7 +62,8 @@ describe("command: about", () => {
     { propName: "color", propValue: parseInt(botColor, 16) },
   ].forEach(({ propName, propValue }) => {
     it(`should send embedded message with ${propName}: ${propValue}`, async () => {
-      const message = buildMessageInt(sandbox, "", "", "", botColor);
+      const message = buildMessageInt( "", "", "", botColor);
+      message.channel.send = sandbox.stub();
 
       await about.run(message);
 
@@ -87,7 +91,8 @@ describe("command: about", () => {
   ].forEach(({ name, value, inline }) => {
     it(`should send embedded message with field ${name}: ${value} 
       as inline ${inline}`, async () => {
-      const message = buildMessageInt(sandbox, "", "", "", botColor);
+      const message = buildMessageInt( "", "", "", botColor);
+      message.channel.send = sandbox.stub();
 
       await about.run(message);
 

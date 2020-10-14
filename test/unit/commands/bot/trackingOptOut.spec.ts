@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { createSandbox, SinonStub } from "sinon";
-import { Message, TextChannel, User } from "discord.js";
+import { Message } from "discord.js";
 import * as TOO from "@Models/TrackingOptOutModel";
 import * as TrackingList from "@Utils/commands/trackingList";
 import { mock } from "ts-mockito";
@@ -53,12 +53,8 @@ describe("command opt-out", () => {
 
   context("when command invalid", () => {
     it("return error message", async () => {
-      const testMessage: Message = buildMessageInt(
-        sandbox,
-        "|outOut add",
-        "123456789",
-        "author"
-      );
+      const testMessage = buildMessageInt("|outOut add", "123456789", "author");
+      testMessage.channel.send = sandbox.stub();
 
       await trackingOptOut.run(testMessage);
 
@@ -68,12 +64,12 @@ describe("command opt-out", () => {
 
   context("when subcommand invalid", () => {
     it("return error message", async () => {
-      const testMessage: Message = buildMessageInt(
-        sandbox,
+      const testMessage = buildMessageInt(
         "|optout",
         "123456789",
         "author"
       );
+      testMessage.channel.send = sandbox.stub();
 
       await trackingOptOut.run(testMessage);
 
@@ -87,12 +83,12 @@ describe("command opt-out", () => {
     describe("command: !optout add", () => {
       context("user already exists", () => {
         it("invoke call back without actually adding", async () => {
-          const testMessage: Message = buildMessageInt(
-            sandbox,
+          const testMessage = buildMessageInt(
             "   |optout                  add   ",
             "123456789",
             "author"
           );
+          testMessage.channel.send = sandbox.stub();
           isTrackableUser.returns(false);
 
           await trackingOptOut.run(testMessage);
@@ -105,8 +101,7 @@ describe("command opt-out", () => {
       });
       context("user does not exist", () => {
         it("attempt to add user id to database", async () => {
-          const testMessage: Message = buildMessageInt(
-            sandbox,
+          const testMessage = buildMessageInt(
             "   |optout                  add   ",
             "123456789",
             "author"
@@ -122,12 +117,12 @@ describe("command opt-out", () => {
       });
       describe("addCallBack called", () => {
         it("should notify user they are now opt-out", async () => {
-          const testMessage: Message = buildMessageInt(
-            sandbox,
+          const testMessage = buildMessageInt(
             "|optout add",
             "123456789",
             "author"
           );
+          testMessage.channel.send = sandbox.stub();
           const document: TOO.TrackingOptOutInt = {
             user_id: "123456789",
           } as TOO.TrackingOptOutInt;
@@ -139,15 +134,12 @@ describe("command opt-out", () => {
           );
         });
         it("should notify user if opt-out failed", async () => {
-          const testMessage: Message = buildMessageInt(
-            sandbox,
+          const testMessage = buildMessageInt(
             "|optout add",
             "123456789",
             "author"
           );
-          const document: TOO.TrackingOptOutInt = {
-            user_id: "123456789",
-          } as TOO.TrackingOptOutInt;
+          testMessage.channel.send = sandbox.stub();
           try {
             await addCallBack(testMessage, "123456789")(
               new Error("Something"),
@@ -164,8 +156,7 @@ describe("command opt-out", () => {
     });
     describe("command: !optout remove", () => {
       it("call deleteMany to remove records", async () => {
-        const testMessage: Message = buildMessageInt(
-          sandbox,
+        const testMessage = buildMessageInt(
           "   |optout remove   ",
           "123456789",
           "author"
@@ -182,12 +173,12 @@ describe("command opt-out", () => {
       });
       describe("removeCallBack called", () => {
         it("warn user if error occured", async () => {
-          const testMessage: Message = buildMessageInt(
-            sandbox,
+          const testMessage = buildMessageInt(
             "   |optout remove   ",
             "123456789",
             "author"
           );
+          testMessage.channel.send = sandbox.stub();
 
           await removeCallback(testMessage)(new Error());
 
@@ -196,12 +187,12 @@ describe("command opt-out", () => {
           );
         });
         it("notify user of status change", async () => {
-          const testMessage: Message = buildMessageInt(
-            sandbox,
+          const testMessage = buildMessageInt(
             "   |optout remove   ",
             "123456789",
             "author"
           );
+          testMessage.channel.send = sandbox.stub();
 
           await removeCallback(testMessage)(null);
 
@@ -215,8 +206,7 @@ describe("command opt-out", () => {
     describe("command: !optout status", () => {
       context("user not found", () => {
         it("call find to recieve records", async () => {
-          const testMessage: Message = buildMessageInt(
-            sandbox,
+          const testMessage = buildMessageInt(
             "   |optout status   ",
             "123456789",
             "author"
@@ -228,13 +218,13 @@ describe("command opt-out", () => {
           expect(TOO.TrackingOptOut.deleteMany).not.calledWith(userRec);
         });
         it("notify user they are opt-in", async () => {
-          const testMessage: Message = buildMessageInt(
-            sandbox,
+          const testMessage = buildMessageInt(
             "   |optout status   ",
             "123456789",
             "author"
           );
           isTrackableUser.returns(true);
+          testMessage.channel.send = sandbox.stub();
 
           await trackingOptOut.run(testMessage);
 
@@ -245,12 +235,12 @@ describe("command opt-out", () => {
       });
       context("user found", () => {
         it("notify user they are opt-out", async () => {
-          const testMessage: Message = buildMessageInt(
-            sandbox,
+          const testMessage = buildMessageInt(
             "   |optout status   ",
             "123456789",
             "author"
           );
+          testMessage.channel.send = sandbox.stub();
           isTrackableUser.returns(false);
 
           await trackingOptOut.run(testMessage);
