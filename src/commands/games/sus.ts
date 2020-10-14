@@ -33,7 +33,7 @@ const sus: CommandInt = {
       "#28feee",
       "#4def3b",
     ];
-    let i = Math.floor(Math.random() * names.length);
+    const i = Math.floor(Math.random() * names.length);
     const embed = new MessageEmbed();
     embed.setTitle(`Emergency Meeting!`);
     embed.setDescription(`${names[i]} is sus`);

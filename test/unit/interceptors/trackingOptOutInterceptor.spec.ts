@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import { Message } from "discord.js";
 import Sinon, { createSandbox } from "sinon";
+import {buildMessage} from "../../testSetup";
 
 import * as TrackingList from "@Utils/commands/trackingList";
 import { getTrackingInterceptor } from "@Interceptors/trackingOptOutInterceptor";
@@ -28,7 +29,7 @@ describe("TrackingOptOutInterceptor", () => {
     });
     context("when next is undefined", () => {
       it("should resolve", async () => {
-        const message = sandbox.createStubInstance<Message>(Message);
+        const message = buildMessage();
         trackingOptOutInterceptor.setNext(undefined);
         const val = await trackingOptOutInterceptor.intercept(message);
 
@@ -38,7 +39,7 @@ describe("TrackingOptOutInterceptor", () => {
     });
     context("when next is MessageListenerHandler", () => {
       it("should await call listener", async () => {
-        const messageStub = sandbox.createStubInstance<Message>(Message);
+        const messageStub = buildMessage();
         const listenerStub = sandbox.stub();
         listenerStub.callsFake((message: Message) => {
           return Promise.resolve("hi");
@@ -53,7 +54,7 @@ describe("TrackingOptOutInterceptor", () => {
     });
     context("when next is interceptor", () => {
       it("should call intercept on next interceptor with message", async () => {
-        const messageStub = sandbox.createStubInstance<Message>(Message);
+        const messageStub = buildMessage();
         const interceptorStub: InterceptInt = {
           setNext: sandbox.stub(),
           next: sandbox.stub(),
@@ -72,7 +73,7 @@ describe("TrackingOptOutInterceptor", () => {
   describe("intercept", () => {
     context("user in opt-out global", () => {
       it("should not call next fn", async () => {
-        const messageStub = sandbox.createStubInstance<Message>(Message);
+        const messageStub = buildMessage();
         const listenerStub = sandbox.stub();
         isTrackableUser.returns(false);
 
@@ -84,7 +85,7 @@ describe("TrackingOptOutInterceptor", () => {
     });
     context("user not in opt-out global", () => {
       it("should call next fn", async () => {
-        const messageStub = sandbox.createStubInstance<Message>(Message);
+        const messageStub = buildMessage();
         const listenerStub = sandbox.stub();
         isTrackableUser.returns(true);
 
