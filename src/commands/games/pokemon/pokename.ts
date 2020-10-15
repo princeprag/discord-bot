@@ -15,7 +15,9 @@ const pokename: CommandInt = {
 
     // Check if the pokemon name is empty.
     if (!name) {
-      await message.reply("Sorry, but what did you want me to search for?");
+      await message.reply(
+        "Would you please provide the Pokemon name you want me to search for?"
+      );
       return;
     }
 
@@ -43,7 +45,7 @@ const pokename: CommandInt = {
         error?.response?.data?.message ?? "Unknown error."
       );
 
-      await message.reply("Sorry, but I could not find anything...");
+      await message.reply("I am so sorry, but I could not find anything...");
     }
   },
 };

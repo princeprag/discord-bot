@@ -16,7 +16,7 @@ const usage: CommandInt = {
     // Check if the command name is empty.
     if (!guild || !command) {
       await message.reply(
-        "Sorry, but what command did you want me to look for?"
+        "Would you please provide the command you want me to look for?"
       );
 
       return;
@@ -31,7 +31,7 @@ const usage: CommandInt = {
     // Check if the command log does not exist.
     if (!commandLog) {
       await message.reply(
-        "Sorry, but it appears no one has use that command yet."
+        "I am so sorry, but no one has used this command yet."
       );
 
       return;
@@ -44,7 +44,7 @@ const usage: CommandInt = {
       new MessageEmbed()
         .setColor(bot.color)
         .setTitle(bot.prefix[guild.id] + command)
-        .setDescription(`BEEP BOOP: This command has been used ${uses} times!`)
+        .setDescription(`This command has been used ${uses} times!`)
         .setFooter(
           `The command was last called by ${last_caller} on ${last_called}`
         )

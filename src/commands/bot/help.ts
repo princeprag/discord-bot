@@ -4,10 +4,10 @@ import { MessageEmbed } from "discord.js";
 const HELP_CONSTANTS = {
   title: "Bot commands",
   description: (prefix: string) =>
-    `My available commands include the following. The command name must be prefixed with \`${prefix}\`, just like the \`${prefix}help\` command used to get this message. For information on a specific command, use \`${prefix}help <command>\`.`,
+    `My available commands are below. The command name must be prefixed with \`${prefix}\`, just like the \`${prefix}help\` command used to get this message. For information on a specific command, please use \`${prefix}help <command>\`.`,
   footer: "I hope I could help!",
   notFound: (prefix: string, commandName: string) =>
-    `sorry, but I could not find the \`${prefix}${commandName}\` command. Try \`${prefix}help\` for a list of available commands.`,
+    `I am so sorry, but I could not find the \`${prefix}${commandName}\` command. Please try \`${prefix}help\` for a list of available commands.`,
 };
 
 const help: CommandInt = {
@@ -54,7 +54,7 @@ const help: CommandInt = {
       // Add the command description.
       commandEmbed.setDescription(command.description);
 
-      // Check if the command has paramenters.
+      // Check if the command has parameters.
       if (command.parameters) {
         commandEmbed.addField(
           "Parameters",

@@ -90,7 +90,7 @@ const user: CommandInt = {
         // Send the user embed to the current channel.
         await channel.send(userEmbed);
       } catch (error) {
-        await message.reply("okay, I will hold off on this action for now.");
+        await message.reply("Okay. I will hold off on this action for now.");
       }
     }
   },

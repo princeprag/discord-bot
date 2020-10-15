@@ -15,6 +15,13 @@ const hpspell: CommandInt = {
     // Get the arguments as the name.
     const name = commandArguments.join(" ");
 
+    // check if query is empty
+    if (!name) {
+      await message.reply(
+        "Would you please provide the spell you want me to search for?"
+      );
+      return;
+    }
     try {
       // Get the spell data from the Harry Potter API.
       const data = await axios.get<HpSpellInt[]>(
@@ -52,7 +59,7 @@ const hpspell: CommandInt = {
         error?.response?.data?.message ?? "Unknown error."
       );
 
-      await message.reply("Sorry, but I could not find anything...");
+      await message.reply("I am so sorry, but I could not find anything...");
     }
   },
 };

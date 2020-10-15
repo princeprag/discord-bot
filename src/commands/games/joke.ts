@@ -30,7 +30,7 @@ const joke: CommandInt = {
       await channel.send(
         new MessageEmbed()
           .setColor(bot.color)
-          .setTitle("Haha!")
+          .setTitle("I giggled at this:")
           .setDescription(joke)
       );
     } catch (error) {
@@ -40,7 +40,7 @@ const joke: CommandInt = {
       );
 
       await message.reply(
-        "Sorry, but I am not really in the mood for a joke right now..."
+        "I am so sorry, but I seem to have lost my book of jokes!"
       );
     }
   },

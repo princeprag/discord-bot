@@ -33,7 +33,7 @@ describe("command: about", () => {
     {
       name: "description",
       value:
-        "Thank for your interest in adding this bot to your server, invite the bot to your server by [clicking here](https://discord.com/api/oauth2/authorize?client_id=716707753090875473&permissions=268511254&scope=bot).",
+        "Thank you for your desire to allow me in your server. Here is an [invite link](https://discord.com/api/oauth2/authorize?client_id=716707753090875473&permissions=268511254&scope=bot) - please click to add me!.",
     },
   ].forEach(({ name, value }) => {
     it(`should set ${name} appropriately`, async () => {

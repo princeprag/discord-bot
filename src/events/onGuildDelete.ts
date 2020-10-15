@@ -25,7 +25,7 @@ async function onGuildDelete(
 
       // Send a message to the debug channel.
       await debugChannelHook.send(
-        `I, ${user.username}, have left the ${name} server!`
+        `${user.username} has left the ${name} server!`
       );
     }
   }

@@ -16,7 +16,9 @@ const github: CommandInt = {
 
     // Check if the user exists.
     if (!user) {
-      await message.reply("Sorry, but you must enter an username.");
+      await message.reply(
+        "Would you please provide the username you want me to search for?"
+      );
       return;
     }
 
@@ -28,7 +30,9 @@ const github: CommandInt = {
 
     // Check if the user exists on GitHub.
     if (ghUser.message === "Not Found") {
-      await channel.send("Sorry, but I was not able to find anything...");
+      await channel.send(
+        "I am so sorry, but I was not able to find anything..."
+      );
       return;
     }
 
@@ -51,7 +55,7 @@ const github: CommandInt = {
     );
 
     // Add the description (GitHub biography)
-    ghEmbed.setDescription(ghUser.bio || "No description provided.");
+    ghEmbed.setDescription(ghUser.bio || "No biography provided.");
 
     // Check if the user has repositories.
     if (ghRepo.length) {

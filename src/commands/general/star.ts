@@ -26,7 +26,9 @@ const star: CommandInt = {
 
     // Check if the user mention is valid.
     if (!userToStarMention || !userToStarMentioned || !mentions.members) {
-      await message.reply("you must mention an user to star.");
+      await message.reply(
+        "Would you please provide the user mention that you want me to send a star to?"
+      );
       return;
     }
 
@@ -35,14 +37,16 @@ const star: CommandInt = {
 
     // Check if the user mention string and the first user mention id are equals.
     if (userToStarMention !== userToStarMentioned.id) {
-      await message.reply("Sorry, but the user mentioned is not valid.");
+      await message.reply(
+        `I am so sorry, but ${userToStarMentioned.toString()} is not a valid user.`
+      );
       return;
     }
 
     // Check if trying to star itself.
     if (userToStarMentioned.id === author.id) {
       await message.reply(
-        "Sorry, but you cannot give yourself a star! I still love you though."
+        "I am so sorry, but you cannot give yourself a star! I still love you though."
       );
 
       return;
@@ -53,7 +57,7 @@ const star: CommandInt = {
 
     // Add a default reason if it not provided.
     if (!reason || !reason.length) {
-      reason = "Sorry, but the user did not give a reason.";
+      reason = "I am sorry, but the user did not provide a reason.";
     }
 
     // Send an embed message with the star to the user.

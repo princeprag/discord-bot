@@ -58,7 +58,7 @@ const xkcd: CommandInt = {
         error?.response?.data?.message ?? "Unknown error."
       );
 
-      await message.reply("sorry, but I could not find anything...");
+      await message.reply("I am so sorry, but I could not find anything...");
     }
   },
 };

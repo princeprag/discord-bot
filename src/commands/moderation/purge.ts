@@ -19,7 +19,7 @@ const purge: CommandInt = {
       !member.hasPermission("MANAGE_MESSAGES")
     ) {
       await message.reply(
-        "Sorry, but this command is restricted to moderators."
+        "I am so sorry, but I can only do this for moderators with permission to manage messages."
       );
 
       return;
@@ -28,9 +28,17 @@ const purge: CommandInt = {
     // Get the next argument as the number.
     const num = commandArguments.shift();
 
-    // Check if the number is empty or not valid.
-    if (!num || isNaN(Number(num))) {
-      await message.reply("Sorry, but that is not a valid number.");
+    // Check if the number is empty
+    if (!num) {
+      await message.reply(
+        "Would you please provide the number of messages you want me to delete?"
+      );
+      return;
+    }
+
+    // Check if the number is not valid.
+    if (isNaN(Number(num))) {
+      await message.reply(`I am so sorry, but ${num} is not a valid number.`);
       return;
     }
 
@@ -39,7 +47,7 @@ const purge: CommandInt = {
     // Check if the number is higher than 100.
     if (limit > 100) {
       await message.reply(
-        "Sorry, but I can only delete up to 100 messages at once"
+        "I am so sorry, but I can only delete up to 100 messages at once"
       );
 
       return;

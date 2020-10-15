@@ -17,7 +17,7 @@ const unrestrict: CommandInt = {
     // Check if the member has the kick members permission.
     if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
       await message.reply(
-        "Sorry, but this command is restricted to moderators."
+        "I am so sorry, but I can only do this for moderators with permission to kick members."
       );
 
       return;
@@ -31,7 +31,9 @@ const unrestrict: CommandInt = {
 
     // Check if the restricted role does not exist.
     if (!restrictedRole) {
-      await message.reply("Sorry, but I could not find the restricted role.");
+      await message.reply(
+        "I am so sorry, but I do not have a record for your restricted role."
+      );
       return;
     }
 
@@ -47,7 +49,9 @@ const unrestrict: CommandInt = {
       !userToUnrestrictMentioned ||
       !mentions.members
     ) {
-      await message.reply("Sorry, but you must mention a user to unrestrict.");
+      await message.reply(
+        "Would you please provide the user you want me to unrestrict?"
+      );
       return;
     }
 
@@ -56,13 +60,15 @@ const unrestrict: CommandInt = {
 
     // Check if the user mention string and the first user mention id are equals.
     if (userToUnrestrictMention !== userToUnrestrictMentioned.id) {
-      await message.reply("Sorry, but the user mentioned is not valid.");
+      await message.reply(
+        `I am so sorry, but ${userToUnrestrictMentioned.toString()} is not a valid user.`
+      );
       return;
     }
 
     // Check if trying to restrict itself.
     if (userToUnrestrictMentioned.id === author.id) {
-      await message.reply("Sorry, but you cannot unrestrict yourself!");
+      await message.reply("Wait, what? You cannot unrestrict yourself.");
       return;
     }
 
@@ -72,7 +78,7 @@ const unrestrict: CommandInt = {
     // Check if the member mention exists.
     if (!memberToUnrestrictMentioned) {
       await message.reply(
-        "Sorry, but you must mention a valid user to unrestrict."
+        "Would you please provide the user you want me to unrestrict?"
       );
       return;
     }
@@ -80,7 +86,7 @@ const unrestrict: CommandInt = {
     // Check if the user is not restricted.
     if (!memberToUnrestrictMentioned.roles.cache.has(restrictedRole.id)) {
       await message.reply(
-        `Sorry, but ${userToUnrestrictMentioned.toString()} is not restricted.`
+        `I am so sorry, but ${userToUnrestrictMentioned.toString()} is not restricted.`
       );
 
       return;
@@ -91,7 +97,7 @@ const unrestrict: CommandInt = {
 
     // Add a default reason if it not provided.
     if (!reason || !reason.length) {
-      reason = "Sorry, but the moderator did not give a reason.";
+      reason = "I am sorry, but the moderator did not give a reason.";
     }
 
     try {
@@ -113,7 +119,7 @@ const unrestrict: CommandInt = {
     } catch (error) {
       console.log(error);
 
-      await message.reply("Sorry, you cannot unrestrict that user.");
+      await message.reply("I am so sorry, you cannot unrestrict that user.");
     }
   },
 };

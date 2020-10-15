@@ -17,7 +17,9 @@ const pokenum: CommandInt = {
 
     // Check if the pokemon number is not valid.
     if (!numberArg || (isNaN(Number(numberArg)) && numberArg !== "random")) {
-      await message.reply("Sorry, but what did you want me to search for?");
+      await message.reply(
+        "Would you please provide the Pokemon number you want me to search for?"
+      );
       return;
     }
 
@@ -32,7 +34,7 @@ const pokenum: CommandInt = {
     // Check if the number is not between 0 and 802.
     if (number < 0 || number > 802) {
       await message.reply(
-        "Sorry, but that number is not right. Choose a number between 0 and 802 (inclusive)"
+        "I am sorry, but that number is not right. Please choose a number between 0 and 802 (inclusive)"
       );
 
       return;

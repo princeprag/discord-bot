@@ -42,7 +42,9 @@ const config: CommandInt = {
     ) {
       // Check if the author has the administrator permission.
       if (!member.hasPermission("ADMINISTRATOR")) {
-        await message.reply("you must be a server administrator.");
+        await message.reply(
+          "I am so sorry, but I can only do this for administrators."
+        );
         return;
       }
 
@@ -65,7 +67,7 @@ const config: CommandInt = {
             // Check if the channel mention and channel mentioned are equals.
             if (channelMention !== channelMentioned.toString()) {
               await message.reply(
-                `the channel ${channelMention} is not valid.`
+                `I am so sorry, but ${channelMention} is not a valid channel.`
               );
 
               return;
@@ -93,7 +95,7 @@ const config: CommandInt = {
               channelConfigured = "welcomes";
             } else {
               await message.reply(
-                `'${channelType}' is not a valid channel for \`${
+                `'I am so sorry, but ${channelType}' is not a valid channel type for \`${
                   prefix[guild.id]
                 }config set channel\`.`
               );
@@ -102,13 +104,15 @@ const config: CommandInt = {
             }
 
             await message.reply(
-              `now ${channelMentioned.toString()} is the ${channelConfigured} channel.`
+              `Okay! I have set ${channelMentioned.toString()} as the ${channelConfigured} channel.`
             );
           } else if (channelType) {
-            await message.reply("you must mention a channel.");
+            await message.reply(
+              "Would you please provide the channel you want me to use?"
+            );
           } else {
             await message.reply(
-              "you must specify a channel type (logs/welcomes)."
+              "Would you please tell me if this is the `logs` or `welcomes` channel?"
             );
           }
 
@@ -128,7 +132,9 @@ const config: CommandInt = {
           if (roleMention && roleMentioned) {
             // Check if the role mention and role mentioned are equals.
             if (roleMention !== roleMentioned.toString()) {
-              await message.reply(`the role ${roleMention} is not valid.`);
+              await message.reply(
+                `I am so sorry, but ${roleMention} is not a valid role.`
+              );
               return;
             }
           }
@@ -150,7 +156,7 @@ const config: CommandInt = {
               roleConfigured = "moderator";
             } else {
               await message.reply(
-                `'${roleType}' is not a valid role for \`${
+                `I am so sorry, but '${roleType}' is not a valid role type for \`${
                   prefix[guild.id]
                 }config set role\`.`
               );
@@ -159,12 +165,16 @@ const config: CommandInt = {
             }
 
             await message.reply(
-              `now ${roleMentioned.toString()} is the ${roleConfigured} role.`
+              `Okay! I have set ${roleMentioned.toString()} as the ${roleConfigured} role.`
             );
           } else if (roleType) {
-            await message.reply("you must mention a role.");
+            await message.reply(
+              "Would you please provide the role you want me to use?"
+            );
           } else {
-            await message.reply("you must specify a role type (restricted).");
+            await message.reply(
+              "Would you please tell me if this is the `restricted` or `moderator` role?"
+            );
           }
 
           return;
@@ -176,13 +186,15 @@ const config: CommandInt = {
 
           // Check if the new prefix does not exist.
           if (!newPrefix) {
-            await message.reply("you must enter the new prefix.");
+            await message.reply(
+              "Would you please provide the new prefix you would like me to watch for?"
+            );
           } else {
             message.bot.prefix[guild.id] = newPrefix;
             await setSetting(guild.id, "prefix", newPrefix);
 
             await message.reply(
-              `now '${newPrefix}' is the new commands prefix.`
+              `Okay! I have set '${newPrefix}' as the new commands prefix.`
             );
           }
 
@@ -203,7 +215,9 @@ const config: CommandInt = {
 
             // Check if the user mention and user mentioned are equals.
             if (userMention !== userMentioned.id) {
-              await message.reply(`the user ${userMention} is not valid.`);
+              await message.reply(
+                `I am so sorry, but ${userMention} is not a valid user.`
+              );
               return;
             }
           }
@@ -221,7 +235,7 @@ const config: CommandInt = {
               if (configType === "add") {
                 if (users.includes(userMentioned.id)) {
                   await message.reply(
-                    `${userMentioned.username} is in the hearts listener.`
+                    `Okay! I have added ${userMentioned.username} to the hearts listener.`
                   );
 
                   return;
@@ -229,8 +243,7 @@ const config: CommandInt = {
 
                 users.push(userMentioned.id);
                 currentUsers.value += users.join(",");
-                messageReply =
-                  "successfully, added the user to hearts listener.";
+                messageReply = "I added the user to hearts listener.";
               } else {
                 const userIndex = users.findIndex(
                   (id) => id === userMentioned.id
@@ -238,7 +251,7 @@ const config: CommandInt = {
 
                 if (userIndex < 0) {
                   await message.reply(
-                    `${userMentioned.username} is not in the hearts listener.`
+                    `I am sorry, but ${userMentioned.username} is not in the hearts listener.`
                   );
 
                   return;
@@ -246,8 +259,7 @@ const config: CommandInt = {
 
                 users.splice(userIndex, 1);
                 currentUsers.value = users.join(",");
-                messageReply =
-                  "successfully, removed the user from hearts listener.";
+                messageReply = "Okay! I removed the user from hearts listener.";
               }
 
               await currentUsers.save();
@@ -260,14 +272,12 @@ const config: CommandInt = {
                 value: userMentioned.id,
               });
 
-              await message.reply(
-                "successfully, added the user to hearts listener."
-              );
+              await message.reply("Okay! I added the user to hearts listener.");
 
               return;
             } else {
               await message.reply(
-                `${userMentioned.username} is not in the hearts listener.`
+                `I am sorry, but ${userMentioned.username} is not in the hearts listener.`
               );
 
               return;
@@ -277,14 +287,16 @@ const config: CommandInt = {
       }
 
       await message.reply(
-        `'${setType}' is not a valid configuration for \`${
+        `I am so sorry, but '${setType}' is not a valid configuration for \`${
           prefix[guild.id]
         }config ${configType}\`.`
       );
 
       return;
     } else if (configType) {
-      await message.reply(`'${configType}' is not a valid configuration type.`);
+      await message.reply(
+        `I am so sorry, but '${configType}' is not a valid configuration type.`
+      );
       return;
     }
 
@@ -292,7 +304,7 @@ const config: CommandInt = {
     const configEmbed = new MessageEmbed();
 
     // Add the title.
-    configEmbed.setTitle("Here are my current settings.");
+    configEmbed.setTitle("Here is my record for your server.");
 
     // Get the logs channel from the database.
     const logsChannel = await getTextChannelFromSettings("logs_channel", guild);

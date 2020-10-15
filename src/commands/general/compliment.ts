@@ -17,7 +17,7 @@ const compliment: CommandInt = {
       new MessageEmbed()
         .setTitle("Hello! I hope you are having a good day!")
         .setDescription(compliments[random])
-        .setFooter("We love you. 💜")
+        .setFooter("I love you. 💜")
     );
   },
 };

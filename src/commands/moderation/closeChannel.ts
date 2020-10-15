@@ -18,7 +18,7 @@ const closeChannel: CommandInt = {
       !member.hasPermission("MANAGE_CHANNELS")
     ) {
       await message.reply(
-        "Sorry, but this command is restricted to moderators."
+        "I am so sorry, but I can only do this for moderators with permission to manage channels."
       );
 
       return;
@@ -30,7 +30,7 @@ const closeChannel: CommandInt = {
     // Check if the channel name does not includes `suspended`.
     if (!channelToDelete.name.includes("suspended")) {
       await message.reply(
-        "Sorry, but I am only allowed to close the `suspended-user` channels."
+        "I am so sorry, but I am only allowed to close the `suspended-user` channels."
       );
 
       return;

@@ -14,6 +14,13 @@ const hpchar: CommandInt = {
     // Get the arguments as an Harry Potter API query.
     const characterName = commandArguments.join("%20");
 
+    //check for query
+    if (!characterName) {
+      await message.reply(
+        "Would you please provide the character name you would like me to search for?"
+      );
+      return;
+    }
     try {
       // Get the character information from the Harry Potter API.
       const data = await axios.get<HpCharInt[]>(
@@ -74,7 +81,7 @@ const hpchar: CommandInt = {
         error?.response?.data?.message ?? "Unknown error."
       );
 
-      await message.reply("Sorry, but I could not find anything...");
+      await message.reply("I am so sorry, but I could not find anything...");
     }
   },
 };

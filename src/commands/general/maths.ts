@@ -23,7 +23,7 @@ const maths: CommandInt = {
     // Check if the problem is empty.
     if (!answer || !problem) {
       await message.reply(
-        "Sorry, but that does not appear to be a valid math expression."
+        "I am so sorry, but that does not appear to be a valid math expression."
       );
 
       return;
@@ -34,7 +34,7 @@ const maths: CommandInt = {
       new MessageEmbed()
         .setColor(bot.color)
         .setTitle("Calculating...")
-        .setDescription("All done!")
+        .setDescription("I hope I did this right.")
         .addField("Input", problem)
         .addField("Result", answer)
     );

@@ -17,7 +17,7 @@ const restrict: CommandInt = {
     // Check if the member has the kick members permission.
     if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
       await message.reply(
-        "Sorry, but this command is restricted to moderators."
+        "I am so sorry, but I can only do this for moderators with permission to kick members."
       );
 
       return;
@@ -31,7 +31,9 @@ const restrict: CommandInt = {
 
     // Check if the moderator role does not exist.
     if (!moderatorRole) {
-      await message.reply("Sorry, but I could not find the moderator role.");
+      await message.reply(
+        "I am so sorry, but I do not have a record for your moderator role."
+      );
       return;
     }
 
@@ -43,7 +45,9 @@ const restrict: CommandInt = {
 
     // Check if the restricted role does not exist.
     if (!restrictedRole) {
-      await message.reply("Sorry, but I could not find the restricted role.");
+      await message.reply(
+        "I am so sorry, but I do not have a record for your restricted role."
+      );
       return;
     }
 
@@ -95,7 +99,9 @@ const restrict: CommandInt = {
       !userToRestrictMentioned ||
       !mentions.members
     ) {
-      await message.reply("you must mention an user to restrict.");
+      await message.reply(
+        "Would you please provide the user you want me to restrict?"
+      );
       return;
     }
 
@@ -104,13 +110,15 @@ const restrict: CommandInt = {
 
     // Check if the user mention string and the first user mention id are equals.
     if (userToRestrictMention !== userToRestrictMentioned.id) {
-      await message.reply("Sorry, but the user mentioned is not valid.");
+      await message.reply(
+        `I am so sorry, but ${userToRestrictMentioned.toString()} is not a valid user.`
+      );
       return;
     }
 
     // Check if trying to restrict itself.
     if (userToRestrictMentioned.id === author.id) {
-      await message.reply("Sorry, but you cannot restrict yourself!");
+      await message.reply("Wait, what? You cannot restrict yourself!");
       return;
     }
 
@@ -120,7 +128,7 @@ const restrict: CommandInt = {
     // Check if the member mention exists.
     if (!memberToRestrictMentioned) {
       await message.reply(
-        "Sorry, but you must mention a valid user to restrict."
+        "Would you please provide the user you want me to restrict?"
       );
       return;
     }
@@ -130,14 +138,16 @@ const restrict: CommandInt = {
       userToRestrictMentioned.id === user.id ||
       memberToRestrictMentioned.id === user.id
     ) {
-      await message.reply("Why are you trying to restrict me? I am sad now.");
+      await message.reply(
+        "You want to restrict me? Oh no! Did I do something wrong?"
+      );
       return;
     }
 
     // Check if the user is already restricted.
     if (memberToRestrictMentioned.roles.cache.has(restrictedRole.id)) {
       await message.reply(
-        `Sorry, but ${userToRestrictMentioned.toString()} is already restricted.`
+        `I am so sorry, but ${userToRestrictMentioned.toString()} is already restricted.`
       );
 
       return;
@@ -148,7 +158,7 @@ const restrict: CommandInt = {
 
     // Add a default reason if it not provided.
     if (!reason || !reason.length) {
-      reason = "Sorry, but the moderator did not give a reason.";
+      reason = "I am sorry, but the moderator did not provide a reason.";
     }
 
     try {
@@ -184,7 +194,7 @@ const restrict: CommandInt = {
 
       // Send an advertisement to the user.
       await memberToRestrictMentioned.send(
-        `Hello! Sorry to bother you. It appears you have been suspended from ${guild.name} for: ${reason} - I have created a channel there for you to appeal this decision.`
+        `Hello! I am sorry to bother you. It appears you have been suspended from ${guild.name} for the following reason: ${reason} - I have created a channel there for you to appeal this decision.`
       );
 
       // Send an embed message to the logs channel.
@@ -202,7 +212,7 @@ const restrict: CommandInt = {
     } catch (error) {
       console.log(error);
 
-      await message.reply("Sorry, you cannot restrict that user.");
+      await message.reply("I am so sorry, but I cannot restrict that user.");
     }
   },
 };

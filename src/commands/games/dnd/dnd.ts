@@ -20,7 +20,7 @@ const dnd: CommandInt = {
     dndEmbed.setTitle("Dungeons and Dragons!");
 
     // Add the description.
-    dndEmbed.setDescription("Search complete. Displaying available commands!");
+    dndEmbed.setDescription("Here are the `dnd` commands I know!");
 
     // Get the available dnd commands.
     const dndCommands: CommandInt[] = Object.values(commands).filter(

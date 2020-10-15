@@ -16,7 +16,7 @@ const http: CommandInt = {
     // Check if the status is not valid.
     if (!status) {
       await message.reply(
-        "Sorry, but what status code did you want me to look for?"
+        "Would you please provide the status code you want me to look for?"
       );
 
       return;
@@ -25,7 +25,7 @@ const http: CommandInt = {
     // Check if the status exists.
     if (!httpStatusList.includes(status)) {
       await message.reply(
-        "Sorry, but that appears to be an invalid status code."
+        `I am so sorry, but ${status} appears to be an invalid status code.`
       );
 
       return;
