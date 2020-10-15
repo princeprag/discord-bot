@@ -1,4 +1,4 @@
-# My Discord Bot
+# BeccaBot
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -13,7 +13,7 @@
 [![Discord](https://img.shields.io/discord/710307364556767283)](https://discord.gg/PHqDbkg)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fnhcarrigan%2Fdiscord-bot.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fnhcarrigan%2Fdiscord-bot?ref=badge_shield)
 
-Welcome to the repository for my discord bot, seen as `nhbot` in my [Discord Server](https://discord.gg/PHqDbkg).
+Welcome to the repository for my discord bot, seen as `BeccaBot` in my [Discord Server](https://discord.gg/PHqDbkg).
 
 [You can invite this bot to your own server!](https://discord.com/oauth2/authorize?client_id=716707753090875473&scope=bot&permissions=268495990)
 
