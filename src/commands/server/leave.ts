@@ -13,7 +13,7 @@ const leave: CommandInt = {
     // Check if the author id is not `465650873650118659`.
     if (author.id !== "465650873650118659") {
       await message.reply(
-        "sorry, but only <@!465650873650118659> is allowed to use this command."
+        "I am so sorry, but I can only do this for nhcarrigan."
       );
 
       return;
@@ -45,7 +45,7 @@ const leave: CommandInt = {
     // Check if the target guild is not valid.
     if (!targetGuild) {
       await message.reply(
-        `Sorry, but the \`${serverID}\` is not a valid server ID.`
+        `I am so sorry, but \`${serverID}\` is not a valid server ID.`
       );
 
       return;

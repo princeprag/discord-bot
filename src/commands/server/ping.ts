@@ -25,12 +25,19 @@ const ping: CommandInt = {
     // Get a color for the ping time.
     const color = pingTime < 90 ? "#21ED4A" : "#F02222";
 
+    //Add speed comment
+    const speed =
+      pingTime < 90
+        ? "I had my coffee today!"
+        : "I am sorry for being so slow...";
+
     // Edit the ping message with the ping time.
     await pingMessage.edit(
       new MessageEmbed()
         .setColor(color)
         .setTitle("Ping Successful")
         .setDescription(`My response time is ${pingTime}ms.`)
+        .setFooter(speed)
     );
   },
 };

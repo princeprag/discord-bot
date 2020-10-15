@@ -15,7 +15,9 @@ const magic: CommandInt = {
 
     // Check if the query is empty.
     if (!query) {
-      await message.reply("Sorry, but what did you want me to search for?");
+      await message.reply(
+        "Would you please tell me the card name you want me to search for?"
+      );
       return;
     }
 
@@ -51,9 +53,7 @@ const magic: CommandInt = {
       );
 
       // Add the card flavor to the embed description.
-      cardEmbed.setDescription(
-        flavor || "Sorry, but this card has no flavour text..."
-      );
+      cardEmbed.setDescription(flavor || "This card has no flavour text...");
 
       // Add the card types to an embed field.
       cardEmbed.addField("Types", types.join(", "));
@@ -64,7 +64,7 @@ const magic: CommandInt = {
       // Add the card text to an embed field.
       cardEmbed.addField(
         "Abilities",
-        text || "Sorry, but this card has no ability text..."
+        text || "This card has no ability text..."
       );
 
       // Send the card embed to the current channel.
@@ -75,7 +75,7 @@ const magic: CommandInt = {
         error?.response?.data?.message ?? "Unknown error."
       );
 
-      await message.reply("Sorry, but I could not find anything...");
+      await message.reply("I am so sorry, but I could not find anything...");
     }
   },
 };

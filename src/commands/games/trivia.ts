@@ -61,7 +61,9 @@ const trivia: CommandInt = {
         .addField("C", answers[2], true)
         .addField("D", answers[3], true)
         .addField("\u200b", "\u200b", true)
-        .setFooter("Enter the correct answer below!")
+        .setFooter(
+          "Please tell me what you think is the correct answer! You have 30 seconds..."
+        )
     );
 
     // Create a new message collector.

@@ -36,9 +36,16 @@ const title: CommandInt = {
       )
     ).data.words[0];
 
+    if (!mood || !occupation || !adjective || !noun) {
+      await channel.send(
+        "I am so sorry, but I seem to have lost the necessary paperwork to assign you a title."
+      );
+      return;
+    }
+
     // Send the message to the current channel.
     await channel.send(
-      `Presenting ${author.toString()}, the ${mood} ${occupation} of ${adjective} ${noun}!`
+      `I present to you: ${author.toString()}, the ${mood} ${occupation} of ${adjective} ${noun}!`
     );
   },
 };

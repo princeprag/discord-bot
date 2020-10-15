@@ -34,7 +34,7 @@ async function onMessage(
   // and send a warning to the current channel.
   if (channel.type === "dm" && author.id !== client.user?.id) {
     message.showTypingAndSendMessage(
-      "Sorry, but would you please talk to me in a server, not a private message? If you need a server to join, check out my home! https://discord.gg/PHqDbkg",
+      "I am so sorry, but would you please talk to me in a server instead of a private message? If you need a server to join, check out my home! https://discord.gg/PHqDbkg",
       3000
     );
 
@@ -77,7 +77,7 @@ async function onMessage(
       }
 
       await message.showTypingAndSendMessage(
-        "Sorry, but please do not upload files. Only images and videos are allowed.",
+        "I am so sorry, but I am not permitted to allow file uploads. Please share videos or images only.",
         3000
       );
 

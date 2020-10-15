@@ -108,9 +108,7 @@ export async function botConnect(): Promise<void> {
   // Send a debug log before turn off the bot.
   process.once("beforeExit", () => {
     if (debugChannelHook) {
-      debugChannelHook.send(
-        `I, ${client.user?.username}, am off to sleep. Goodbye.`
-      );
+      debugChannelHook.send(`${client.user?.username} is shutting down.`);
     }
   });
 }

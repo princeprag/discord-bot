@@ -19,7 +19,9 @@ const habitica: CommandInt = {
 
     // Check if the user id is not valid.
     if (!id) {
-      await message.reply("sorry, but what did you want me to search for?");
+      await message.reply(
+        "Would you please provide the user id you want me to search for?"
+      );
       return;
     }
 
@@ -202,7 +204,7 @@ const habitica: CommandInt = {
       // Send the quests embed to the current channel.
       await channel.send(questsEmbed).catch(async () => {
         await message.reply(
-          "sorry, but I found too much data. I cannot handle this!"
+          "I am so sorry, but the user has completed too many quests. I cannot carry this much information!"
         );
       });
     } catch (error) {
@@ -211,7 +213,7 @@ const habitica: CommandInt = {
         error?.response?.data?.message ?? "Unknown error."
       );
 
-      await message.reply("Sorry, but I could not find that user...");
+      await message.reply("I am so sorry, but I could not find that user...");
     }
   },
 };

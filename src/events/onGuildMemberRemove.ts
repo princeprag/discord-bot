@@ -36,9 +36,7 @@ async function onGuildMemberRemove(
       .setColor("#AB47E7")
       .setTitle("A user has left us!")
       .setDescription(
-        `Sad day... ${
-          nickname || user.username
-        } has left us. You will be missed!`
+        `${nickname || user.username} has left us. You will be missed!`
       )
   );
 }

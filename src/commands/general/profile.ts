@@ -15,9 +15,16 @@ const profile: CommandInt = {
     // Get the next argument as the website.
     const website = commandArguments.shift();
 
+    // Check if there is no website provided
+    if (!website) {
+      await message.reply(
+        "Would you please provide the website you want me to search for?"
+      );
+      return;
+    }
+
     // Check if the website is not valid.
     if (
-      !website ||
       ![
         "steam",
         "facebook",
@@ -32,7 +39,9 @@ const profile: CommandInt = {
         "ig",
       ].includes(website)
     ) {
-      await message.reply("Sorry, but I cannot access that website...");
+      await message.reply(
+        `I am so sorry, but I do not have access to ${website}`
+      );
       return;
     }
 
@@ -41,7 +50,9 @@ const profile: CommandInt = {
 
     // Check if the user is empty.
     if (!user) {
-      await message.reply("Sorry, but who did you want me to search for?");
+      await message.reply(
+        "Would you please provide the user you want me to search for?"
+      );
       return;
     }
 
@@ -70,7 +81,7 @@ const profile: CommandInt = {
         .setColor(bot.color)
         .setTitle(`Query: ${website} | For user: ${user}`)
         .setDescription(
-          `BEEP BOOP: Here is a [link to their profile](${prefix}${user})`
+          `I found them! Here is a [link to their profile](${prefix}${user})`
         )
     );
   },

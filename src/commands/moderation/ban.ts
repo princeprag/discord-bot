@@ -17,7 +17,7 @@ const ban: CommandInt = {
     // Check if the member has the ban members permission.
     if (!guild || !user || !member || !member.hasPermission("BAN_MEMBERS")) {
       await message.reply(
-        "sorry, but this command is restricted to moderators."
+        "I am sorry, but I can only do this for moderators who are allowed to ban members."
       );
 
       return;
@@ -31,7 +31,9 @@ const ban: CommandInt = {
 
     // Check if the user mention is valid.
     if (!userToBanMention || !userToBanMentioned || !mentions.members) {
-      await message.reply("Sorry, but you must mention an user to ban.");
+      await message.reply(
+        "Would you please provide the user you want me to ban?"
+      );
       return;
     }
 
@@ -40,13 +42,15 @@ const ban: CommandInt = {
 
     // Check if the user mention string and the first user mention id are equals.
     if (userToBanMention !== userToBanMentioned.id) {
-      await message.reply("Sorry, but the user mentioned is not valid.");
+      await message.reply(
+        `I am so sorry, but ${userToBanMentioned.toString()} is not a valid user.`
+      );
       return;
     }
 
     // Check if trying to ban itself.
     if (userToBanMentioned.id === author.id) {
-      await message.reply("Sorry but you cannot ban yourself!");
+      await message.reply("Wait, what? You cannot ban yourself!");
       return;
     }
 
@@ -55,7 +59,9 @@ const ban: CommandInt = {
 
     // Check if the member mention exists.
     if (!memberToBanMentioned) {
-      await message.reply("Sorry but you must mention a valid user to ban.");
+      await message.reply(
+        "Would you please provide the user you want me to ban?"
+      );
       return;
     }
 
@@ -64,13 +70,17 @@ const ban: CommandInt = {
       userToBanMentioned.id === user.id ||
       memberToBanMentioned.id === user.id
     ) {
-      await message.reply("Why are you trying to ban me? I am sad now.");
+      await message.reply(
+        "You want to ban me? Oh no! Did I do something wrong?"
+      );
       return;
     }
 
     // Check if the user is bannable.
     if (!memberToBanMentioned.bannable) {
-      await message.reply("Sorry but you cannot ban this user.");
+      await message.reply(
+        `I am so sorry, but I cannot ban ${memberToBanMentioned.toString()}.`
+      );
       return;
     }
 
@@ -79,12 +89,12 @@ const ban: CommandInt = {
 
     // Add a default reason if it not provided.
     if (!reason || !reason.length) {
-      reason = "Sorry, but the moderator did not give a reason.";
+      reason = "I am sorry, but the moderator did not give a reason.";
     }
 
     // Send the an advertisement about the action.
     const botMessage = await message.reply(
-      "wait! This action is irreversible. To proceed, react with '✅'."
+      "Wait! This action is irreversible. To proceed, react with '✅'."
     );
 
     if (!botMessage.deleted) {
@@ -140,7 +150,7 @@ const ban: CommandInt = {
 
         // Send a message to the user.
         await userToBanMentioned.send(
-          `**[Ban]** ${author.toString()} bans you, reason: ${reason}`
+          `**[Ban]** ${author.toString()} has banned you for the following reason: ${reason}`
         );
       } catch (error) {
         await message.reply("okay, I will hold off on this action for now.");

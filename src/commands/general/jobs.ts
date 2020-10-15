@@ -25,7 +25,7 @@ const jobs: CommandInt = {
       new MessageEmbed()
         .setColor("#0E76A8")
         .setTitle("Job search!")
-        .setDescription(`[Here are some potential jobs for your.](${url})`)
+        .setDescription(`[Here are some potential jobs for you.](${url})`)
     );
   },
 };

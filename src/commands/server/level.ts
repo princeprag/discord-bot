@@ -32,7 +32,9 @@ const level: CommandInt = {
       userToStr = userToStr.replace(/[<@!>]/gi, "");
 
       if (userToStr !== userTo.id) {
-        await message.reply("the user mention is not valid.");
+        await message.reply(
+          `I am so sorry, but ${userToStr} is not a valid user.`
+        );
         return;
       }
 
@@ -48,7 +50,9 @@ const level: CommandInt = {
 
     // Check if the user info does not exist.
     if (!userInfo) {
-      await message.reply("sorry, but I could not find anything...");
+      await message.reply(
+        "I am so sorry, but I have no record of that user. Please encourage them to talk!"
+      );
       return;
     }
 
@@ -62,7 +66,9 @@ const level: CommandInt = {
     levelEmbed.setTitle(`${username}'s ranking`);
 
     // Add the description.
-    levelEmbed.setDescription(`Here is where you stand in \`${guild.name}!\``);
+    levelEmbed.setDescription(
+      `Here is the record I have for you in \`${guild.name}!\``
+    );
 
     // Add the user experiencie.
     levelEmbed.addField("Experience points", userInfo.points, true);

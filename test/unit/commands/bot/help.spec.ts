@@ -63,7 +63,7 @@ describe("command: help", () => {
       { name: "title", value: "Bot commands" },
       {
         name: "description",
-        value: `My available commands include the following. The command name must be prefixed with \`${testPrefix}\`, just like the \`${testPrefix}help\` command used to get this message. For information on a specific command, use \`${testPrefix}help <command>\`.`,
+        value: `My available commands are below. The command name must be prefixed with \`${testPrefix}\`, just like the \`${testPrefix}help\` command used to get this message. For information on a specific command, please use \`${testPrefix}help <command>\`.`,
       },
     ].forEach(({ name, value }) => {
       it(`should set property ${name} to provided value`, async () => {
@@ -180,7 +180,7 @@ describe("command: help", () => {
       const reply = (msg.reply as SinonStub).firstCall.firstArg;
 
       expect(reply).to.equal(
-        `sorry, but I could not find the \`${testPrefix}yooo\` command. Try \`${testPrefix}help\` for a list of available commands.`
+        `I am so sorry, but I could not find the \`${testPrefix}yooo\` command. Please try \`${testPrefix}help\` for a list of available commands.`
       );
     });
   });

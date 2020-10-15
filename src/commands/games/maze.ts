@@ -25,7 +25,7 @@ const maze: CommandInt = {
     // Check if the action is not `request` and `solve`.
     if (action !== "request" && action !== "solve") {
       await message.reply(
-        "I'm sorry, but I do not see the correct information in your request. Please try again."
+        "Would you please let me know if you want to `request` a maze or `solve` a maze?"
       );
 
       return;
@@ -57,7 +57,9 @@ const maze: CommandInt = {
       mazeEmbed.setTitle(name);
 
       mazeEmbed.setDescription(
-        `When you have finished, use \`${bot.prefix[guild.id]}maze solve ${
+        `When you have finished, please use \`${
+          bot.prefix[guild.id]
+        }maze solve ${
           mazePath.split("/").reverse()[0]
         } <answer>\`, where answer is a null-spaced string of cardinal directions.`
       );
@@ -85,7 +87,7 @@ const maze: CommandInt = {
 
       // Check if the maze id is empty.
       if (!id) {
-        await message.reply("Sorry, but you must enter the maze id.");
+        await message.reply("Would you please provide the maze id?");
         return;
       }
 
@@ -94,7 +96,7 @@ const maze: CommandInt = {
 
       // Check if the maze answer is empty.
       if (!answer) {
-        await message.reply("sorry, but you must enter the maze answer.");
+        await message.reply("Would you please provide the maze answer?");
         return;
       }
 

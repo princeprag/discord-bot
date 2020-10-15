@@ -21,7 +21,9 @@ const space: CommandInt = {
     if (date) {
       // Check if the date has the `YYYY-MM-DD` format.
       if (!/[0-9]{4}-[0-9]{2}-[0-9]{2}/.test(date)) {
-        await message.reply("sorry, but the date provided is not valid.");
+        await message.reply(
+          `I am so sorry, but ${date} is not a valid date. Would you please use the format \`YYYY-MM-DD\`?`
+        );
         return;
       }
 
@@ -66,9 +68,7 @@ const space: CommandInt = {
       spaceEmbed.setTitle("SPAAAAACE");
 
       // Add the error description to the embed description.
-      spaceEmbed.setDescription(
-        "Bot got lost in space. Please try again later."
-      );
+      spaceEmbed.setDescription("I got lost in space. Please try again later.");
     }
 
     // Send the space embed to the current channel.

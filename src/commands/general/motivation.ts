@@ -18,7 +18,7 @@ const motivation: CommandInt = {
     // Send the embed to the current channel.
     await channel.send(
       new MessageEmbed()
-        .setTitle("Time to get motivated!")
+        .setTitle("You can do it!")
         .setDescription(quote)
         .setFooter(author)
     );

@@ -24,7 +24,7 @@ const server: CommandInt = {
     serverEmbed.setTitle(guild.name);
 
     // Add the description.
-    serverEmbed.setDescription("Here is the information of this server!");
+    serverEmbed.setDescription("Here is the information for this server!");
 
     // Add the server image to the embed thumbnail.
     serverEmbed.setThumbnail(guild.iconURL({ dynamic: true }) || "");
@@ -103,25 +103,25 @@ const server: CommandInt = {
     serverEmbed.addField("\u200b", "\u200b", true);
 
     // Add the server channels count to an embed field.
-    serverEmbed.addField("Channels count", guild.channels.cache.size, true);
+    serverEmbed.addField("Channel count", guild.channels.cache.size, true);
 
     // Add the server text channels count to an embed field.
     serverEmbed.addField(
-      "Text channels count",
+      "Text channel count",
       guild.channels.cache.filter((channel) => channel.type === "text").size,
       true
     );
 
     // Add the server voice channels count to an embed field.
     serverEmbed.addField(
-      "Voice channels count",
+      "Voice channel count",
       guild.channels.cache.filter((channel) => channel.type === "voice").size,
       true
     );
 
     // Add the footer.
     serverEmbed.setFooter(
-      `Use '${prefix[guild.id]}help' to see more commands.`
+      `Please use '${prefix[guild.id]}help' to see my commands.`
     );
 
     // Send the server embed to the current channel.

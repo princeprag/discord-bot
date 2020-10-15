@@ -30,13 +30,11 @@ const challenge: CommandInt = {
     // Check if the action is not `start`, `request` and `solve`.
     if (action !== "start" && action !== "request" && action !== "solve") {
       await message.reply(
-        `sorry, but I just recognize \`${
-          prefix[guild.id]
-        }challenge start\`, \`${
+        `Would you please use \`${prefix[guild.id]}challenge start\`, \`${
           prefix[guild.id]
         }challenge request <id>\` or \`${
           prefix[guild.id]
-        }challenge solve <id> <answer>\`.`
+        }challenge solve <id> <answer>\`?`
       );
 
       return;
@@ -59,7 +57,7 @@ const challenge: CommandInt = {
             .setColor(bot.color)
             .setTitle("Start the challenge!")
             .setDescription(
-              `Welcome to the challenge game! To get your first challenge, call this command: \`${
+              `Welcome to the challenge game! To get your first challenge, please call this command: \`${
                 prefix[guild.id]
               }challenge request ${nextQuestion.split("/").reverse()[0]}\``
             )
@@ -72,7 +70,7 @@ const challenge: CommandInt = {
 
         // Check if the id is not valid.
         if (!id) {
-          await message.reply("Sorry, but you must enter the challenge id.");
+          await message.reply("Would you please enter the challenge id?");
           return;
         }
 
@@ -110,9 +108,7 @@ const challenge: CommandInt = {
 
           // Check if the answer is not valid.
           if (!answer) {
-            await message.reply(
-              "Sorry, but you must enter the challenge answer."
-            );
+            await message.reply("Would you please enter the challenge answer?");
 
             return;
           }

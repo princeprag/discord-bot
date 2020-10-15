@@ -59,11 +59,9 @@ const adventure: CommandInt = {
     // Check if the action is not `start` and `move`.
     if (action !== "start" && action !== "move") {
       await message.reply(
-        `sorry, but I just recognize \`${
+        `Would you please use \`${prefix[guild.id]}adventure start\` or \`${
           prefix[guild.id]
-        }adventure start\` or \`${
-          prefix[guild.id]
-        }adventure move <room> <direction>\`.`
+        }adventure move <room> <direction>\`?`
       );
 
       return;
@@ -108,7 +106,7 @@ const adventure: CommandInt = {
 
         // Check if the room is not valid.
         if (!room) {
-          await message.reply("Sorry, but you must enter the room id.");
+          await message.reply("Would you please enter the room id?");
           return;
         }
 
@@ -117,7 +115,7 @@ const adventure: CommandInt = {
 
         // Check if the direction is not valid.
         if (!direction) {
-          await message.reply("Sorry, but you must enter the direction.");
+          await message.reply("Would you please enter the direction?");
           return;
         }
 
@@ -147,7 +145,7 @@ const adventure: CommandInt = {
 
       // Send an error message to the current channel.
       await message.reply(
-        `Sorry, but I cannot execute the \`${action}\` action inside the adventure.`
+        `I am so sorry, but I cannot execute the \`${action}\` action inside the adventure.`
       );
 
       return;

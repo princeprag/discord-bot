@@ -27,7 +27,7 @@ const uptime: CommandInt = {
     await channel.send(
       new MessageEmbed()
         .setColor(bot.color)
-        .setTitle("Bot uptime")
+        .setTitle("Becca's uptime")
         .setDescription(
           `I have been awake for... ${~~hours} hour${
             hours === 1 ? "" : "s"

@@ -20,7 +20,7 @@ const fact: CommandInt = {
     await channel.send(
       new MessageEmbed()
         .setColor(bot.color)
-        .setTitle("Fun fact!")
+        .setTitle("Did you know?")
         .setURL(source_url)
         .setDescription(text)
     );
