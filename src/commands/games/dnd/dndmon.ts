@@ -16,7 +16,9 @@ const dndmon: CommandInt = {
 
     // Check if the query is not empty.
     if (!query || !query.length) {
-      await message.reply("Would you please provide the monster you want me to search for?");
+      await message.reply(
+        "Would you please provide the monster you want me to search for?"
+      );
       return;
     }
 
@@ -27,7 +29,9 @@ const dndmon: CommandInt = {
 
     // Check if the dnd monster is not valid.
     if (!data.data || data.data.error) {
-      await message.reply("I am so sorry, but I was unable to find anything...");
+      await message.reply(
+        "I am so sorry, but I was unable to find anything..."
+      );
       return;
     }
 

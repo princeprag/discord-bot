@@ -20,3 +20,10 @@ Did you remember to update the `package.json` version number?
 - [ ] Minor Version Update: \_.X.\_ (for the addition of new commands)
 - [ ] Patch Version Update: \_.\_.X (for bug fixes _in the code_.)
 - [ ] No Version Update: \_.\_.\_ (no version update for additions to tests, documentation, or anything that isn't end-user facing.)
+
+## Documentation:
+
+For _any_ version updates, please verify if the [documentation page](https://www.nhcarrigan.com/discord-bot-documentation) needs an update. If it does, please [create an issue there](https://github.com/nhcarrigan/discord-bot-documentation) to ensure it is not forgotten.
+
+- [ ] My contribution does NOT require a documentation update.
+- [ ] My contribution DOES require a documentation update.
