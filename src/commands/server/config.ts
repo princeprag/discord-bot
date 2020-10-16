@@ -343,7 +343,9 @@ const config: CommandInt = {
       "Restricted Role",
       restrictRole
         ? `The restrict and unrestrict role for the server is ${restrictRole.toString()}`
-        : `Please configure a restrict role using \`${prefix}config set role restricted @role\`.`
+        : `Please configure a restrict role using \`${
+            prefix[guild.id]
+          }config set role restricted @role\`.`
     );
 
     // Get the moderator role from the database
@@ -354,7 +356,9 @@ const config: CommandInt = {
       "Moderator Role",
       modRole
         ? `The moderator role for the restrict command is ${modRole.toString()}`
-        : `Please configure a moderator role using \`${prefix}config set role moderator @role\`.`
+        : `Please configure a moderator role using \`${
+            prefix[guild.id]
+          }config set role moderator @role\`.`
     );
     // Send the embed to the current channel.
     await channel.send(configEmbed);
