@@ -1,11 +1,19 @@
 import CommandInt from "@Interfaces/CommandInt";
 import { MessageAttachment, MessageEmbed } from "discord.js";
 
+const images = [
+  "Moon.jpg",
+  "Moonlight 3.png",
+  "Moonlight 4.png",
+  "Moonlight 5.png",
+  "Moonlight.png",
+];
+
 const art: CommandInt = {
   name: "art",
   description: "Returns art!",
   run: async (message) => {
-    const random = Math.floor(Math.random() * 5).toString();
+    const random = Math.floor(Math.random() * 5);
     const artEmbed = new MessageEmbed();
     artEmbed.setTitle("Art!");
     artEmbed.setDescription(
@@ -13,7 +21,7 @@ const art: CommandInt = {
     );
     const attachment = [];
     attachment.push(
-      new MessageAttachment(`./img/Becca${random}.png`, "becca.png")
+      new MessageAttachment(`./img/${images[random]}`, "becca.png")
     );
     artEmbed.attachFiles(attachment);
     artEmbed.setImage("attachment://becca.png");
