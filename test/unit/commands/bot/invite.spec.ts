@@ -5,7 +5,7 @@ import invite from "@Commands/bot/invite";
 import { buildMessageInt } from "../../../testSetup";
 import { sinDependencies } from "mathjs";
 
-describe("command: about", () => {
+describe("command: invite", () => {
   let sandbox;
   const testPrefix = "☂";
   const botColor = "7B25AA";
