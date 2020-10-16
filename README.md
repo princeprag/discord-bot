@@ -1,6 +1,9 @@
 # BeccaBot
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![License: GPL-3.0](https://img.shields.io/github/license/nhcarrigan/BeccaBot?color=purple)](https://opensource.org/licenses/MIT)
@@ -25,9 +28,14 @@ Are you interested in contributing to the development of this bot? We welcome al
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fnhcarrigan%2FBeccaBot.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fnhcarrigan%2FBeccaBot?ref=badge_large)
 
+## Art Credits
+
+Credit for the bot's avatar and the support server art goes to [MoonlightKCreations](https://www.instagram.com/moonlightkcreations/). If you want to show some support, consider [commissioning her!](https://meitanteimoonlight.wixsite.com/moonlightkcreations/commissions).
+
 ## Hacktoberfest 2020
 
-If you are participating in [Hacktoberfest](https://hacktoberfest.digitalocean.com/) this year, this repository is welcoming contributions! 
+If you are participating in [Hacktoberfest](https://hacktoberfest.digitalocean.com/) this year, this repository is welcoming contributions!
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -52,6 +60,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
