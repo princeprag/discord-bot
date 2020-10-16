@@ -41,9 +41,6 @@ export async function botConnect(): Promise<void> {
     );
   }
 
-  // Connect to the MongoDB database.
-  await connectDatabase(debugChannelHook).then(loadCurrentTrackingOptOutList);
-
   // Create a new Discord bot object.
   const client: ClientInt = extendsClientToClientInt(new Client());
 
@@ -104,6 +101,11 @@ export async function botConnect(): Promise<void> {
 
   // Log the bot with the Discord token.
   await client.login(process.env.DISCORD_TOKEN);
+
+  // Connect to the MongoDB database.
+  await connectDatabase(debugChannelHook, client).then(
+    loadCurrentTrackingOptOutList
+  );
 
   // Send a debug log before turn off the bot.
   process.once("beforeExit", () => {
