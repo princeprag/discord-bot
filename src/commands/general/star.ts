@@ -1,5 +1,5 @@
 import CommandInt from "@Interfaces/CommandInt";
-import { MessageEmbed } from "discord.js";
+import { MessageAttachment, MessageEmbed } from "discord.js";
 
 const star: CommandInt = {
   name: "star",
@@ -60,6 +60,10 @@ const star: CommandInt = {
       reason = "I am sorry, but the user did not provide a reason.";
     }
 
+    //create message attachment
+    const attachment = [];
+    attachment.push(new MessageAttachment("./img/star.png", "star.png"));
+
     // Send an embed message with the star to the user.
     await userToStarMentioned.send(
       new MessageEmbed()
@@ -68,9 +72,8 @@ const star: CommandInt = {
           `${author.toString()} has given this shiny gold star to you!`
         )
         .addField("Reason", reason)
-        .setImage(
-          "https://github.com/nhcarrigan/BeccaBot/blob/master/img/star.png?raw=true"
-        )
+        .attachFiles(attachment)
+        .setImage("attachment://star.png")
         .setFooter("I am so proud of you! 🙃")
     );
 
