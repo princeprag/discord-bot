@@ -13,7 +13,7 @@ const report: CommandInt = {
         .setColor(bot.color)
         .setTitle("Report a bug")
         .setDescription(
-          "Did I do something wrong? Report an issue [here](https://github.com/nhcarrigan/discord-bot/issues/choose)."
+          "Did I do something wrong? Report an issue [here](https://github.com/nhcarrigan/BeccaBot/issues/choose)."
         )
     );
   },

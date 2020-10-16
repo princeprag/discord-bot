@@ -23,7 +23,7 @@ Did you remember to update the `package.json` version number?
 
 ## Documentation:
 
-For _any_ version updates, please verify if the [documentation page](https://www.nhcarrigan.com/discord-bot-documentation) needs an update. If it does, please [create an issue there](https://github.com/nhcarrigan/discord-bot-documentation) to ensure it is not forgotten.
+For _any_ version updates, please verify if the [documentation page](https://www.nhcarrigan.com/BeccaBot-documentation) needs an update. If it does, please [create an issue there](https://github.com/nhcarrigan/BeccaBot-documentation/issues/new?assignees=nhcarrigan&labels=%F0%9F%9A%A6+status%3A+awaiting+triage&template=update.md&title=%5BUPDATE%5D) to ensure it is not forgotten.
 
 - [ ] My contribution does NOT require a documentation update.
 - [ ] My contribution DOES require a documentation update.

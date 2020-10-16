@@ -14,11 +14,11 @@
     "bot",
     "discord-bot"
   ],
-  "repository": "https://github.com/nhcarrigan/discord-bot",
+  "repository": "https://github.com/nhcarrigan/BeccaBot",
   "bugs": {
-    "url": "https://github.com/nhcarrigan/discord-bot/issues"
+    "url": "https://github.com/nhcarrigan/BeccaBot/issues"
   },
-  "homepage": "https://github.com/nhcarrigan/discord-bot#readme",
+  "homepage": "https://github.com/nhcarrigan/BeccaBot#readme",
   "scripts": {
     "build": "rm -rf ./prod && tsc",
     "precoverage": "rm -rf ./coverage ./nyc_output",

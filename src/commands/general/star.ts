@@ -69,7 +69,7 @@ const star: CommandInt = {
         )
         .addField("Reason", reason)
         .setImage(
-          "https://github.com/nhcarrigan/discord-bot/blob/master/img/star.png?raw=true"
+          "https://github.com/nhcarrigan/BeccaBot/blob/master/img/star.png?raw=true"
         )
         .setFooter("I am so proud of you! 🙃")
     );
