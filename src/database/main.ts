@@ -1,3 +1,4 @@
+import ClientInt from "@Interfaces/ClientInt";
 import { WebhookClient } from "discord.js";
 import { connect } from "mongoose";
 
@@ -10,7 +11,8 @@ import { connect } from "mongoose";
  * @returns { Promise<void> }
  */
 async function connectDatabase(
-  debugChannelHook: WebhookClient | null
+  debugChannelHook: WebhookClient | null,
+  client: ClientInt
 ): Promise<void> {
   try {
     await connect(process.env.MONGODB || "", {
@@ -21,7 +23,9 @@ async function connectDatabase(
     console.log("Connected to the database");
 
     if (debugChannelHook) {
-      await debugChannelHook.send("I connected to the database.");
+      await debugChannelHook.send(
+        `\`${client.user?.username}\` has connected to the database.`
+      );
     }
   } catch (e) {
     throw new Error(`Database connection failed: ${e}`);
