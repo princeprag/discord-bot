@@ -43,7 +43,7 @@ const config: CommandInt = {
       // Check if the author has the administrator permission.
       //NOTE: nhcarrigan hard-coded for development purposes.
       if (
-        !member.hasPermission("MANAGE_SERVER") &&
+        !member.hasPermission("MANAGE_GUILD") &&
         member.id !== "465650873650118659"
       ) {
         await message.reply(
