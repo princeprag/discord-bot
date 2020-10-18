@@ -116,6 +116,9 @@ const unrestrict: CommandInt = {
           .setFooter("Please remember to follow our rules!")
           .setTimestamp()
       );
+
+      //respond
+      await message.reply("Okay! I have taken care of that for you.");
     } catch (error) {
       console.log(error);
 
