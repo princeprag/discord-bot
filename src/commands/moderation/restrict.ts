@@ -162,6 +162,15 @@ const restrict: CommandInt = {
     }
 
     try {
+      //remove all other roles
+      memberToRestrictMentioned.roles.cache.forEach(async (role) => {
+        //everyone role cannot be removed - it has same ID as guild, so skip it.
+        if (role.id === guild.id) {
+          return;
+        }
+        await memberToRestrictMentioned.roles.remove(role);
+      });
+
       // Add the restricted role to the user.
       await memberToRestrictMentioned.roles.add(restrictedRole);
 
@@ -194,7 +203,7 @@ const restrict: CommandInt = {
 
       // Send an advertisement to the user.
       await memberToRestrictMentioned.send(
-        `Hello! I am sorry to bother you. It appears you have been suspended from ${guild.name} for the following reason: ${reason} - I have created a channel there for you to appeal this decision.`
+        `Hello! I am sorry to bother you. It appears you have been suspended from **${guild.name}** for the following reason: ${reason} \n I have created a channel there for you to appeal this decision.`
       );
 
       // Send an embed message to the logs channel.
@@ -209,6 +218,9 @@ const restrict: CommandInt = {
           .setFooter("Please remember to follow our rules!")
           .setTimestamp()
       );
+
+      //respond
+      await message.reply("Okay! I have taken care of that for you.");
     } catch (error) {
       console.log(error);
 
