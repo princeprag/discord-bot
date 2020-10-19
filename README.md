@@ -14,7 +14,6 @@
 [![Issues](https://img.shields.io/github/issues/nhcarrigan/BeccaBot)](https://github.com/nhcarrigan/BeccaBot/issues)
 [![Pull Requests](https://img.shields.io/github/issues-pr/nhcarrigan/BeccaBot)](https://github.com/nhcarrigan/BeccaBot/pulls)
 [![Discord](https://img.shields.io/discord/710307364556767283)](https://discord.gg/PHqDbkg)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fnhcarrigan%2FBeccaBot.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fnhcarrigan%2FBeccaBot?ref=badge_shield)
 
 Welcome to the repository for my discord bot, seen as `BeccaBot` in my [Discord Server](https://discord.gg/PHqDbkg).
 
@@ -23,10 +22,6 @@ Welcome to the repository for my discord bot, seen as `BeccaBot` in my [Discord 
 ## Join Our Team!
 
 Are you interested in contributing to the development of this bot? We welcome all who want to assist! If you would like to contribute, you are welcome to fork the repository and make your changes. Submit a pull request when you are ready for us to review your changes. You can also submit issues for various purposes. For more information, please review our [contributing guidelines](./CONTRIBUTING.md).
-
-## License
-
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fnhcarrigan%2FBeccaBot.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fnhcarrigan%2FBeccaBot?ref=badge_large)
 
 ## Art Credits
 
