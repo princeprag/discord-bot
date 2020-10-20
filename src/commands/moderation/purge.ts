@@ -105,6 +105,7 @@ const purge: CommandInt = {
           );
         }
       } catch (error) {
+        console.log(error);
         await message.reply("Okay, I will hold off on this action for now.");
       }
     }
