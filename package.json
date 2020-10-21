@@ -22,7 +22,7 @@
   "scripts": {
     "build": "rm -rf ./prod && tsc --sourcemap",
     "precoverage": "rm -rf ./nyc_output",
-    "coverage": "nyc npm run test:unit --reporter=text-lcov > ./coverage/lcov.info",
+    "coverage": "nyc npm run test:unit --reporter=text-lcov | coveralls",
     "dev": "nodemon",
     "dev:command": "npm run build && npm run start:ts",
     "lint": "eslint src --fix",
@@ -61,6 +61,7 @@
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
     "chai": "^4.2.0",
+    "coveralls": "^3.1.0",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
     "eslint": "^7.11.0",
