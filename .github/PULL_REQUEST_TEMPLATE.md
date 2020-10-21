@@ -28,7 +28,7 @@ Are all the unit tests passing and have you added tests that cover your changes?
 Coverage Checklist:
 
 - [ ] All unit tests passing
-- [ ] Code which PR touches has tests.
+- [ ] Code that my PR modifies has tests.
 - [ ] PR defines validation steps.
 
 ## Documentation:
