@@ -12,14 +12,22 @@ const privacy: CommandInt = {
   description:
     "Generates an embed with brief information about the bot's privacy policy.",
   run: async (message) => {
-    const { channel } = message;
+    try {
+      const { channel } = message;
 
-    // Send an embed message to the current channel.
-    await channel.send(
-      new MessageEmbed()
-        .setTitle(PRIVACY_CONSTANTS.title)
-        .setDescription(PRIVACY_CONSTANTS.description)
-    );
+      // Send an embed message to the current channel.
+      await channel.send(
+        new MessageEmbed()
+          .setTitle(PRIVACY_CONSTANTS.title)
+          .setDescription(PRIVACY_CONSTANTS.description)
+      );
+    } catch (error) {
+      console.log(
+        `${message.guild?.name} had the following error with the privacy command:`
+      );
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
+    }
   },
 };
 

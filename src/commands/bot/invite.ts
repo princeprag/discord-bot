@@ -12,16 +12,24 @@ const invite: CommandInt = {
   name: "invite",
   description: "Get the invitation url of the bot to your server.",
   run: async (message) => {
-    const { bot, channel } = message;
+    try {
+      const { bot, channel } = message;
 
-    // Send an embed message to the current channel.
-    await channel.send(
-      new MessageEmbed()
-        .setColor(bot.color)
-        .setTitle(INVITE_CONSTANTS.title)
-        .setDescription(INVITE_CONSTANTS.description)
-        .setFooter(INVITE_CONSTANTS.footer)
-    );
+      // Send an embed message to the current channel.
+      await channel.send(
+        new MessageEmbed()
+          .setColor(bot.color)
+          .setTitle(INVITE_CONSTANTS.title)
+          .setDescription(INVITE_CONSTANTS.description)
+          .setFooter(INVITE_CONSTANTS.footer)
+      );
+    } catch (error) {
+      console.log(
+        `${message.guild?.name} had the following error with the invite command:`
+      );
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
+    }
   },
 };
 

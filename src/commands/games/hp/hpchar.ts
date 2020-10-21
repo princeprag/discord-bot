@@ -9,19 +9,19 @@ const hpchar: CommandInt = {
     "Returns information on the provided Harry Potter character <name>.",
   parameters: ["`<name>`: the first and last name of the character."],
   run: async (message) => {
-    const { bot, channel, commandArguments } = message;
-
-    // Get the arguments as an Harry Potter API query.
-    const characterName = commandArguments.join("%20");
-
-    //check for query
-    if (!characterName) {
-      await message.reply(
-        "Would you please provide the character name you would like me to search for?"
-      );
-      return;
-    }
     try {
+      const { bot, channel, commandArguments } = message;
+
+      // Get the arguments as an Harry Potter API query.
+      const characterName = commandArguments.join("%20");
+
+      //check for query
+      if (!characterName) {
+        await message.reply(
+          "Would you please provide the character name you would like me to search for?"
+        );
+        return;
+      }
       // Get the character information from the Harry Potter API.
       const data = await axios.get<HpCharInt[]>(
         `https://www.potterapi.com/v1/characters?key=${process.env.HP_KEY}&name=${characterName}`
@@ -29,7 +29,8 @@ const hpchar: CommandInt = {
 
       // Check if the first element exists.
       if (!data.data.length || !data.data[0]) {
-        throw new Error();
+        await message.reply("I am so sorry, but I could not find anything...");
+        return;
       }
 
       // Create a new empty embed.
@@ -77,11 +78,10 @@ const hpchar: CommandInt = {
       await channel.send(hpEmbed);
     } catch (error) {
       console.log(
-        "Harry Potter Character Command:",
-        error?.response?.data?.message ?? "Unknown error."
+        `${message.guild?.name} had the following error with the hpchar command:`
       );
-
-      await message.reply("I am so sorry, but I could not find anything...");
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

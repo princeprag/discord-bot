@@ -164,18 +164,10 @@ const challenge: CommandInt = {
       }
     } catch (error) {
       console.log(
-        "Challenge command:",
-        error?.response?.data?.message ?? "Unknown error."
+        `${message.guild?.name} had the following error with the challenge command:`
       );
-
-      const errorEmbed = new MessageEmbed();
-      errorEmbed.setColor(bot.color);
-      errorEmbed.setTitle("Challenge Error");
-      errorEmbed.setDescription(
-        error?.response?.data?.message ?? "Unknown error"
-      );
-
-      await message.reply(errorEmbed);
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

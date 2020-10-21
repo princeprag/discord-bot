@@ -7,63 +7,63 @@ const purge: CommandInt = {
     "Purges **number** of messages from the current channel. Restricted to server moderators.",
   parameters: ["`<number>` - number of messages to delete; no more than 100"],
   run: async (message) => {
-    const { author, bot, channel, commandArguments, guild, member } = message;
+    try {
+      const { author, bot, channel, commandArguments, guild, member } = message;
 
-    const { user } = bot;
+      const { user } = bot;
 
-    // Check if the member has the manage messages permission.
-    if (
-      !guild ||
-      !user ||
-      !member ||
-      !member.hasPermission("MANAGE_MESSAGES")
-    ) {
-      await message.reply(
-        "I am so sorry, but I can only do this for moderators with permission to manage messages."
+      // Check if the member has the manage messages permission.
+      if (
+        !guild ||
+        !user ||
+        !member ||
+        !member.hasPermission("MANAGE_MESSAGES")
+      ) {
+        await message.reply(
+          "I am so sorry, but I can only do this for moderators with permission to manage messages."
+        );
+
+        return;
+      }
+
+      // Get the next argument as the number.
+      const num = commandArguments.shift();
+
+      // Check if the number is empty
+      if (!num) {
+        await message.reply(
+          "Would you please provide the number of messages you want me to delete?"
+        );
+        return;
+      }
+
+      // Check if the number is not valid.
+      if (isNaN(Number(num))) {
+        await message.reply(`I am so sorry, but ${num} is not a valid number.`);
+        return;
+      }
+
+      const limit = Number(num);
+
+      // Check if the number is higher than 100.
+      if (limit > 100) {
+        await message.reply(
+          "I am so sorry, but I can only delete up to 100 messages at once"
+        );
+
+        return;
+      }
+
+      // Send the an advertisement about the action.
+      const botMessage = await message.reply(
+        "Wait! This action is irreversible. To proceed, react with '✅'."
       );
 
-      return;
-    }
+      if (!botMessage.deleted) {
+        // Add the reactions.
+        await botMessage.react("❌");
+        await botMessage.react("✅");
 
-    // Get the next argument as the number.
-    const num = commandArguments.shift();
-
-    // Check if the number is empty
-    if (!num) {
-      await message.reply(
-        "Would you please provide the number of messages you want me to delete?"
-      );
-      return;
-    }
-
-    // Check if the number is not valid.
-    if (isNaN(Number(num))) {
-      await message.reply(`I am so sorry, but ${num} is not a valid number.`);
-      return;
-    }
-
-    const limit = Number(num);
-
-    // Check if the number is higher than 100.
-    if (limit > 100) {
-      await message.reply(
-        "I am so sorry, but I can only delete up to 100 messages at once"
-      );
-
-      return;
-    }
-
-    // Send the an advertisement about the action.
-    const botMessage = await message.reply(
-      "Wait! This action is irreversible. To proceed, react with '✅'."
-    );
-
-    if (!botMessage.deleted) {
-      // Add the reactions.
-      await botMessage.react("❌");
-      await botMessage.react("✅");
-
-      try {
         // Get the first reaction with `✅` or `❌` of the moderator.
         const collector = await botMessage.awaitReactions(
           (reaction, user) =>
@@ -82,7 +82,8 @@ const purge: CommandInt = {
 
         // Check if the reaction is valid and is `✅`.
         if (!reaction || reaction.emoji.name !== "✅") {
-          throw new Error();
+          await message.reply("Okay, I will hold off on that action for now.");
+          return;
         }
 
         // Fetch the messages.
@@ -104,12 +105,14 @@ const purge: CommandInt = {
               .setTimestamp()
           );
         }
-      } catch (error) {
-        console.log(error);
-        await message.reply("Okay, I will hold off on this action for now.");
       }
+    } catch (error) {
+      console.log(
+        `${message.guild?.name} had the following error with the purge command:`
+      );
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };
-
 export default purge;

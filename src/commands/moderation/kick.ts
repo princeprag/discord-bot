@@ -10,81 +10,88 @@ const kick: CommandInt = {
     "`<?reason>`: reason for kicking the user",
   ],
   run: async (message) => {
-    const { author, bot, commandArguments, guild, member, mentions } = message;
-
-    const { user } = bot;
-
-    // Check if the member has the kick members permission.
-    if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
-      await message.reply(
-        "I am so sorry, but I can only do this for moderators with permission to kick members."
-      );
-
-      return;
-    }
-
-    // Get the next argument as the user to kick mention.
-    let userToKickMention = commandArguments.shift();
-
-    // Get the first user mention.
-    const userToKickMentioned = mentions.users.first();
-
-    // Check if the user mention is valid.
-    if (!userToKickMention || !userToKickMentioned || !mentions.members) {
-      await message.reply(
-        "Would you please provide the user you want me to kick?"
-      );
-      return;
-    }
-
-    // Remove the `<@!` and `>` from the mention to get the id.
-    userToKickMention = userToKickMention.replace(/[<@!>]/gi, "");
-
-    // Check if the user mention string and the first user mention id are equals.
-    if (userToKickMention !== userToKickMentioned.id) {
-      await message.reply(
-        `I am so sorry, but ${userToKickMentioned.toString()} is not a valid user.`
-      );
-      return;
-    }
-
-    // Check if trying to kick itself.
-    if (userToKickMentioned.id === author.id) {
-      await message.reply("Wait, what? You cannot kick yourself!");
-      return;
-    }
-
-    // Get the first member mention.
-    const memberToKickMentioned = mentions.members.first();
-
-    // Check if the member mention exists.
-    if (!memberToKickMentioned) {
-      await message.reply(
-        "Would you please provide the user you want me to kick?"
-      );
-      return;
-    }
-
-    // Check if the user id or member id are the bot id.
-    if (
-      userToKickMentioned.id === user.id ||
-      memberToKickMentioned.id === user.id
-    ) {
-      await message.reply(
-        "You want to kick me? Oh no! Did I do something wrong?"
-      );
-      return;
-    }
-
-    // Get the reason of the warn.
-    let reason = commandArguments.join(" ");
-
-    // Add a default reason if it not provided.
-    if (!reason || !reason.length) {
-      reason = "I am sorry, but the moderator did not give a reason.";
-    }
-
     try {
+      const {
+        author,
+        bot,
+        commandArguments,
+        guild,
+        member,
+        mentions,
+      } = message;
+
+      const { user } = bot;
+
+      // Check if the member has the kick members permission.
+      if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
+        await message.reply(
+          "I am so sorry, but I can only do this for moderators with permission to kick members."
+        );
+
+        return;
+      }
+
+      // Get the next argument as the user to kick mention.
+      let userToKickMention = commandArguments.shift();
+
+      // Get the first user mention.
+      const userToKickMentioned = mentions.users.first();
+
+      // Check if the user mention is valid.
+      if (!userToKickMention || !userToKickMentioned || !mentions.members) {
+        await message.reply(
+          "Would you please provide the user you want me to kick?"
+        );
+        return;
+      }
+
+      // Remove the `<@!` and `>` from the mention to get the id.
+      userToKickMention = userToKickMention.replace(/[<@!>]/gi, "");
+
+      // Check if the user mention string and the first user mention id are equals.
+      if (userToKickMention !== userToKickMentioned.id) {
+        await message.reply(
+          `I am so sorry, but ${userToKickMentioned.toString()} is not a valid user.`
+        );
+        return;
+      }
+
+      // Check if trying to kick itself.
+      if (userToKickMentioned.id === author.id) {
+        await message.reply("Wait, what? You cannot kick yourself!");
+        return;
+      }
+
+      // Get the first member mention.
+      const memberToKickMentioned = mentions.members.first();
+
+      // Check if the member mention exists.
+      if (!memberToKickMentioned) {
+        await message.reply(
+          "Would you please provide the user you want me to kick?"
+        );
+        return;
+      }
+
+      // Check if the user id or member id are the bot id.
+      if (
+        userToKickMentioned.id === user.id ||
+        memberToKickMentioned.id === user.id
+      ) {
+        await message.reply(
+          "You want to kick me? Oh no! Did I do something wrong?"
+        );
+        return;
+      }
+
+      // Get the reason of the warn.
+      let reason = commandArguments.join(" ");
+
+      // Add a default reason if it not provided.
+      if (!reason || !reason.length) {
+        reason = "I am sorry, but the moderator did not give a reason.";
+      }
+
       // Check if the user is kickable.
       if (!memberToKickMentioned.kickable) {
         throw new Error(`Not kickable user: ${userToKickMentioned.username}`);

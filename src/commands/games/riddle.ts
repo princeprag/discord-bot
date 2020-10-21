@@ -140,18 +140,10 @@ const riddle: CommandInt = {
       await channel.send(riddleEmbed);
     } catch (error) {
       console.log(
-        "Riddle command:",
-        error?.response?.data?.message ?? "Unknown error"
+        `${message.guild?.name} had the following error with the riddle command:`
       );
-
-      const errorEmbed = new MessageEmbed();
-      errorEmbed.setColor(bot.color);
-      errorEmbed.setTitle("Riddle Error");
-      errorEmbed.setDescription(
-        error?.response?.data?.message ?? "Unknown error"
-      );
-
-      await message.reply(errorEmbed);
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

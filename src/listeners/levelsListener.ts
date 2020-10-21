@@ -10,53 +10,60 @@ const levelListener: ListenerInt = {
   description:
     "Grants 1 to 5 experience points for each message you send, and you level up at every 100 experience points.",
   run: async (message) => {
-    // Get the author and current guild from the message.
-    const { author, guild } = message;
+    try {
+      // Get the author and current guild from the message.
+      const { author, guild } = message;
 
-    // Check if the author is not a bot and the guild is valid.
-    if (author.bot || !guild) {
-      return;
-    }
+      // Check if the author is not a bot and the guild is valid.
+      if (author.bot || !guild) {
+        return;
+      }
 
-    // Get the user from the database.
-    let user = await UserModel.findOne({
-      server_id: guild.id,
-      user_id: author.id,
-    });
-
-    // Check if the user does not exist and create one.
-    if (!user) {
-      user = await UserModel.create<UserIntRequired>({
-        name: author.username,
+      // Get the user from the database.
+      let user = await UserModel.findOne({
         server_id: guild.id,
         user_id: author.id,
       });
-    }
 
-    // Get the old user level.
-    const oldLevel = user.points % 100;
+      // Check if the user does not exist and create one.
+      if (!user) {
+        user = await UserModel.create<UserIntRequired>({
+          name: author.username,
+          server_id: guild.id,
+          user_id: author.id,
+        });
+      }
 
-    // Add more points to the user.
-    user.points += ~~(Math.random() * 5) + 1;
+      // Get the old user level.
+      const oldLevel = user.points % 100;
 
-    // Get the new user level.
-    const newLevel = user.points % 100;
+      // Add more points to the user.
+      user.points += ~~(Math.random() * 5) + 1;
 
-    // Get the current experiencie.
-    const currentExp = user.points;
+      // Get the new user level.
+      const newLevel = user.points % 100;
 
-    // Change the user last seen.
-    user.last_seen = Date.now();
+      // Get the current experiencie.
+      const currentExp = user.points;
 
-    // Save the points and last seen to the database.
-    await user.save();
+      // Change the user last seen.
+      user.last_seen = Date.now();
 
-    if (newLevel < oldLevel) {
-      const currentLevel = ~~(currentExp / 100);
+      // Save the points and last seen to the database.
+      await user.save();
 
-      await message.channel.send(
-        `Congratulations ${author.toString()}! You have reached level ${currentLevel}`
+      if (newLevel < oldLevel) {
+        const currentLevel = ~~(currentExp / 100);
+
+        await message.channel.send(
+          `Congratulations ${author.toString()}! You have reached level ${currentLevel}`
+        );
+      }
+    } catch (error) {
+      console.log(
+        `${message.guild?.name} had the following error with the levels listener:`
       );
+      console.log(error);
     }
   },
 };
