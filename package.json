@@ -22,7 +22,8 @@
   "scripts": {
     "build": "rm -rf ./prod && tsc",
     "precoverage": "rm -rf ./coverage ./nyc_output",
-    "coverage": "nyc npm run test:unit",
+    "coverage": "nyc npm run test:unit --reporter=json > coverage.json",
+    "postcoverage": "codecov --disable=gcov",
     "dev": "nodemon",
     "dev:command": "npm run build && npm run start:ts",
     "lint": "eslint src --fix",
@@ -61,6 +62,7 @@
     "@typescript-eslint/eslint-plugin": "^4.4.0",
     "@typescript-eslint/parser": "^4.4.0",
     "chai": "^4.2.0",
+    "codecov": "^3.8.0",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
     "eslint": "^7.11.0",
