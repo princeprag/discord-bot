@@ -1,9 +1,12 @@
 # BeccaBot
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
+[![Coverage Status](https://coveralls.io/repos/github/nhcarrigan/BeccaBot/badge.svg?branch=main)](https://coveralls.io/github/nhcarrigan/BeccaBot?branch=main)
 [![License: GPL-3.0](https://img.shields.io/github/license/nhcarrigan/BeccaBot?color=purple)](https://opensource.org/licenses/MIT)
 ![Version Status](https://img.shields.io/github/package-json/v/nhcarrigan/BeccaBot/main)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=nhcarrigan/BeccaBot)](https://dependabot.com)
@@ -53,6 +56,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
