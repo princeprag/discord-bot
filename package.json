@@ -22,7 +22,7 @@
   "scripts": {
     "build": "rm -rf ./prod && tsc --sourcemap",
     "precoverage": "rm -rf ./coverage ./nyc_output",
-    "coverage": "nyc npm run test:unit --reporter=lcov > coverage.lcov",
+    "coverage": "nyc npm run test:unit --reporter=lcov > ./coverage/lcov.info",
     "dev": "nodemon",
     "dev:command": "npm run build && npm run start:ts",
     "lint": "eslint src --fix",
