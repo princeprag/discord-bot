@@ -24,16 +24,18 @@ const dnd: CommandInt = {
       dndEmbed.setDescription("Here are the `dnd` commands I know!");
 
       // Get the available dnd commands.
-      const dndCommands: CommandInt[] = Object.values(commands).filter(
-        (command) =>
-          (command.name &&
-            command.name.startsWith("dnd") &&
-            command.name !== "dnd") ||
-          (command.names && command.names.find((el) => el.startsWith("dnd")))
+      const dndCommands: Set<CommandInt> = new Set(
+        Object.values(commands).filter(
+          (command) =>
+            (command.name &&
+              command.name.startsWith("dnd") &&
+              command.name !== "dnd") ||
+            (command.names && command.names.find((el) => el.startsWith("dnd")))
+        )
       );
 
       // Add the dnd commands to embed fields.
-      if (dndCommands.length) {
+      if (dndCommands.size) {
         for (const dndCommand of dndCommands) {
           dndEmbed.addField(
             prefix[guild.id] +
