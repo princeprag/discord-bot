@@ -11,15 +11,23 @@ const report: CommandInt = {
   names: ["report", "bug", "issue"],
   description: "Generates a link to the issues page",
   run: async (message) => {
-    const { bot, channel } = message;
+    try {
+      const { bot, channel } = message;
 
-    // Send an embed message to the current channel.
-    await channel.send(
-      new MessageEmbed()
-        .setColor(bot.color)
-        .setTitle(REPORT_CONSTANTS.title)
-        .setDescription(REPORT_CONSTANTS.description)
-    );
+      // Send an embed message to the current channel.
+      await channel.send(
+        new MessageEmbed()
+          .setColor(bot.color)
+          .setTitle(REPORT_CONSTANTS.title)
+          .setDescription(REPORT_CONSTANTS.description)
+      );
+    } catch (error) {
+      console.log(
+        `${message.guild?.name} had the following error with the report command:`
+      );
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
+    }
   },
 };
 

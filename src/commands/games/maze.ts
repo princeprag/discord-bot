@@ -13,123 +13,136 @@ const maze: CommandInt = {
     "`<?answer>`: the maze directions answer",
   ],
   run: async (message) => {
-    const { bot, channel, commandArguments, guild } = message;
+    try {
+      const { bot, channel, commandArguments, guild } = message;
 
-    if (!guild) {
-      return;
-    }
-
-    // Get the next argument as the action.
-    const action = commandArguments.shift();
-
-    // Check if the action is not `request` and `solve`.
-    if (action !== "request" && action !== "solve") {
-      await message.reply(
-        "Would you please let me know if you want to `request` a maze or `solve` a maze?"
-      );
-
-      return;
-    }
-
-    // Create a new empty embed.
-    const mazeEmbed = new MessageEmbed();
-
-    // Add the light purple color.
-    mazeEmbed.setColor(bot.color);
-
-    // Check if the action is `request`.
-    if (action === "request") {
-      // Get the data from the noops API.
-      const data = await axios.get<MazeInt>(
-        "https://api.noopschallenge.com/mazebot/random?maxSize=35"
-      );
-
-      const {
-        endingPosition,
-        exampleSolution,
-        map,
-        mazePath,
-        name,
-        startingPosition,
-      } = data.data;
-
-      // Add the maze data to the embed.
-      mazeEmbed.setTitle(name);
-
-      mazeEmbed.setDescription(
-        `When you have finished, please use \`${
-          bot.prefix[guild.id]
-        }maze solve ${
-          mazePath.split("/").reverse()[0]
-        } <answer>\`, where answer is a null-spaced string of cardinal directions.`
-      );
-
-      mazeEmbed.addField("Starting position", JSON.stringify(startingPosition));
-      mazeEmbed.addField("Ending position", JSON.stringify(endingPosition));
-      mazeEmbed.addField("Example answer", exampleSolution.directions);
-
-      // Send the maze embed to the current channel.
-      await channel.send(mazeEmbed);
-
-      // Send the maze map to the current channel.
-      await channel.send(
-        `\`\`\`js\r\n${"_".repeat(map[0].toString().length + 2)}\r\n|${map.join(
-          "|\r\n|"
-        )}|\r\n${"¯".repeat(map[0].toString().length + 2)}\r\n\`\`\``
-      );
-
-      return;
-    }
-    // Otherwise, the action is `solve`.
-    else {
-      // Get the next argument as the maze id.
-      const id = commandArguments.shift();
-
-      // Check if the maze id is empty.
-      if (!id) {
-        await message.reply("Would you please provide the maze id?");
+      if (!guild) {
         return;
       }
 
-      // Get the next argument as the maze answer.
-      const answer = commandArguments.shift();
+      // Get the next argument as the action.
+      const action = commandArguments.shift();
 
-      // Check if the maze answer is empty.
-      if (!answer) {
-        await message.reply("Would you please provide the maze answer?");
+      // Check if the action is not `request` and `solve`.
+      if (action !== "request" && action !== "solve") {
+        await message.reply(
+          "Would you please let me know if you want to `request` a maze or `solve` a maze?"
+        );
+
         return;
       }
 
-      // Get the solve data from the noops API.
-      const data = await axios.post<MazeSolveInt>(
-        `https://api.noopschallenge.com/mazebot/mazes/${id}`,
-        {
-          directions: answer,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      // Create a new empty embed.
+      const mazeEmbed = new MessageEmbed();
 
-      const solution = data.data;
+      // Add the light purple color.
+      mazeEmbed.setColor(bot.color);
 
-      // Add the data to the embed.
-      mazeEmbed.setTitle("Solution");
-      mazeEmbed.setDescription(solution.message);
+      // Check if the action is `request`.
+      if (action === "request") {
+        // Get the data from the noops API.
+        const data = await axios.get<MazeInt>(
+          "https://api.noopschallenge.com/mazebot/random?maxSize=35"
+        );
 
-      Object.entries(solution).forEach((el) => {
-        if (el[0] === "message") {
+        const {
+          endingPosition,
+          exampleSolution,
+          map,
+          mazePath,
+          name,
+          startingPosition,
+        } = data.data;
+
+        // Add the maze data to the embed.
+        mazeEmbed.setTitle(name);
+
+        mazeEmbed.setDescription(
+          `When you have finished, please use \`${
+            bot.prefix[guild.id]
+          }maze solve ${
+            mazePath.split("/").reverse()[0]
+          } <answer>\`, where answer is a null-spaced string of cardinal directions.`
+        );
+
+        mazeEmbed.addField(
+          "Starting position",
+          JSON.stringify(startingPosition)
+        );
+        mazeEmbed.addField("Ending position", JSON.stringify(endingPosition));
+        mazeEmbed.addField("Example answer", exampleSolution.directions);
+
+        // Send the maze embed to the current channel.
+        await channel.send(mazeEmbed);
+
+        // Send the maze map to the current channel.
+        await channel.send(
+          `\`\`\`js\r\n${"_".repeat(
+            map[0].toString().length + 2
+          )}\r\n|${map.join("|\r\n|")}|\r\n${"¯".repeat(
+            map[0].toString().length + 2
+          )}\r\n\`\`\``
+        );
+
+        return;
+      }
+      // Otherwise, the action is `solve`.
+      else {
+        // Get the next argument as the maze id.
+        const id = commandArguments.shift();
+
+        // Check if the maze id is empty.
+        if (!id) {
+          await message.reply("Would you please provide the maze id?");
           return;
         }
 
-        mazeEmbed.addField(el[0], el[1]);
-      });
-    }
+        // Get the next argument as the maze answer.
+        const answer = commandArguments.shift();
 
-    // Send the maze embed to the current channel.
-    await channel.send(mazeEmbed);
+        // Check if the maze answer is empty.
+        if (!answer) {
+          await message.reply("Would you please provide the maze answer?");
+          return;
+        }
+
+        // Get the solve data from the noops API.
+        const data = await axios.post<MazeSolveInt>(
+          `https://api.noopschallenge.com/mazebot/mazes/${id}`,
+          {
+            directions: answer,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        const solution = data.data;
+
+        // Add the data to the embed.
+        mazeEmbed.setTitle("Solution");
+        mazeEmbed.setDescription(solution.message);
+
+        Object.entries(solution).forEach((el) => {
+          if (el[0] === "message") {
+            return;
+          }
+
+          mazeEmbed.addField(el[0], el[1]);
+        });
+      }
+
+      // Send the maze embed to the current channel.
+      await channel.send(mazeEmbed);
+    } catch (error) {
+      console.log(
+        `${message.guild?.name} had the following error with the maze command:`
+      );
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
+    }
   },
 };
 

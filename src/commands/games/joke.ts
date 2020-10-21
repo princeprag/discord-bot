@@ -23,7 +23,10 @@ const joke: CommandInt = {
 
       // Check if the status is not 200.
       if (status !== 200) {
-        throw new Error();
+        await message.reply(
+          "I am so sorry, but I seem to have lost my book of jokes!"
+        );
+        return;
       }
 
       // Send an embed message to the current channel.
@@ -35,13 +38,10 @@ const joke: CommandInt = {
       );
     } catch (error) {
       console.log(
-        "Joke Command:",
-        error?.response?.data?.message ?? "Unknown error."
+        `${message.guild?.name} had the following error with the joke command:`
       );
-
-      await message.reply(
-        "I am so sorry, but I seem to have lost my book of jokes!"
-      );
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

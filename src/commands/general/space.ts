@@ -9,31 +9,30 @@ const space: CommandInt = {
     "Gets the astronomy picture of the day! Optionally retrieve an APoD from an earlier date.",
   parameters: ["`<?date>`: date of picture to retrieve, format YYYY-MM-DD"],
   run: async (message) => {
-    const { channel, commandArguments } = message;
+    try {
+      const { channel, commandArguments } = message;
 
-    // Get the next argument as the date.
-    const date = commandArguments.shift();
+      // Get the next argument as the date.
+      const userDate = commandArguments.shift();
 
-    // Set the default url.
-    let url = `https://api.nasa.gov/planetary/apod?api_key=${process.env.NASA_API}`;
+      // Set the default url.
+      let url = `https://api.nasa.gov/planetary/apod?api_key=${process.env.NASA_API}`;
 
-    // Check if the date exists.
-    if (date) {
-      // Check if the date has the `YYYY-MM-DD` format.
-      if (!/[0-9]{4}-[0-9]{2}-[0-9]{2}/.test(date)) {
-        await message.reply(
-          `I am so sorry, but ${date} is not a valid date. Would you please use the format \`YYYY-MM-DD\`?`
-        );
-        return;
+      // Check if the date exists.
+      if (userDate) {
+        // Check if the date has the `YYYY-MM-DD` format.
+        if (!/[0-9]{4}-[0-9]{2}-[0-9]{2}/.test(userDate)) {
+          await message.reply(
+            `I am so sorry, but ${userDate} is not a valid date. Would you please use the format \`YYYY-MM-DD\`?`
+          );
+          return;
+        }
+
+        // Add the date to the url.
+        url += `&date=${userDate}`;
       }
 
-      // Add the date to the url.
-      url += `&date=${date}`;
-    }
-
-    const spaceEmbed = new MessageEmbed();
-
-    try {
+      const spaceEmbed = new MessageEmbed();
       // Get the data from the NASA API.
       const space = await axios.get<SpaceInt>(url);
 
@@ -41,11 +40,21 @@ const space: CommandInt = {
 
       // Check if the code is 404.
       if (code === 404) {
-        throw new Error();
+        // Add the error title to the embed title.
+        spaceEmbed.setTitle("SPAAAAACE");
+
+        // Add the error description to the embed description.
+        spaceEmbed.setDescription(
+          "I got lost in space. Please try again later."
+        );
+
+        // Send the space embed to the current channel.
+        await channel.send(spaceEmbed);
+        return;
       }
 
       // Add the space image title to the embed title.
-      spaceEmbed.setTitle(`${date} Space image: ${title}`);
+      spaceEmbed.setTitle(`${userDate || date} Space image: ${title}`);
 
       // Add the NASA url to the embed title url.
       spaceEmbed.setURL("https://apod.nasa.gov/apod/astropix.html");
@@ -60,19 +69,11 @@ const space: CommandInt = {
       spaceEmbed.setFooter(`© ${copyright || "No copyright provided"}`);
     } catch (error) {
       console.log(
-        "Space Command:",
-        error?.response?.data?.message ?? "Unknown error."
+        `${message.guild?.name} had the following error with the space command:`
       );
-
-      // Add the error title to the embed title.
-      spaceEmbed.setTitle("SPAAAAACE");
-
-      // Add the error description to the embed description.
-      spaceEmbed.setDescription("I got lost in space. Please try again later.");
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
-
-    // Send the space embed to the current channel.
-    await channel.send(spaceEmbed);
   },
 };
 

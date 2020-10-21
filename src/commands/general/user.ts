@@ -35,7 +35,8 @@ const user: CommandInt = {
 
         // Check if the reaction is valid and is `✅`.
         if (!reaction || reaction.emoji.name !== "✅") {
-          throw new Error();
+          await message.reply("Okay, I will hold off on that for now.");
+          return;
         }
 
         // Create a new empty embed.
@@ -90,7 +91,11 @@ const user: CommandInt = {
         // Send the user embed to the current channel.
         await channel.send(userEmbed);
       } catch (error) {
-        await message.reply("Okay. I will hold off on this action for now.");
+        console.log(
+          `${message.guild?.name} had the following error with the user command:`
+        );
+        console.log(error);
+        message.reply("I am so sorry, but I cannot do that at the moment.");
       }
     }
   },

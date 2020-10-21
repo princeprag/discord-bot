@@ -65,46 +65,54 @@ export const trackingOptOut: CommandInt = {
     \n`,
   ],
   run: async (message: MessageInt) => {
-    const [command, subcommand] = message?.content?.trim().split(/\s{1,}/, 2);
-    if (!command?.match(/.{1}optout/)) {
-      message.channel.send(MESSAGE_COMMAND_INVALID);
-      return;
-    }
-    if (!VALID_SUBCOMMAND.includes(subcommand)) {
-      message.channel.send(MESSAGE_SUBCOMMAND_INVALID);
-      return;
-    }
+    try {
+      const [command, subcommand] = message?.content?.trim().split(/\s{1,}/, 2);
+      if (!command?.match(/.{1}optout/)) {
+        message.channel.send(MESSAGE_COMMAND_INVALID);
+        return;
+      }
+      if (!VALID_SUBCOMMAND.includes(subcommand)) {
+        message.channel.send(MESSAGE_SUBCOMMAND_INVALID);
+        return;
+      }
 
-    const userId = message?.author?.id;
-    const canTrackableUser = isTrackableUser(userId);
+      const userId = message?.author?.id;
+      const canTrackableUser = isTrackableUser(userId);
 
-    if (subcommand === "status") {
-      await statusResolve(message, userId, "status")(canTrackableUser);
-      return;
-    }
+      if (subcommand === "status") {
+        await statusResolve(message, userId, "status")(canTrackableUser);
+        return;
+      }
 
-    if (subcommand === "add" && canTrackableUser) {
-      const newOptOutUser = new TrackingOptOut({
-        user_id: userId,
-      });
-      await newOptOutUser.save(addCallBack(message, userId));
-      return; // exit run fn
-    }
-    if (subcommand === "add" && !canTrackableUser) {
-      statusResolve(message, userId, "status")(canTrackableUser);
-      return; // exit run fn
-    }
-    if (subcommand === "remove" && !canTrackableUser) {
-      await TrackingOptOut.deleteMany(
-        { user_id: userId },
-        removeCallback(message)
+      if (subcommand === "add" && canTrackableUser) {
+        const newOptOutUser = new TrackingOptOut({
+          user_id: userId,
+        });
+        await newOptOutUser.save(addCallBack(message, userId));
+        return; // exit run fn
+      }
+      if (subcommand === "add" && !canTrackableUser) {
+        statusResolve(message, userId, "status")(canTrackableUser);
+        return; // exit run fn
+      }
+      if (subcommand === "remove" && !canTrackableUser) {
+        await TrackingOptOut.deleteMany(
+          { user_id: userId },
+          removeCallback(message)
+        );
+
+        return; // exit run fn
+      }
+      if (subcommand === "remove" && canTrackableUser) {
+        statusResolve(message, userId, "status")(canTrackableUser);
+        return; // exit run fn
+      }
+    } catch (error) {
+      console.log(
+        `${message.guild?.name} had the following error with the opt-out command:`
       );
-
-      return; // exit run fn
-    }
-    if (subcommand === "remove" && canTrackableUser) {
-      statusResolve(message, userId, "status")(canTrackableUser);
-      return; // exit run fn
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

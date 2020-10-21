@@ -18,100 +18,108 @@ const help: CommandInt = {
     "`<?command>`: name of the command to get more information about",
   ],
   run: async (message) => {
-    const { bot, channel, commandArguments, guild } = message;
+    try {
+      const { bot, channel, commandArguments, guild } = message;
 
-    const { color, commands, prefix } = bot;
+      const { color, commands, prefix } = bot;
 
-    if (!guild) {
-      return;
-    }
+      if (!guild) {
+        return;
+      }
 
-    // Get the next argument as the command name.
-    const commandName = commandArguments.shift();
+      // Get the next argument as the command name.
+      const commandName = commandArguments.shift();
 
-    // Check if the command name exists.
-    if (commandName) {
-      // Get the command interface for the command name.
-      const command = commands[commandName];
+      // Check if the command name exists.
+      if (commandName) {
+        // Get the command interface for the command name.
+        const command = commands[commandName];
 
-      // Check if the command does not exist.
-      if (!command) {
-        await message.reply(
-          HELP_CONSTANTS.notFound(prefix[guild.id], commandName)
+        // Check if the command does not exist.
+        if (!command) {
+          await message.reply(
+            HELP_CONSTANTS.notFound(prefix[guild.id], commandName)
+          );
+          return;
+        }
+
+        // Create a new empty embed.
+        const commandEmbed = new MessageEmbed();
+
+        // Add a light purple color.
+        commandEmbed.setColor(color);
+
+        // Add the command name as the title.
+        commandEmbed.setTitle(commandName);
+
+        // Add the command description.
+        commandEmbed.setDescription(command.description);
+
+        // Check if the command has parameters.
+        if (command.parameters) {
+          commandEmbed.addField(
+            "Parameters",
+            command.parameters
+              .join("\r\n")
+              .replace(/{@prefix}/gi, prefix[guild.id])
+          );
+        }
+
+        // Add the command usage.
+        commandEmbed.addField(
+          "Usage",
+          `${prefix[guild.id]}${commandName}${
+            command.parameters
+              ? ` ${command.parameters
+                  .map((el) => el.split(":")[0].replace(/`/g, ""))
+                  .join(" ")}`
+              : ""
+          }`
         );
+
+        // Send the embed to the current channel.
+        await channel.send(commandEmbed);
         return;
       }
 
       // Create a new empty embed.
-      const commandEmbed = new MessageEmbed();
+      const helpEmbed = new MessageEmbed();
 
       // Add a light purple color.
-      commandEmbed.setColor(color);
+      helpEmbed.setColor(color);
 
-      // Add the command name as the title.
-      commandEmbed.setTitle(commandName);
+      // Add the title.
+      helpEmbed.setTitle(HELP_CONSTANTS.title);
 
-      // Add the command description.
-      commandEmbed.setDescription(command.description);
+      // Add the description.
+      helpEmbed.setDescription(HELP_CONSTANTS.description(prefix[guild.id]));
 
-      // Check if the command has parameters.
-      if (command.parameters) {
-        commandEmbed.addField(
-          "Parameters",
-          command.parameters
-            .join("\r\n")
-            .replace(/{@prefix}/gi, prefix[guild.id])
-        );
+      const commandNames: string[] = [];
+
+      // Get the unique commands.
+      for (const command of new Set(Object.values(commands)).values()) {
+        if (command.name) {
+          commandNames.push(`\`${command.name}\``);
+        } else if (command.names) {
+          commandNames.push(`\`${command.names.join("/")}\``);
+        }
       }
 
-      // Add the command usage.
-      commandEmbed.addField(
-        "Usage",
-        `${prefix[guild.id]}${commandName}${
-          command.parameters
-            ? ` ${command.parameters
-                .map((el) => el.split(":")[0].replace(/`/g, ""))
-                .join(" ")}`
-            : ""
-        }`
-      );
+      // Add the available commands.
+      helpEmbed.addField("Available commands", commandNames.sort().join(" | "));
+
+      // Add the footer.
+      helpEmbed.setFooter(HELP_CONSTANTS.footer);
 
       // Send the embed to the current channel.
-      await channel.send(commandEmbed);
-      return;
+      await channel.send(helpEmbed);
+    } catch (error) {
+      console.log(
+        `${message.guild?.name} had the following error with the help command:`
+      );
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
-
-    // Create a new empty embed.
-    const helpEmbed = new MessageEmbed();
-
-    // Add a light purple color.
-    helpEmbed.setColor(color);
-
-    // Add the title.
-    helpEmbed.setTitle(HELP_CONSTANTS.title);
-
-    // Add the description.
-    helpEmbed.setDescription(HELP_CONSTANTS.description(prefix[guild.id]));
-
-    const commandNames: string[] = [];
-
-    // Get the unique commands.
-    for (const command of new Set(Object.values(commands)).values()) {
-      if (command.name) {
-        commandNames.push(`\`${command.name}\``);
-      } else if (command.names) {
-        commandNames.push(`\`${command.names.join("/")}\``);
-      }
-    }
-
-    // Add the available commands.
-    helpEmbed.addField("Available commands", commandNames.sort().join(" | "));
-
-    // Add the footer.
-    helpEmbed.setFooter(HELP_CONSTANTS.footer);
-
-    // Send the embed to the current channel.
-    await channel.send(helpEmbed);
   },
 };
 

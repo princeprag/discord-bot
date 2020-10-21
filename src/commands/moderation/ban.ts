@@ -10,99 +10,106 @@ const ban: CommandInt = {
     "`<?reason>`: reason for banning the user",
   ],
   run: async (message) => {
-    const { author, bot, commandArguments, guild, member, mentions } = message;
+    try {
+      const {
+        author,
+        bot,
+        commandArguments,
+        guild,
+        member,
+        mentions,
+      } = message;
 
-    const { user } = bot;
+      const { user } = bot;
 
-    // Check if the member has the ban members permission.
-    if (!guild || !user || !member || !member.hasPermission("BAN_MEMBERS")) {
-      await message.reply(
-        "I am sorry, but I can only do this for moderators who are allowed to ban members."
+      // Check if the member has the ban members permission.
+      if (!guild || !user || !member || !member.hasPermission("BAN_MEMBERS")) {
+        await message.reply(
+          "I am sorry, but I can only do this for moderators who are allowed to ban members."
+        );
+
+        return;
+      }
+
+      // Get the next argument as the user to ban mention.
+      let userToBanMention = commandArguments.shift();
+
+      // Get the first user mention.
+      const userToBanMentioned = mentions.users.first();
+
+      // Check if the user mention is valid.
+      if (!userToBanMention || !userToBanMentioned || !mentions.members) {
+        await message.reply(
+          "Would you please provide the user you want me to ban?"
+        );
+        return;
+      }
+
+      // Remove the `<@!` and `>` from the mention to get the id.
+      userToBanMention = userToBanMention.replace(/[<@!>]/gi, "");
+
+      // Check if the user mention string and the first user mention id are equals.
+      if (userToBanMention !== userToBanMentioned.id) {
+        await message.reply(
+          `I am so sorry, but ${userToBanMentioned.toString()} is not a valid user.`
+        );
+        return;
+      }
+
+      // Check if trying to ban itself.
+      if (userToBanMentioned.id === author.id) {
+        await message.reply("Wait, what? You cannot ban yourself!");
+        return;
+      }
+
+      // Get the first member mention.
+      const memberToBanMentioned = mentions.members.first();
+
+      // Check if the member mention exists.
+      if (!memberToBanMentioned) {
+        await message.reply(
+          "Would you please provide the user you want me to ban?"
+        );
+        return;
+      }
+
+      // Check if the user id or member id are the bot id.
+      if (
+        userToBanMentioned.id === user.id ||
+        memberToBanMentioned.id === user.id
+      ) {
+        await message.reply(
+          "You want to ban me? Oh no! Did I do something wrong?"
+        );
+        return;
+      }
+
+      // Check if the user is bannable.
+      if (!memberToBanMentioned.bannable) {
+        await message.reply(
+          `I am so sorry, but I cannot ban ${memberToBanMentioned.toString()}.`
+        );
+        return;
+      }
+
+      // Get the reason of the ban.
+      let reason = commandArguments.join(" ");
+
+      // Add a default reason if it not provided.
+      if (!reason || !reason.length) {
+        reason = "I am sorry, but the moderator did not give a reason.";
+      }
+
+      // Send the an advertisement about the action.
+      const botMessage = await message.reply(
+        "Wait! This action is irreversible. To proceed, react with '✅'."
       );
 
-      return;
-    }
+      if (!botMessage.deleted) {
+        // Add the reactions.
+        await botMessage.react("❌");
+        await botMessage.react("✅");
 
-    // Get the next argument as the user to ban mention.
-    let userToBanMention = commandArguments.shift();
-
-    // Get the first user mention.
-    const userToBanMentioned = mentions.users.first();
-
-    // Check if the user mention is valid.
-    if (!userToBanMention || !userToBanMentioned || !mentions.members) {
-      await message.reply(
-        "Would you please provide the user you want me to ban?"
-      );
-      return;
-    }
-
-    // Remove the `<@!` and `>` from the mention to get the id.
-    userToBanMention = userToBanMention.replace(/[<@!>]/gi, "");
-
-    // Check if the user mention string and the first user mention id are equals.
-    if (userToBanMention !== userToBanMentioned.id) {
-      await message.reply(
-        `I am so sorry, but ${userToBanMentioned.toString()} is not a valid user.`
-      );
-      return;
-    }
-
-    // Check if trying to ban itself.
-    if (userToBanMentioned.id === author.id) {
-      await message.reply("Wait, what? You cannot ban yourself!");
-      return;
-    }
-
-    // Get the first member mention.
-    const memberToBanMentioned = mentions.members.first();
-
-    // Check if the member mention exists.
-    if (!memberToBanMentioned) {
-      await message.reply(
-        "Would you please provide the user you want me to ban?"
-      );
-      return;
-    }
-
-    // Check if the user id or member id are the bot id.
-    if (
-      userToBanMentioned.id === user.id ||
-      memberToBanMentioned.id === user.id
-    ) {
-      await message.reply(
-        "You want to ban me? Oh no! Did I do something wrong?"
-      );
-      return;
-    }
-
-    // Check if the user is bannable.
-    if (!memberToBanMentioned.bannable) {
-      await message.reply(
-        `I am so sorry, but I cannot ban ${memberToBanMentioned.toString()}.`
-      );
-      return;
-    }
-
-    // Get the reason of the ban.
-    let reason = commandArguments.join(" ");
-
-    // Add a default reason if it not provided.
-    if (!reason || !reason.length) {
-      reason = "I am sorry, but the moderator did not give a reason.";
-    }
-
-    // Send the an advertisement about the action.
-    const botMessage = await message.reply(
-      "Wait! This action is irreversible. To proceed, react with '✅'."
-    );
-
-    if (!botMessage.deleted) {
-      // Add the reactions.
-      await botMessage.react("❌");
-      await botMessage.react("✅");
-
-      try {
         // Get the first reaction with `✅` or `❌` of the moderator.
         const collector = await botMessage.awaitReactions(
           (reaction, user) =>
@@ -115,7 +122,7 @@ const ban: CommandInt = {
 
         // Check if the reaction is valid and is `✅`.
         if (!reaction || reaction.emoji.name !== "✅") {
-          throw new Error();
+          await message.reply("Okay, I will hold off on that action for now.");
         }
 
         // Create a new empty embed.
@@ -152,9 +159,13 @@ const ban: CommandInt = {
         await userToBanMentioned.send(
           `**[Ban]** ${author.toString()} has banned you for the following reason: ${reason}`
         );
-      } catch (error) {
-        await message.reply("okay, I will hold off on this action for now.");
       }
+    } catch (error) {
+      console.log(
+        `${message.guild?.name} had the following error with the ban command:`
+      );
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

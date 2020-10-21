@@ -45,42 +45,42 @@ const adventure: CommandInt = {
     "`<direction>`: the direction you want to move",
   ],
   run: async (message) => {
-    const { author, bot, channel, commandArguments, guild } = message;
-
-    const { color, prefix } = bot;
-
-    if (!guild) {
-      return;
-    }
-
-    // Get the next argument as the action.
-    const action = commandArguments.shift();
-
-    // Check if the action is not `start` and `move`.
-    if (action !== "start" && action !== "move") {
-      await message.reply(
-        `Would you please use \`${prefix[guild.id]}adventure start\` or \`${
-          prefix[guild.id]
-        }adventure move <room> <direction>\`?`
-      );
-
-      return;
-    }
-
-    // Create a new empty embed.
-    let adventureEmbed = new MessageEmbed();
-
-    // Add the light purple color.
-    adventureEmbed.setColor(color);
-
-    // Set the title.
-    adventureEmbed.setTitle(`${author.username}'s adventure!`);
-
-    const headers = {
-      "content-type": "application/json",
-    };
-
     try {
+      const { author, bot, channel, commandArguments, guild } = message;
+
+      const { color, prefix } = bot;
+
+      if (!guild) {
+        return;
+      }
+
+      // Get the next argument as the action.
+      const action = commandArguments.shift();
+
+      // Check if the action is not `start` and `move`.
+      if (action !== "start" && action !== "move") {
+        await message.reply(
+          `Would you please use \`${prefix[guild.id]}adventure start\` or \`${
+            prefix[guild.id]
+          }adventure move <room> <direction>\`?`
+        );
+
+        return;
+      }
+
+      // Create a new empty embed.
+      let adventureEmbed = new MessageEmbed();
+
+      // Add the light purple color.
+      adventureEmbed.setColor(color);
+
+      // Set the title.
+      adventureEmbed.setTitle(`${author.username}'s adventure!`);
+
+      const headers = {
+        "content-type": "application/json",
+      };
+
       // Check if the action is `start`.
       if (action === "start") {
         // Get the data from the noops challenge api.
@@ -137,22 +137,16 @@ const adventure: CommandInt = {
           adventureEmbed
         );
       }
+
+      // Send the embed to the current channel.
+      await channel.send(adventureEmbed);
     } catch (error) {
       console.log(
-        "Adventure command:",
-        error?.response?.data?.message ?? "Unknown error."
+        `${message.guild?.name} had the following error with the adventure command:`
       );
-
-      // Send an error message to the current channel.
-      await message.reply(
-        `I am so sorry, but I cannot execute the \`${action}\` action inside the adventure.`
-      );
-
-      return;
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
-
-    // Send the embed to the current channel.
-    await channel.send(adventureEmbed);
   },
 };
 
