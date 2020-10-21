@@ -22,6 +22,10 @@ If you want to propose a new feature or bug fix for the bot's code, feel free to
 
 You are welcome to join the [Discord Server](https://discord.gg/PHqDbkg) to work with other developers and test your changes to the bot. Remember that you'll need to send us an invite link for your bot to join, and you'll need to have the bot running (this can be done locally while you're working on the files).
 
+### Code Coverage
+
+When submitting code changes, please ensure tests are added to cover your change or the expected behavior of code. We are using several frameworks to make implementing tests easier, and there are test-helper functions to keep these clean in `testSetup.ts`.
+
 ### Configure Your Bot
 
 To set up your own instance of the bot, please review the [Developer Documentation](https://www.nhcarrigan.com/BeccaBot-documentation/).
