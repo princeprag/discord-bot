@@ -1,0 +1,244 @@
+
+> becca_bot@6.0.0 pretest:unit C:\Users\nhcar\Documents\Github\BeccaBot
+> npm run build
+
+
+> becca_bot@6.0.0 build C:\Users\nhcar\Documents\Github\BeccaBot
+> rm -rf ./prod && tsc --sourcemap
+
+
+> becca_bot@6.0.0 test:unit C:\Users\nhcar\Documents\Github\BeccaBot
+> mocha './test/unit/**/*spec.ts'
+
+
+
+  main - botConnect()
+    database available
+      √ should call loadCurrentTrackingOptOutList
+
+  command: about
+    √ should send
+    √ should set footer message text
+    √ should set timestamp
+    √ should send embedded message with title: Greetings! My name is BeccaBot!
+    √ should send embedded message with description: I am a discord bot created by [nhcarrigan](https://www.nhcarrigan.com), with help from a few contributors.  You can view my [source code and contributor list](https://github.com/nhcarrigan/BeccaBot) online.
+
+View the [official repository](https://github.com/nhcarrigan/BeccaBot) or you can join to the [official Discord server](https://discord.gg/PHqDbkg). I am named after nhcarrigan's old DnD/RP character.
+    √ should send embedded message with color: 8070570
+    √ should send embedded message with field Version: test-1.0 
+      as inline true
+    √ should send embedded message with field Creation date: Sun May 31 2020 
+      as inline true
+    √ should send embedded message with field Servers: 1 
+      as inline true
+    √ should send embedded message with field Users: 1 
+      as inline true
+    √ should send embedded message with field Available commands: 0 🙃 
+      as inline true
+    √ should send embedded message with field Favourite color: PURPLE! 💜 
+      as inline true
+
+  command: help
+    √ should set footer text
+    when not on a discord server
+      √ should return without calling any commands
+    when called without commandName
+      √ send an embeded message
+      √ should set property color to provided value
+      √ should set property title to provided value
+      √ should set property description to provided value
+      √ should set available commands field approperiately
+      √ should set available commands field approperiately
+    when called with existing commandName
+      √ send an embeded message
+      √ should set property color to provided value
+      √ should set property title to provided value
+      √ should set property description to provided value
+      √ should set parameter field based on command
+    when called with non-existing command name
+      √ should set footer text
+
+  command: invite
+    √ should set footer appropriately
+    √ should set color appropriately
+    √ should set title appropriately
+    √ should set description appropriately
+    when command followed by extra text
+      √ should set footer appropriately
+
+  command: listeners
+    √ should set color appropriately
+    √ should set title appropriately
+    √ should set description appropriately
+    √ should call send
+    when customListeners exist
+      √ should add a field for every custom listener
+    when command followed by extra text
+      √ should call send
+
+  command: privacy
+    √ should set title appropriately
+    √ should set description appropriately
+    √ should call send
+    when command followed by extra text
+      √ should call send
+
+  command: report
+    √ should set color appropriately
+    √ should set title appropriately
+    √ should set description appropriately
+    √ should call send
+    when command followed by extra text
+      √ should call send
+
+  command opt-out
+    when command invalid
+      √ return error message
+    when subcommand invalid
+      √ return error message
+    when subcommand valid
+      command: !optout add
+        user already exists
+          √ invoke call back without actually adding
+        user does not exist
+          √ attempt to add user id to database
+        addCallBack called
+          √ should notify user they are now opt-out
+          √ should notify user if opt-out failed
+      command: !optout remove
+        √ call deleteMany to remove records
+        removeCallBack called
+          √ warn user if error occured
+          √ notify user of status change
+      command: !optout status
+        user not found
+          √ call find to recieve records
+          √ notify user they are opt-in
+        user found
+          √ notify user they are opt-out
+
+  onMessage event
+    heart & level listeners exist
+      √ should call run on interceptableLevelsListener
+      √ should call run on heartsListener
+    is direct message
+      √ should send warning
+    is not a discord server
+      √ should return without calling command
+    command does not start with prefix
+      √ should return without calling command
+    command exists
+      √ should call requested command
+      usageListener exists
+        √ should call run on interceptableUsageListener
+
+  TrackingOptOutInterceptor
+    next()
+      when next is undefined
+        √ should resolve
+      when next is MessageListenerHandler
+        √ should await call listener
+      when next is interceptor
+        √ should call intercept on next interceptor with message
+    intercept
+      user in opt-out global
+        √ should not call next fn
+      user not in opt-out global
+        √ should call next fn
+
+  interceptedLevelsListener
+    √ should have one interceptor assigned
+    run()
+      when user is trackable
+        √ should call levelsListener
+      when user is not trackable
+        √ should not call levelsListener
+
+  InterceptableListener - base
+    run()
+      when no interceptors provided
+        √ should called action
+      when interceptors provided all resolve true
+        √ should call all interceptors action
+      when interceptors provided at least one resolve false
+        √ should call not call interceptors after action false or listener action
+    register()
+      √ should set new interceptor to call listener action
+
+  interceptedUsageListener
+    √ should have one interceptor assigned
+    run()
+      when user is trackable
+        √ should call usageListener
+      when user is not trackable
+        √ should not call usageListener
+
+  trackingList
+    getTrackingOptOutIdArray
+      √ should return empty set
+    isTrackableUser
+      id provided does not match any id in set
+        √ should return true
+      id provided does match an id in set
+        √ should return false
+    loadCurrentTrackingOptOutList
+      √ should get the current set of optOutUsers and load them into TRACKING_OPT_OUT
+      exception occurs
+        √ should log error
+    trackUser
+      attempting to add user to opt out list
+        √ should update
+      attempting to remove user from opt out list
+        √ should update
+
+
+  88 passing (188ms)
+
+---------------------------------|---------|----------|---------|---------|-------------------------
+File                             | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s       
+---------------------------------|---------|----------|---------|---------|-------------------------
+All files                        |   66.78 |    43.91 |    61.7 |   67.24 |                         
+ src                             |   71.43 |    71.43 |   15.79 |   83.33 |                         
+  botConnect.ts                  |   71.43 |    71.43 |   15.79 |   83.33 | 59,65,71,77,83,92,98-99 
+ src/commands/bot                |   86.59 |     56.6 |     100 |   86.44 |                         
+  about.ts                       |    87.5 |        0 |     100 |    87.5 | 77-81                   
+  help.ts                        |   93.18 |    61.11 |     100 |   93.18 | 117-121                 
+  invite.ts                      |   72.73 |        0 |     100 |   72.73 | 27-31                   
+  listeners.ts                   |   82.35 |        0 |     100 |   82.35 | 38-42                   
+  privacy.ts                     |   72.73 |        0 |     100 |   72.73 | 25-29                   
+  report.ts                      |   72.73 |        0 |     100 |   72.73 | 25-29                   
+  trackingOptOut.ts              |   90.16 |    72.06 |     100 |   89.83 | 106-115                 
+ src/database                    |      25 |        0 |       0 |      25 |                         
+  main.ts                        |      25 |        0 |       0 |      25 | 17-31                   
+ src/database/models             |     100 |      100 |     100 |     100 |                         
+  CommandLogModel.ts             |     100 |      100 |     100 |     100 |                         
+  SettingModel.ts                |     100 |      100 |     100 |     100 |                         
+  TrackingOptOutModel.ts         |     100 |      100 |     100 |     100 |                         
+  UserModel.ts                   |     100 |      100 |     100 |     100 |                         
+ src/events                      |   43.36 |    25.97 |    12.5 |   43.36 |                         
+  onGuildCreate.ts               |   16.67 |        0 |       0 |   16.67 | 18-27                   
+  onGuildDelete.ts               |   16.67 |        0 |       0 |   16.67 | 18-27                   
+  onGuildMemberAdd.ts            |   21.05 |        0 |       0 |   21.05 | 25-69                   
+  onGuildMemberRemove.ts         |   23.08 |        0 |       0 |   23.08 | 10-34                   
+  onMessage.ts                   |      70 |    55.56 |     100 |      70 | 63-84,95-107            
+  onMessageDelete.ts             |   33.33 |        0 |       0 |   33.33 | 19-27                   
+  onMessageUpdate.ts             |   33.33 |        0 |       0 |   33.33 | 20-28                   
+  onReady.ts                     |   14.29 |        0 |       0 |   14.29 | 16-27                   
+ src/interceptors                |     100 |       75 |     100 |     100 |                         
+  trackingOptOutInterceptor.ts   |     100 |       75 |     100 |     100 | 13                      
+ src/interfaces/interceptor      |     100 |    93.75 |     100 |     100 |                         
+  InterceptInt.ts                |     100 |    93.75 |     100 |     100 | 22                      
+ src/listeners                   |   48.96 |    13.16 |   57.14 |   48.96 |                         
+  heartsListener.ts              |      25 |        0 |       0 |      25 | 14-56                   
+  interceptableLevelsListener.ts |     100 |      100 |     100 |     100 |                         
+  interceptableListener.ts       |     100 |    83.33 |     100 |     100 | 41                      
+  interceptableUsageListener.ts  |     100 |      100 |     100 |     100 |                         
+  levelsListener.ts              |   13.64 |        0 |       0 |   13.64 | 12-66                   
+  usageListener.ts               |   16.67 |        0 |       0 |   16.67 | 9-46                    
+ src/utils                       |   58.14 |    37.14 |   61.54 |   56.63 |                         
+  extendsClientToClientInt.ts    |   30.56 |        0 |      20 |   30.56 | 21-143                  
+  extendsMessageToMessageInt.ts  |     100 |      100 |     100 |     100 |                         
+  readDirectory.ts               |   71.05 |     61.9 |      75 |   69.44 | 38-44,71-81,104         
+ src/utils/commands              |   88.89 |    78.57 |   90.91 |    87.5 |                         
+  trackingList.ts                |   88.89 |    78.57 |   90.91 |    87.5 | 9,34,41                 
+---------------------------------|---------|----------|---------|---------|-------------------------
