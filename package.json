@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/nhcarrigan/BeccaBot#readme",
   "scripts": {
-    "build": "rm -rf ./prod && tsc",
+    "build": "rm -rf ./prod && tsc --sourcemap",
     "precoverage": "rm -rf ./coverage ./nyc_output",
     "coverage": "nyc npm run test:unit --reporter=json > coverage.json",
     "postcoverage": "codecov --disable=gcov",
