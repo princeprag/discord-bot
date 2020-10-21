@@ -22,7 +22,8 @@
       "profile": "https://github.com/adprasad",
       "contributions": [
         "code",
-        "test"
+        "test",
+        "doc"
       ]
     },
     {
@@ -83,7 +84,7 @@
     }
   ],
   "contributorsPerLine": 7,
-  "projectName": "beccabot",
+  "projectName": "BeccaBot",
   "projectOwner": "nhcarrigan",
   "repoType": "github",
   "repoHost": "https://github.com",
