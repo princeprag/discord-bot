@@ -21,6 +21,16 @@ Did you remember to update the `package.json` version number?
 - [ ] Patch Version Update: \_.\_.X (for bug fixes _in the code_.)
 - [ ] No Version Update: \_.\_.\_ (no version update for additions to tests, documentation, or anything that isn't end-user facing.)
 
+## Code Coverage:
+
+Are all the unit tests passing and have you added tests that cover your changes? Run `npm run coverage`
+
+Coverage Checklist:
+
+- [ ] All unit tests passing
+- [ ] Code that my PR modifies has tests.
+- [ ] PR defines validation steps.
+
 ## Documentation:
 
 For _any_ version updates, please verify if the [documentation page](https://www.nhcarrigan.com/BeccaBot-documentation) needs an update. If it does, please [create an issue there](https://github.com/nhcarrigan/BeccaBot-documentation/issues/new?assignees=nhcarrigan&labels=%F0%9F%9A%A6+status%3A+awaiting+triage&template=update.md&title=%5BUPDATE%5D) to ensure it is not forgotten.
