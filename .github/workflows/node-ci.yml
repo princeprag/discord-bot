@@ -35,11 +35,4 @@ jobs:
         run: npm run build
 
       - name: Run Unit Tests
-        run: npm run coverage
-
-      - name: Coveralls GitHub Action
-        env: 
-          COVERALLS_SERVICE_NAME: 'GitHub CI'
-          COVERALLS_GIT_BRANCH: main
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: npm run coverageReport
+        run: npm run test
