@@ -2,6 +2,16 @@ import CommandInt from "@Interfaces/CommandInt";
 import { artList } from "@Utils/commands/artList";
 import { MessageAttachment, MessageEmbed } from "discord.js";
 
+const ART_CONSTANTS = {
+  error: "I am so sorry, but I cannot do that at the moment.",
+  title: "Art!",
+  description: (artist: string, artist_url: string): string =>
+    `Here is some Becca art! Art kindly done by [${artist}](${artist_url})!`,
+  attachment_name: "becca.png",
+  attachment_path: (file_name: string): string => `./img/${file_name}`,
+  image: "attachment://becca.png",
+};
+
 const art: CommandInt = {
   name: "art",
   description: "Returns art!",
@@ -15,18 +25,21 @@ const art: CommandInt = {
 
       //create embed
       const artEmbed = new MessageEmbed();
-      artEmbed.setTitle("Art!");
-      artEmbed.setDescription(
-        `Here is some Becca art! Art kindly done by [${artist}](${artist_url})!`
-      );
+      artEmbed.setTitle(ART_CONSTANTS.title);
+      artEmbed.setDescription(ART_CONSTANTS.description(artist, artist_url));
 
       //local files require a bit of hacking
       const attachment = [];
-      attachment.push(new MessageAttachment(`./img/${file_name}`, "becca.png"));
+      attachment.push(
+        new MessageAttachment(
+          ART_CONSTANTS.attachment_path(file_name),
+          ART_CONSTANTS.attachment_name
+        )
+      );
 
       //add local file
       artEmbed.attachFiles(attachment);
-      artEmbed.setImage("attachment://becca.png");
+      artEmbed.setImage(ART_CONSTANTS.image);
 
       //send it!
       await message.reply(artEmbed);
@@ -35,7 +48,7 @@ const art: CommandInt = {
         `${message.guild?.name} had this error with the art command:`
       );
       console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
+      message.reply(ART_CONSTANTS.error);
     }
   },
 };
