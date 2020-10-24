@@ -102,6 +102,11 @@ export async function botConnect(): Promise<void> {
   // Log the bot with the Discord token.
   await client.login(process.env.DISCORD_TOKEN);
 
+  //set custom status
+  await client.user?.setActivity("for people who need my help~!", {
+    type: "WATCHING",
+  });
+
   // Connect to the MongoDB database.
   await connectDatabase(debugChannelHook, client).then(
     loadCurrentTrackingOptOutList
