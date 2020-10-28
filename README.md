@@ -24,6 +24,14 @@ Welcome to the repository for my discord bot, seen as `BeccaBot` in my [Discord 
 
 Are you interested in contributing to the development of this bot? We welcome all who want to assist! If you would like to contribute, you are welcome to fork the repository and make your changes. Submit a pull request when you are ready for us to review your changes. You can also submit issues for various purposes. For more information, please review our [contributing guidelines](./CONTRIBUTING.md).
 
+## Feedback and Bugs
+
+If you have feedback or a bug report, please feel free to open a GitHub issue!
+
+## Code of Conduct
+
+Before interacting with our community, please read our [Code of Conduct](CODE_OF_CONDUCT.md).
+
 ## Art Credits
 
 Credit for the bot's avatar and the support server art goes to [MoonlightKCreations](https://www.instagram.com/moonlightkcreations/). If you want to show some support, consider [commissioning her!](https://meitanteimoonlight.wixsite.com/moonlightkcreations/commissions).
