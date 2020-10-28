@@ -3,6 +3,16 @@ import DndClassInt from "@Interfaces/commands/dnd/DndClassInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 
+const DNDCLASS_CONSTANT = {
+  error: {
+    no_query: "Would you please provide the class you want me to search for?",
+    bad_data: "I am so sorry, but I was unable to find anything...",
+    default: "I am so sorry, but I cannot do that at the moment.",
+  },
+  dndApi: "https://www.dnd5eapi.co/api/classes/",
+  join_separator: ", ",
+};
+
 const dndclass: CommandInt = {
   name: "dndclass",
   description:
@@ -17,22 +27,18 @@ const dndclass: CommandInt = {
 
       // Check if the query is not empty.
       if (!query || !query.length) {
-        await message.reply(
-          "Would you please provide the class you want me to search for?"
-        );
+        await message.reply(DNDCLASS_CONSTANT.error.no_query);
         return;
       }
 
       // Get the data from the dnd api.
       const data = await axios.get<DndClassInt>(
-        `https://www.dnd5eapi.co/api/classes/${query}`
+        `${DNDCLASS_CONSTANT.dndApi}${query}`
       );
 
       // Check if the dnd class is not valid.
       if (!data.data || data.data.error) {
-        await message.reply(
-          "I am so sorry, but I was unable to find anything..."
-        );
+        await message.reply(DNDCLASS_CONSTANT.error.bad_data);
         return;
       }
 
@@ -59,23 +65,23 @@ const dndclass: CommandInt = {
       // Add the proficiencies to an embed field.
       dndClassEmbed.addField(
         "Proficiencies",
-        proficiencies.map((el) => el.name).join(", ")
+        proficiencies.map((el) => el.name).join(DNDCLASS_CONSTANT.join_separator)
       );
 
       // Add the proficiencies choices to an embed field.
       dndClassEmbed.addField(
         `Plus ${proficiency_choices[0].choose} from`,
-        proficiency_choices[0].from.map((el) => el.name).join(", ")
+        proficiency_choices[0].from.map((el) => el.name).join(DNDCLASS_CONSTANT.join_separator)
       );
 
       // Send the embed to the current channel.
       await channel.send(dndClassEmbed);
     } catch (error) {
-      console.log(
+      console.error(
         `${message.guild?.name} had the following error with the dndclass command:`
       );
-      console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
+      console.error(error);
+      message.reply(DNDCLASS_CONSTANT.error.default);
     }
   },
 };
