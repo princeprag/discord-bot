@@ -65,13 +65,17 @@ const dndclass: CommandInt = {
       // Add the proficiencies to an embed field.
       dndClassEmbed.addField(
         "Proficiencies",
-        proficiencies.map((el) => el.name).join(DNDCLASS_CONSTANT.join_separator)
+        proficiencies
+          .map((el) => el.name)
+          .join(DNDCLASS_CONSTANT.join_separator)
       );
 
       // Add the proficiencies choices to an embed field.
       dndClassEmbed.addField(
         `Plus ${proficiency_choices[0].choose} from`,
-        proficiency_choices[0].from.map((el) => el.name).join(DNDCLASS_CONSTANT.join_separator)
+        proficiency_choices[0].from
+          .map((el) => el.name)
+          .join(DNDCLASS_CONSTANT.join_separator)
       );
 
       // Send the embed to the current channel.
