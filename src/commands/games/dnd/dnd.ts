@@ -1,6 +1,12 @@
 import CommandInt from "@Interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
 
+const DND_CONSTANTS = {
+  title: "Dungeons and Dragons!",
+  description: "Here are the `dnd` commands I know!",
+  error: "I am so sorry, but I cannot do that at the moment.",
+};
+
 const dnd: CommandInt = {
   name: "dnd",
   description: "List of the available Dungeons and Dragons commands",
@@ -18,10 +24,10 @@ const dnd: CommandInt = {
       const dndEmbed = new MessageEmbed();
 
       // Add the title.
-      dndEmbed.setTitle("Dungeons and Dragons!");
+      dndEmbed.setTitle(DND_CONSTANTS.title);
 
       // Add the description.
-      dndEmbed.setDescription("Here are the `dnd` commands I know!");
+      dndEmbed.setDescription(DND_CONSTANTS.description);
 
       // Get the available dnd commands.
       const dndCommands: Set<CommandInt> = new Set(
@@ -60,7 +66,7 @@ const dnd: CommandInt = {
         `${message.guild?.name} had the following error with the dnd command:`
       );
       console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
+      message.reply(DND_CONSTANTS.error);
     }
   },
 };

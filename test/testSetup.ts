@@ -51,6 +51,12 @@ export const buildUserManager = (
   userCache.forEach(({ key, value }) => users.cache.set(key, value));
   return users;
 };
+
+export const buildGuild = () => {
+  const guild = mock<Guild>();
+  return guild;
+};
+
 export const buildMessage = (content: string): Message => {
   const msg = mock<Message>();
   msg.content = content;
