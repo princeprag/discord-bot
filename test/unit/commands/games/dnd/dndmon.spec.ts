@@ -4,13 +4,13 @@ import { Message, MessageEmbed } from "discord.js";
 import axios from "axios";
 import { buildMessageInt } from "../../../../testSetup";
 import MessageInt from "@Interaces/MessageInt";
-import cmd from "@Commands/games/dnd/dndclass";
+import cmd from "@Commands/games/dnd/dndmon";
 
-describe("command: games/dnd/dndclass", () => {
+describe("command: games/dnd/dndmon", () => {
   let sandbox: SinonSandbox;
   const testPrefix = "☂";
   const botColor = "7B25AA";
-  const baseCommand = `${testPrefix}dndclass`;
+  const baseCommand = `${testPrefix}dndmon`;
   const dndclassMsg = (subcommand?) => {
     const message: Message & MessageInt = buildMessageInt(
       `${baseCommand}${subcommand ? ` ${subcommand}` : ""}`,
@@ -41,7 +41,7 @@ describe("command: games/dnd/dndclass", () => {
       await cmd.run(message);
 
       expect(message.reply).calledWith(
-        "Would you please provide the class you want me to search for?"
+        "Would you please provide the monster you want me to search for?"
       );
     });
   });
@@ -80,20 +80,19 @@ describe("command: games/dnd/dndclass", () => {
     it("should set embedded message correctly", async () => {
       const dndClass = "programmer";
       const classData = {
-        hit_die: "blue",
-        name: "Grand Lord Programmer",
-        proficiencies: [
-          { name: "TDD" },
-          { name: "Lean" },
-          { name: "Design Patterns" },
-        ],
-        proficiency_choices: [
-          {
-            choose: "apple",
-            from: [{ name: "barrel" }, { name: "tree" }, { name: "bowl" }],
-          },
-        ],
-        url: "/api/classes/programmer",
+        alignment: "skewed",
+        armor_class: "light",
+        challenge_rating: "Infinite",
+        charisma: "99",
+        constitution: "98",
+        dexterity: "98",
+        intelligence: "999",
+        name: "Demon Lord Programmmer",
+        strength: "over 9000",
+        subtype: "Wizard",
+        type: "Robot",
+        url: "blue",
+        wisdom: "95",
       };
       const get = sandbox.stub();
       get.resolves({ data: classData });
@@ -104,10 +103,14 @@ describe("command: games/dnd/dndclass", () => {
       const expectedMsg = new MessageEmbed();
       expectedMsg.setTitle(classData.name);
       expectedMsg.setURL(`https://www.dnd5eapi.co${classData.url}`);
-      expectedMsg.addField("Hit die", classData.hit_die);
-      expectedMsg.addField("Proficiencies", "TDD, Lean, Design Patterns");
-      expectedMsg.addField("Plus apple from", "barrel, tree, bowl");
-
+      expectedMsg.addField("Challenge rating", classData.challenge_rating);
+      expectedMsg.addField("Type", `${classData.type} - ${classData.subtype}`);
+      expectedMsg.addField("Alignment", classData.alignment);
+      expectedMsg.addField(
+        "Attributes",
+        `STR: ${classData.strength}, DEX: ${classData.dexterity}, CON: ${classData.constitution}, INT: ${classData.intelligence}, WIS: ${classData.wisdom}, CHA: ${classData.charisma}`
+      );
+      expectedMsg.addField("Armour class", classData.armor_class);
       await cmd.run(message);
 
       expect(message.channel.send).calledWith(expectedMsg);

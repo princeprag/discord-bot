@@ -3,6 +3,16 @@ import DndMonInt from "@Interfaces/commands/dnd/DndMonInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 
+const DNDCLASS_CONSTANT = {
+  error: {
+    no_query: "Would you please provide the monster you want me to search for?",
+    bad_data: "I am so sorry, but I was unable to find anything...",
+    default: "I am so sorry, but I cannot do that at the moment.",
+  },
+  dndApi: "https://www.dnd5eapi.co/api/monsters/",
+  join_separator: ", ",
+};
+
 const dndmon: CommandInt = {
   names: ["dndmon", "dndmonster"],
   description:
@@ -17,22 +27,18 @@ const dndmon: CommandInt = {
 
       // Check if the query is not empty.
       if (!query || !query.length) {
-        await message.reply(
-          "Would you please provide the monster you want me to search for?"
-        );
+        await message.reply(DNDCLASS_CONSTANT.error.no_query);
         return;
       }
 
       // Get the data from the dnd api.
       const data = await axios.get<DndMonInt>(
-        `https://www.dnd5eapi.co/api/monsters/${query}`
+        `${DNDCLASS_CONSTANT.dndApi}${query}`
       );
 
       // Check if the dnd monster is not valid.
       if (!data.data || data.data.error) {
-        await message.reply(
-          "I am so sorry, but I was unable to find anything..."
-        );
+        await message.reply(DNDCLASS_CONSTANT.error.bad_data);
         return;
       }
 
@@ -86,7 +92,7 @@ const dndmon: CommandInt = {
         `${message.guild?.name} had the following error with the dndmon command:`
       );
       console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
+      message.reply(DNDCLASS_CONSTANT.error.default);
     }
   },
 };
