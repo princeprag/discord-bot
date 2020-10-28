@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createSandbox, SinonSpyCall } from "sinon";
+import { createSandbox } from "sinon";
 import cmd from "@Commands/games/dnd/dnd";
 import { buildMessageInt, buildGuild } from "../../../../testSetup";
 import { Message, MessageEmbed } from "discord.js";
