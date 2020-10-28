@@ -6,7 +6,7 @@ import { buildMessageInt } from "../../../../testSetup";
 import MessageInt from "@Interaces/MessageInt";
 import cmd from "@Commands/games/dnd/dndrace";
 
-describe("command: games/dnd/race", () => {
+describe("command: games/dnd/dndrace", () => {
   let sandbox: SinonSandbox;
   const testPrefix = "☂";
   const botColor = "7B25AA";
@@ -41,7 +41,7 @@ describe("command: games/dnd/race", () => {
       await cmd.run(message);
 
       expect(message.reply).calledWith(
-        "Would you please provide the monster you want me to search for?"
+        "Would you please provide the race you want me to search for?"
       );
     });
   });
