@@ -3,6 +3,42 @@ import axios from "axios";
 import DndRaceInt from "@Interfaces/commands/dnd/DndRaceInt";
 import { MessageEmbed } from "discord.js";
 
+const DNDRACE_CONST = {
+  fields: {
+    age: {
+      name: "Age",
+    },
+    alignment: {
+      name: "Alignment",
+    },
+    size: {
+      name: "Size",
+    },
+    language: {
+      name: "Language",
+    },
+    bonuses: {
+      name: "Bonuses",
+      transform: function (
+        data: Array<{ name: string; bonus: number }>
+      ): string {
+        return data.map((el) => `${el.name}: ${el.bonus}`).join(", ");
+      },
+    },
+    url: {
+      name: "URL",
+      transform: (data: string): string => {
+        return `https://www.dnd5eapi.co${data}`;
+      },
+    },
+  },
+  error: {
+    no_query: "Would you please provide the race you want me to search for?",
+    bad_data: "I am so sorry, but I was unable to find anything...",
+    default: "I am so sorry, but I cannot do that at the moment.",
+  },
+};
+
 const dndrace: CommandInt = {
   name: "dndrace",
   description: "Gets information the provided Dungeons and Dragons **race**.",
@@ -16,9 +52,7 @@ const dndrace: CommandInt = {
 
       // Check if the query is not empty.
       if (!query || !query.length) {
-        await message.reply(
-          "Would you please provide the race you want me to search for?"
-        );
+        await message.reply(DNDRACE_CONST.error.no_query);
         return;
       }
 
@@ -29,9 +63,7 @@ const dndrace: CommandInt = {
 
       // Check if the dnd race is not valid.
       if (!data.data || data.data.error) {
-        await message.reply(
-          "I am so sorry, but I was unable to find anything..."
-        );
+        await message.reply(DNDRACE_CONST.error.bad_data);
         return;
       }
 
@@ -52,24 +84,24 @@ const dndrace: CommandInt = {
       dndRaceEmbed.setTitle(name);
 
       // Add the race url to the embed title url.
-      dndRaceEmbed.setURL(`https://www.dnd5eapi.co${url}`);
+      dndRaceEmbed.setURL(DNDRACE_CONST.fields.url.transform(url));
 
       // Add the race age to an embed field.
-      dndRaceEmbed.addField("Age", age);
+      dndRaceEmbed.addField(DNDRACE_CONST.fields.age.name, age);
 
       // Add the race alignment to an embed field.
-      dndRaceEmbed.addField("Alignment", alignment);
+      dndRaceEmbed.addField(DNDRACE_CONST.fields.alignment.name, alignment);
 
       // Add the race size description to an embed field.
-      dndRaceEmbed.addField("Size", size_description);
+      dndRaceEmbed.addField(DNDRACE_CONST.fields.size.name, size_description);
 
       // Add the race language to an embed field.
-      dndRaceEmbed.addField("Language", language_desc);
+      dndRaceEmbed.addField(DNDRACE_CONST.fields.language.name, language_desc);
 
       // Add the race bonuses to an embed field.
       dndRaceEmbed.addField(
-        "Bonuses",
-        ability_bonuses.map((el) => `${el.name}: ${el.bonus}`).join(", ")
+        DNDRACE_CONST.fields.bonuses.name,
+        DNDRACE_CONST.fields.bonuses.transform(ability_bonuses)
       );
 
       // Send the embed to the current channel.
@@ -79,7 +111,7 @@ const dndrace: CommandInt = {
         `${message.guild?.name} had the following error with the dndrace command:`
       );
       console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
+      message.reply(DNDRACE_CONST.error.default);
     }
   },
 };

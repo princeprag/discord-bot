@@ -3,6 +3,23 @@ import DndSchoolInt from "@Interfaces/commands/dnd/DndSchoolInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 
+const DNDSCHOOL_CONST = {
+  fields: {
+    url: {
+      name: "URL",
+      transform: (data: string): string => {
+        return `https://www.dnd5eapi.co${data}`;
+      },
+    },
+  },
+  error: {
+    no_query:
+      "Would you please provide the school of magic you want me to search for?",
+    bad_data: "I am so sorry, but I was unable to find anything...",
+    default: "I am so sorry, but I cannot do that at the moment.",
+  },
+};
+
 const dndschool: CommandInt = {
   name: "dndschool",
   description:
@@ -17,9 +34,7 @@ const dndschool: CommandInt = {
 
       // Check if the query is not empty.
       if (!query || !query.length) {
-        await message.reply(
-          "Would you please provide the school of magic you want me to search for?"
-        );
+        await message.reply(DNDSCHOOL_CONST.error.no_query);
         return;
       }
 
@@ -30,9 +45,7 @@ const dndschool: CommandInt = {
 
       // Check if the dnd school is not valid.
       if (!data.data || data.data.error) {
-        await message.reply(
-          "I am so sorry, but I was unable to find anything..."
-        );
+        await message.reply(DNDSCHOOL_CONST.error.bad_data);
         return;
       }
 
@@ -45,7 +58,7 @@ const dndschool: CommandInt = {
       dndSchoolEmbed.setTitle(name);
 
       // Add the school url to the embed title url.
-      dndSchoolEmbed.setURL(`https://www.dnd5eapi.co${url}`);
+      dndSchoolEmbed.setURL(DNDSCHOOL_CONST.fields.url.transform(url));
 
       // Add the school description to the embed description.
       dndSchoolEmbed.setDescription(desc);
@@ -57,7 +70,7 @@ const dndschool: CommandInt = {
         `${message.guild?.name} had the following error with the dndschool command:`
       );
       console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
+      message.reply(DNDSCHOOL_CONST.error.default);
     }
   },
 };

@@ -51,6 +51,12 @@ export const buildUserManager = (
   userCache.forEach(({ key, value }) => users.cache.set(key, value));
   return users;
 };
+
+export const buildGuild = () => {
+  const guild = mock<Guild>();
+  return guild;
+};
+
 export const buildMessage = (content: string): Message => {
   const msg = mock<Message>();
   msg.content = content;
@@ -63,16 +69,19 @@ export const buildClientInt = ({
   channel,
   users,
   guilds,
+  prefix,
 }: {
   version: string;
   botColor: string;
   channel?: Channel;
   users?: UserManager;
   guilds?: GuildManager;
+  prefix?: string;
 }) => {
   const client: Client & ClientInt = mock<Client>();
   client.color = `#${botColor}`;
   client.version = version;
+  client.prefix = { default: prefix, server_id: prefix };
   if (channel) {
     client.channel = channel;
   }
@@ -89,7 +98,8 @@ export const buildMessageInt = (
   content: string,
   userId: string,
   authorName: string,
-  botColor = "000000"
+  botColor = "000000",
+  prefix = "☂"
 ): MessageInt => {
   const author: User = buildUser(userId, authorName);
   const channel: TextChannel = buildTextChannel();
@@ -101,11 +111,13 @@ export const buildMessageInt = (
     channel,
     users,
     guilds,
+    prefix,
   });
   const msg: Message & MessageInt = buildMessage(content);
   msg.author = author;
   msg.channel = channel;
   msg.bot = bot;
   msg.commandArguments = content.split(" ");
+  msg.commandName = msg.commandArguments.shift() || prefix;
   return msg as MessageInt;
 };
