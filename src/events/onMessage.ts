@@ -108,6 +108,15 @@ async function onMessage(
   }
   // Check if the content of the message starts with the server prefix.
   if (!content.startsWith(prefix)) {
+    //check if the bot is mentioned anyway
+    if (client.user && message.mentions.has(client.user.id)) {
+      channel.startTyping();
+      await message.sleep(3000);
+      channel.stopTyping();
+      await message.channel.send(
+        `Hello! Was there something I could help you with? Try \`${prefix}help\` to see what I can do for you! 💜`
+      );
+    }
     return;
   }
   // Get the first argument as the command name.
@@ -133,6 +142,7 @@ async function onMessage(
 
     // Execute the command.
     await command.run(message);
+    return;
   }
 }
 
