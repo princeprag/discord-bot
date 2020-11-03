@@ -10,14 +10,22 @@ Access to Data is only permitted to bot developers, and only in the scope requir
 
 Data is stored in a MongoDB database. The database is secured to prevent external access, however no guarantee is provided and the Bot owners assume no liability for the unintentional or malicious breach of Data. In the event of an unauthorised Data access, users will be notified through the Discord client application.
 
+## On Server Leave
+
+When the Bot leaves a Discord server, the data related to that server is deleted. This deleted data includes, but is not limited to:
+
+- Command Usage Logs for that server.
+- Custom config settings for that server.
+- User data associated with that server (e.g. level data)
+
 ## User Rights
 
 At any time, you have the right to request to view the Data pertaining to your Discord account. You may submit a request through a Discord message or [email to `@nhcarrigan`](mailto:nhcarrigan@gmail.com?Subject=Discord%20Privacy). You have the right to request the removal of relevant Data. You also have the right to "opt out" of Data collection - please note that this will disable specific features of the bot such as the `level` feature for your account.
 
 ## Underage Users
 
-The use of this Bot is not permitted for minors under the age of 13, or under the age of legal consent for their country. This is in compliance with the [Discord Terms of Service.](https://discord.com/terms). No information will be knowingly stored from an underage user. If it is found out that a user is underage we will take all necessary action to delete the stored data.
+The use of this Bot is not permitted for minors under the age of 13, or under the age of legal consent for their country. This is in compliance with the [Discord Terms of Service](https://discord.com/terms). No information will be knowingly stored from an underage user. If it is found out that a user is underage we will take all necessary action to delete the stored data.
 
 ## Questions
 
-If you have any questions or are concerned about what data might be being stored from your accout contact `@nhcarrigan`. For more information check the [Discord Terms Of Service](https://discord.com/terms).
+If you have any questions or are concerned about what data might be being stored from your account contact `@nhcarrigan`. For more information check the [Discord Terms Of Service](https://discord.com/terms).
