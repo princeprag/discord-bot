@@ -109,7 +109,7 @@ async function onMessage(
   // Check if the content of the message starts with the server prefix.
   if (!content.startsWith(prefix)) {
     //check if the bot is mentioned anyway
-    if (client.user && message.mentions.has(client.user.id)) {
+    if (client.user && message.mentions.users?.has(client.user.id)) {
       if (message.author.id === process.env.OWNER_ID) {
         channel.startTyping();
         await message.sleep(3000);
