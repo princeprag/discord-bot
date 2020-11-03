@@ -52,7 +52,7 @@ const config: CommandInt = {
         //NOTE: nhcarrigan hard-coded for development purposes.
         if (
           !member.hasPermission("MANAGE_GUILD") &&
-          member.id !== "465650873650118659"
+          member.id !== process.env.OWNER_ID
         ) {
           await message.reply(
             "I am so sorry, but I can only do this for moderators with permission to manage server."

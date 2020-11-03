@@ -3,7 +3,7 @@ import CommandInt from "@Interfaces/CommandInt";
 const leave: CommandInt = {
   name: "leave",
   description:
-    "Can tell the bot to leave a specific server. Gives a list of servers the bot is in. Pass the ID of the target server as the parameter to leave that server. This command is specific to the bot owner <@!465650873650118659>.",
+    "Can tell the bot to leave a specific server. Gives a list of servers the bot is in. Pass the ID of the target server as the parameter to leave that server. This command is specific to nhcarrigan.",
   parameters: ["<?serverID>: the ID of the server to leave"],
   run: async (message) => {
     try {
@@ -11,8 +11,8 @@ const leave: CommandInt = {
 
       const { guilds } = bot;
 
-      // Check if the author id is not `465650873650118659`.
-      if (author.id !== "465650873650118659") {
+      // Check if the author id is not the owner id.
+      if (author.id !== process.env.OWNER_ID) {
         await message.reply(
           "I am so sorry, but I can only do this for nhcarrigan."
         );
