@@ -110,6 +110,13 @@ async function onMessage(
   if (!content.startsWith(prefix)) {
     //check if the bot is mentioned anyway
     if (client.user && message.mentions.has(client.user.id)) {
+      if (message.author.id === process.env.OWNER_ID) {
+        channel.startTyping();
+        await message.sleep(3000);
+        channel.stopTyping();
+        await message.channel.send("Hello, love! What can I do for you today?");
+        return;
+      }
       channel.startTyping();
       await message.sleep(3000);
       channel.stopTyping();
@@ -136,7 +143,13 @@ async function onMessage(
       // Execute the usage listener.
       await usageListener.run(message);
     }
-
+    if (message.author.id === process.env.OWNER_ID) {
+      channel.stopTyping();
+      await message.channel.send(
+        "Sure thing, love! I would be happy to do that for you!"
+      );
+      channel.startTyping();
+    }
     await message.sleep(3000);
     channel.stopTyping();
 
