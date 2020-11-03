@@ -5,23 +5,33 @@ const search: CommandInt = {
   description: "Returns a Google search link for the provided **query**.",
   parameters: ["`<query>`: the string to search for"],
   run: async (message) => {
-    const { channel, commandArguments } = message;
+    try {
+      const { channel, commandArguments } = message;
 
-    // Get the arguments as a Google search query.
-    const query = commandArguments
-      .map((el) => el.replace(/<@!.*>%20/g, ""))
-      .join("%20");
+      // Get the arguments as a Google search query.
+      const query = commandArguments
+        .map((el) => el.replace(/<@!.*>%20/g, ""))
+        .join("%20");
 
-    // Check if the query is empty.
-    if (!query || !query.length) {
-      await message.reply("Sorry, but what did you want me to search for?");
-      return;
+      // Check if the query is empty.
+      if (!query || !query.length) {
+        await message.reply(
+          "Would you please provide the term you want me to search for?"
+        );
+        return;
+      }
+
+      // Send the search url to the current channel.
+      await channel.send(
+        `I found something! https://google.com/search?q=${query}`
+      );
+    } catch (error) {
+      console.log(
+        `${message.guild?.name} had the following error with the search command:`
+      );
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
-
-    // Send the search url to the current channel.
-    await channel.send(
-      `BEEP BOOP: Query complete. https://google.com/search?q=${query}`
-    );
   },
 };
 

@@ -29,7 +29,7 @@ const riddle: CommandInt = {
     // Check if the action is not `start`, `request` and `solve`.
     if (action !== "start" && action !== "request" && action !== "solve") {
       await message.reply(
-        "I'm sorry, but I do not see the correct information in your request. Please try again."
+        "Would you please tell me if you want to `start`, `request`, or `solve` a riddle?"
       );
 
       return;
@@ -62,7 +62,7 @@ const riddle: CommandInt = {
         riddleEmbed.setTitle("Start the riddle!");
 
         riddleEmbed.setDescription(
-          `Welcome to the riddles game! To get your first riddle, call this command: \`${
+          `Welcome to the riddles game! To get your first riddle, please call this command: \`${
             bot.prefix[guild.id]
           }riddle request ${start.riddlePath.split("/").reverse()[0]}\``
         );
@@ -74,7 +74,7 @@ const riddle: CommandInt = {
 
         // Check if the riddle id is empty.
         if (!id) {
-          await message.reply("Sorry, you must enter the riddle id.");
+          await message.reply("Would you please provide the riddle id?");
           return;
         }
 
@@ -99,7 +99,7 @@ const riddle: CommandInt = {
 
           // Check if the riddle answer is empty.
           if (!answer) {
-            await message.reply("Sorry, you must enter the riddle answer.");
+            await message.reply("Would you please provide the riddle answer?");
             return;
           }
 
@@ -140,18 +140,10 @@ const riddle: CommandInt = {
       await channel.send(riddleEmbed);
     } catch (error) {
       console.log(
-        "Riddle command:",
-        error?.response?.data?.message ?? "Unknown error"
+        `${message.guild?.name} had the following error with the riddle command:`
       );
-
-      const errorEmbed = new MessageEmbed();
-      errorEmbed.setColor(bot.color);
-      errorEmbed.setTitle("Riddle Error");
-      errorEmbed.setDescription(
-        error?.response?.data?.message ?? "Unknown error"
-      );
-
-      await message.reply(errorEmbed);
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

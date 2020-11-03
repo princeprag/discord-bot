@@ -22,7 +22,8 @@
       "profile": "https://github.com/adprasad",
       "contributions": [
         "code",
-        "test"
+        "test",
+        "doc"
       ]
     },
     {
@@ -41,7 +42,8 @@
       "avatar_url": "https://avatars0.githubusercontent.com/u/65516863?v=4",
       "profile": "http://landonlloyd.github.io",
       "contributions": [
-        "doc"
+        "doc",
+        "code"
       ]
     },
     {
@@ -68,7 +70,7 @@
       "avatar_url": "https://avatars1.githubusercontent.com/u/66655515?v=4",
       "profile": "https://shadowtime2000.github.io",
       "contributions": [
-        "bug"
+        "code"
       ]
     },
     {
@@ -82,7 +84,7 @@
     }
   ],
   "contributorsPerLine": 7,
-  "projectName": "discord-bot",
+  "projectName": "BeccaBot",
   "projectOwner": "nhcarrigan",
   "repoType": "github",
   "repoHost": "https://github.com",

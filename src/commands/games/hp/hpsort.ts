@@ -20,7 +20,8 @@ const hpsort: CommandInt = {
 
       // Check if the houses are valid.
       if (!house.data.length || !house.data[0]) {
-        throw new Error();
+        await message.reply("I am so sorry, but I could not find anything...");
+        return;
       }
 
       // Get the sort house.
@@ -28,7 +29,8 @@ const hpsort: CommandInt = {
 
       // Check if the target house is valid.
       if (!targetHouse) {
-        throw new Error();
+        await message.reply("I am so sorry, but I could not find anything...");
+        return;
       }
 
       // Create a new empty embed.
@@ -75,11 +77,10 @@ const hpsort: CommandInt = {
       await channel.send(houseEmbed);
     } catch (error) {
       console.log(
-        "Harry Potter House Command:",
-        error?.response?.data?.message ?? "Unknown error."
+        `${message.guild?.name} had the following error with the hpsort command:`
       );
-
-      await message.reply("Sorry, but I could not find anything...");
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

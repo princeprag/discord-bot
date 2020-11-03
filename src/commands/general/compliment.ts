@@ -7,18 +7,26 @@ const compliment: CommandInt = {
   description:
     "Provides a nice little compliment, courtesy of [freeCodeCamp](https://freecodecamp.org).",
   run: async (message) => {
-    const { channel } = message;
+    try {
+      const { channel } = message;
 
-    // Get a random quote index.
-    const random = ~~(Math.random() * compliments.length - 1);
+      // Get a random quote index.
+      const random = ~~(Math.random() * compliments.length - 1);
 
-    // Send the embed message to the current channel.
-    await channel.send(
-      new MessageEmbed()
-        .setTitle("Hello! I hope you are having a good day!")
-        .setDescription(compliments[random])
-        .setFooter("We love you. 💜")
-    );
+      // Send the embed message to the current channel.
+      await channel.send(
+        new MessageEmbed()
+          .setTitle("Hello! I hope you are having a good day!")
+          .setDescription(compliments[random])
+          .setFooter("I love you. 💜")
+      );
+    } catch (error) {
+      console.log(
+        `${message.guild?.name} had the following error with the compliment command:`
+      );
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
+    }
   },
 };
 

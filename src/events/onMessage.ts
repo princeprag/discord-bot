@@ -34,7 +34,7 @@ async function onMessage(
   // and send a warning to the current channel.
   if (channel.type === "dm" && author.id !== client.user?.id) {
     message.showTypingAndSendMessage(
-      "Sorry, but would you please talk to me in a server, not a private message? If you need a server to join, check out my home! https://discord.gg/PHqDbkg",
+      "I am so sorry, but would you please talk to me in a server instead of a private message? If you need a server to join, check out my home! https://discord.gg/PHqDbkg",
       3000
     );
 
@@ -77,7 +77,7 @@ async function onMessage(
       }
 
       await message.showTypingAndSendMessage(
-        "Sorry, but please do not upload files. Only images and videos are allowed.",
+        "I am so sorry, but I am not permitted to allow file uploads. Please share videos or images only.",
         3000
       );
 
@@ -108,6 +108,22 @@ async function onMessage(
   }
   // Check if the content of the message starts with the server prefix.
   if (!content.startsWith(prefix)) {
+    //check if the bot is mentioned anyway
+    if (client.user && message.mentions.users?.has(client.user.id)) {
+      if (message.author.id === process.env.OWNER_ID) {
+        channel.startTyping();
+        await message.sleep(3000);
+        channel.stopTyping();
+        await message.channel.send("Hello, love! What can I do for you today?");
+        return;
+      }
+      channel.startTyping();
+      await message.sleep(3000);
+      channel.stopTyping();
+      await message.channel.send(
+        `Hello! Was there something I could help you with? Try \`${prefix}help\` to see what I can do for you! 💜`
+      );
+    }
     return;
   }
   // Get the first argument as the command name.
@@ -127,12 +143,19 @@ async function onMessage(
       // Execute the usage listener.
       await usageListener.run(message);
     }
-
+    if (message.author.id === process.env.OWNER_ID) {
+      channel.stopTyping();
+      await message.channel.send(
+        "Sure thing, love! I would be happy to do that for you!"
+      );
+      channel.startTyping();
+    }
     await message.sleep(3000);
     channel.stopTyping();
 
     // Execute the command.
     await command.run(message);
+    return;
   }
 }
 

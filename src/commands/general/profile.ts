@@ -10,69 +10,88 @@ const profile: CommandInt = {
     "`<user>`: username or ID of the user to find",
   ],
   run: async (message) => {
-    const { bot, channel, commandArguments } = message;
+    try {
+      const { bot, channel, commandArguments } = message;
 
-    // Get the next argument as the website.
-    const website = commandArguments.shift();
+      // Get the next argument as the website.
+      const website = commandArguments.shift();
 
-    // Check if the website is not valid.
-    if (
-      !website ||
-      ![
-        "steam",
-        "facebook",
-        "fb",
-        "github",
-        "gh",
-        "twitter",
-        "tw",
-        "linkedin",
-        "tumblr",
-        "instagram",
-        "ig",
-      ].includes(website)
-    ) {
-      await message.reply("Sorry, but I cannot access that website...");
-      return;
+      // Check if there is no website provided
+      if (!website) {
+        await message.reply(
+          "Would you please provide the website you want me to search for?"
+        );
+        return;
+      }
+
+      // Check if the website is not valid.
+      if (
+        ![
+          "steam",
+          "facebook",
+          "fb",
+          "github",
+          "gh",
+          "twitter",
+          "tw",
+          "linkedin",
+          "tumblr",
+          "instagram",
+          "ig",
+        ].includes(website)
+      ) {
+        await message.reply(
+          `I am so sorry, but I do not have access to ${website}`
+        );
+        return;
+      }
+
+      // Get the next argument as the user.
+      let user = commandArguments.shift();
+
+      // Check if the user is empty.
+      if (!user) {
+        await message.reply(
+          "Would you please provide the user you want me to search for?"
+        );
+        return;
+      }
+
+      let prefix = "";
+
+      if (website === "stream") {
+        prefix = "https://steamcommunity.com/id/";
+      } else if (website === "facebook" || website === "fb") {
+        prefix = "https://facebook.com/";
+      } else if (website === "github" || website === "gh") {
+        prefix = "https://github.com/";
+      } else if (website === "twitter" || website === "tw") {
+        prefix = "https://twitter.com/";
+      } else if (website === "linkedin") {
+        prefix = "https://linkedin.com/in/";
+      } else if (website === "tumblr") {
+        prefix = "https://";
+        user = user + ".tumblr.com";
+      } else if (website === "instagram" || website === "ig") {
+        prefix = "https://instagram.com/";
+      }
+
+      // Send an embed to the current channel.
+      await channel.send(
+        new MessageEmbed()
+          .setColor(bot.color)
+          .setTitle(`Query: ${website} | For user: ${user}`)
+          .setDescription(
+            `I found them! Here is a [link to their profile](${prefix}${user})`
+          )
+      );
+    } catch (error) {
+      console.log(
+        `${message.guild?.name} had the following error with the profile command:`
+      );
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
-
-    // Get the next argument as the user.
-    let user = commandArguments.shift();
-
-    // Check if the user is empty.
-    if (!user) {
-      await message.reply("Sorry, but who did you want me to search for?");
-      return;
-    }
-
-    let prefix = "";
-
-    if (website === "stream") {
-      prefix = "https://steamcommunity.com/id/";
-    } else if (website === "facebook" || website === "fb") {
-      prefix = "https://facebook.com/";
-    } else if (website === "github" || website === "gh") {
-      prefix = "https://github.com/";
-    } else if (website === "twitter" || website === "tw") {
-      prefix = "https://twitter.com/";
-    } else if (website === "linkedin") {
-      prefix = "https://linkedin.com/in/";
-    } else if (website === "tumblr") {
-      prefix = "https://";
-      user = user + ".tumblr.com";
-    } else if (website === "instagram" || website === "ig") {
-      prefix = "https://instagram.com/";
-    }
-
-    // Send an embed to the current channel.
-    await channel.send(
-      new MessageEmbed()
-        .setColor(bot.color)
-        .setTitle(`Query: ${website} | For user: ${user}`)
-        .setDescription(
-          `BEEP BOOP: Here is a [link to their profile](${prefix}${user})`
-        )
-    );
   },
 };
 

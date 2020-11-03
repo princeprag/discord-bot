@@ -15,7 +15,7 @@ const joke: CommandInt = {
         headers: {
           Accept: "application/json",
           "User-Agent":
-            "NHBot (https://www.nhcarrigan.com/discord-bot-documentation",
+            "BeccaBot (https://www.nhcarrigan.com/BeccaBot-documentation",
         },
       });
 
@@ -23,25 +23,25 @@ const joke: CommandInt = {
 
       // Check if the status is not 200.
       if (status !== 200) {
-        throw new Error();
+        await message.reply(
+          "I am so sorry, but I seem to have lost my book of jokes!"
+        );
+        return;
       }
 
       // Send an embed message to the current channel.
       await channel.send(
         new MessageEmbed()
           .setColor(bot.color)
-          .setTitle("Haha!")
+          .setTitle("I giggled at this:")
           .setDescription(joke)
       );
     } catch (error) {
       console.log(
-        "Joke Command:",
-        error?.response?.data?.message ?? "Unknown error."
+        `${message.guild?.name} had the following error with the joke command:`
       );
-
-      await message.reply(
-        "Sorry, but I am not really in the mood for a joke right now..."
-      );
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

@@ -10,91 +10,104 @@ const unrestrict: CommandInt = {
     "`<?reason>`: reason for restoring the user.",
   ],
   run: async (message) => {
-    const { author, bot, commandArguments, guild, member, mentions } = message;
-
-    const { user } = bot;
-
-    // Check if the member has the kick members permission.
-    if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
-      await message.reply(
-        "Sorry, but this command is restricted to moderators."
-      );
-
-      return;
-    }
-
-    // Get the restricted role.
-    const restrictedRole = await bot.getRoleFromSettings(
-      "restricted_role",
-      guild
-    );
-
-    // Check if the restricted role does not exist.
-    if (!restrictedRole) {
-      await message.reply("Sorry, but I could not find the restricted role.");
-      return;
-    }
-
-    // Get the next argument as the user to unrestrict mention.
-    let userToUnrestrictMention = commandArguments.shift();
-
-    // Get the first user mention.
-    const userToUnrestrictMentioned = mentions.users.first();
-
-    // Check if the user mention is valid.
-    if (
-      !userToUnrestrictMention ||
-      !userToUnrestrictMentioned ||
-      !mentions.members
-    ) {
-      await message.reply("Sorry, but you must mention a user to unrestrict.");
-      return;
-    }
-
-    // Remove the `<@!` and `>` from the mention to get the id.
-    userToUnrestrictMention = userToUnrestrictMention.replace(/[<@!>]/gi, "");
-
-    // Check if the user mention string and the first user mention id are equals.
-    if (userToUnrestrictMention !== userToUnrestrictMentioned.id) {
-      await message.reply("Sorry, but the user mentioned is not valid.");
-      return;
-    }
-
-    // Check if trying to restrict itself.
-    if (userToUnrestrictMentioned.id === author.id) {
-      await message.reply("Sorry, but you cannot unrestrict yourself!");
-      return;
-    }
-
-    // Get the first member mention.
-    const memberToUnrestrictMentioned = mentions.members.first();
-
-    // Check if the member mention exists.
-    if (!memberToUnrestrictMentioned) {
-      await message.reply(
-        "Sorry, but you must mention a valid user to unrestrict."
-      );
-      return;
-    }
-
-    // Check if the user is not restricted.
-    if (!memberToUnrestrictMentioned.roles.cache.has(restrictedRole.id)) {
-      await message.reply(
-        `Sorry, but ${userToUnrestrictMentioned.toString()} is not restricted.`
-      );
-
-      return;
-    }
-
-    // Get the reason of the warn.
-    let reason = commandArguments.join(" ");
-
-    // Add a default reason if it not provided.
-    if (!reason || !reason.length) {
-      reason = "Sorry, but the moderator did not give a reason.";
-    }
-
     try {
+      const {
+        author,
+        bot,
+        commandArguments,
+        guild,
+        member,
+        mentions,
+      } = message;
+
+      const { user } = bot;
+
+      // Check if the member has the kick members permission.
+      if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
+        await message.reply(
+          "I am so sorry, but I can only do this for moderators with permission to kick members."
+        );
+
+        return;
+      }
+
+      // Get the restricted role.
+      const restrictedRole = await bot.getRoleFromSettings(
+        "restricted_role",
+        guild
+      );
+
+      // Check if the restricted role does not exist.
+      if (!restrictedRole) {
+        await message.reply(
+          "I am so sorry, but I do not have a record for your restricted role."
+        );
+        return;
+      }
+
+      // Get the next argument as the user to unrestrict mention.
+      let userToUnrestrictMention = commandArguments.shift();
+
+      // Get the first user mention.
+      const userToUnrestrictMentioned = mentions.users.first();
+
+      // Check if the user mention is valid.
+      if (
+        !userToUnrestrictMention ||
+        !userToUnrestrictMentioned ||
+        !mentions.members
+      ) {
+        await message.reply(
+          "Would you please provide the user you want me to unrestrict?"
+        );
+        return;
+      }
+
+      // Remove the `<@!` and `>` from the mention to get the id.
+      userToUnrestrictMention = userToUnrestrictMention.replace(/[<@!>]/gi, "");
+
+      // Check if the user mention string and the first user mention id are equals.
+      if (userToUnrestrictMention !== userToUnrestrictMentioned.id) {
+        await message.reply(
+          `I am so sorry, but ${userToUnrestrictMentioned.toString()} is not a valid user.`
+        );
+        return;
+      }
+
+      // Check if trying to restrict itself.
+      if (userToUnrestrictMentioned.id === author.id) {
+        await message.reply("Wait, what? You cannot unrestrict yourself.");
+        return;
+      }
+
+      // Get the first member mention.
+      const memberToUnrestrictMentioned = mentions.members.first();
+
+      // Check if the member mention exists.
+      if (!memberToUnrestrictMentioned) {
+        await message.reply(
+          "Would you please provide the user you want me to unrestrict?"
+        );
+        return;
+      }
+
+      // Check if the user is not restricted.
+      if (!memberToUnrestrictMentioned.roles.cache.has(restrictedRole.id)) {
+        await message.reply(
+          `I am so sorry, but ${userToUnrestrictMentioned.toString()} is not restricted.`
+        );
+
+        return;
+      }
+
+      // Get the reason of the warn.
+      let reason = commandArguments.join(" ");
+
+      // Add a default reason if it not provided.
+      if (!reason || !reason.length) {
+        reason = "I am sorry, but the moderator did not give a reason.";
+      }
+
       // Remove the restricted role to the user.
       memberToUnrestrictMentioned.roles.remove(restrictedRole);
 
@@ -110,10 +123,15 @@ const unrestrict: CommandInt = {
           .setFooter("Please remember to follow our rules!")
           .setTimestamp()
       );
-    } catch (error) {
-      console.log(error);
 
-      await message.reply("Sorry, you cannot unrestrict that user.");
+      //respond
+      await message.reply("Okay! I have taken care of that for you.");
+    } catch (error) {
+      console.log(
+        `${message.guild?.name} had the following error with the unrestrict command:`
+      );
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

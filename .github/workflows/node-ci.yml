@@ -1,13 +1,15 @@
 name: Node.js CI
 on:
   push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
 
 jobs:
   ci:
-    name: Lint and Build
+    name: Lint Build Test
     runs-on: ubuntu-latest
 
     strategy:

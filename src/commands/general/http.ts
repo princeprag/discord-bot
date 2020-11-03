@@ -8,35 +8,43 @@ const http: CommandInt = {
     "Returns a definition for the status parameter. Includes a cute cat photo.",
   parameters: ["`<status>`: the HTTP status to define"],
   run: async (message) => {
-    const { channel, commandArguments } = message;
+    try {
+      const { channel, commandArguments } = message;
 
-    // Get the next argument as the status.
-    const status = commandArguments.shift();
+      // Get the next argument as the status.
+      const status = commandArguments.shift();
 
-    // Check if the status is not valid.
-    if (!status) {
-      await message.reply(
-        "Sorry, but what status code did you want me to look for?"
+      // Check if the status is not valid.
+      if (!status) {
+        await message.reply(
+          "Would you please provide the status code you want me to look for?"
+        );
+
+        return;
+      }
+
+      // Check if the status exists.
+      if (!httpStatusList.includes(status)) {
+        await message.reply(
+          `I am so sorry, but ${status} appears to be an invalid status code.`
+        );
+
+        return;
+      }
+
+      // Send an embed to the current channel.
+      await channel.send(
+        new MessageEmbed()
+          .setTitle(`HTTP status: ${status}`)
+          .setImage(`https://http.cat/${status}.jpg`)
       );
-
-      return;
-    }
-
-    // Check if the status exists.
-    if (!httpStatusList.includes(status)) {
-      await message.reply(
-        "Sorry, but that appears to be an invalid status code."
+    } catch (error) {
+      console.log(
+        `${message.guild?.name} had the following error with the http command:`
       );
-
-      return;
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
-
-    // Send an embed to the current channel.
-    await channel.send(
-      new MessageEmbed()
-        .setTitle(`HTTP status: ${status}`)
-        .setImage(`https://http.cat/${status}.jpg`)
-    );
   },
 };
 

@@ -31,16 +31,19 @@ async function onMessageUpdate(
       {
         name: "Old content",
         value:
-          oldMessage.content || "Sorry, but I could not find that message.",
+          oldMessage.content ||
+          "I am so sorry, but I could not find that message.",
       },
       {
         name: "New content",
         value:
-          newMessage.content || "Sorry, but I could not find that message.",
+          newMessage.content ||
+          "I am so sorry, but I could not find that message.",
       },
       {
         name: "Author",
-        value: author.toString() || "Sorry, but I could not find that user.",
+        value:
+          author.toString() || "I am so sorry, but I could not find that user.",
       }
     )
   );

@@ -1,5 +1,5 @@
 import CommandInt from "@Interfaces/CommandInt";
-import { MessageEmbed } from "discord.js";
+import { MessageAttachment, MessageEmbed } from "discord.js";
 
 const star: CommandInt = {
   name: "star",
@@ -10,70 +10,92 @@ const star: CommandInt = {
     "`<?reason>`: reason for giving the star",
   ],
   run: async (message) => {
-    const { author, bot, channel, commandArguments, guild, mentions } = message;
+    try {
+      const {
+        author,
+        bot,
+        channel,
+        commandArguments,
+        guild,
+        mentions,
+      } = message;
 
-    const { user } = bot;
+      const { user } = bot;
 
-    if (!guild || !user) {
-      return;
-    }
+      if (!guild || !user) {
+        return;
+      }
 
-    // Get the next argument as the user to star mention.
-    let userToStarMention = commandArguments.shift();
+      // Get the next argument as the user to star mention.
+      let userToStarMention = commandArguments.shift();
 
-    // Get the first user mention.
-    const userToStarMentioned = mentions.users.first();
+      // Get the first user mention.
+      const userToStarMentioned = mentions.users.first();
 
-    // Check if the user mention is valid.
-    if (!userToStarMention || !userToStarMentioned || !mentions.members) {
-      await message.reply("you must mention an user to star.");
-      return;
-    }
+      // Check if the user mention is valid.
+      if (!userToStarMention || !userToStarMentioned || !mentions.members) {
+        await message.reply(
+          "Would you please provide the user mention that you want me to send a star to?"
+        );
+        return;
+      }
 
-    // Remove the `<@!` and `>` from the mention to get the id.
-    userToStarMention = userToStarMention.replace(/[<@!>]/gi, "");
+      // Remove the `<@!` and `>` from the mention to get the id.
+      userToStarMention = userToStarMention.replace(/[<@!>]/gi, "");
 
-    // Check if the user mention string and the first user mention id are equals.
-    if (userToStarMention !== userToStarMentioned.id) {
-      await message.reply("Sorry, but the user mentioned is not valid.");
-      return;
-    }
+      // Check if the user mention string and the first user mention id are equals.
+      if (userToStarMention !== userToStarMentioned.id) {
+        await message.reply(
+          `I am so sorry, but ${userToStarMentioned.toString()} is not a valid user.`
+        );
+        return;
+      }
 
-    // Check if trying to star itself.
-    if (userToStarMentioned.id === author.id) {
-      await message.reply(
-        "Sorry, but you cannot give yourself a star! I still love you though."
+      // Check if trying to star itself.
+      if (userToStarMentioned.id === author.id) {
+        await message.reply(
+          "I am so sorry, but you cannot give yourself a star! I still love you though."
+        );
+
+        return;
+      }
+
+      // Get the reason of the star.
+      let reason = commandArguments.join(" ");
+
+      // Add a default reason if it not provided.
+      if (!reason || !reason.length) {
+        reason = "I am sorry, but the user did not provide a reason.";
+      }
+
+      //create message attachment
+      const attachment = [];
+      attachment.push(new MessageAttachment("./img/star.png", "star.png"));
+
+      // Send an embed message with the star to the user.
+      await userToStarMentioned.send(
+        new MessageEmbed()
+          .setTitle("You got a gold star!")
+          .setDescription(
+            `${author.toString()} has given this shiny gold star to you!`
+          )
+          .addField("Reason", reason)
+          .attachFiles(attachment)
+          .setImage("attachment://star.png")
+          .setFooter("I am so proud of you! 🙃")
       );
 
-      return;
+      // Send a success message to the current channel.
+      await channel.send(
+        `Okay, I sent ${userToStarMentioned.toString()} a gold star!`
+      );
+    } catch (error) {
+      console.log(
+        `${message.guild?.name} had the following error with the star command:`
+      );
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
-
-    // Get the reason of the star.
-    let reason = commandArguments.join(" ");
-
-    // Add a default reason if it not provided.
-    if (!reason || !reason.length) {
-      reason = "Sorry, but the user did not give a reason.";
-    }
-
-    // Send an embed message with the star to the user.
-    await userToStarMentioned.send(
-      new MessageEmbed()
-        .setTitle("You got a gold star!")
-        .setDescription(
-          `${author.toString()} has given this shiny gold star to you!`
-        )
-        .addField("Reason", reason)
-        .setImage(
-          "https://github.com/nhcarrigan/discord-bot/blob/master/img/star.png?raw=true"
-        )
-        .setFooter("I am so proud of you! 🙃")
-    );
-
-    // Send a success message to the current channel.
-    await channel.send(
-      `Okay, I sent ${userToStarMentioned.toString()} a gold star!`
-    );
   },
 };
 

@@ -1,3 +1,6 @@
+import CommandLogModel from "@Models/CommandLogModel";
+import SettingModel from "@Models/SettingModel";
+import UserModel from "@Models/UserModel";
 import { Client, Guild, WebhookClient } from "discord.js";
 
 /**
@@ -20,13 +23,46 @@ async function onGuildDelete(
     const { user } = client;
 
     if (user) {
-      // Get the server name from the current guild.
-      const { name } = guild;
+      // Get the name and id of the server from the current guild.
+      const { id, name } = guild;
 
       // Send a message to the debug channel.
       await debugChannelHook.send(
-        `I, ${user.username}, have left the ${name} server!`
+        `${user.username} has left the ${name} server!`
       );
+
+      // Get the command logs of the server.
+      const commandLogs = await CommandLogModel.find({ server_id: id });
+
+      // Check if the server has command logs.
+      if (commandLogs.length) {
+        for await (const commandLog of commandLogs) {
+          // Delete the command log.
+          await CommandLogModel.findByIdAndDelete(commandLog._id);
+        }
+      }
+
+      // Get the settings of the server.
+      const settings = await SettingModel.find({ server_id: id });
+
+      // Check if the server has custom settings.
+      if (settings.length) {
+        for await (const setting of settings) {
+          // Delete the setting.
+          await SettingModel.findByIdAndDelete(setting._id);
+        }
+      }
+
+      // Get the users of the server.
+      const users = await UserModel.find({ server_id: id });
+
+      // Check if the server has users.
+      if (users.length) {
+        for await (const user of users) {
+          // Delete the user.
+          await UserModel.findByIdAndDelete(user._id);
+        }
+      }
     }
   }
 }

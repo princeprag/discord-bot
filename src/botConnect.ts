@@ -41,9 +41,6 @@ export async function botConnect(): Promise<void> {
     );
   }
 
-  // Connect to the MongoDB database.
-  await connectDatabase(debugChannelHook).then(loadCurrentTrackingOptOutList);
-
   // Create a new Discord bot object.
   const client: ClientInt = extendsClientToClientInt(new Client());
 
@@ -105,12 +102,20 @@ export async function botConnect(): Promise<void> {
   // Log the bot with the Discord token.
   await client.login(process.env.DISCORD_TOKEN);
 
+  //set custom status
+  await client.user?.setActivity("for people who need my help~!", {
+    type: "WATCHING",
+  });
+
+  // Connect to the MongoDB database.
+  await connectDatabase(debugChannelHook, client).then(
+    loadCurrentTrackingOptOutList
+  );
+
   // Send a debug log before turn off the bot.
   process.once("beforeExit", () => {
     if (debugChannelHook) {
-      debugChannelHook.send(
-        `I, ${client.user?.username}, am off to sleep. Goodbye.`
-      );
+      debugChannelHook.send(`${client.user?.username} is shutting down.`);
     }
   });
 }

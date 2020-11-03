@@ -8,47 +8,55 @@ const usage: CommandInt = {
     "Gets the number of times a particular **command** has been used.",
   parameters: ["`<command>`: name of the command to check"],
   run: async (message) => {
-    const { bot, channel, commandArguments, guild } = message;
+    try {
+      const { bot, channel, commandArguments, guild } = message;
 
-    // Get the next argument as the command name.
-    const command = commandArguments.shift();
+      // Get the next argument as the command name.
+      const command = commandArguments.shift();
 
-    // Check if the command name is empty.
-    if (!guild || !command) {
-      await message.reply(
-        "Sorry, but what command did you want me to look for?"
+      // Check if the command name is empty.
+      if (!guild || !command) {
+        await message.reply(
+          "Would you please provide the command you want me to look for?"
+        );
+
+        return;
+      }
+
+      // Get the command log from the database.
+      const commandLog = await CommandLogModel.findOne({
+        command,
+        server_id: guild.id,
+      });
+
+      // Check if the command log does not exist.
+      if (!commandLog) {
+        await message.reply(
+          "I am so sorry, but no one has used this command yet."
+        );
+
+        return;
+      }
+
+      const { last_called, last_caller, uses } = commandLog;
+
+      // Send an embed message to the current channel.
+      await channel.send(
+        new MessageEmbed()
+          .setColor(bot.color)
+          .setTitle(bot.prefix[guild.id] + command)
+          .setDescription(`This command has been used ${uses} times!`)
+          .setFooter(
+            `The command was last called by ${last_caller} on ${last_called}`
+          )
       );
-
-      return;
-    }
-
-    // Get the command log from the database.
-    const commandLog = await CommandLogModel.findOne({
-      command,
-      server_id: guild.id,
-    });
-
-    // Check if the command log does not exist.
-    if (!commandLog) {
-      await message.reply(
-        "Sorry, but it appears no one has use that command yet."
+    } catch (error) {
+      console.log(
+        `${message.guild?.name} had the following error with the usage command:`
       );
-
-      return;
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
-
-    const { last_called, last_caller, uses } = commandLog;
-
-    // Send an embed message to the current channel.
-    await channel.send(
-      new MessageEmbed()
-        .setColor(bot.color)
-        .setTitle(bot.prefix[guild.id] + command)
-        .setDescription(`BEEP BOOP: This command has been used ${uses} times!`)
-        .setFooter(
-          `The command was last called by ${last_caller} on ${last_called}`
-        )
-    );
   },
 };
 

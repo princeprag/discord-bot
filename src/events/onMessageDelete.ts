@@ -33,7 +33,7 @@ async function onMessageDelete(
       .addFields(
         {
           name: "Message author",
-          value: author || "Sorry, but I could not find that user.",
+          value: author || "I am so sorry, but I could not find that user.",
         },
         {
           name: "Channel",
@@ -42,7 +42,8 @@ async function onMessageDelete(
         {
           name: "Content",
           value:
-            content || "Sorry, but i Could not tell what the message said.",
+            content ||
+            "I am so sorry, but I could not tell what the message said.",
         }
       )
   );

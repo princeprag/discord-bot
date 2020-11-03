@@ -12,28 +12,30 @@ const habitica: CommandInt = {
   description: "Gets user profile information on the given <id>.",
   parameters: ["`<id>`: the user id of the profile to look up"],
   run: async (message) => {
-    const { bot, channel, commandArguments } = message;
-
-    // Get the next argument as the user id.
-    const id = commandArguments.shift();
-
-    // Check if the user id is not valid.
-    if (!id) {
-      await message.reply("sorry, but what did you want me to search for?");
-      return;
-    }
-
-    // Get the Habitica API key from the environment.
-    const key = process.env.HABITICA_KEY || "Error finding key.";
-
-    // Get the headers.
-    const headers = {
-      "x-client": "285a3335-33b9-473f-8d80-085c04f207bc-DiscordBot",
-      "x-api-user": "285a3335-33b9-473f-8d80-085c04f207bc",
-      "x-api-key": key,
-    };
-
     try {
+      const { bot, channel, commandArguments } = message;
+
+      // Get the next argument as the user id.
+      const id = commandArguments.shift();
+
+      // Check if the user id is not valid.
+      if (!id) {
+        await message.reply(
+          "Would you please provide the user id you want me to search for?"
+        );
+        return;
+      }
+
+      // Get the Habitica API key from the environment.
+      const key = process.env.HABITICA_KEY || "Error finding key.";
+
+      // Get the headers.
+      const headers = {
+        "x-client": "285a3335-33b9-473f-8d80-085c04f207bc-DiscordBot",
+        "x-api-user": "285a3335-33b9-473f-8d80-085c04f207bc",
+        "x-api-key": key,
+      };
+
       // Get the user data from the Habitica API.
       const user = await axios.get<HabiticaUserInt>(
         `https://habitica.com/api/v3/members/${id}`,
@@ -42,7 +44,8 @@ const habitica: CommandInt = {
 
       // Check if the user data result is not success.
       if (!user.data.success) {
-        throw new Error();
+        await message.reply("I am so sorry, but I could not find that user...");
+        return;
       }
 
       const { auth, profile, stats } = user.data.data;
@@ -110,7 +113,10 @@ const habitica: CommandInt = {
 
       // Check if the user achievements data result is not success.
       if (!achievements.data.success) {
-        throw new Error();
+        await message.reply(
+          "I am so sorry, but I could not find that user's achievements..."
+        );
+        return;
       }
 
       const { basic, onboarding, seasonal, special } = achievements.data.data;
@@ -202,16 +208,15 @@ const habitica: CommandInt = {
       // Send the quests embed to the current channel.
       await channel.send(questsEmbed).catch(async () => {
         await message.reply(
-          "sorry, but I found too much data. I cannot handle this!"
+          "I am so sorry, but the user has completed too many quests. I cannot carry this much information!"
         );
       });
     } catch (error) {
       console.log(
-        "Habitica Command:",
-        error?.response?.data?.message ?? "Unknown error."
+        `${message.guild?.name} had the following error with the habitica command:`
       );
-
-      await message.reply("Sorry, but I could not find that user...");
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

@@ -8,18 +8,20 @@ const magic: CommandInt = {
   description: "Returns a Magic: The Gathering card that matches the **name**.",
   parameters: ["`<card>`: name of the card to search for"],
   run: async (message) => {
-    const { bot, channel, commandArguments } = message;
-
-    // Get the arguments as a magic query.
-    const query = commandArguments.join(" ");
-
-    // Check if the query is empty.
-    if (!query) {
-      await message.reply("Sorry, but what did you want me to search for?");
-      return;
-    }
-
     try {
+      const { bot, channel, commandArguments } = message;
+
+      // Get the arguments as a magic query.
+      const query = commandArguments.join(" ");
+
+      // Check if the query is empty.
+      if (!query) {
+        await message.reply(
+          "Would you please tell me the card name you want me to search for?"
+        );
+        return;
+      }
+
       // Get the data from the magic API.
       const data = await axios.get<MagicInt>(
         `https://api.magicthegathering.io/v1/cards?name=${query}&pageSize=1`
@@ -30,7 +32,8 @@ const magic: CommandInt = {
 
       // Check if the data is not valid.
       if (!data.data || !data.data.cards.length || !card) {
-        throw new Error();
+        await message.reply("I am so sorry, but I could not find anything.");
+        return;
       }
 
       // Create a new empty embed.
@@ -51,9 +54,7 @@ const magic: CommandInt = {
       );
 
       // Add the card flavor to the embed description.
-      cardEmbed.setDescription(
-        flavor || "Sorry, but this card has no flavour text..."
-      );
+      cardEmbed.setDescription(flavor || "This card has no flavour text...");
 
       // Add the card types to an embed field.
       cardEmbed.addField("Types", types.join(", "));
@@ -64,18 +65,17 @@ const magic: CommandInt = {
       // Add the card text to an embed field.
       cardEmbed.addField(
         "Abilities",
-        text || "Sorry, but this card has no ability text..."
+        text || "This card has no ability text..."
       );
 
       // Send the card embed to the current channel.
       await channel.send(cardEmbed);
     } catch (error) {
       console.log(
-        "Magic Command:",
-        error?.response?.data?.message ?? "Unknown error."
+        `${message.guild?.name} had the following error with the magic command:`
       );
-
-      await message.reply("Sorry, but I could not find anything...");
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

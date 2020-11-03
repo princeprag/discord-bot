@@ -1,11 +1,6 @@
 import { expect } from "chai";
-import {
-  MessageEmbed,
-} from "discord.js";
-import {
-  createSandbox,
-  SinonStub,
-} from "sinon";
+import { MessageEmbed } from "discord.js";
+import { createSandbox, SinonStub } from "sinon";
 import about from "@Commands/bot/about";
 import { buildMessageInt } from "../../../testSetup";
 
@@ -21,7 +16,8 @@ describe("command: about", () => {
   });
 
   it("should send", async () => {
-    const message = buildMessageInt(sandbox, "", "", "", botColor);
+    const message = buildMessageInt("", "", "", botColor);
+    message.channel.send = sandbox.stub();
 
     await about.run(message);
 
@@ -29,7 +25,8 @@ describe("command: about", () => {
   });
 
   it(`should set footer message text`, async () => {
-    const message = buildMessageInt(sandbox, "", "", "", botColor);
+    const message = buildMessageInt("", "", "", botColor);
+    message.channel.send = sandbox.stub();
 
     await about.run(message);
 
@@ -40,7 +37,8 @@ describe("command: about", () => {
   });
 
   it(`should set timestamp`, async () => {
-    const message = buildMessageInt(sandbox, "", "", "", botColor);
+    const message = buildMessageInt("", "", "", botColor);
+    message.channel.send = sandbox.stub();
 
     await about.run(message);
 
@@ -51,15 +49,16 @@ describe("command: about", () => {
   });
 
   [
-    { propName: "title", propValue: "Greetings! My name is nhbot!" },
+    { propName: "title", propValue: "Greetings! My name is BeccaBot!" },
     {
       propName: "description",
-      propValue: `I am a discord bot created by [nhcarrigan](https://www.nhcarrigan.com), with help from a few contributors.  You can view my [source code and contributor list](https://github.com/nhcarrigan/discord-bot) online.\r\n\r\nView the [official repository](https://github.com/nhcarrigan/discord-bot) or you can join to the [official Discord server](https://discord.gg/PHqDbkg).`,
+      propValue: `I am a discord bot created by [nhcarrigan](https://www.nhcarrigan.com), with help from a few contributors.  You can view my [source code and contributor list](https://github.com/nhcarrigan/BeccaBot) online.\r\n\r\nView the [official repository](https://github.com/nhcarrigan/BeccaBot) or you can join to the [official Discord server](https://discord.gg/PHqDbkg). I am named after nhcarrigan's old DnD/RP character.`,
     },
     { propName: "color", propValue: parseInt(botColor, 16) },
   ].forEach(({ propName, propValue }) => {
     it(`should send embedded message with ${propName}: ${propValue}`, async () => {
-      const message = buildMessageInt(sandbox, "", "", "", botColor);
+      const message = buildMessageInt("", "", "", botColor);
+      message.channel.send = sandbox.stub();
 
       await about.run(message);
 
@@ -87,7 +86,8 @@ describe("command: about", () => {
   ].forEach(({ name, value, inline }) => {
     it(`should send embedded message with field ${name}: ${value} 
       as inline ${inline}`, async () => {
-      const message = buildMessageInt(sandbox, "", "", "", botColor);
+      const message = buildMessageInt("", "", "", botColor);
+      message.channel.send = sandbox.stub();
 
       await about.run(message);
 

@@ -10,12 +10,20 @@ const hpspell: CommandInt = {
     "`<name>`: the name of the spell to search for or set `random` to get a random spell.",
   ],
   run: async (message) => {
-    const { bot, channel, commandArguments } = message;
-
-    // Get the arguments as the name.
-    const name = commandArguments.join(" ");
-
     try {
+      const { bot, channel, commandArguments } = message;
+
+      // Get the arguments as the name.
+      const name = commandArguments.join(" ");
+
+      // check if query is empty
+      if (!name) {
+        await message.reply(
+          "Would you please provide the spell you want me to search for?"
+        );
+        return;
+      }
+
       // Get the spell data from the Harry Potter API.
       const data = await axios.get<HpSpellInt[]>(
         `https://www.potterapi.com/v1/spells?key=${process.env.HP_KEY}`
@@ -33,7 +41,8 @@ const hpspell: CommandInt = {
 
       // Check if the target spell is not valid.
       if (!targetSpell) {
-        throw new Error();
+        await message.reply("I am so sorry, but I could not find anything...");
+        return;
       }
 
       const { effect, type, spell } = targetSpell;
@@ -48,11 +57,10 @@ const hpspell: CommandInt = {
       );
     } catch (error) {
       console.log(
-        "Harry Potter Spell Command:",
-        error?.response?.data?.message ?? "Unknown error."
+        `${message.guild?.name} had the following error with the hpspell command:`
       );
-
-      await message.reply("Sorry, but I could not find anything...");
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

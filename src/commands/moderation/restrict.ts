@@ -10,148 +10,174 @@ const restrict: CommandInt = {
     "`<?reason>`: reason for restricting the user.",
   ],
   run: async (message) => {
-    const { author, bot, commandArguments, guild, member, mentions } = message;
-
-    const { user } = bot;
-
-    // Check if the member has the kick members permission.
-    if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
-      await message.reply(
-        "Sorry, but this command is restricted to moderators."
-      );
-
-      return;
-    }
-
-    // Get the moderator role.
-    const moderatorRole = await bot.getRoleFromSettings(
-      "moderator_role",
-      guild
-    );
-
-    // Check if the moderator role does not exist.
-    if (!moderatorRole) {
-      await message.reply("Sorry, but I could not find the moderator role.");
-      return;
-    }
-
-    // Get the restricted role.
-    const restrictedRole = await bot.getRoleFromSettings(
-      "restricted_role",
-      guild
-    );
-
-    // Check if the restricted role does not exist.
-    if (!restrictedRole) {
-      await message.reply("Sorry, but I could not find the restricted role.");
-      return;
-    }
-
-    // Get the restrict category.
-    let category = guild.channels.cache.find(
-      (c) => c.name === "Appeals" && c.type === "category"
-    );
-
-    const allow: (
-      | "VIEW_CHANNEL"
-      | "READ_MESSAGE_HISTORY"
-      | "SEND_MESSAGES"
-    )[] = ["VIEW_CHANNEL", "READ_MESSAGE_HISTORY", "SEND_MESSAGES"];
-
-    // Check if the restrict category does not exist.
-    if (!category) {
-      category = await guild.channels.create("Appeals", {
-        type: "category",
-        permissionOverwrites: [
-          {
-            id: guild.id,
-            deny: allow,
-          },
-          {
-            id: moderatorRole.id,
-            allow,
-          },
-          {
-            id: restrictedRole.id,
-            allow,
-          },
-          {
-            id: user.id, // Bot ID.
-            allow,
-          },
-        ],
-      });
-    }
-
-    // Get the next argument as the user to restrict mention.
-    let userToRestrictMention = commandArguments.shift();
-
-    // Get the first user mention.
-    const userToRestrictMentioned = mentions.users.first();
-
-    // Check if the user mention is valid.
-    if (
-      !userToRestrictMention ||
-      !userToRestrictMentioned ||
-      !mentions.members
-    ) {
-      await message.reply("you must mention an user to restrict.");
-      return;
-    }
-
-    // Remove the `<@!` and `>` from the mention to get the id.
-    userToRestrictMention = userToRestrictMention.replace(/[<@!>]/gi, "");
-
-    // Check if the user mention string and the first user mention id are equals.
-    if (userToRestrictMention !== userToRestrictMentioned.id) {
-      await message.reply("Sorry, but the user mentioned is not valid.");
-      return;
-    }
-
-    // Check if trying to restrict itself.
-    if (userToRestrictMentioned.id === author.id) {
-      await message.reply("Sorry, but you cannot restrict yourself!");
-      return;
-    }
-
-    // Get the first member mention.
-    const memberToRestrictMentioned = mentions.members.first();
-
-    // Check if the member mention exists.
-    if (!memberToRestrictMentioned) {
-      await message.reply(
-        "Sorry, but you must mention a valid user to restrict."
-      );
-      return;
-    }
-
-    // Check if the user id or member id are the bot id.
-    if (
-      userToRestrictMentioned.id === user.id ||
-      memberToRestrictMentioned.id === user.id
-    ) {
-      await message.reply("Why are you trying to restrict me? I am sad now.");
-      return;
-    }
-
-    // Check if the user is already restricted.
-    if (memberToRestrictMentioned.roles.cache.has(restrictedRole.id)) {
-      await message.reply(
-        `Sorry, but ${userToRestrictMentioned.toString()} is already restricted.`
-      );
-
-      return;
-    }
-
-    // Get the reason of the warn.
-    let reason = commandArguments.join(" ");
-
-    // Add a default reason if it not provided.
-    if (!reason || !reason.length) {
-      reason = "Sorry, but the moderator did not give a reason.";
-    }
-
     try {
+      const {
+        author,
+        bot,
+        commandArguments,
+        guild,
+        member,
+        mentions,
+      } = message;
+
+      const { user } = bot;
+
+      // Check if the member has the kick members permission.
+      if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
+        await message.reply(
+          "I am so sorry, but I can only do this for moderators with permission to kick members."
+        );
+
+        return;
+      }
+
+      // Get the moderator role.
+      const moderatorRole = await bot.getRoleFromSettings(
+        "moderator_role",
+        guild
+      );
+
+      // Check if the moderator role does not exist.
+      if (!moderatorRole) {
+        await message.reply(
+          "I am so sorry, but I do not have a record for your moderator role."
+        );
+        return;
+      }
+
+      // Get the restricted role.
+      const restrictedRole = await bot.getRoleFromSettings(
+        "restricted_role",
+        guild
+      );
+
+      // Check if the restricted role does not exist.
+      if (!restrictedRole) {
+        await message.reply(
+          "I am so sorry, but I do not have a record for your restricted role."
+        );
+        return;
+      }
+
+      // Get the restrict category.
+      let category = guild.channels.cache.find(
+        (c) => c.name === "Appeals" && c.type === "category"
+      );
+
+      const allow: (
+        | "VIEW_CHANNEL"
+        | "READ_MESSAGE_HISTORY"
+        | "SEND_MESSAGES"
+      )[] = ["VIEW_CHANNEL", "READ_MESSAGE_HISTORY", "SEND_MESSAGES"];
+
+      // Check if the restrict category does not exist.
+      if (!category) {
+        category = await guild.channels.create("Appeals", {
+          type: "category",
+          permissionOverwrites: [
+            {
+              id: guild.id,
+              deny: allow,
+            },
+            {
+              id: moderatorRole.id,
+              allow,
+            },
+            {
+              id: restrictedRole.id,
+              allow,
+            },
+            {
+              id: user.id, // Bot ID.
+              allow,
+            },
+          ],
+        });
+      }
+
+      // Get the next argument as the user to restrict mention.
+      let userToRestrictMention = commandArguments.shift();
+
+      // Get the first user mention.
+      const userToRestrictMentioned = mentions.users.first();
+
+      // Check if the user mention is valid.
+      if (
+        !userToRestrictMention ||
+        !userToRestrictMentioned ||
+        !mentions.members
+      ) {
+        await message.reply(
+          "Would you please provide the user you want me to restrict?"
+        );
+        return;
+      }
+
+      // Remove the `<@!` and `>` from the mention to get the id.
+      userToRestrictMention = userToRestrictMention.replace(/[<@!>]/gi, "");
+
+      // Check if the user mention string and the first user mention id are equals.
+      if (userToRestrictMention !== userToRestrictMentioned.id) {
+        await message.reply(
+          `I am so sorry, but ${userToRestrictMentioned.toString()} is not a valid user.`
+        );
+        return;
+      }
+
+      // Check if trying to restrict itself.
+      if (userToRestrictMentioned.id === author.id) {
+        await message.reply("Wait, what? You cannot restrict yourself!");
+        return;
+      }
+
+      // Get the first member mention.
+      const memberToRestrictMentioned = mentions.members.first();
+
+      // Check if the member mention exists.
+      if (!memberToRestrictMentioned) {
+        await message.reply(
+          "Would you please provide the user you want me to restrict?"
+        );
+        return;
+      }
+
+      // Check if the user id or member id are the bot id.
+      if (
+        userToRestrictMentioned.id === user.id ||
+        memberToRestrictMentioned.id === user.id
+      ) {
+        await message.reply(
+          "You want to restrict me? Oh no! Did I do something wrong?"
+        );
+        return;
+      }
+
+      // Check if the user is already restricted.
+      if (memberToRestrictMentioned.roles.cache.has(restrictedRole.id)) {
+        await message.reply(
+          `I am so sorry, but ${userToRestrictMentioned.toString()} is already restricted.`
+        );
+
+        return;
+      }
+
+      // Get the reason of the warn.
+      let reason = commandArguments.join(" ");
+
+      // Add a default reason if it not provided.
+      if (!reason || !reason.length) {
+        reason = "I am sorry, but the moderator did not provide a reason.";
+      }
+
+      //remove all other roles
+      memberToRestrictMentioned.roles.cache.forEach(async (role) => {
+        //everyone role cannot be removed - it has same ID as guild, so skip it.
+        if (role.id === guild.id) {
+          return;
+        }
+        await memberToRestrictMentioned.roles.remove(role);
+      });
+
       // Add the restricted role to the user.
       await memberToRestrictMentioned.roles.add(restrictedRole);
 
@@ -184,7 +210,7 @@ const restrict: CommandInt = {
 
       // Send an advertisement to the user.
       await memberToRestrictMentioned.send(
-        `Hello! Sorry to bother you. It appears you have been suspended from ${guild.name} for: ${reason} - I have created a channel there for you to appeal this decision.`
+        `Hello! I am sorry to bother you. It appears you have been suspended from **${guild.name}** for the following reason: ${reason} \n I have created a channel there for you to appeal this decision.`
       );
 
       // Send an embed message to the logs channel.
@@ -199,10 +225,15 @@ const restrict: CommandInt = {
           .setFooter("Please remember to follow our rules!")
           .setTimestamp()
       );
-    } catch (error) {
-      console.log(error);
 
-      await message.reply("Sorry, you cannot restrict that user.");
+      //respond
+      await message.reply("Okay! I have taken care of that for you.");
+    } catch (error) {
+      console.log(
+        `${message.guild?.name} had the following error with the restrict command:`
+      );
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };
