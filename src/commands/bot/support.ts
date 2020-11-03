@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js";
 const SUPPORT_CONSTANTS = {
   title: "Do you need some help?",
   description:
-    "I am sorry if I couldn't explain things well enough. You can join my [support server](https://discord.gg/PHqDbkg) for some additional assistance.",
+    "I am sorry if I couldn't explain things well enough. You can join my [support server](https://discord.gg/PHqDbkg) or check my [Documentation Page](https://www.nhcarrigan.com/BeccaBot-documentation/) for some additional assistance.",
 };
 
 const support: CommandInt = {
