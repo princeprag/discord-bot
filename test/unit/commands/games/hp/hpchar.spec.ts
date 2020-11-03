@@ -3,7 +3,7 @@ import axios from "axios";
 import cmd from "@Commands/games/hp/hpchar";
 import { SinonSandbox, createSandbox } from "sinon";
 import { buildMessageInt } from "../../../../testSetup";
-import { Message, MessageEmbed } from "discord.js";
+import { MessageEmbed } from "discord.js";
 
 describe("command: games/hp/hpchar", () => {
   let sandbox: SinonSandbox;
