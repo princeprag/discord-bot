@@ -46,7 +46,7 @@ async function onMessage(
     return;
   }
   // Get the heartsListener, levelsListener and usageListener from the listeners list.
-  const { heartsListener } = client.customListeners;
+  const { heartsListener, thanksListener } = client.customListeners;
   const levelsListener = client.customListeners.interceptableLevelsListener;
   const usageListener = client.customListeners.interceptableUsageListener;
 
@@ -108,21 +108,8 @@ async function onMessage(
   }
   // Check if the content of the message starts with the server prefix.
   if (!content.startsWith(prefix)) {
-    //check if the bot is mentioned anyway
-    if (client.user && message.mentions.users?.has(client.user.id)) {
-      if (message.author.id === process.env.OWNER_ID) {
-        channel.startTyping();
-        await message.sleep(3000);
-        channel.stopTyping();
-        await message.channel.send("Hello, love! What can I do for you today?");
-        return;
-      }
-      channel.startTyping();
-      await message.sleep(3000);
-      channel.stopTyping();
-      await message.channel.send(
-        `Hello! Was there something I could help you with? Try \`${prefix}help\` to see what I can do for you! 💜`
-      );
+    if (thanksListener) {
+      await thanksListener.run(message);
     }
     return;
   }
