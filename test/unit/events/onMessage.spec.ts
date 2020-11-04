@@ -1,4 +1,4 @@
-import { SinonSandbox, createSandbox, SinonStub, clock } from "sinon";
+import { SinonSandbox, createSandbox, SinonStub, replace } from "sinon";
 import { mock, reset } from "ts-mockito";
 import { expect } from "chai";
 import * as discordjs from "discord.js";
@@ -7,6 +7,7 @@ import CommandInt from "@Interfaces/CommandInt";
 import ListenerInt from "@Interfaces/ListenerInt";
 import onMessage from "@Events/onMessage";
 import { getListeners } from "@Utils/readDirectory";
+import SettingModel from "@Models/SettingModel";
 
 describe("onMessage event", () => {
   const testPrefix = "☂";
@@ -28,10 +29,12 @@ describe("onMessage event", () => {
   beforeEach(() => {
     sandbox = createSandbox();
     sandbox.useFakeTimers();
+    sandbox.replace(SettingModel, "findOne", sandbox.stub().resolves());
   });
 
   afterEach(() => {
     reset();
+    sandbox.clock.restore();
     sandbox.restore();
   });
 
@@ -39,11 +42,12 @@ describe("onMessage event", () => {
     it("should call run on interceptableLevelsListener", async () => {
       const aboutStub = sandbox.stub().resolves();
       const client = mock<discordjs.Client>();
-      const msg = mock<discordjs.Message>();
+      const msg = mock<discordjs.Message>({ send: sandbox.stub() });
       msg.content = `${testPrefix}about`;
       msg.attachments = new discordjs.Collection();
       msg.channel.startTyping = sandbox.stub();
       msg.channel.stopTyping = sandbox.stub();
+      msg.channel.send = sandbox.stub().resolves();
       msg.guild.id = "server_id";
 
       const clientInt = extendsClientToClientInt(client);
@@ -76,6 +80,7 @@ describe("onMessage event", () => {
       msg.attachments = new discordjs.Collection();
       msg.channel.startTyping = sandbox.stub();
       msg.channel.stopTyping = sandbox.stub();
+      msg.channel.send = sandbox.stub().resolves();
       msg.guild.id = "server_id";
 
       const clientInt = extendsClientToClientInt(client);
@@ -200,6 +205,7 @@ describe("onMessage event", () => {
         msg.attachments = new discordjs.Collection();
         msg.channel.startTyping = sandbox.stub();
         msg.channel.stopTyping = sandbox.stub();
+        msg.channel.send = sandbox.stub();
         msg.guild.id = "server_id";
 
         const clientInt = extendsClientToClientInt(client);
@@ -232,6 +238,7 @@ describe("onMessage event", () => {
       msg.attachments = new discordjs.Collection();
       msg.channel.startTyping = sandbox.stub();
       msg.channel.stopTyping = sandbox.stub();
+      msg.channel.send = sandbox.stub();
       msg.guild.id = "server_id";
 
       const clientInt = extendsClientToClientInt(client);
