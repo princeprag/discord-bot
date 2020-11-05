@@ -8,7 +8,7 @@ const leave: CommandInt = {
   parameters: ["<?serverID>: the ID of the server to leave"],
   run: async (message) => {
     try {
-      const { author, bot, channel, commandArguments } = message;
+      const { author, bot, commandArguments } = message;
 
       const { guilds } = bot;
 
@@ -26,49 +26,8 @@ const leave: CommandInt = {
 
       // Check if the server id is empty - return list of servers.
       if (!serverID || !serverID.length) {
-        let pageCount = 0;
-        let serverList: string[] = [],
-          ownerList: string[] = [];
-        let serverCount = 0;
-        const ownerIds: string[] = [];
-        const servers = guilds.cache.map((el) => el);
-        const length = servers.length;
-        for (let i = 0; i < length; i++) {
-          const guild = servers[i];
-          serverList.push(`${guild.name} (${guild.id})`);
-          ownerList.push(`${guild.owner?.user.username} (${guild.ownerID})`);
-          serverCount++;
-          ownerIds.push(guild.ownerID);
-          if (serverList.length === 10 || ownerList.length === 10) {
-            const serverEmbed = new MessageEmbed()
-              .setTitle(`Server List part ${++pageCount}`)
-              .setColor(bot.color);
-            for (let i = 0; i < serverList.length; i++) {
-              serverEmbed.addField(serverList[i], ownerList[i]);
-            }
-            await channel.send(serverEmbed);
-            serverList = [];
-            ownerList = [];
-          }
-        }
-        const ownerCount = new Set(ownerIds).size;
-        if (!serverList.length || !ownerList.length) {
-          await channel.send(
-            `I am in ${serverCount} servers, with ${ownerCount} unique owners.`
-          );
-          return;
-        }
-        const serverEmbed = new MessageEmbed()
-          .setTitle(`Server List part ${++pageCount}`)
-          .setColor(bot.color);
-        for (let i = 0; i < serverList.length; i++) {
-          serverEmbed.addField(serverList[i], ownerList[i]);
-        }
-        await channel.send(serverEmbed);
-        await channel.send(
-          `I am in ${serverCount} servers, with ${ownerCount} unique owner${
-            ownerCount === 1 ? "s" : ""
-          }.`
+        await message.reply(
+          "Would you please provide the server ID you wish for me to leave?"
         );
         return;
       }
