@@ -1,4 +1,6 @@
 import CommandInt from "@Interfaces/CommandInt";
+import { Guild, MessageEmbed } from "discord.js";
+import server from "./server";
 
 const leave: CommandInt = {
   name: "leave",
@@ -23,20 +25,36 @@ const leave: CommandInt = {
       // Get the next argument as the server id.
       const serverID = commandArguments.shift();
 
-      // Check if the server id is empty.
+      // Check if the server id is empty - return list of servers.
       if (!serverID || !serverID.length) {
         let count = 0;
-        await channel.send(
-          `**Available servers:**\r\n${guilds.cache
-            .map(
-              (guild) =>
-                `**${++count}.** ${guild.id} - ${guild.name} - Owned by ${
-                  guild.owner?.user.username
-                } (${guild.ownerID})`
-            )
-            .join("\r\n")}`
-        );
-
+        let serverList: string[] = [],
+          ownerList: string[] = [];
+        const servers = guilds.cache.map((el) => el);
+        const length = servers.length;
+        for (let i = 0; i < length; i++) {
+          const guild = servers[i];
+          serverList.push(`${guild.name} (${guild.id})`);
+          ownerList.push(`${guild.owner?.user.username} (${guild.ownerID})`);
+          if (serverList.length === 10 || ownerList.length === 10) {
+            const serverEmbed = new MessageEmbed()
+              .setTitle(`Server List part ${++count}`)
+              .setColor(bot.color);
+            for (let i = 0; i < serverList.length; i++) {
+              serverEmbed.addField(serverList[i], ownerList[i], true);
+            }
+            await channel.send(serverEmbed);
+            serverList = [];
+            ownerList = [];
+          }
+        }
+        const serverEmbed = new MessageEmbed()
+          .setTitle(`Server List part ${++count}`)
+          .setColor(bot.color);
+        for (let i = 0; i < serverList.length; i++) {
+          serverEmbed.addField(serverList[i], ownerList[i], true);
+        }
+        await channel.send(serverEmbed);
         return;
       }
 
