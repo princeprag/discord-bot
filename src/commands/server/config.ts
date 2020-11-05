@@ -71,9 +71,11 @@ const config: CommandInt = {
             const toggleSetting = await getToggleFromSettings(setType, guild);
             await setToggle(guild.id, setType, !toggleSetting);
             await message.reply(
-              `I have turned the ${setType} feature ${!toggleSetting ? 'on' : 'off'}`
+              `I have turned the ${setType} feature ${
+                !toggleSetting ? "on" : "off"
+              }`
             );
-            renturn;
+            return;
           }
           await message.reply(
             `I am so sorry, but ${setType} is not a valid option to toggle.`
@@ -401,7 +403,9 @@ const config: CommandInt = {
       // Add the thanks setting to an embed field.
       configEmbed.addField(
         "Thanks",
-        `I will${shouldThank ? '' : ' NOT'} congratule users when another user thanks them`
+        `I will${
+          shouldThank ? "" : " NOT"
+        } congratule users when another user thanks them`
       );
 
       //get the levels setting from the database
@@ -410,7 +414,9 @@ const config: CommandInt = {
       // Add the levels setting to an embed field.
       configEmbed.addField(
         "Levels",
-        `I will${shouldLevel ? '' : ' NOT'} give users experience points for being active.`
+        `I will${
+          shouldLevel ? "" : " NOT"
+        } give users experience points for being active.`
       );
 
       // Send the embed to the current channel.
