@@ -67,25 +67,13 @@ const config: CommandInt = {
         const setType = commandArguments.shift();
 
         if (configType === "toggle") {
-          if (setType === "thanks") {
-            const shouldThank = await getToggleFromSettings("thanks", guild);
-            await setToggle(guild.id, "thanks", !shouldThank);
+          if (setType === "thanks" || setType === "levels") {
+            const toggleSetting = await getToggleFromSettings(setType, guild);
+            await setToggle(guild.id, setType, !toggleSetting);
             await message.reply(
-              !shouldThank
-                ? "I have turned the thank feature on."
-                : "I have turned the thank feature off."
+              `I have turned the ${setType} feature ${!toggleSetting ? 'on' : 'off'}`
             );
-            return;
-          }
-          if (setType === "levels") {
-            const shouldLevel = await getToggleFromSettings("levels", guild);
-            await setToggle(guild.id, "levels", !shouldLevel);
-            await message.reply(
-              !shouldLevel
-                ? "I have turned the level feature on."
-                : "I have turned the level feature off."
-            );
-            return;
+            renturn;
           }
           await message.reply(
             `I am so sorry, but ${setType} is not a valid option to toggle.`
@@ -413,9 +401,7 @@ const config: CommandInt = {
       // Add the thanks setting to an embed field.
       configEmbed.addField(
         "Thanks",
-        shouldThank
-          ? "I will congratulate users when another user thanks them."
-          : "I will NOT congratulate users when another user thanks them."
+        `I will${shouldThank ? '' : ' NOT'} congratule users when another user thanks them`
       );
 
       //get the levels setting from the database
@@ -424,9 +410,7 @@ const config: CommandInt = {
       // Add the levels setting to an embed field.
       configEmbed.addField(
         "Levels",
-        shouldLevel
-          ? "I will give users experience points for being active"
-          : "I will NOT give users experience points for being active."
+        `I will${shouldLevel ? '' : ' NOT'} give users experience points for being active.`
       );
 
       // Send the embed to the current channel.

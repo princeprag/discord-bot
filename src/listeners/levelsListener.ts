@@ -27,7 +27,7 @@ const levelListener: ListenerInt = {
       });
 
       // If levels is off, return
-      if (!shouldLevel?.value) {
+      if (!shouldLevel || !shouldLevel.value) {
         return;
       }
 
