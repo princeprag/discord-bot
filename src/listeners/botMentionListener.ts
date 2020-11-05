@@ -5,7 +5,10 @@ const botMentionListener: ListenerInt = {
   description: "Listens for the bot being mentioned.",
   run: async (message) => {
     try {
-      const { bot, channel } = message;
+      const { bot, channel, guild } = message;
+      if (!guild) {
+        return;
+      }
       if (bot.user && message.mentions.users?.has(bot.user.id)) {
         if (message.author.id === process.env.OWNER_ID) {
           channel.startTyping();
@@ -20,7 +23,9 @@ const botMentionListener: ListenerInt = {
         await message.sleep(3000);
         channel.stopTyping();
         await message.channel.send(
-          `Hello! Was there something I could help you with? Try \`${bot.prefix}help\` to see what I can do for you! 💜`
+          `Hello! Was there something I could help you with? Try \`${
+            bot.prefix[guild.id]
+          }help\` to see what I can do for you! 💜`
         );
       }
     } catch (error) {
