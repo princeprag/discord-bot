@@ -3,6 +3,12 @@ import HpHouseInt from "@Interfaces/commands/hp/HpHouseInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 
+const HPSORT_CONSTANT = {
+  error: {
+    default: "I am so sorry, but I cannot do that at the moment.",
+  },
+};
+
 const hpsort: CommandInt = {
   name: "hpsort",
   description: "Sorts you into a Hogwarts house.",
@@ -80,7 +86,7 @@ const hpsort: CommandInt = {
         `${message.guild?.name} had the following error with the hpsort command:`
       );
       console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
+      message.reply(HPSORT_CONSTANT.error.default);
     }
   },
 };
