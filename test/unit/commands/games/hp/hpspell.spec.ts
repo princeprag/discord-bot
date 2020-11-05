@@ -26,7 +26,7 @@ describe("command: games/hp/hpspell", () => {
   describe("when spell name missing", () => {
     it("shoud warn the sender", async () => {
       const expected =
-        "Would you please provide the spell you want me to search for?";
+        "Would you please try the command again, and provide the spell you want me to search for?";
       const msg = buildMessageInt(baseCommand, "", "", botColor);
       msg.reply = sandbox.stub();
 

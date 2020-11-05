@@ -19,7 +19,7 @@ const pokenum: CommandInt = {
       // Check if the pokemon number is not valid.
       if (!numberArg || (isNaN(Number(numberArg)) && numberArg !== "random")) {
         await message.reply(
-          "Would you please provide the Pokemon number you want me to search for?"
+          "Would you please try the command again, and provide the Pokemon number you want me to search for?"
         );
         return;
       }

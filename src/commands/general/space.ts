@@ -23,7 +23,7 @@ const space: CommandInt = {
         // Check if the date has the `YYYY-MM-DD` format.
         if (!/[0-9]{4}-[0-9]{2}-[0-9]{2}/.test(userDate)) {
           await message.reply(
-            `I am so sorry, but ${userDate} is not a valid date. Would you please use the format \`YYYY-MM-DD\`?`
+            `I am so sorry, but ${userDate} is not a valid date. Would you please try the command again, and use the format \`YYYY-MM-DD\`?`
           );
           return;
         }

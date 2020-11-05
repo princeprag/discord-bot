@@ -14,7 +14,7 @@ const DNDSCHOOL_CONST = {
   },
   error: {
     no_query:
-      "Would you please provide the school of magic you want me to search for?",
+      "Would you please try the command again, and provide the school of magic you want me to search for?",
     bad_data: "I am so sorry, but I was unable to find anything...",
     default: "I am so sorry, but I cannot do that at the moment.",
   },

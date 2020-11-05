@@ -7,7 +7,7 @@ const HPCHAR_CONSTANT = {
   error: {
     default: "I am so sorry, but I cannot do that at the moment.",
     missingName:
-      "Would you please provide the character name you would like me to search for?",
+      "Would you please try the command again, and provide the character name you would like me to search for?",
     noData: "I am so sorry, but I could not find anything...",
   },
   data: {

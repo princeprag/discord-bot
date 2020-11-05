@@ -26,7 +26,7 @@ const leave: CommandInt = {
       // Check if the server id is empty - return list of servers.
       if (!serverID || !serverID.length) {
         await message.reply(
-          "Would you please provide the server ID you wish for me to leave?"
+          "Would you please try the command again, and provide the server ID you wish for me to leave?"
         );
         return;
       }

@@ -108,7 +108,7 @@ const restrict: CommandInt = {
         !mentions.members
       ) {
         await message.reply(
-          "Would you please provide the user you want me to restrict?"
+          "Would you please try the command again, and provide the user you want me to restrict?"
         );
         return;
       }
@@ -136,7 +136,7 @@ const restrict: CommandInt = {
       // Check if the member mention exists.
       if (!memberToRestrictMentioned) {
         await message.reply(
-          "Would you please provide the user you want me to restrict?"
+          "Would you please try the command again, and provide the user you want me to restrict?"
         );
         return;
       }

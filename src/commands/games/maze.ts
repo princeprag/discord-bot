@@ -26,7 +26,7 @@ const maze: CommandInt = {
       // Check if the action is not `request` and `solve`.
       if (action !== "request" && action !== "solve") {
         await message.reply(
-          "Would you please let me know if you want to `request` a maze or `solve` a maze?"
+          "Would you please try the command again, and let me know if you want to `request` a maze or `solve` a maze?"
         );
 
         return;
@@ -93,7 +93,9 @@ const maze: CommandInt = {
 
         // Check if the maze id is empty.
         if (!id) {
-          await message.reply("Would you please provide the maze id?");
+          await message.reply(
+            "Would you please try the command again, and provide the maze id?"
+          );
           return;
         }
 
@@ -102,7 +104,9 @@ const maze: CommandInt = {
 
         // Check if the maze answer is empty.
         if (!answer) {
-          await message.reply("Would you please provide the maze answer?");
+          await message.reply(
+            "Would you please try the command again, and provide the maze answer?"
+          );
           return;
         }
 

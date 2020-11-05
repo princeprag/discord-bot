@@ -18,7 +18,7 @@ const github: CommandInt = {
       // Check if the user exists.
       if (!user) {
         await message.reply(
-          "Would you please provide the username you want me to search for?"
+          "Would you please try the command again, and provide the username you want me to search for?"
         );
         return;
       }
