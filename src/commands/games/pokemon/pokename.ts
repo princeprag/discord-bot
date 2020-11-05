@@ -17,7 +17,7 @@ const pokename: CommandInt = {
       // Check if the pokemon name is empty.
       if (!name) {
         await message.reply(
-          "Would you please provide the Pokemon name you want me to search for?"
+          "Would you please try the command again, and provide the Pokemon name you want me to search for?"
         );
         return;
       }

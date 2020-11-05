@@ -41,7 +41,7 @@ describe("command: games/dnd/dndrace", () => {
       await cmd.run(message);
 
       expect(message.reply).calledWith(
-        "Would you please provide the race you want me to search for?"
+        "Would you please try the command again, and provide the race you want me to search for?"
       );
     });
   });

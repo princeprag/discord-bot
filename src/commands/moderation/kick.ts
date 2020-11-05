@@ -40,7 +40,7 @@ const kick: CommandInt = {
       // Check if the user mention is valid.
       if (!userToKickMention || !userToKickMentioned || !mentions.members) {
         await message.reply(
-          "Would you please provide the user you want me to kick?"
+          "Would you please try the command again, and provide the user you want me to kick?"
         );
         return;
       }
@@ -68,7 +68,7 @@ const kick: CommandInt = {
       // Check if the member mention exists.
       if (!memberToKickMentioned) {
         await message.reply(
-          "Would you please provide the user you want me to kick?"
+          "Would you please try the command again, and provide the user you want me to kick?"
         );
         return;
       }

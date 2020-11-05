@@ -35,7 +35,7 @@ const star: CommandInt = {
       // Check if the user mention is valid.
       if (!userToStarMention || !userToStarMentioned || !mentions.members) {
         await message.reply(
-          "Would you please provide the user mention that you want me to send a star to?"
+          "Would you please try the command again, and provide the user mention that you want me to send a star to?"
         );
         return;
       }

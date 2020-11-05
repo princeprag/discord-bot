@@ -5,7 +5,7 @@ import { MessageEmbed } from "discord.js";
 
 const DNDCLASS_CONSTANT = {
   error: {
-    no_query: "Would you please provide the class you want me to search for?",
+    no_query: "Would you please try the command again, and provide the class you want me to search for?",
     bad_data: "I am so sorry, but I was unable to find anything...",
     default: "I am so sorry, but I cannot do that at the moment.",
   },

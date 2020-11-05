@@ -32,7 +32,7 @@ const purge: CommandInt = {
       // Check if the number is empty
       if (!num) {
         await message.reply(
-          "Would you please provide the number of messages you want me to delete?"
+          "Would you please try the command again, and provide the number of messages you want me to delete?"
         );
         return;
       }

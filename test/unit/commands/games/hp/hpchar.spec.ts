@@ -154,7 +154,7 @@ describe("command: games/hp/hpchar", () => {
   describe("when command is missing name", () => {
     it("should reply missing name error message", async () => {
       const expected =
-        "Would you please provide the character name you would like me to search for?";
+        "Would you please try the command again, and provide the character name you would like me to search for?";
       const message = buildMessageInt(baseCommand, "", "", botColor);
       message.reply = sandbox.stub();
       message.channel.send = sandbox.stub().rejects();

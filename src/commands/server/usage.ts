@@ -17,7 +17,7 @@ const usage: CommandInt = {
       // Check if the command name is empty.
       if (!guild || !command) {
         await message.reply(
-          "Would you please provide the command you want me to look for?"
+          "Would you please try the command again, and provide the command you want me to look for?"
         );
 
         return;

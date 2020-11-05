@@ -5,7 +5,7 @@ import { MessageEmbed } from "discord.js";
 
 const HPSPECLL_CONSTANT = {
   error: {
-    noName: "Would you please provide the spell you want me to search for?",
+    noName: "Would you please try the command again, and provide the spell you want me to search for?",
     notFound: "I am so sorry, but I could not find anything...",
     default: "I am so sorry, but I cannot do that at the moment.",
   },

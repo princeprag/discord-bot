@@ -16,7 +16,7 @@ const roll: CommandInt = {
       // Check if the num is valid.
       if (!num) {
         await message.reply(
-          "Would you please tell me what `num` die you want me to roll?"
+          "Would you please try the command again, and tell me what `num` die you want me to roll?"
         );
         return;
       }
@@ -24,7 +24,7 @@ const roll: CommandInt = {
       // Check if the num starts with `d`.
       if (!num.startsWith("d")) {
         await message.reply(
-          "Would you please be sure that your die value starts with `d`? For example, `d20` is a 20-sided die."
+          "Would you please try the command again, and be sure that your die value starts with `d`? For example, `d20` is a 20-sided die."
         );
         return;
       }

@@ -138,11 +138,11 @@ const config: CommandInt = {
               );
             } else if (channelType) {
               await message.reply(
-                "Would you please provide the channel you want me to use?"
+                "Would you please try the command again, and provide the channel you want me to use?"
               );
             } else {
               await message.reply(
-                "Would you please tell me if this is the `logs` or `welcomes` channel?"
+                "Would you please try the command again, and tell me if this is the `logs` or `welcomes` channel?"
               );
             }
 
@@ -199,11 +199,11 @@ const config: CommandInt = {
               );
             } else if (roleType) {
               await message.reply(
-                "Would you please provide the role you want me to use?"
+                "Would you please try the command again, and provide the role you want me to use?"
               );
             } else {
               await message.reply(
-                "Would you please tell me if this is the `restricted` or `moderator` role?"
+                "Would you please try the command again, and tell me if this is the `restricted` or `moderator` role?"
               );
             }
 
@@ -217,7 +217,7 @@ const config: CommandInt = {
             // Check if the new prefix does not exist.
             if (!newPrefix) {
               await message.reply(
-                "Would you please provide the new prefix you would like me to watch for?"
+                "Would you please try the command again, and provide the new prefix you would like me to watch for?"
               );
             } else {
               message.bot.prefix[guild.id] = newPrefix;

@@ -17,7 +17,7 @@ const http: CommandInt = {
       // Check if the status is not valid.
       if (!status) {
         await message.reply(
-          "Would you please provide the status code you want me to look for?"
+          "Would you please try the command again, and provide the status code you want me to look for?"
         );
 
         return;

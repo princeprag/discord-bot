@@ -21,7 +21,7 @@ const habitica: CommandInt = {
       // Check if the user id is not valid.
       if (!id) {
         await message.reply(
-          "Would you please provide the user id you want me to search for?"
+          "Would you please try the command again, and provide the user id you want me to search for?"
         );
         return;
       }

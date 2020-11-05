@@ -19,7 +19,7 @@ const profile: CommandInt = {
       // Check if there is no website provided
       if (!website) {
         await message.reply(
-          "Would you please provide the website you want me to search for?"
+          "Would you please try the command again, and provide the website you want me to search for?"
         );
         return;
       }
@@ -52,7 +52,7 @@ const profile: CommandInt = {
       // Check if the user is empty.
       if (!user) {
         await message.reply(
-          "Would you please provide the user you want me to search for?"
+          "Would you please try the command again, and provide the user you want me to search for?"
         );
         return;
       }

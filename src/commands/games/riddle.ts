@@ -29,7 +29,7 @@ const riddle: CommandInt = {
     // Check if the action is not `start`, `request` and `solve`.
     if (action !== "start" && action !== "request" && action !== "solve") {
       await message.reply(
-        "Would you please tell me if you want to `start`, `request`, or `solve` a riddle?"
+        "Would you please try the command again, and tell me if you want to `start`, `request`, or `solve` a riddle?"
       );
 
       return;
@@ -74,7 +74,9 @@ const riddle: CommandInt = {
 
         // Check if the riddle id is empty.
         if (!id) {
-          await message.reply("Would you please provide the riddle id?");
+          await message.reply(
+            "Would you please try the command again, and provide the riddle id?"
+          );
           return;
         }
 
@@ -99,7 +101,9 @@ const riddle: CommandInt = {
 
           // Check if the riddle answer is empty.
           if (!answer) {
-            await message.reply("Would you please provide the riddle answer?");
+            await message.reply(
+              "Would you please try the command again, and provide the riddle answer?"
+            );
             return;
           }
 
