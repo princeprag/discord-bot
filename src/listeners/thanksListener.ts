@@ -1,5 +1,4 @@
 import ListenerInt from "@Interfaces/ListenerInt";
-import SettingModel from "@Models/SettingModel";
 import ToggleModel from "@Models/ToggleModel";
 import botMentionListener from "./botMentionListener";
 
