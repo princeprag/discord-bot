@@ -19,7 +19,7 @@ const thanksListener: ListenerInt = {
         key: "thanks",
       });
 
-      if (!shouldThank?.value) {
+      if (!shouldThank || !shouldThank.value) {
         await botMentionListener.run(message);
         return;
       }
