@@ -15,6 +15,9 @@ describe("command: games/hp/hpsort", () => {
     sandbox = createSandbox();
     sandbox.replace(console, "log", sandbox.stub());
     sandbox.replace(console, "error", sandbox.stub());
+    sandbox.replace(process, "env", {
+      HP_KEY: "",
+    });
   });
   afterEach(() => {
     sandbox.restore();
@@ -45,8 +48,12 @@ describe("command: games/hp/hpsort", () => {
 
       await cmd.run(message);
 
-      expect(get.firstCall).to.be.calledWith("https://www.potterapi.com/v1/sortingHat")
-      expect(get.secondCall).to.be.calledWith("https://www.potterapi.com/v1/houses?key=")
+      expect(get.firstCall).to.be.calledWith(
+        "https://www.potterapi.com/v1/sortingHat"
+      );
+      expect(get.secondCall).to.be.calledWith(
+        "https://www.potterapi.com/v1/houses?key="
+      );
       expect(message.reply).calledWith(expected);
     });
   });
@@ -65,8 +72,12 @@ describe("command: games/hp/hpsort", () => {
 
       await cmd.run(message);
 
-      expect(get.firstCall).to.be.calledWith("https://www.potterapi.com/v1/sortingHat")
-      expect(get.secondCall).to.be.calledWith("https://www.potterapi.com/v1/houses?key=")
+      expect(get.firstCall).to.be.calledWith(
+        "https://www.potterapi.com/v1/sortingHat"
+      );
+      expect(get.secondCall).to.be.calledWith(
+        "https://www.potterapi.com/v1/houses?key="
+      );
       expect(message.reply).calledWith(expected);
     });
   });
@@ -81,7 +92,7 @@ describe("command: games/hp/hpsort", () => {
         values: ["quack", "quack", "honk"],
         colors: ["yellow", "green", "tie-die"],
         houseGhost: "daffy duck",
-      }
+      };
       const housesReturn = { data: [houseDetails] };
       const message = buildMessageInt(baseCommand, "", "", botColor);
       message.channel.send = sandbox.stub().resolves();
@@ -103,8 +114,12 @@ describe("command: games/hp/hpsort", () => {
 
       await cmd.run(message);
 
-      expect(get.firstCall).to.be.calledWith("https://www.potterapi.com/v1/sortingHat")
-      expect(get.secondCall).to.be.calledWith("https://www.potterapi.com/v1/houses?key=")
+      expect(get.firstCall).to.be.calledWith(
+        "https://www.potterapi.com/v1/sortingHat"
+      );
+      expect(get.secondCall).to.be.calledWith(
+        "https://www.potterapi.com/v1/houses?key="
+      );
       expect(message.channel.send).calledWith(expected);
     });
   });

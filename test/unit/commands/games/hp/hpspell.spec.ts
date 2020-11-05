@@ -15,6 +15,9 @@ describe("command: games/hp/hpspell", () => {
     sandbox = createSandbox();
     sandbox.replace(console, "log", sandbox.stub());
     sandbox.replace(console, "error", sandbox.stub());
+    sandbox.replace(process, "env", {
+      HP_KEY: "",
+    });
   });
   afterEach(() => {
     sandbox.restore();
