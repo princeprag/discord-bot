@@ -2,6 +2,7 @@ import { Client, Guild, MessageEmbed, Role, TextChannel } from "discord.js";
 import ClientInt from "@Interfaces/ClientInt";
 import SettingModel, { SettingModelInt } from "@Models/SettingModel";
 import { sleep } from "./extendsMessageToMessageInt";
+import ToggleModel, { ToggleModelInt } from "@Models/ToggleModel";
 
 /**
  * See `./src/interfaces/ClientInt.ts` for more information.
@@ -39,6 +40,30 @@ async function setSetting(
 }
 
 /**
+ * See `./src/interfaces/ClientInt.ts` for more information
+ *
+ * @async
+ * @function
+ * @param {string} key
+ * @param {string} guild
+ * @param {boolean} value
+ * @returns { Promise<ToggleModelInt> }
+ */
+async function setToggle(
+  server_id: string,
+  key: string,
+  value: boolean
+): Promise<ToggleModelInt> {
+  const toggle = await ToggleModel.findOne({ server_id, key });
+  if (!toggle) {
+    return await ToggleModel.create({ server_id, key, value });
+  }
+  toggle.value = value;
+  await toggle.save();
+  return toggle;
+}
+
+/**
  * See `./src/interfaces/ClientInt.ts` for more information.
  *
  * @async
@@ -60,7 +85,7 @@ async function getTextChannelFromSettings(
   // Check if the channel exists in the database.
   if (channelSetting) {
     // Get the channel from the server channels.
-    const channel = guild.channels.cache.get(channelSetting.value);
+    const channel = guild.channels.cache.get(channelSetting.value as string);
 
     // Check if the channel exists and is a text channel.
     if (channel && channel.type === "text") {
@@ -93,7 +118,7 @@ async function getRoleFromSettings(
   // Check if the role exists in the database.
   if (roleSetting) {
     // Get the role from the server roles.
-    const role = guild.roles.cache.get(roleSetting.value);
+    const role = guild.roles.cache.get(roleSetting.value as string);
 
     // Check if the role exists.
     if (role) {
@@ -102,6 +127,29 @@ async function getRoleFromSettings(
   }
 
   return null;
+}
+
+/**
+ * See `./src/interfaces/ClientInt.ts` for more information.
+ *
+ * @async
+ * @function
+ * @param {string} key
+ * @param {Guild} guild
+ * @returns {Promise<boolean | null> }
+ */
+async function getToggleFromSettings(
+  key: string,
+  guild: Guild
+): Promise<boolean | null> {
+  const toggleSetting = await ToggleModel.findOne({
+    server_id: guild.id,
+    key,
+  });
+  if (!toggleSetting) {
+    return false;
+  }
+  return toggleSetting.value;
 }
 
 /**
@@ -157,9 +205,11 @@ function extendsClientToClientInt(client: Client): ClientInt {
   new_client.color = "#AB47E6";
 
   new_client.setSetting = setSetting;
+  new_client.setToggle = setToggle;
   new_client.getTextChannelFromSettings = getTextChannelFromSettings;
   new_client.getRoleFromSettings = getRoleFromSettings;
   new_client.sendMessageToLogsChannel = sendMessageToLogsChannel;
+  new_client.getToggleFromSettings = getToggleFromSettings;
 
   return new_client;
 }

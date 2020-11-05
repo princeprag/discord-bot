@@ -1,4 +1,5 @@
 import { SettingModelInt } from "@Models/SettingModel";
+import { ToggleModelInt } from "@Models/ToggleModel";
 import { Client, Guild, MessageEmbed, Role, TextChannel } from "discord.js";
 import CommandInt from "./CommandInt";
 import ListenerInt from "./ListenerInt";
@@ -51,7 +52,7 @@ interface ClientInt extends Client {
    * @function
    * @param { string } server_id
    * @param { string } key
-   * @param { string } value
+   * @param { string | boolean } value
    * @returns { Promise<SettingModelInt> }
    */
   setSetting(
@@ -59,6 +60,22 @@ interface ClientInt extends Client {
     key: string,
     value: string
   ): Promise<SettingModelInt>;
+
+  /**
+   * Update a toggle in the database or create one if not exists.
+   *
+   * @async
+   * @function
+   * @param {string} key
+   * @param {string} guild
+   * @param {boolean} value
+   * @returns { Promise<ToggleModelInt> }
+   */
+  setToggle(
+    server_id: string,
+    key: string,
+    value: boolean
+  ): Promise<ToggleModelInt>;
 
   /**
    * Get a text channel from the database by its id.
@@ -84,6 +101,17 @@ interface ClientInt extends Client {
    * @returns { Promise<Role | null> }
    */
   getRoleFromSettings(key: string, guild: Guild): Promise<Role | null>;
+
+  /**
+   * Get a toggle from the database by its id.
+   *
+   * @async
+   * @function
+   * @param {string} key
+   * @param {Guild} guild
+   * @returns {Promise<boolean | null> }
+   */
+  getToggleFromSettings(key: string, guild: Guild): Promise<boolean | null>;
 
   /**
    * Send a message to the logs channel.
