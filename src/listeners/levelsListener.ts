@@ -1,5 +1,6 @@
 import ListenerInt from "@Interfaces/ListenerInt";
 import SettingModel from "@Models/SettingModel";
+import ToggleModel from "@Models/ToggleModel";
 import UserModel, { UserIntRequired } from "@Models/UserModel";
 
 /**
@@ -21,7 +22,7 @@ const levelListener: ListenerInt = {
       }
 
       // Get levels toggle from database
-      const shouldLevel = await SettingModel.findOne({
+      const shouldLevel = await ToggleModel.findOne({
         server_id: guild.id,
         key: "levels",
       });
