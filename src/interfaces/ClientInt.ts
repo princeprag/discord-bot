@@ -52,7 +52,7 @@ interface ClientInt extends Client {
    * @function
    * @param { string } server_id
    * @param { string } key
-   * @param { string | boolean } value
+   * @param { string } value
    * @returns { Promise<SettingModelInt> }
    */
   setSetting(
@@ -66,9 +66,9 @@ interface ClientInt extends Client {
    *
    * @async
    * @function
-   * @param {string} key
-   * @param {string} guild
-   * @param {boolean} value
+   * @param { string } key
+   * @param { string } guild
+   * @param { boolean } value
    * @returns { Promise<ToggleModelInt> }
    */
   setToggle(
