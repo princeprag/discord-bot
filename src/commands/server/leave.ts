@@ -1,6 +1,5 @@
 import CommandInt from "@Interfaces/CommandInt";
-import { Guild, MessageEmbed } from "discord.js";
-import server from "./server";
+import { MessageEmbed } from "discord.js";
 
 const leave: CommandInt = {
   name: "leave",
