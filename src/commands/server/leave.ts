@@ -1,5 +1,4 @@
 import CommandInt from "@Interfaces/CommandInt";
-import { MessageEmbed } from "discord.js";
 
 const leave: CommandInt = {
   name: "leave",
