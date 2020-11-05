@@ -118,7 +118,7 @@ async function getRoleFromSettings(
   // Check if the role exists in the database.
   if (roleSetting) {
     // Get the role from the server roles.
-    const role = guild.roles.cache.get(roleSetting.value as string);
+    const role = guild.roles.cache.get(roleSetting.value);
 
     // Check if the role exists.
     if (role) {
