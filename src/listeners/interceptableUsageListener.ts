@@ -8,7 +8,7 @@ class InterceptableUsageListener extends BaseInterceptableListener {
     super(usageListener.name, usageListener.description);
   }
   action(message: MessageInt): Promise<void> {
-    return usageListener.run(message);
+    return usageListener.run(message) as Promise<void>;
   }
 }
 

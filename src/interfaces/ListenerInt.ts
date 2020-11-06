@@ -25,7 +25,7 @@ interface ListenerInt {
    * @param { MessageInt } message
    * @returns { Promise<void> }
    */
-  run(message: MessageInt): Promise<void>;
+  run(message: MessageInt): Promise<void> | Promise<boolean>;
 }
 
 export default ListenerInt;

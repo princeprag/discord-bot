@@ -47,7 +47,11 @@ async function onMessage(
     return;
   }
   // Get the heartsListener, levelsListener and usageListener from the listeners list.
-  const { heartsListener, thanksListener } = client.customListeners;
+  const {
+    heartsListener,
+    thanksListener,
+    blockedUserListener,
+  } = client.customListeners;
   const levelsListener = client.customListeners.interceptableLevelsListener;
   const usageListener = client.customListeners.interceptableUsageListener;
 
@@ -134,9 +138,7 @@ async function onMessage(
     channel.startTyping();
 
     // check for block
-    const blockCheck = await BlockedUserModel.findOne({
-      userId: message.author.id,
-    });
+    const blockCheck = await blockedUserListener.run(message);
     if (blockCheck) {
       //log it
       console.log("But they were blocked.");

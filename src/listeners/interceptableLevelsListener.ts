@@ -8,7 +8,7 @@ class InterceptableLevelsListener extends BaseInterceptableListener {
     super(levelsListener.name, levelsListener.description);
   }
   action(message: MessageInt): Promise<void> {
-    return levelsListener.run(message);
+    return levelsListener.run(message) as Promise<void>;
   }
 }
 
