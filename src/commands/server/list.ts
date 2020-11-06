@@ -24,7 +24,7 @@ const list: CommandInt = {
       }
 
       // counting variables
-      let serverList: string[] = [],
+      const serverList: string[] = [],
         ownerList: string[] = [];
       const ownerIds: string[] = [];
 
@@ -52,7 +52,7 @@ const list: CommandInt = {
 
           ownerList.push(`${guild.owner.user.username} (${guild.ownerID})`);
         } else {
-          ownerList.push('No owner');
+          ownerList.push("No owner");
         }
 
         //push owner ID to array
@@ -78,11 +78,17 @@ const list: CommandInt = {
 
       const pageCount = ~~(currentPage * serversPerPage);
 
-      const serverPage = serverList.slice(pageCount - serversPerPage, pageCount);
+      const serverPage = serverList.slice(
+        pageCount - serversPerPage,
+        pageCount
+      );
       const ownerPage = ownerList.slice(pageCount - serversPerPage, pageCount);
 
       serverPage.forEach((server, i) => {
-        serverEmbed.addField(`${pageCount - serversPerPage + i + 1}. ${server}`, ownerPage[i]);
+        serverEmbed.addField(
+          `${pageCount - serversPerPage + i + 1}. ${server}`,
+          ownerPage[i]
+        );
       });
 
       serverEmbed.setFooter(`Page ${currentPage} of ${totalPages}`);
