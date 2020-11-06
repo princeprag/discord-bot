@@ -1,4 +1,4 @@
-import { Message, MessageAttachment } from "discord.js";
+import { Message } from "discord.js";
 import SettingModel from "@Models/SettingModel";
 import MessageInt from "@Interfaces/MessageInt";
 import { prefix as defaultPrefix } from "../../default_config.json";
