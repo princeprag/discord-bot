@@ -1,6 +1,5 @@
 import CommandInt from "@Interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
-import { e } from "mathjs";
 
 const LISTENERS_CONSTANT = {
   title: "I am always listening...",
