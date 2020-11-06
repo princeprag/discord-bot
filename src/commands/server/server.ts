@@ -37,8 +37,11 @@ const server: CommandInt = {
         true
       );
 
+      // Fetch guild owner
+      const guildOwner = await guild.members.fetch(guild.ownerID);
+
       // Add the server owner to an embed field.
-      serverEmbed.addField("Owner", guild.owner, true);
+      serverEmbed.addField("Owner", guildOwner, true);
 
       // Add the server commands prefix to an embed field.
       serverEmbed.addField("Command prefix", prefix[guild.id], true);
@@ -46,17 +49,20 @@ const server: CommandInt = {
       // Add the server members count to an embed field.
       serverEmbed.addField("Member count", guild.memberCount, true);
 
+      // Fetch all members, map to array
+      const guildMembers = (await guild.members.fetch()).map((u) => u);
+
       // Add the server human members count to an embed field.
       serverEmbed.addField(
         "Human members",
-        guild.members.cache.filter((member) => !member.user.bot).size,
+        guildMembers.filter((member) => !member.user.bot).length,
         true
       );
 
       // Add the server bots count to an embed field.
       serverEmbed.addField(
         "Bot members",
-        guild.members.cache.filter((member) => member.user.bot).size,
+        guildMembers.filter((member) => member.user.bot).length,
         true
       );
 
@@ -65,23 +71,21 @@ const server: CommandInt = {
 
       // Get the online stats.
       const onlineStats = `🟢 ${
-        guild.members.cache.filter(
+        guildMembers.filter(
           (member) => member.user.presence.status === "online"
-        ).size
+        ).length
       } | 🟡 ${
-        guild.members.cache.filter(
-          (member) => member.user.presence.status === "idle"
-        ).size
+        guildMembers.filter((member) => member.user.presence.status === "idle")
+          .length
       } | 🔴 ${
-        guild.members.cache.filter(
-          (member) => member.user.presence.status === "dnd"
-        ).size
+        guildMembers.filter((member) => member.user.presence.status === "dnd")
+          .length
       } | ⚪ ${
-        guild.members.cache.filter(
+        guildMembers.filter(
           (member) =>
             member.user.presence.status === "offline" ||
             member.user.presence.status === "invisible"
-        ).size
+        ).length
       }`;
 
       // Add the server member status tracking to an embed field.
