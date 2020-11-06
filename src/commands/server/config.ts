@@ -9,7 +9,7 @@ const config: CommandInt = {
   parameters: [
     "`<?action (set/add/remove/toggle)>`: set a channel, role or the prefix to the bot server configuration, or add or remove an user to heart listener.",
     "`<?sub-action (channel/role/prefix/hearts/thanks/levels)>`: use this with `{@prefix}config <action>`",
-    "`<?type (logs/welcomes/restricted/moderator)>`: type of the channel or role, use this whit `{@prefix}config set channel <type>` or `{@prefix}config set role <type>`",
+    "`<?type (logs/welcomes/restricted/moderator/welcome-message)>`: type of the channel or role, use this whit `{@prefix}config set channel <type>` or `{@prefix}config set role <type>`",
     "`<?mention (role/channel)>`: channel or role mention, use this with `{@prefix}config set channel <type> <mention>` or `{@prefix}config set role <type> <mention>`",
     "`<?mention (user)>`: user mention, use this `{@prefix}config add hearts <mention>` or `{@prefix}config remove hearts <mention>`",
     "`<?prefix>`: the new prefix, use this with `{@prefix}config set prefix <prefix>`",
@@ -229,6 +229,19 @@ const config: CommandInt = {
             }
 
             return;
+          } else if (setType === "welcome-message") {
+            const welcomeMessage = commandArguments.join(" ");
+            if (welcomeMessage.length > 1000) {
+              await message.reply(
+                "Sorry, but that message is too long. Would you please try the command again with a shorter message?"
+              );
+              return;
+            }
+            await setSetting(guild.id, "welcome_message", welcomeMessage);
+            await message.reply(
+              "Okay, I have set your custom welcome message."
+            );
+            return;
           }
         } else {
           // Check if the set type is `hearts`.
@@ -405,7 +418,7 @@ const config: CommandInt = {
         "Thanks",
         `I will${
           shouldThank ? "" : " NOT"
-        } congratule users when another user thanks them`
+        } congratulate users when another user thanks them.`
       );
 
       //get the levels setting from the database
@@ -417,6 +430,20 @@ const config: CommandInt = {
         `I will${
           shouldLevel ? "" : " NOT"
         } give users experience points for being active.`
+      );
+
+      //get the custom welcome message from the database:
+      const activeWelcomeMessage = await SettingModel.findOne({
+        server_id: guild.id,
+        key: "welcome_message",
+      });
+
+      // Add welcome message status to embed
+      configEmbed.addField(
+        "Welcome Message",
+        activeWelcomeMessage
+          ? activeWelcomeMessage.value
+          : "Hello `{@username}`! Welcome to {@servername}! My name is Becca, and I am here to help!"
       );
 
       // Send the embed to the current channel.

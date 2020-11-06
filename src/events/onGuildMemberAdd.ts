@@ -42,7 +42,7 @@ async function onGuildMemberAdd(
 
   // Set a default welcome message.
   let welcomeMessage =
-    "Hello `{@username}`! Welcome to the {@servername} server! My name is Becca, and I am here to help!";
+    "Hello `{@username}`! Welcome to {@servername}! My name is Becca, and I am here to help!";
 
   // Get the custom welcome message from the database.
   const welcomeMessageSetting = await SettingModel.findOne({
