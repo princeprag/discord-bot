@@ -125,6 +125,12 @@ async function onMessage(
 
   // Check if the command exists.
   if (command) {
+    // Log the command usage.
+    console.log(
+      `${message.author.username} called the ${message.commandName} command in ${message.guild?.name}.`
+    );
+
+    // Simulate typing
     channel.startTyping();
 
     // check for block
@@ -132,6 +138,10 @@ async function onMessage(
       userId: message.author.id,
     });
     if (blockCheck) {
+      //log it
+      console.log("But they were blocked.");
+
+      // respond to blocked user
       await message.sleep(3000);
       channel.stopTyping();
       await message.channel.send(
