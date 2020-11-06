@@ -11,92 +11,67 @@ const user: CommandInt = {
     if (!guild || !member) {
       return;
     }
+    try {
+      // Check for user mention, fall back to author
+      const target = message.mentions.members?.first() || member;
 
-    // Send an advertisement to the action.
-    const botMessage = await channel.send(
-      "Wait! I need to make sure you are okay with this. This command will display some of your user information, like your username and account creation date. If you are okay with this, react with '✅'."
-    );
+      // Create a new empty embed.
+      const userEmbed = new MessageEmbed();
 
-    if (!botMessage.deleted) {
-      // Add the reactions.
-      await botMessage.react("❌");
-      await botMessage.react("✅");
+      // Add the light purple color.
+      userEmbed.setColor(bot.color);
 
-      try {
-        // Get the first reaction with `✅` or `❌` of the author.
-        const collector = await botMessage.awaitReactions(
-          (reaction, user) =>
-            ["✅", "❌"].includes(reaction.emoji.name) && user.id === author.id,
-          { max: 1, time: 10000, errors: ["time"] }
-        );
+      // Add the user name to the embed title.
+      userEmbed.setTitle(target.displayName);
 
-        // Get the first reaction from the reactions collector.
-        const reaction = collector.first();
+      // Add the user avatar to the embed thumbnail.
+      userEmbed.setThumbnail(target.user.displayAvatarURL({ dynamic: true }));
 
-        // Check if the reaction is valid and is `✅`.
-        if (!reaction || reaction.emoji.name !== "✅") {
-          await message.reply("Okay, I will hold off on that for now.");
-          return;
-        }
+      // Add the description.
+      userEmbed.setDescription(
+        `This is the information I could find on ${target.toString()}`
+      );
 
-        // Create a new empty embed.
-        const userEmbed = new MessageEmbed();
+      // Add the creation date to an embed field.
+      userEmbed.addField(
+        "Creation date",
+        new Date(target.user.createdTimestamp).toLocaleDateString(),
+        true
+      );
 
-        // Add the light purple color.
-        userEmbed.setColor(bot.color);
+      // Add the server join date to an embed field.
+      userEmbed.addField(
+        "Server join date",
+        new Date(target.joinedTimestamp || Date.now()).toLocaleDateString(),
+        true
+      );
 
-        // Add the user name to the embed title.
-        userEmbed.setTitle(member.displayName);
+      // Add an empty field.
+      userEmbed.addField("\u200b", "\u200b", true);
 
-        // Add the user avatar to the embed thumbnail.
-        userEmbed.setThumbnail(author.displayAvatarURL({ dynamic: true }));
+      // Add the user status to an embed field.
+      userEmbed.addField("Status", target.presence.status, true);
 
-        // Add the description.
-        userEmbed.setDescription(
-          `This is the information I could find on ${author.toString()}`
-        );
+      // Add the username to an embed field.
+      userEmbed.addField("Username", target.user.tag, true);
 
-        // Add the creation date to an embed field.
-        userEmbed.addField(
-          "Creation date",
-          new Date(author.createdTimestamp).toLocaleDateString(),
-          true
-        );
+      // Add an empty field.
+      userEmbed.addField("\u200b", "\u200b", true);
 
-        // Add the server join date to an embed field.
-        userEmbed.addField(
-          "Server join date",
-          new Date(member.joinedTimestamp || Date.now()).toLocaleDateString(),
-          true
-        );
+      // Add the user roles to an embed field.
+      userEmbed.addField(
+        "Roles",
+        target.roles.cache.map((role) => role.toString()).join(" ")
+      );
 
-        // Add an empty field.
-        userEmbed.addField("\u200b", "\u200b", true);
-
-        // Add the user status to an embed field.
-        userEmbed.addField("Status", author.presence.status, true);
-
-        // Add the username to an embed field.
-        userEmbed.addField("Username", author.tag, true);
-
-        // Add an empty field.
-        userEmbed.addField("\u200b", "\u200b", true);
-
-        // Add the user roles to an embed field.
-        userEmbed.addField(
-          "Roles",
-          member.roles.cache.map((role) => role.toString()).join(" ")
-        );
-
-        // Send the user embed to the current channel.
-        await channel.send(userEmbed);
-      } catch (error) {
-        console.log(
-          `${message.guild?.name} had the following error with the user command:`
-        );
-        console.log(error);
-        message.reply("I am so sorry, but I cannot do that at the moment.");
-      }
+      // Send the user embed to the current channel.
+      await channel.send(userEmbed);
+    } catch (error) {
+      console.log(
+        `${message.guild?.name} had the following error with the user command:`
+      );
+      console.log(error);
+      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };
