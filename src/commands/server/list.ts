@@ -52,7 +52,8 @@ const list: CommandInt = {
 
           ownerList.push(`${guild.owner.user.username} (${guild.ownerID})`);
         } else {
-          ownerList.push("No owner");
+          const targetUser = await bot.users.fetch(guild.ownerID);
+          ownerList.push(`${targetUser.username} (${guild.ownerID})`);
         }
 
         //push owner ID to array
