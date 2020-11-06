@@ -62,9 +62,7 @@ const thanksListener: ListenerInt = {
           replies.push("Thanking yourself seems a bit weird...");
           continue;
         }
-        replies.push(
-          `Nice work <@!${mention.id}>! Thank you for helping!`
-        );
+        replies.push(`Nice work <@!${mention.id}>! Thank you for helping!`);
       }
       //send single message with replies
       channel.startTyping();
