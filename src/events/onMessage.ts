@@ -46,7 +46,11 @@ async function onMessage(
     return;
   }
   // Get the heartsListener, levelsListener and usageListener from the listeners list.
-  const { heartsListener, thanksListener } = client.customListeners;
+  const {
+    heartsListener,
+    thanksListener,
+    blockedUserListener,
+  } = client.customListeners;
   const levelsListener = client.customListeners.interceptableLevelsListener;
   const usageListener = client.customListeners.interceptableUsageListener;
 
@@ -124,12 +128,36 @@ async function onMessage(
 
   // Check if the command exists.
   if (command) {
+    // Log the command usage.
+    console.log(
+      `${message.author.username} called the ${message.commandName} command in ${message.guild?.name}.`
+    );
+
+    // Simulate typing
     channel.startTyping();
+
+    // check for block
+    const blockCheck = await blockedUserListener.run(message);
+    if (blockCheck) {
+      //log it
+      console.log("But they were blocked.");
+
+      // respond to blocked user
+      await message.sleep(3000);
+      channel.stopTyping();
+      await message.channel.send(
+        "I am so sorry, but I am not allowed to help you."
+      );
+      return;
+    }
+
     // Check if the usage listener exists.
     if (usageListener) {
       // Execute the usage listener.
       await usageListener.run(message);
     }
+
+    // Respond to bot owner.
     if (message.author.id === process.env.OWNER_ID) {
       channel.stopTyping();
       await message.channel.send(
@@ -137,6 +165,8 @@ async function onMessage(
       );
       channel.startTyping();
     }
+
+    // End typing.
     await message.sleep(3000);
     channel.stopTyping();
 
