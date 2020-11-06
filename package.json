@@ -43,7 +43,7 @@
     "@Utils": "prod/src/utils"
   },
   "dependencies": {
-    "axios": "^0.20.0",
+    "axios": "^0.21.0",
     "discord.js": "^12.4.1",
     "mathjs": "^7.6.0",
     "module-alias": "^2.2.2",
