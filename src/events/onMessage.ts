@@ -1,9 +1,10 @@
-import { Message } from "discord.js";
+import { Message, MessageAttachment } from "discord.js";
 import SettingModel from "@Models/SettingModel";
 import MessageInt from "@Interfaces/MessageInt";
 import { prefix as defaultPrefix } from "../../default_config.json";
 import extendsMessageToMessageInt from "@Utils/extendsMessageToMessageInt";
 import ClientInt from "@Interfaces/ClientInt";
+import BlockedUserModel from "@Models/BlockedUserModel";
 
 /**
  * Execute when a user sends a message in a channel.
@@ -125,11 +126,27 @@ async function onMessage(
   // Check if the command exists.
   if (command) {
     channel.startTyping();
+
+    // check for block
+    const blockCheck = await BlockedUserModel.findOne({
+      userId: message.author.id,
+    });
+    if (blockCheck) {
+      await message.sleep(3000);
+      channel.stopTyping();
+      await message.channel.send(
+        "I am so sorry, but I am not allowed to help you."
+      );
+      return;
+    }
+
     // Check if the usage listener exists.
     if (usageListener) {
       // Execute the usage listener.
       await usageListener.run(message);
     }
+
+    // Respond to bot owner.
     if (message.author.id === process.env.OWNER_ID) {
       channel.stopTyping();
       await message.channel.send(
@@ -137,6 +154,8 @@ async function onMessage(
       );
       channel.startTyping();
     }
+
+    // End typing.
     await message.sleep(3000);
     channel.stopTyping();
 
