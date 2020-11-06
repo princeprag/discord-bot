@@ -4,7 +4,6 @@ import MessageInt from "@Interfaces/MessageInt";
 import { prefix as defaultPrefix } from "../../default_config.json";
 import extendsMessageToMessageInt from "@Utils/extendsMessageToMessageInt";
 import ClientInt from "@Interfaces/ClientInt";
-import BlockedUserModel from "@Models/BlockedUserModel";
 
 /**
  * Execute when a user sends a message in a channel.
