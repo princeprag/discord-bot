@@ -5,7 +5,7 @@ const user: CommandInt = {
   names: ["user", "userinfo", "me"],
   description: "Returns information on your account.",
   run: async (message) => {
-    const { author, bot, channel, guild, member } = message;
+    const { bot, channel, guild, member } = message;
 
     // Check if the current guild and the member are not valid.
     if (!guild || !member) {
