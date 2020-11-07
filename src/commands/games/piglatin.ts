@@ -3,7 +3,6 @@ import { MessageEmbed } from "discord.js";
 
 const translator = (str: string): string => {
   let end = false;
-  let i = 1;
   str = str.toLowerCase();
   const mainArray = str.split(" ");
   //split each word into array
@@ -14,6 +13,7 @@ const translator = (str: string): string => {
     for (let charPos = 0; charPos < strArray.length; charPos++) {
       if (strArray[charPos].match(/['".,!?]/)) {
         strArray.splice(charPos, 1);
+        charPos--;
       }
     }
     //word begins with vowel
@@ -22,11 +22,10 @@ const translator = (str: string): string => {
       strArray.push("a");
       strArray.push("y");
       mainArray[arrPos] = strArray.join("");
-      end = true;
       continue;
     }
     // word begins with consonant, contains vowel
-    for (i = 1; i < strArray.length; i++) {
+    for (let i = 1; i < strArray.length; i++) {
       if (strArray[i].match(/[aeiou]/)) {
         const pushString = strArray.splice(0, i).join("");
         strArray.push(pushString);
