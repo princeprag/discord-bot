@@ -7,15 +7,8 @@ const translator = (str: string): string => {
   const mainArray = str.split(" ");
   //split each word into array
   for (let arrPos = 0; arrPos < mainArray.length; arrPos++) {
-    const strArray = mainArray[arrPos].split("");
+    const strArray = mainArray[arrPos].replace(/['".,!?]/g, "").split("");
     end = false;
-    //strip punctuation
-    for (let charPos = 0; charPos < strArray.length; charPos++) {
-      if (strArray[charPos].match(/['".,!?]/)) {
-        strArray.splice(charPos, 1);
-        charPos--;
-      }
-    }
     //word begins with vowel
     if (strArray[0].match(/[aeiou]/)) {
       strArray.push("w");
