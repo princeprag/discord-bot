@@ -1,7 +1,6 @@
 import CommandInt from "@Interfaces/CommandInt";
 import ProfileModel, { ProfileModelInt } from "@Models/ProfileModel";
 import { MessageEmbed } from "discord.js";
-import { DefaultSerializer } from "v8";
 
 const generateProfile = (data: ProfileModelInt): MessageEmbed => {
   const embed = new MessageEmbed()
