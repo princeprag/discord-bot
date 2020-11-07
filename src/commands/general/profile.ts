@@ -1,6 +1,7 @@
 import CommandInt from "@Interfaces/CommandInt";
 import ProfileModel, { ProfileModelInt } from "@Models/ProfileModel";
 import { MessageEmbed } from "discord.js";
+import { DefaultSerializer } from "v8";
 
 const generateProfile = (data: ProfileModelInt): MessageEmbed => {
   const embed = new MessageEmbed()
@@ -30,7 +31,7 @@ const profile: CommandInt = {
     "Returns an embed containing the user's stored profile data. Optionally get <?user>'s profile, or optionally add <?url> to your data for <?website>",
   parameters: [
     "`<?website>`: name of the website to add",
-    "`<?url>`: URL to add for website",
+    "`<?url>`: URL to add for website, or `remove` to delete the website",
     "`<?user>`: username or ID of the user to find",
   ],
   run: async (message) => {
@@ -75,7 +76,9 @@ const profile: CommandInt = {
 
       if (!profileWebsites.includes(website.toLowerCase())) {
         await message.reply(
-          `${website} is not a supported website to add. I can currently add: ${profileWebsites.toString()}`
+          `${website} is not a supported website to add. I can currently add: ${profileWebsites.join(
+            "-"
+          )}`
         );
         return;
       }
@@ -85,6 +88,23 @@ const profile: CommandInt = {
         await message.reply(
           `Would you please try the command again, and provide the URL you would like me to add for your ${website}?`
         );
+        return;
+      }
+      if (url === "remove") {
+        const data = await ProfileModel.findOne({ userId: author.id });
+        if (!data) {
+          await message.reply(
+            "I am so sorry, but you do not have a profile set up yet."
+          );
+          return;
+        }
+        const target = data.profiles.findIndex((el) => el.website === website);
+        data.profiles.splice(target, 1);
+        await data.save();
+        await channel.send(
+          `Okay, I have removed ${website} from your profile. Here is what you have now:`
+        );
+        await channel.send(generateProfile(data));
         return;
       }
       if (!url.startsWith("http")) {
@@ -110,7 +130,7 @@ const profile: CommandInt = {
       addData.profiles.push({ website, url });
       await addData.save();
       await message.reply(
-        `Okay, I have set your ${website} to ${url}. Here is your profile:`
+        `Okay, I have set your ${website} to <${url}>. Here is your profile:`
       );
       await channel.send(generateProfile(addData));
     } catch (error) {
