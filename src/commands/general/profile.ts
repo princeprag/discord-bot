@@ -103,7 +103,7 @@ const profile: CommandInt = {
         await channel.send(
           `Okay, I have removed ${website} from your profile. Here is what you have now:`
         );
-        await channel.send(generateProfile(data));
+        await channel.send(generateProfile(data).setColor(bot.color));
         return;
       }
       if (!url.startsWith("http")) {
@@ -131,7 +131,7 @@ const profile: CommandInt = {
       await message.reply(
         `Okay, I have set your ${website} to <${url}>. Here is your profile:`
       );
-      await channel.send(generateProfile(addData));
+      await channel.send(generateProfile(addData).setColor(bot.color));
     } catch (error) {
       console.log(
         `${message.guild?.name} had the following error with the profile command:`
