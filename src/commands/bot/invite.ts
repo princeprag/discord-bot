@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js";
 const INVITE_CONSTANTS = {
   title: "Bot invitation",
   description:
-    "Thank you for your desire to allow me in your server. Here is an [invite link](https://discord.com/api/oauth2/authorize?client_id=716707753090875473&permissions=268511254&scope=bot) - please click to add me!.",
+    "Thank you for your desire to allow me in your server. Here is an [invite link](https://discord.com/api/oauth2/authorize?client_id=716707753090875473&permissions=268527702&scope=bot) - please click to add me!.",
   footer: "I feel so happy! 💜",
 };
 

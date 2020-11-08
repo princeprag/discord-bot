@@ -16,7 +16,7 @@ const search: CommandInt = {
       // Check if the query is empty.
       if (!query || !query.length) {
         await message.reply(
-          "Would you please provide the term you want me to search for?"
+          "Would you please try the command again, and provide the term you want me to search for?"
         );
         return;
       }

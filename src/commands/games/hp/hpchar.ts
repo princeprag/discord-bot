@@ -3,6 +3,43 @@ import HpCharInt from "@Interfaces/commands/hp/HpCharInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 
+const HPCHAR_CONSTANT = {
+  error: {
+    default: "I am so sorry, but I cannot do that at the moment.",
+    missingName:
+      "Would you please try the command again, and provide the character name you would like me to search for?",
+    noData: "I am so sorry, but I could not find anything...",
+  },
+  data: {
+    role: {
+      fieldName: "Role",
+      fieldDefault: "No record found.",
+    },
+    school: {
+      fieldName: "School",
+      fieldDefault: "Not a student.",
+    },
+    house: {
+      fieldName: "House",
+      fieldDefault: "Not a Hogwarts student.",
+    },
+    wand: {
+      fieldName: "Wand",
+      fieldDefault: "Not a wand-wielder.",
+    },
+    blood: {
+      fieldName: "Blood?",
+    },
+    species: {
+      fieldName: "Species",
+    },
+    patronus: {
+      fieldName: "Patronus",
+      fieldDefault: "Not a wizard.",
+    },
+  },
+};
+
 const hpchar: CommandInt = {
   name: "hpchar",
   description:
@@ -17,9 +54,7 @@ const hpchar: CommandInt = {
 
       //check for query
       if (!characterName) {
-        await message.reply(
-          "Would you please provide the character name you would like me to search for?"
-        );
+        await message.reply(HPCHAR_CONSTANT.error.missingName);
         return;
       }
       // Get the character information from the Harry Potter API.
@@ -29,7 +64,7 @@ const hpchar: CommandInt = {
 
       // Check if the first element exists.
       if (!data.data.length || !data.data[0]) {
-        await message.reply("I am so sorry, but I could not find anything...");
+        await message.reply(HPCHAR_CONSTANT.error.noData);
         return;
       }
 
@@ -54,25 +89,40 @@ const hpchar: CommandInt = {
       hpEmbed.setTitle(name);
 
       // Add the character role to an embed field.
-      hpEmbed.addField("Role", role || "No record found.");
+      hpEmbed.addField(
+        HPCHAR_CONSTANT.data.role.fieldName,
+        role || HPCHAR_CONSTANT.data.role.fieldDefault
+      );
 
       // Add the character school to an embed field.
-      hpEmbed.addField("School", school || "Not a student.");
+      hpEmbed.addField(
+        HPCHAR_CONSTANT.data.school.fieldName,
+        school || HPCHAR_CONSTANT.data.school.fieldDefault
+      );
 
       // Add the character house to an embed field.
-      hpEmbed.addField("House", house || "Not a Hogwarts student.");
+      hpEmbed.addField(
+        HPCHAR_CONSTANT.data.house.fieldName,
+        house || HPCHAR_CONSTANT.data.house.fieldDefault
+      );
 
       // Add the character wand to an embed field.
-      hpEmbed.addField("Wand", wand || "Not a wand-wielder.");
+      hpEmbed.addField(
+        HPCHAR_CONSTANT.data.wand.fieldName,
+        wand || HPCHAR_CONSTANT.data.wand.fieldDefault
+      );
 
       // Add the character blood to an embed field.
-      hpEmbed.addField("Blood?", bloodStatus);
+      hpEmbed.addField(HPCHAR_CONSTANT.data.blood.fieldName, bloodStatus);
 
       // Add the character species to an embed field.
-      hpEmbed.addField("Species", species);
+      hpEmbed.addField(HPCHAR_CONSTANT.data.species.fieldName, species);
 
       // Add the character patronus to an embed field.
-      hpEmbed.addField("Patronus", patronus || "Not a wizard.");
+      hpEmbed.addField(
+        HPCHAR_CONSTANT.data.patronus.fieldName,
+        patronus || HPCHAR_CONSTANT.data.patronus.fieldDefault
+      );
 
       // Send the hp embed to the current channel.
       await channel.send(hpEmbed);
@@ -81,7 +131,7 @@ const hpchar: CommandInt = {
         `${message.guild?.name} had the following error with the hpchar command:`
       );
       console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
+      message.reply(HPCHAR_CONSTANT.error.default);
     }
   },
 };

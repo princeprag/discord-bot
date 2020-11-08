@@ -40,7 +40,7 @@ const ban: CommandInt = {
       // Check if the user mention is valid.
       if (!userToBanMention || !userToBanMentioned || !mentions.members) {
         await message.reply(
-          "Would you please provide the user you want me to ban?"
+          "Would you please try the command again, and provide the user you want me to ban?"
         );
         return;
       }
@@ -68,7 +68,7 @@ const ban: CommandInt = {
       // Check if the member mention exists.
       if (!memberToBanMentioned) {
         await message.reply(
-          "Would you please provide the user you want me to ban?"
+          "Would you please try the command again, and provide the user you want me to ban?"
         );
         return;
       }

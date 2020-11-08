@@ -42,7 +42,11 @@ export async function botConnect(): Promise<void> {
   }
 
   // Create a new Discord bot object.
-  const client: ClientInt = extendsClientToClientInt(new Client());
+  const client: ClientInt = extendsClientToClientInt(
+    new Client({
+      partials: ["USER"],
+    })
+  );
 
   // Add the bot version to the bot client.
   client.version = version;

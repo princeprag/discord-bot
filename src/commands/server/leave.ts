@@ -7,7 +7,7 @@ const leave: CommandInt = {
   parameters: ["<?serverID>: the ID of the server to leave"],
   run: async (message) => {
     try {
-      const { author, bot, channel, commandArguments } = message;
+      const { author, bot, commandArguments } = message;
 
       const { guilds } = bot;
 
@@ -23,20 +23,11 @@ const leave: CommandInt = {
       // Get the next argument as the server id.
       const serverID = commandArguments.shift();
 
-      // Check if the server id is empty.
+      // Check if the server id is empty - return list of servers.
       if (!serverID || !serverID.length) {
-        let count = 0;
-        await channel.send(
-          `**Available servers:**\r\n${guilds.cache
-            .map(
-              (guild) =>
-                `**${++count}.** ${guild.id} - ${guild.name} - Owned by ${
-                  guild.owner?.user.username
-                } (${guild.ownerID})`
-            )
-            .join("\r\n")}`
+        await message.reply(
+          "Would you please try the command again, and provide the server ID you wish for me to leave?"
         );
-
         return;
       }
 

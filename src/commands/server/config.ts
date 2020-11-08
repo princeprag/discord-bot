@@ -7,9 +7,9 @@ const config: CommandInt = {
   description:
     "Returns the bot configuration for this server. (The parameters are only for server administrators)",
   parameters: [
-    "`<?action (set/add/remove)>`: set a channel, role or the prefix to the bot server configuration, or add or remove an user to heart listener.",
-    "`<?sub-action (channel/role/prefix/hearts)>`: use this with `{@prefix}config <action>`",
-    "`<?type (logs/welcomes/restricted/moderator)>`: type of the channel or role, use this whit `{@prefix}config set channel <type>` or `{@prefix}config set role <type>`",
+    "`<?action (set/add/remove/toggle)>`: set a channel, role or the prefix to the bot server configuration, or add or remove an user to heart listener.",
+    "`<?sub-action (channel/role/prefix/hearts/thanks/levels)>`: use this with `{@prefix}config <action>`",
+    "`<?type (logs/welcomes/restricted/moderator/welcome-message)>`: type of the channel or role, use this whit `{@prefix}config set channel <type>` or `{@prefix}config set role <type>`",
     "`<?mention (role/channel)>`: channel or role mention, use this with `{@prefix}config set channel <type> <mention>` or `{@prefix}config set role <type> <mention>`",
     "`<?mention (user)>`: user mention, use this `{@prefix}config add hearts <mention>` or `{@prefix}config remove hearts <mention>`",
     "`<?prefix>`: the new prefix, use this with `{@prefix}config set prefix <prefix>`",
@@ -34,8 +34,10 @@ const config: CommandInt = {
       // Get `getTextChannelFromSettings`, the prefix and `setSetting` from the bot client.
       const {
         getTextChannelFromSettings,
+        getToggleFromSettings,
         prefix,
         setSetting,
+        setToggle,
         getRoleFromSettings,
       } = bot;
 
@@ -46,7 +48,8 @@ const config: CommandInt = {
       if (
         configType === "set" ||
         configType === "add" ||
-        configType === "remove"
+        configType === "remove" ||
+        configType === "toggle"
       ) {
         // Check if the author has the administrator permission.
         //NOTE: nhcarrigan hard-coded for development purposes.
@@ -63,7 +66,22 @@ const config: CommandInt = {
         // Get the next argument as the set type.
         const setType = commandArguments.shift();
 
-        if (configType === "set") {
+        if (configType === "toggle") {
+          if (setType === "thanks" || setType === "levels") {
+            const toggleSetting = await getToggleFromSettings(setType, guild);
+            await setToggle(guild.id, setType, !toggleSetting);
+            await message.reply(
+              `I have turned the ${setType} feature ${
+                !toggleSetting ? "on" : "off"
+              }`
+            );
+            return;
+          }
+          await message.reply(
+            `I am so sorry, but ${setType} is not a valid option to toggle.`
+          );
+          return;
+        } else if (configType === "set") {
           // Check if the set type is `channel`.
           if (setType === "channel") {
             // Get the next argument as the channel type.
@@ -120,11 +138,11 @@ const config: CommandInt = {
               );
             } else if (channelType) {
               await message.reply(
-                "Would you please provide the channel you want me to use?"
+                "Would you please try the command again, and provide the channel you want me to use?"
               );
             } else {
               await message.reply(
-                "Would you please tell me if this is the `logs` or `welcomes` channel?"
+                "Would you please try the command again, and tell me if this is the `logs` or `welcomes` channel?"
               );
             }
 
@@ -181,11 +199,11 @@ const config: CommandInt = {
               );
             } else if (roleType) {
               await message.reply(
-                "Would you please provide the role you want me to use?"
+                "Would you please try the command again, and provide the role you want me to use?"
               );
             } else {
               await message.reply(
-                "Would you please tell me if this is the `restricted` or `moderator` role?"
+                "Would you please try the command again, and tell me if this is the `restricted` or `moderator` role?"
               );
             }
 
@@ -199,7 +217,7 @@ const config: CommandInt = {
             // Check if the new prefix does not exist.
             if (!newPrefix) {
               await message.reply(
-                "Would you please provide the new prefix you would like me to watch for?"
+                "Would you please try the command again, and provide the new prefix you would like me to watch for?"
               );
             } else {
               message.bot.prefix[guild.id] = newPrefix;
@@ -210,6 +228,19 @@ const config: CommandInt = {
               );
             }
 
+            return;
+          } else if (setType === "welcome-message") {
+            const welcomeMessage = commandArguments.join(" ");
+            if (welcomeMessage.length > 1000) {
+              await message.reply(
+                "Sorry, but that message is too long. Would you please try the command again with a shorter message?"
+              );
+              return;
+            }
+            await setSetting(guild.id, "welcome_message", welcomeMessage);
+            await message.reply(
+              "Okay, I have set your custom welcome message."
+            );
             return;
           }
         } else {
@@ -378,6 +409,43 @@ const config: CommandInt = {
               prefix[guild.id]
             }config set role moderator @role\`.`
       );
+
+      // Get the thanks setting from the database
+      const shouldThank = await getToggleFromSettings("thanks", guild);
+
+      // Add the thanks setting to an embed field.
+      configEmbed.addField(
+        "Thanks",
+        `I will${
+          shouldThank ? "" : " NOT"
+        } congratulate users when another user thanks them.`
+      );
+
+      //get the levels setting from the database
+      const shouldLevel = await getToggleFromSettings("levels", guild);
+
+      // Add the levels setting to an embed field.
+      configEmbed.addField(
+        "Levels",
+        `I will${
+          shouldLevel ? "" : " NOT"
+        } give users experience points for being active.`
+      );
+
+      //get the custom welcome message from the database:
+      const activeWelcomeMessage = await SettingModel.findOne({
+        server_id: guild.id,
+        key: "welcome_message",
+      });
+
+      // Add welcome message status to embed
+      configEmbed.addField(
+        "Welcome Message",
+        activeWelcomeMessage
+          ? activeWelcomeMessage.value
+          : "Hello `{@username}`! Welcome to {@servername}! My name is Becca, and I am here to help!"
+      );
+
       // Send the embed to the current channel.
       await channel.send(configEmbed);
     } catch (error) {

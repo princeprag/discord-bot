@@ -40,7 +40,7 @@ const warn: CommandInt = {
       // Check if the user mention is valid.
       if (!userToWarnMention || !userToWarnMentioned || !mentions.members) {
         await message.reply(
-          "Would you please provide the user you want me to warn?"
+          "Would you please try the command again, and provide the user you want me to warn?"
         );
         return;
       }
@@ -68,7 +68,7 @@ const warn: CommandInt = {
       // Check if the member mention exists.
       if (!memberToWarnMentioned) {
         await message.reply(
-          "Would you please provide the user you want me to warn?"
+          "Would you please try the command again, and provide the user you want me to warn?"
         );
         return;
       }

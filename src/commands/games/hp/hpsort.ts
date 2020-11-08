@@ -3,6 +3,39 @@ import HpHouseInt from "@Interfaces/commands/hp/HpHouseInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 
+const HPSORT_CONSTANT = {
+  error: {
+    default: "I am so sorry, but I cannot do that at the moment.",
+    noData: "I am so sorry, but I could not find anything...",
+  },
+  title: "The sorting hat has spoken!",
+  description: (houseName: string): string => {
+    return `You have been placed in House ${houseName}!`;
+  },
+  fields: {
+    mascot: {
+      fieldName: "House mascot",
+    },
+    headOfHouse: {
+      fieldName: "Head of house",
+    },
+    founder: {
+      fieldName: "House founder",
+    },
+    values: {
+      fieldName: "Values",
+      transform: (data: string[]): string => data.join(", "),
+    },
+    colors: {
+      fieldName: "Colours",
+      transform: (data: string[]): string => data.join(", "),
+    },
+    houseGhost: {
+      fieldName: "House ghost",
+    },
+  },
+};
+
 const hpsort: CommandInt = {
   name: "hpsort",
   description: "Sorts you into a Hogwarts house.",
@@ -14,22 +47,22 @@ const hpsort: CommandInt = {
       const sort = await axios.get("https://www.potterapi.com/v1/sortingHat");
 
       // Get the house data from the Harry Potter API.
-      const house = await axios.get<HpHouseInt[]>(
+      const houses = await axios.get<HpHouseInt[]>(
         `https://www.potterapi.com/v1/houses?key=${process.env.HP_KEY}`
       );
 
       // Check if the houses are valid.
-      if (!house.data.length || !house.data[0]) {
-        await message.reply("I am so sorry, but I could not find anything...");
+      if (!houses.data.length || !houses.data[0]) {
+        await message.reply(HPSORT_CONSTANT.error.noData);
         return;
       }
 
       // Get the sort house.
-      const targetHouse = house.data.find((el) => el.name === sort.data);
+      const targetHouse = houses.data.find((house) => house.name === sort.data);
 
       // Check if the target house is valid.
       if (!targetHouse) {
-        await message.reply("I am so sorry, but I could not find anything...");
+        await message.reply(HPSORT_CONSTANT.error.noData);
         return;
       }
 
@@ -50,28 +83,40 @@ const hpsort: CommandInt = {
       houseEmbed.setColor(bot.color);
 
       // Add the title.
-      houseEmbed.setTitle("The sorting hat has spoken!");
+      houseEmbed.setTitle(HPSORT_CONSTANT.title);
 
       // Add the house name to the embed description.
-      houseEmbed.setDescription(`You have been placed in House ${name}!`);
+      houseEmbed.setDescription(HPSORT_CONSTANT.description(name));
 
       // Add the house mascot to an embed field.
-      houseEmbed.addField("House mascot", mascot);
+      houseEmbed.addField(HPSORT_CONSTANT.fields.mascot.fieldName, mascot);
 
       // Add the head of house to an embed field.
-      houseEmbed.addField("Head of house", headOfHouse);
+      houseEmbed.addField(
+        HPSORT_CONSTANT.fields.headOfHouse.fieldName,
+        headOfHouse
+      );
 
       // Add the house founder to an embed field.
-      houseEmbed.addField("House founder", founder);
+      houseEmbed.addField(HPSORT_CONSTANT.fields.founder.fieldName, founder);
 
       // Add the house values to an embed field.
-      houseEmbed.addField("Values", values.join(", "));
+      houseEmbed.addField(
+        HPSORT_CONSTANT.fields.values.fieldName,
+        HPSORT_CONSTANT.fields.values.transform(values)
+      );
 
       // Add the house colors to an embed field.
-      houseEmbed.addField("Colours", colors.join(", "));
+      houseEmbed.addField(
+        HPSORT_CONSTANT.fields.colors.fieldName,
+        HPSORT_CONSTANT.fields.colors.transform(colors)
+      );
 
       // Add the house ghost to an embed field.
-      houseEmbed.addField("House ghost", houseGhost);
+      houseEmbed.addField(
+        HPSORT_CONSTANT.fields.houseGhost.fieldName,
+        houseGhost
+      );
 
       // Send the embed to the current channel.
       await channel.send(houseEmbed);
@@ -80,7 +125,7 @@ const hpsort: CommandInt = {
         `${message.guild?.name} had the following error with the hpsort command:`
       );
       console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
+      message.reply(HPSORT_CONSTANT.error.default);
     }
   },
 };

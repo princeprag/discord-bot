@@ -3,6 +3,15 @@ import HpSpellInt from "@Interfaces/commands/hp/HpSpellInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 
+const HPSPECLL_CONSTANT = {
+  error: {
+    noName:
+      "Would you please try the command again, and provide the spell you want me to search for?",
+    notFound: "I am so sorry, but I could not find anything...",
+    default: "I am so sorry, but I cannot do that at the moment.",
+  },
+};
+
 const hpspell: CommandInt = {
   name: "hpspell",
   description: "Returns information on the <name> spell.",
@@ -18,9 +27,7 @@ const hpspell: CommandInt = {
 
       // check if query is empty
       if (!name) {
-        await message.reply(
-          "Would you please provide the spell you want me to search for?"
-        );
+        await message.reply(HPSPECLL_CONSTANT.error.noName);
         return;
       }
 
@@ -36,12 +43,13 @@ const hpspell: CommandInt = {
 
       // Check if the name is `random`.
       if (name.toLowerCase() === "random") {
-        targetSpell = data.data[~~(Math.random() * data.data.length - 1)];
+        const spellIndex = Math.floor(Math.random() * data.data.length);
+        targetSpell = data.data[spellIndex];
       }
 
       // Check if the target spell is not valid.
       if (!targetSpell) {
-        await message.reply("I am so sorry, but I could not find anything...");
+        await message.reply(HPSPECLL_CONSTANT.error.notFound);
         return;
       }
 
@@ -60,7 +68,7 @@ const hpspell: CommandInt = {
         `${message.guild?.name} had the following error with the hpspell command:`
       );
       console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
+      message.reply(HPSPECLL_CONSTANT.error.default);
     }
   },
 };

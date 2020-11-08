@@ -1,4 +1,5 @@
 import ListenerInt from "@Interfaces/ListenerInt";
+import ToggleModel from "@Models/ToggleModel";
 import UserModel, { UserIntRequired } from "@Models/UserModel";
 
 /**
@@ -16,6 +17,17 @@ const levelListener: ListenerInt = {
 
       // Check if the author is not a bot and the guild is valid.
       if (author.bot || !guild) {
+        return;
+      }
+
+      // Get levels toggle from database
+      const shouldLevel = await ToggleModel.findOne({
+        server_id: guild.id,
+        key: "levels",
+      });
+
+      // If levels is off, return
+      if (!shouldLevel || !shouldLevel.value) {
         return;
       }
 

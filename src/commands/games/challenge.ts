@@ -70,7 +70,9 @@ const challenge: CommandInt = {
 
         // Check if the id is not valid.
         if (!id) {
-          await message.reply("Would you please enter the challenge id?");
+          await message.reply(
+            "Would you please try the command again, and enter the challenge id?"
+          );
           return;
         }
 
@@ -108,7 +110,9 @@ const challenge: CommandInt = {
 
           // Check if the answer is not valid.
           if (!answer) {
-            await message.reply("Would you please enter the challenge answer?");
+            await message.reply(
+              "Would you please try the command again, and enter the challenge answer?"
+            );
 
             return;
           }

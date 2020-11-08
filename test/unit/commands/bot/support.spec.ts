@@ -4,7 +4,7 @@ import { createSandbox, SinonStub } from "sinon";
 import cmd from "@Commands/bot/support";
 import { buildMessageInt } from "../../../testSetup";
 
-describe("command: report", () => {
+describe("command: support", () => {
   let sandbox;
   const testPrefix = "☂";
   const botColor = "7B25AA";
@@ -23,7 +23,7 @@ describe("command: report", () => {
     {
       name: "description",
       value:
-        "I am sorry if I couldn't explain things well enough. You can join my [support server](https://discord.gg/PHqDbkg) for some additional assistance.",
+        "I am sorry if I couldn't explain things well enough. You can join my [support server](https://discord.gg/PHqDbkg) or check my [documentation page](https://www.nhcarrigan.com/BeccaBot-documentation/) for some additional assistance.",
     },
   ].forEach(({ name, value }) => {
     it(`should set ${name} appropriately`, async () => {
@@ -38,8 +38,8 @@ describe("command: report", () => {
   });
 
   context("when command followed by extra text", () => {
-    const inviteWithExtra = `${baseCommand} hello world`;
     it("should call send", async () => {
+      const inviteWithExtra = `${baseCommand} hello world`;
       const message = buildMessageInt(inviteWithExtra, "", "", botColor);
       const send: SinonStub = sandbox.stub();
       message.channel.send = send;

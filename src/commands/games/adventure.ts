@@ -106,7 +106,9 @@ const adventure: CommandInt = {
 
         // Check if the room is not valid.
         if (!room) {
-          await message.reply("Would you please enter the room id?");
+          await message.reply(
+            "Would you please try the command again, and enter the room id?"
+          );
           return;
         }
 
@@ -115,7 +117,9 @@ const adventure: CommandInt = {
 
         // Check if the direction is not valid.
         if (!direction) {
-          await message.reply("Would you please enter the direction?");
+          await message.reply(
+            "Would you please try the command again, and enter the direction?"
+          );
           return;
         }
 

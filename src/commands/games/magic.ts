@@ -17,7 +17,7 @@ const magic: CommandInt = {
       // Check if the query is empty.
       if (!query) {
         await message.reply(
-          "Would you please tell me the card name you want me to search for?"
+          "Would you please try the command again, and tell me the card name you want me to search for?"
         );
         return;
       }

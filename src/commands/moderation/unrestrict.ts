@@ -58,7 +58,7 @@ const unrestrict: CommandInt = {
         !mentions.members
       ) {
         await message.reply(
-          "Would you please provide the user you want me to unrestrict?"
+          "Would you please try the command again, and provide the user you want me to unrestrict?"
         );
         return;
       }
@@ -86,7 +86,7 @@ const unrestrict: CommandInt = {
       // Check if the member mention exists.
       if (!memberToUnrestrictMentioned) {
         await message.reply(
-          "Would you please provide the user you want me to unrestrict?"
+          "Would you please try the command again, and provide the user you want me to unrestrict?"
         );
         return;
       }
