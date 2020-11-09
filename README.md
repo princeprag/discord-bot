@@ -6,8 +6,7 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-[![Coverage Status](https://coveralls.io/repos/github/nhcarrigan/BeccaBot/badge.svg?branch=main)](https://coveralls.io/github/nhcarrigan/BeccaBot?branch=main)
-[![License: GPL-3.0](https://img.shields.io/github/license/nhcarrigan/BeccaBot?color=purple)](https://opensource.org/licenses/MIT)
+[![License: Hippocratic-2.1](https://img.shields.io/github/license/nhcarrigan/BeccaBot?color=purple)](https://firstdonoharm.dev/)
 ![Version Status](https://img.shields.io/github/package-json/v/nhcarrigan/BeccaBot/main)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=nhcarrigan/BeccaBot)](https://dependabot.com)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/nhcarrigan/BeccaBot.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nhcarrigan/BeccaBot/alerts/)
@@ -16,7 +15,7 @@
 [![Pull Requests](https://img.shields.io/github/issues-pr/nhcarrigan/BeccaBot)](https://github.com/nhcarrigan/BeccaBot/pulls)
 [![Discord](https://img.shields.io/discord/710307364556767283)](https://discord.gg/PHqDbkg)
 
-Welcome to the repository for my discord bot, seen as `BeccaBot` in my [Discord Server](https://discord.gg/PHqDbkg).
+Welcome to the repository for `BeccaBot`!
 
 [You can invite this bot to your own server!](https://discord.com/oauth2/authorize?client_id=716707753090875473&scope=bot&permissions=268495990)
 
@@ -26,7 +25,7 @@ Are you interested in contributing to the development of this bot? We welcome al
 
 ## Feedback and Bugs
 
-If you have feedback or a bug report, please feel free to open a GitHub issue!
+If you have feedback or a bug report, please feel free to open a GitHub issue! You are also invited to join the [Discord support server](https://discord.gg/PHqDbkg).
 
 ## Code of Conduct
 
@@ -35,10 +34,6 @@ Before interacting with our community, please read our [Code of Conduct](CODE_OF
 ## Art Credits
 
 Credit for the bot's avatar and the support server art goes to [MoonlightKCreations](https://www.instagram.com/moonlightkcreations/). If you want to show some support, consider [commissioning her!](https://meitanteimoonlight.wixsite.com/moonlightkcreations/commissions).
-
-## Hacktoberfest 2020
-
-If you are participating in [Hacktoberfest](https://hacktoberfest.digitalocean.com/) this year, this repository is welcoming contributions!
 
 ## Contributors ✨
 
