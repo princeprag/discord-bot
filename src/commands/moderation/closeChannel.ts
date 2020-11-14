@@ -2,7 +2,7 @@ import CommandInt from "@Interfaces/CommandInt";
 import { MessageEmbed, TextChannel } from "discord.js";
 
 const closeChannel: CommandInt = {
-  names: ["close", "close-channel"],
+  name: "close",
   description:
     "Closes the channel - only available for automatically generated appeal channels. Only available to moderators.",
   run: async (message) => {

@@ -3,7 +3,7 @@ import CommandLogModel from "@Models/CommandLogModel";
 import { MessageEmbed } from "discord.js";
 
 const usage: CommandInt = {
-  names: ["usage", "commandusage"],
+  name: "usage",
   description:
     "Gets the number of times a particular **command** has been used.",
   parameters: ["`<command>`: name of the command to check"],

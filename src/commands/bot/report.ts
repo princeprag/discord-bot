@@ -8,7 +8,7 @@ const REPORT_CONSTANTS = {
 };
 
 const report: CommandInt = {
-  names: ["report", "bug", "issue"],
+  name: "bugreport",
   description: "Generates a link to the issues page",
   run: async (message) => {
     try {

@@ -2,7 +2,7 @@ import CommandInt from "@Interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
 
 const restrict: CommandInt = {
-  names: ["restrict", "mute"],
+  name: "restrict",
   description:
     "Restrict **user**'s access to the channel. Optionally provide a **reason**. Only available to server moderators. Bot will log this action if log channel is available.",
   parameters: [

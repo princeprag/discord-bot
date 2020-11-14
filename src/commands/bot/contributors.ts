@@ -4,7 +4,7 @@ import Axios from "axios";
 import { Message, MessageEmbed } from "discord.js";
 
 const contributors: CommandInt = {
-  names: ["contributors", "contribs"],
+  name: "contributors",
   description: "Lists the contributors for the bot.",
   run: async (message: Message) => {
     try {

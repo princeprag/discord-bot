@@ -84,10 +84,9 @@ describe("command: help", () => {
       {
         name: "Available commands",
         commands: {
-          mock: { names: ["mock", "can mock"] },
           fake: { name: "available to fake" },
         },
-        value: "`available to fake` | `mock/can mock`",
+        value: "`available to fake`",
       },
     ].forEach(({ name, commands, value }) => {
       it("should set available commands field approperiately", async () => {
