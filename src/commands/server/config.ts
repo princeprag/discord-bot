@@ -329,6 +329,10 @@ const config: CommandInt = {
                 return;
               }
             }
+            await message.reply(
+              `I am so sorry, but ${userMention} is not a valid user.`
+            );
+            return;
           }
         }
 
