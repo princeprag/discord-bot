@@ -22,8 +22,8 @@ describe("command: games/dnd/dnd", () => {
     message.guild.id = "gid";
     message.bot.commands = [
       { name: "dnd yo", description: "one" },
-      { names: ["larry", "moe", "curly"], description: "not one" },
-      { names: ["hi", "ho", "dnd silver"], description: "two" },
+      { name: "blah", description: "not one" },
+      { name: "dnd silver", description: "two" },
       { name: "dnd you", description: "three", parameters: [`<know>`] },
     ];
     message.bot.prefix = {
@@ -69,7 +69,7 @@ describe("command: games/dnd/dnd", () => {
       name: "fields",
       value: [
         { name: `${testPrefix}dnd yo`, value: "one", inline: false },
-        { name: `${testPrefix}hi/ho/dnd silver`, value: "two", inline: false },
+        { name: `${testPrefix}dnd silver`, value: "two", inline: false },
         { name: `${testPrefix}dnd you <know>`, value: "three", inline: false },
       ],
     },

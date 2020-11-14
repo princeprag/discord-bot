@@ -4,7 +4,7 @@ import axios from "axios";
 import { MessageEmbed } from "discord.js";
 
 const pokenum: CommandInt = {
-  names: ["pokenum", "pokemonnum"],
+  name: "pokenum",
   description: "Searches for the Pokemon by the **number** provided.",
   parameters: [
     "<number>: the number to search for; optionally use the string 'random' instead",

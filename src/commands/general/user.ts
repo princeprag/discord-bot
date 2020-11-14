@@ -2,7 +2,7 @@ import CommandInt from "@Interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
 
 const user: CommandInt = {
-  names: ["user", "userinfo", "me"],
+  name: "user",
   description: "Returns information on your account.",
   run: async (message) => {
     const { bot, channel, guild, member } = message;

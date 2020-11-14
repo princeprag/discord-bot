@@ -41,7 +41,7 @@ const translator = (str: string): string => {
 };
 
 const pigLatin: CommandInt = {
-  names: ["piglatin", "pig"],
+  name: "piglatin",
   description: "Translates the given string into piglatin.",
   run: async (message) => {
     try {

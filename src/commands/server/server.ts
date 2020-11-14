@@ -2,7 +2,7 @@ import CommandInt from "@Interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
 
 const server: CommandInt = {
-  names: ["server", "serverinfo"],
+  name: "server",
   description: "Gives the current status of this server.",
   run: async (message) => {
     try {

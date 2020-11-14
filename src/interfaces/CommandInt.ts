@@ -9,13 +9,7 @@ interface CommandInt {
    * Name of the command.
    * @property
    */
-  name?: string;
-
-  /**
-   * Multiple names for the command.
-   * @property
-   */
-  names?: string[];
+  name: string;
 
   /**
    * Description of the command.

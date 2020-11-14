@@ -98,11 +98,7 @@ const help: CommandInt = {
 
       // Get the unique commands.
       for (const command of new Set(Object.values(commands)).values()) {
-        if (command.name) {
-          commandNames.push(`\`${command.name}\``);
-        } else if (command.names) {
-          commandNames.push(`\`${command.names.join("/")}\``);
-        }
+        commandNames.push(`\`${command.name}\``);
       }
 
       // Add the available commands.

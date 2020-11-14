@@ -8,7 +8,7 @@ const LISTENERS_CONSTANT = {
 };
 
 const listeners: CommandInt = {
-  names: ["listen", "listeners"],
+  name: "listeners",
   description:
     "Provides information on the active listener features for the bot.",
   run: async (message) => {

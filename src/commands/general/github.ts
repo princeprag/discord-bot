@@ -4,7 +4,7 @@ import axios from "axios";
 import { MessageEmbed } from "discord.js";
 
 const github: CommandInt = {
-  names: ["github", "gh"],
+  name: "github",
   description: "Gets information on the <user>'s GitHub profile.",
   parameters: ["`<user>`: The user to look for on GitHub"],
   run: async (message) => {

@@ -15,7 +15,7 @@ const DNDCLASS_CONSTANT = {
 };
 
 const dndmon: CommandInt = {
-  names: ["dndmon", "dndmonster"],
+  name: "dndmon",
   description:
     "Gets information on the provided Dungeons and Dragons **monster**.",
   parameters: ["`<monster>`: the name of the monster to search"],

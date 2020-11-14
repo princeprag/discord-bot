@@ -33,10 +33,9 @@ const dnd: CommandInt = {
       const dndCommands: Set<CommandInt> = new Set(
         Object.values(commands).filter(
           (command) =>
-            (command.name &&
-              command.name.startsWith("dnd") &&
-              command.name !== "dnd") ||
-            (command.names && command.names.find((el) => el.startsWith("dnd")))
+            command.name &&
+            command.name.startsWith("dnd") &&
+            command.name !== "dnd"
         )
       );
 
@@ -45,9 +44,7 @@ const dnd: CommandInt = {
         for (const dndCommand of dndCommands) {
           dndEmbed.addField(
             prefix[guild.id] +
-              (dndCommand.names
-                ? dndCommand.names.join("/")
-                : dndCommand.name) +
+              dndCommand.name +
               (dndCommand.parameters
                 ? ` ${dndCommand.parameters
                     .join(" ")
