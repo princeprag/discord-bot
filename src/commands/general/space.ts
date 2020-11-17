@@ -39,7 +39,7 @@ const space: CommandInt = {
       const { code, copyright, date, explanation, hdurl, title } = space.data;
 
       // Check if the code is 404.
-      if (code === 404) {
+      if (code === 404 || !space.data) {
         // Add the error title to the embed title.
         spaceEmbed.setTitle("SPAAAAACE");
 
@@ -67,6 +67,8 @@ const space: CommandInt = {
 
       // Add the space image copyright to the embed footer.
       spaceEmbed.setFooter(`© ${copyright || "No copyright provided"}`);
+
+      await channel.send(spaceEmbed);
     } catch (error) {
       console.log(
         `${message.guild?.name} had the following error with the space command:`
