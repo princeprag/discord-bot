@@ -25,11 +25,15 @@ Are you interested in contributing to the development of this bot? We welcome al
 
 ## Feedback and Bugs
 
-If you have feedback or a bug report, please feel free to open a GitHub issue! You are also invited to join the [Discord support server](https://discord.gg/PHqDbkg).
+If you have feedback or a bug report, please feel free to open a GitHub issue! You are also invited to join the [BeccaBot support server](https://discord.gg/PHqDbkg).
 
 ## Code of Conduct
 
 Before interacting with our community, please read our [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## Questions
+
+If you have questions regarding contributing, using the project, or any related topic, you can reach us at our [Discord Server](https://discord.gg/yMBWgETTJu) where we would be happy to help!
 
 ## Art Credits
 

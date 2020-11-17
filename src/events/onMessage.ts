@@ -34,7 +34,7 @@ async function onMessage(
   // and send a warning to the current channel.
   if (channel.type === "dm" && author.id !== client.user?.id) {
     message.showTypingAndSendMessage(
-      "I am so sorry, but would you please talk to me in a server instead of a private message? If you need a server to join, check out my home! https://discord.gg/PHqDbkg",
+      "I am so sorry, but would you please talk to me in a server instead of a private message?\nIf you need a server to join, you are welcome to join my support server: https://discord.gg/PHqDbkg\nOr you can join my owner's server: https://discord.gg/yMBWgETTJu",
       3000
     );
 

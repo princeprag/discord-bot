@@ -2,7 +2,7 @@
   "name": "becca_bot",
   "author": "Nicholas Carrigan",
   "main": "./prod/src/main.js",
-  "version": "6.11.0",
+  "version": "6.11.1",
   "license": "Hippocratic 2.1",
   "private": false,
   "engines": {
@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/nhcarrigan/BeccaBot#readme",
   "scripts": {
-    "build": "rm -rf ./prod && tsc --sourcemap",
+    "prebuild": "rm -rf ./prod",
+    "build": "tsc",
     "precoverage": "rm -rf ./nyc_output",
     "coverage": "nyc npm run test:unit",
     "postcoverage": "nyc report --reporter=text-lcov > lcov.info",
