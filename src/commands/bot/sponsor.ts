@@ -6,7 +6,7 @@ const sponsor: CommandInt = {
   description: "Returns an embed containing the sponsor links.",
   run: async (message) => {
     try {
-      const { channel } = message;
+      const { channel, bot } = message;
 
       //create embed
       const sponsorEmbed = new MessageEmbed()
@@ -14,6 +14,7 @@ const sponsor: CommandInt = {
         .setDescription(
           "Are you interested in sponsoring my development and helping fund my improvement? Thank you very much! Words cannot express my appreciation!"
         )
+        .setColor(bot.color)
         .addFields(
           {
             name: "Monthly Donation",
