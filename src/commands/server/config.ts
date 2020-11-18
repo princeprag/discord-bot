@@ -208,6 +208,12 @@ const config: CommandInt = {
           );
           return;
         }
+        if (value.replace(/\D/g, "") === process.env.OWNER_ID) {
+          await message.reply(
+            "The love I have for my darling can never be stopped."
+          );
+          return;
+        }
       }
 
       // If setting hearts, check for valid user.
@@ -219,6 +225,12 @@ const config: CommandInt = {
         if (!success) {
           await message.reply(
             `I am so sorry, but ${value} does not appear to be a valid user.`
+          );
+          return;
+        }
+        if (value.replace(/\D/g, "") === process.env.OWNER_ID) {
+          await message.reply(
+            "Wait a moment! I will not refuse to help my beloved."
           );
           return;
         }
