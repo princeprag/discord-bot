@@ -31,10 +31,11 @@ const unrestrict: CommandInt = {
         return;
       }
 
+      const serverSettings = await bot.getSettings(guild.id, guild.name);
+
       // Get the restricted role.
-      const restrictedRole = await bot.getRoleFromSettings(
-        "restricted_role",
-        guild
+      const restrictedRole = guild.roles.cache.find(
+        (role) => role.id === serverSettings.restricted_role
       );
 
       // Check if the restricted role does not exist.

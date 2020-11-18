@@ -1,5 +1,4 @@
 import ListenerInt from "@Interfaces/ListenerInt";
-import SettingModel from "@Models/SettingModel";
 import { love as defaultLovesIDs } from "../../default_config.json";
 
 const heartReactions = ["❤️", "🧡", "💛", "💚", "💙", "💜", "🖤", "🤍"];
@@ -14,7 +13,7 @@ const heartsListener: ListenerInt = {
   run: async (message) => {
     try {
       // Get the current guild from the message.
-      const { author, guild } = message;
+      const { author, guild, bot } = message;
 
       // Check if is a valid guild.
       if (!guild) {
@@ -24,15 +23,14 @@ const heartsListener: ListenerInt = {
       // Set the default loves user ids.
       let authors = defaultLovesIDs;
 
+      const serverSetting = await bot.getSettings(guild.id, guild.name);
+
       // Get the custom loves from the database.
-      const lovesSetting = await SettingModel.findOne({
-        server_id: guild.id,
-        key: "loves",
-      });
+      const lovesSetting = serverSetting.hearts;
 
       // Check if the custom loves are valid.
       if (lovesSetting) {
-        authors = authors.concat(lovesSetting.value.split(","));
+        authors = authors.concat(lovesSetting);
       }
 
       // Check if the message author id is in the loves user ids.

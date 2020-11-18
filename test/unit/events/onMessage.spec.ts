@@ -7,7 +7,7 @@ import CommandInt from "@Interfaces/CommandInt";
 import ListenerInt from "@Interfaces/ListenerInt";
 import onMessage from "@Events/onMessage";
 import { getListeners } from "@Utils/readDirectory";
-import SettingModel from "@Models/SettingModel";
+import ServerModel from "@Models/ServerModel";
 
 describe("onMessage event", () => {
   const testPrefix = "☂";
@@ -29,7 +29,7 @@ describe("onMessage event", () => {
   beforeEach(() => {
     sandbox = createSandbox();
     sandbox.useFakeTimers();
-    sandbox.replace(SettingModel, "findOne", sandbox.stub().resolves());
+    sandbox.replace(ServerModel, "findOne", sandbox.stub().resolves());
   });
 
   afterEach(() => {

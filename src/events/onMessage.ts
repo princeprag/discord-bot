@@ -1,9 +1,9 @@
 import { Message } from "discord.js";
-import SettingModel from "@Models/SettingModel";
 import MessageInt from "@Interfaces/MessageInt";
 import { prefix as defaultPrefix } from "../../default_config.json";
 import extendsMessageToMessageInt from "@Utils/extendsMessageToMessageInt";
 import ClientInt from "@Interfaces/ClientInt";
+import ServerModel from "@Models/ServerModel";
 
 /**
  * Execute when a user sends a message in a channel.
@@ -96,14 +96,13 @@ async function onMessage(
 
   if (!prefix.length) {
     // Get the custom prefix for the server from the database.
-    const prefixSetting = await SettingModel.findOne({
-      server_id,
-      key: "prefix",
+    const prefixSetting = await ServerModel.findOne({
+      serverID: server_id,
     });
 
     // Check if the server has a custom prefix.
     if (prefixSetting) {
-      client.prefix[server_id] = prefixSetting.value;
+      client.prefix[server_id] = prefixSetting.prefix;
     } else {
       client.prefix[server_id] = defaultPrefix;
     }
