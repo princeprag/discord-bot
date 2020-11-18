@@ -1,7 +1,5 @@
 import ListenerInt from "@Interfaces/ListenerInt";
-import CommandLogModel, {
-  CommandLogIntRequired,
-} from "@Models/CommandLogModel";
+import CommandLogModel, { CommandLogInt } from "@Models/CommandLogModel";
 
 const usageListener: ListenerInt = {
   name: "Command uses",
@@ -18,24 +16,55 @@ const usageListener: ListenerInt = {
 
       // Get the command log.
       const commandLog = await CommandLogModel.findOne({
-        command: commandName,
-        server_id: guild.id,
+        commandName: commandName,
       });
 
       // Check if the command log does not exist and create one.
       if (!commandLog) {
-        await CommandLogModel.create<CommandLogIntRequired>({
-          command: commandName,
-          server_id: guild.id,
-          last_caller: author.username,
+        await CommandLogModel.create<CommandLogInt>({
+          commandName: commandName,
+          uses: 1,
+          lastUsed: new Date(Date.now()),
+          lastUser: author.username,
+          servers: [
+            {
+              serverID: guild.id,
+              serverName: guild.name,
+              serverUses: 1,
+              serverLastUsed: new Date(Date.now()),
+              serverLastUser: author.username,
+            },
+          ],
         });
 
         return;
       }
 
+      //increment global uses
       commandLog.uses += 1;
-      commandLog.last_called = Date.now();
-      commandLog.last_caller = author.username;
+
+      // get server and index from log
+      const server = commandLog.servers.find((s) => s.serverID === guild.id);
+
+      // if no, then add one
+      if (!server) {
+        commandLog.servers.push({
+          serverID: guild.id,
+          serverName: guild.name,
+          serverUses: 0,
+          serverLastUsed: new Date(Date.now()),
+          serverLastUser: author.username,
+        });
+        commandLog.markModified("servers");
+        await commandLog.save();
+        return;
+      }
+
+      server.serverUses++;
+      server.serverName = guild.name;
+      server.serverLastUsed = new Date(Date.now());
+      server.serverLastUser = author.username;
+      commandLog.markModified("servers");
 
       // Save the command log.
       await commandLog.save();

@@ -25,29 +25,49 @@ const usage: CommandInt = {
 
       // Get the command log from the database.
       const commandLog = await CommandLogModel.findOne({
-        command,
-        server_id: guild.id,
+        commandName: command,
       });
 
       // Check if the command log does not exist.
       if (!commandLog) {
         await message.reply(
-          "I am so sorry, but no one has used this command yet."
+          `I am so sorry, but no one has used the ${command} command yet.`
         );
 
         return;
       }
 
-      const { last_called, last_caller, uses } = commandLog;
+      const serverLog = commandLog.servers.find((s) => s.serverID === guild.id);
 
       // Send an embed message to the current channel.
       await channel.send(
         new MessageEmbed()
           .setColor(bot.color)
           .setTitle(bot.prefix[guild.id] + command)
-          .setDescription(`This command has been used ${uses} times!`)
-          .setFooter(
-            `The command was last called by ${last_caller} on ${last_called}`
+          .setDescription("Here's what I have for this command:")
+          .addFields(
+            {
+              name: "Global Usage",
+              value: commandLog
+                ? `This command has been used a total of ${
+                    commandLog.uses
+                  } times. It was last used by ${
+                    commandLog.lastUser
+                  } on ${commandLog.lastUsed.toLocaleDateString()}`
+                : "This command has not been used yet!",
+            },
+            {
+              name: "Server Usage",
+              value: serverLog
+                ? `This command has been used in ${
+                    serverLog.serverName
+                  } a total of ${
+                    serverLog.serverUses
+                  } times. It was last used by ${
+                    serverLog.serverLastUser
+                  } on ${serverLog.serverLastUsed.toLocaleDateString()}`
+                : `This command has not been used in ${guild.name} yet!`,
+            }
           )
       );
     } catch (error) {

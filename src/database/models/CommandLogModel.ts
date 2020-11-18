@@ -1,39 +1,25 @@
 import { Document, model, Schema } from "mongoose";
 
-export interface CommandLogIntOptional {
+export interface CommandLogInt extends Document {
+  commandName: string;
   uses: number;
-  last_called: number;
+  lastUsed: Date;
+  lastUser: string;
+  servers: {
+    serverID: string;
+    serverName: string;
+    serverUses: number;
+    serverLastUsed: Date;
+    serverLastUser: string;
+  }[];
 }
 
-export interface CommandLogIntRequired {
-  command: string;
-  server_id: string;
-  last_caller: string;
-}
-
-export interface CommandLogInt
-  extends Document,
-    CommandLogIntOptional,
-    CommandLogIntRequired {}
-
-const commandLog = new Schema({
-  command: String,
-  uses: {
-    type: Number,
-    default: 1,
-  },
-  server_id: {
-    type: String,
-    required: true,
-  },
-  last_called: {
-    type: Date,
-    default: Date.now,
-  },
-  last_caller: {
-    type: String,
-    required: true,
-  },
+export const CommandLog = new Schema({
+  commandName: String,
+  uses: Number,
+  lastUsed: Date,
+  lastUser: String,
+  servers: [Object],
 });
 
-export default model<CommandLogInt>("command_log", commandLog);
+export default model<CommandLogInt>("command_log", CommandLog);
