@@ -19,7 +19,10 @@ const config: CommandInt = {
         return;
       }
 
-      if (!member.hasPermission("MANAGE_GUILD")) {
+      if (
+        !member.hasPermission("MANAGE_GUILD") &&
+        member.id !== process.env.OWNER_ID
+      ) {
         await message.reply(
           `I am so sorry, but I can only perform this for moderators with the permission to manage the server.`
         );
@@ -45,7 +48,7 @@ const config: CommandInt = {
         configEmbed.addField(
           "Log channel",
           serverSettings.log_channel
-            ? `Moderation activity, such as kicks, bans, warnings, and deleted messages will go to the ${serverSettings.log_channel} channel.`
+            ? `Moderation activity, such as kicks, bans, warnings, and deleted messages will go to the <#${serverSettings.log_channel}> channel.`
             : `Please configure a logs channel using \`${
                 prefix[guild.id]
               }config set log_channel #channel)\`.`
@@ -55,7 +58,7 @@ const config: CommandInt = {
         configEmbed.addField(
           "Welcome Channel",
           serverSettings.welcome_channel
-            ? `Members will be welcomed (and member departures will be mentioned) in the ${serverSettings.welcome_channel} channel.`
+            ? `Members will be welcomed (and member departures will be mentioned) in the <#${serverSettings.welcome_channel}> channel.`
             : `Please configure a welcomes channel using \`${
                 prefix[guild.id]
               }config set welcome_channel #channel)\`.`
@@ -65,7 +68,7 @@ const config: CommandInt = {
         configEmbed.addField(
           "Restricted Role",
           serverSettings.restricted_role
-            ? `The restrict and unrestrict role for the server is ${serverSettings.restricted_role}`
+            ? `The restrict and unrestrict role for the server is <@&${serverSettings.restricted_role}>`
             : `Please configure a restrict role using \`${
                 prefix[guild.id]
               }config set restricted_role @role\`.`
@@ -75,7 +78,7 @@ const config: CommandInt = {
         configEmbed.addField(
           "Moderator Role",
           serverSettings.moderator_role
-            ? `The moderator role for the restrict command is ${serverSettings.moderator_role}`
+            ? `The moderator role for the restrict command is <@&${serverSettings.moderator_role}>`
             : `Please configure a moderator role using \`${
                 prefix[guild.id]
               }config set role moderator @role\`.`
@@ -102,27 +105,46 @@ const config: CommandInt = {
           "Welcome Message",
           serverSettings.custom_welcome
             ? serverSettings.custom_welcome
-            : "Hello `{@username}`! Welcome to {@servername}! My name is Becca, and I am here to help!"
+            : "Hello `{@username}`! Welcome to `{@servername}`! My name is Becca, and I am here to help!"
         );
 
         // Send the embed to the current channel.
         await channel.send(configEmbed);
+
+        // Create embed containing hearts users
+        const heartsEmbed = new MessageEmbed()
+          .setTitle("Hearts")
+          .setFooter("These users will receive my love!")
+          .setDescription(
+            serverSettings.hearts.map((el) => `<@!${el}>`).join(" | ") ||
+              "No one :("
+          );
+
+        // send hearts embed
+        await channel.send(heartsEmbed);
         return;
       }
+
+      // Check for valid type
       if (configType !== "set") {
         await message.reply(
           `I am so sorry, but ${configType} is not a valid action for me to take.`
         );
         return;
       }
+
+      // Get setting to set
       const key = commandArguments.shift();
 
+      // If no setting provided, end.
       if (!key) {
         await message.reply(
           "Would you please try the command again, and provide the setting you would like me to change?"
         );
         return;
       }
+
+      // If invalid setting provided, end.
       if (
         ![
           "prefix",
@@ -141,20 +163,82 @@ const config: CommandInt = {
         );
         return;
       }
+
+      // Get value for setting.
       const value = commandArguments.join(" ");
+
+      // If no value provided, end.
       if (!value) {
         await message.reply(
           "Would you please try the command again, and tell me the value you would like me to set?"
         );
         return;
       }
+
+      // If setting channel, check for valid channel.
+      if (key === "welcome_channel" || key === "log_channel") {
+        const success = guild.channels.cache.find(
+          (chan) => chan.id === value.replace(/\D/g, "")
+        );
+        if (!success) {
+          await message.reply(
+            `I am so sorry, but ${value} does not appear to be a valid channel.`
+          );
+          return;
+        }
+      }
+
+      // If setting role, check for valid role.
+      if (key === "restricted_role" || key === "moderator_role") {
+        const success = guild.roles.cache.find(
+          (role) => role.id === value.replace(/\D/g, "")
+        );
+        if (!success) {
+          await message.reply(
+            `I am so sorry, but ${value} does not appear to be a valid role.`
+          );
+          return;
+        }
+      }
+
+      // If setting hearts, check for valid user.
+      if (key === "hearts") {
+        const peeps = await guild.members.fetch();
+        const success = peeps.find(
+          (mem) => mem.id === value.replace(/\D/g, "")
+        );
+        if (!success) {
+          await message.reply(
+            `I am so sorry, but ${value} does not appear to be a valid user.`
+          );
+          return;
+        }
+      }
+
+      // If setting toggle, check for off/on.
+      if (key === "thanks" || key === "levels") {
+        if (value !== "on" && value !== "off") {
+          await message.reply(
+            `I am so sorry, but ${value} is not a valid option for ${key}. Please try again and tell me if you want ${key} to be turned \`on\` or \`off\`.`
+          );
+          return;
+        }
+      }
+
+      // Set client prefix.
       if (key === "prefix") {
         prefix[guild.id] = value;
       }
-      await setSetting(guild.id, guild.name, key, value);
+
+      // Save settings.
+      const newSettings = await setSetting(guild.id, guild.name, key, value);
+
+      // Send confirmation.F
       await channel.send(
         key === "hearts"
-          ? `Okay, I will give hearts to ${value}!`
+          ? !newSettings.hearts.includes(value.replace(/\D/g, ""))
+            ? `Okay, I will stop giving hearts to ${value}!`
+            : `Okay, I will give hearts to ${value}!`
           : `Okay, I have set ${key} to ${value}!`
       );
     } catch (error) {

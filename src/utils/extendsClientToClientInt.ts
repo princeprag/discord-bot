@@ -50,10 +50,16 @@ async function setSetting(
   }
 
   if (key === "hearts") {
-    server.hearts.push(value.replace(/\W/g, ""));
-    server.markModified("hearts");
+    if (server.hearts.includes(value.replace(/\D/g, ""))) {
+      const index = server.hearts.indexOf(value.replace(/\D/g, ""));
+      server.hearts.splice(index, 1);
+      server.markModified("hearts");
+    } else {
+      server.hearts.push(value.replace(/\D/g, ""));
+      server.markModified("hearts");
+    }
   } else if (key !== "custom_welcome") {
-    server[key] = value.replace(/\W/g, "");
+    server[key] = value.replace(/\D/g, "");
   } else {
     server[key] = value;
   }
