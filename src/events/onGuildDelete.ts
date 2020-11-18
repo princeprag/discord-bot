@@ -1,7 +1,6 @@
-import CommandLogModel from "@Models/CommandLogModel";
 import ServerModel from "@Models/ServerModel";
-import UserModel from "@Models/UserModel";
 import { Client, Guild, WebhookClient } from "discord.js";
+import LevelModel from "@Models/LevelModel";
 
 /**
  * Send a debug message when a guild has been deleted.
@@ -31,30 +30,11 @@ async function onGuildDelete(
         `${user.username} has left the ${name} server!`
       );
 
-      // Get the command logs of the server.
-      const commandLogs = await CommandLogModel.find({ server_id: id });
-
-      // Check if the server has command logs.
-      if (commandLogs.length) {
-        for await (const commandLog of commandLogs) {
-          // Delete the command log.
-          await CommandLogModel.findByIdAndDelete(commandLog._id);
-        }
-      }
-
-      // Get the settings of the server.
+      // Delete the server settings.
       await ServerModel.findOneAndDelete({ serverID: id });
 
       // Get the users of the server.
-      const users = await UserModel.find({ server_id: id });
-
-      // Check if the server has users.
-      if (users.length) {
-        for await (const user of users) {
-          // Delete the user.
-          await UserModel.findByIdAndDelete(user._id);
-        }
-      }
+      await LevelModel.findOneAndDelete({ serverID: id });
     }
   }
 }

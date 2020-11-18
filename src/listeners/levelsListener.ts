@@ -1,5 +1,5 @@
 import ListenerInt from "@Interfaces/ListenerInt";
-import UserModel, { UserIntRequired } from "@Models/UserModel";
+import LevelModel from "@Models/LevelModel";
 
 /**
  * Grants 1 to 5 experience points for each message you send, and you level up at every 100 experience points.
@@ -28,19 +28,40 @@ const levelListener: ListenerInt = {
         return;
       }
 
-      // Get the user from the database.
-      let user = await UserModel.findOne({
-        server_id: guild.id,
-        user_id: author.id,
-      });
+      // Get the server from the database.
+      const server = await LevelModel.findOne({ serverID: guild.id });
+
+      // if no server, create one.
+      if (!server) {
+        await LevelModel.create({
+          serverID: guild.id,
+          serverName: guild.name,
+          users: [
+            {
+              userID: author.id,
+              userName: author.username,
+              points: ~~(Math.random() * 5) + 1,
+              lastSeen: new Date(Date.now()),
+            },
+          ],
+        });
+        return;
+      }
+
+      // get the user from the server
+      const user = server.users.find((u) => u.userID === author.id);
 
       // Check if the user does not exist and create one.
       if (!user) {
-        user = await UserModel.create<UserIntRequired>({
-          name: author.username,
-          server_id: guild.id,
-          user_id: author.id,
+        server.users.push({
+          userID: author.id,
+          userName: author.username,
+          points: ~~(Math.random() * 5) + 1,
+          lastSeen: new Date(Date.now()),
         });
+        server.markModified("users");
+        await server.save();
+        return;
       }
 
       // Get the old user level.
@@ -56,10 +77,14 @@ const levelListener: ListenerInt = {
       const currentExp = user.points;
 
       // Change the user last seen.
-      user.last_seen = Date.now();
+      user.lastSeen = new Date(Date.now());
+
+      // update username
+      user.userName = author.username;
 
       // Save the points and last seen to the database.
-      await user.save();
+      server.markModified("users");
+      await server.save();
 
       if (newLevel < oldLevel) {
         const currentLevel = ~~(currentExp / 100);

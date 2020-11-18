@@ -2,7 +2,7 @@
   "name": "becca_bot",
   "author": "Nicholas Carrigan",
   "main": "./prod/src/main.js",
-  "version": "7.0.6",
+  "version": "7.0.7",
   "license": "Hippocratic 2.1",
   "private": false,
   "engines": {
