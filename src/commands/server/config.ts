@@ -19,6 +19,13 @@ const config: CommandInt = {
         return;
       }
 
+      if (!member.hasPermission("MANAGE_GUILD")) {
+        await message.reply(
+          `I am so sorry, but I can only perform this for moderators with the permission to manage the server.`
+        );
+        return;
+      }
+
       // Get `getTextChannelFromSettings`, the prefix and `setSetting` from the bot client.
       const { prefix, setSetting, getSettings } = bot;
 
