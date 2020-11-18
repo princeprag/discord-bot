@@ -58,7 +58,7 @@ async function setSetting(
       server.hearts.push(value.replace(/\D/g, ""));
       server.markModified("hearts");
     }
-  } else if (key !== "custom_welcome") {
+  } else if (key !== "custom_welcome" && key !== "prefix") {
     server[key] = value.replace(/\D/g, "");
   } else {
     server[key] = value;
