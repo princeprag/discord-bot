@@ -1,8 +1,7 @@
-import { Client, Guild, MessageEmbed, Role, TextChannel } from "discord.js";
+import { Client, Guild, MessageEmbed, TextChannel } from "discord.js";
 import ClientInt from "@Interfaces/ClientInt";
 import { sleep } from "./extendsMessageToMessageInt";
 import ServerModel, { ServerModelInt } from "@Models/ServerModel";
-import { Server } from "http";
 
 /**
  * See `./src/interfaces/ClientInt.ts` for more information.

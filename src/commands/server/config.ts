@@ -12,14 +12,7 @@ const config: CommandInt = {
   run: async (message) => {
     try {
       // Get the bot client, current channel, command arguments and current guild, mentions and member of the message.
-      const {
-        bot,
-        channel,
-        commandArguments,
-        guild,
-        mentions,
-        member,
-      } = message;
+      const { bot, channel, commandArguments, guild, member } = message;
 
       // Check if the guild and member are valid.
       if (!guild || !member) {

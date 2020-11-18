@@ -1,5 +1,5 @@
 import { ServerModelInt } from "@Models/ServerModel";
-import { Client, Guild, MessageEmbed, Role, TextChannel } from "discord.js";
+import { Client, Guild, MessageEmbed } from "discord.js";
 import CommandInt from "./CommandInt";
 import ListenerInt from "./ListenerInt";
 
