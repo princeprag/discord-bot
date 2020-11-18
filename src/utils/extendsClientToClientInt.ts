@@ -50,7 +50,7 @@ async function setSetting(
   }
 
   if (key === "hearts") {
-    server.hearts.push(value);
+    server.hearts.push(value.replace(/\W/g, ""));
     server.markModified("hearts");
   } else if (key !== "custom_welcome") {
     server[key] = value.replace(/\W/g, "");
