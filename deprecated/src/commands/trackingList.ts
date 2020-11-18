@@ -1,4 +1,7 @@
-import { TrackingOptOut, TrackingOptOutInt } from "@Models/TrackingOptOutModel";
+import {
+  TrackingOptOut,
+  TrackingOptOutInt,
+} from "../deprecated/TrackingOptOutModel";
 
 export let TRACKING_OPT_OUT: Array<string> = new Array<string>();
 

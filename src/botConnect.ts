@@ -1,7 +1,6 @@
 import "module-alias/register";
 import { Client, WebhookClient } from "discord.js";
 import connectDatabase from "@Database";
-import { loadCurrentTrackingOptOutList } from "@Utils/commands/trackingList";
 import ClientInt from "@Interfaces/ClientInt";
 import extendsClientToClientInt from "@Utils/extendsClientToClientInt";
 import { getCommands, getListeners } from "@Utils/readDirectory";
@@ -112,9 +111,7 @@ export async function botConnect(): Promise<void> {
   });
 
   // Connect to the MongoDB database.
-  await connectDatabase(debugChannelHook, client).then(
-    loadCurrentTrackingOptOutList
-  );
+  await connectDatabase(debugChannelHook, client);
 
   // Send a debug log before turn off the bot.
   process.once("beforeExit", () => {
