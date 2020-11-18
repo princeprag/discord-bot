@@ -51,7 +51,7 @@ const usageListener: ListenerInt = {
         commandLog.servers.push({
           serverID: guild.id,
           serverName: guild.name,
-          serverUses: 0,
+          serverUses: 1,
           serverLastUsed: new Date(Date.now()),
           serverLastUser: author.username,
         });
