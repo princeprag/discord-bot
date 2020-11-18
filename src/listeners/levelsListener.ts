@@ -12,7 +12,7 @@ const levelListener: ListenerInt = {
   run: async (message, config) => {
     try {
       // Get the author and current guild from the message.
-      const { author, guild, bot } = message;
+      const { author, guild } = message;
 
       // Check if the author is not a bot and the guild is valid.
       if (author.bot || !guild) {

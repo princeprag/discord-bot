@@ -13,7 +13,7 @@ const heartsListener: ListenerInt = {
   run: async (message, config) => {
     try {
       // Get the current guild from the message.
-      const { author, guild, bot } = message;
+      const { author, guild } = message;
 
       // Check if is a valid guild.
       if (!guild) {
