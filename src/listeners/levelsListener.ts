@@ -9,7 +9,7 @@ const levelListener: ListenerInt = {
   name: "Level up!",
   description:
     "Grants 1 to 5 experience points for each message you send, and you level up at every 100 experience points.",
-  run: async (message) => {
+  run: async (message, config) => {
     try {
       // Get the author and current guild from the message.
       const { author, guild, bot } = message;
@@ -19,9 +19,8 @@ const levelListener: ListenerInt = {
         return;
       }
 
-      const serverSettings = await bot.getSettings(guild.id, guild.name);
       // Get levels toggle from database
-      const shouldLevel = serverSettings.levels === "on";
+      const shouldLevel = config.levels === "on";
 
       // If levels is off, return
       if (!shouldLevel) {

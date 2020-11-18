@@ -9,7 +9,7 @@ const config: CommandInt = {
     "`<setting>` - The setting you would like to set. See the docs for available options.",
     "`<value>` - The value of that setting. See the docs for available options.",
   ],
-  run: async (message) => {
+  run: async (message, config) => {
     try {
       // Get the bot client, current channel, command arguments and current guild, mentions and member of the message.
       const { bot, channel, commandArguments, guild, member } = message;
@@ -30,7 +30,7 @@ const config: CommandInt = {
       }
 
       // Get `getTextChannelFromSettings`, the prefix and `setSetting` from the bot client.
-      const { prefix, setSetting, getSettings } = bot;
+      const { prefix, setSetting } = bot;
 
       // Get the next argument as the config type.
       const configType = commandArguments.shift();
@@ -42,13 +42,11 @@ const config: CommandInt = {
         // Add the title.
         configEmbed.setTitle("Here is my record for your server.");
 
-        const serverSettings = await getSettings(guild.id, guild.name);
-
         // Add the logs channel to an embed field.
         configEmbed.addField(
           "Log channel",
-          serverSettings.log_channel
-            ? `Moderation activity, such as kicks, bans, warnings, and deleted messages will go to the <#${serverSettings.log_channel}> channel.`
+          config.log_channel
+            ? `Moderation activity, such as kicks, bans, warnings, and deleted messages will go to the <#${config.log_channel}> channel.`
             : `Please configure a logs channel using \`${
                 prefix[guild.id]
               }config set log_channel #channel)\`.`
@@ -57,8 +55,8 @@ const config: CommandInt = {
         // Add the welcomes channel to an embed field.
         configEmbed.addField(
           "Welcome Channel",
-          serverSettings.welcome_channel
-            ? `Members will be welcomed (and member departures will be mentioned) in the <#${serverSettings.welcome_channel}> channel.`
+          config.welcome_channel
+            ? `Members will be welcomed (and member departures will be mentioned) in the <#${config.welcome_channel}> channel.`
             : `Please configure a welcomes channel using \`${
                 prefix[guild.id]
               }config set welcome_channel #channel)\`.`
@@ -67,8 +65,8 @@ const config: CommandInt = {
         // Add the restricted role to an embed field.
         configEmbed.addField(
           "Restricted Role",
-          serverSettings.restricted_role
-            ? `The restrict and unrestrict role for the server is <@&${serverSettings.restricted_role}>`
+          config.restricted_role
+            ? `The restrict and unrestrict role for the server is <@&${config.restricted_role}>`
             : `Please configure a restrict role using \`${
                 prefix[guild.id]
               }config set restricted_role @role\`.`
@@ -77,18 +75,18 @@ const config: CommandInt = {
         // Add the moderator role to an embed field.
         configEmbed.addField(
           "Moderator Role",
-          serverSettings.moderator_role
-            ? `The moderator role for the restrict command is <@&${serverSettings.moderator_role}>`
+          config.moderator_role
+            ? `The moderator role for the restrict command is <@&${config.moderator_role}>`
             : `Please configure a moderator role using \`${
                 prefix[guild.id]
-              }config set role moderator @role\`.`
+              }config set moderator_role @role\`.`
         );
 
         // Add the thanks setting to an embed field.
         configEmbed.addField(
           "Thanks",
           `I will${
-            serverSettings.thanks === "on" ? "" : " NOT"
+            config.thanks === "on" ? "" : " NOT"
           } congratulate users when another user thanks them.`
         );
 
@@ -96,15 +94,15 @@ const config: CommandInt = {
         configEmbed.addField(
           "Levels",
           `I will${
-            serverSettings.levels === "on" ? "" : " NOT"
+            config.levels === "on" ? "" : " NOT"
           } give users experience points for being active.`
         );
 
         // Add welcome message status to embed
         configEmbed.addField(
           "Welcome Message",
-          serverSettings.custom_welcome
-            ? serverSettings.custom_welcome
+          config.custom_welcome
+            ? config.custom_welcome
             : "Hello `{@username}`! Welcome to `{@servername}`! My name is Becca, and I am here to help!"
         );
 
@@ -116,12 +114,22 @@ const config: CommandInt = {
           .setTitle("Hearts")
           .setFooter("These users will receive my love!")
           .setDescription(
-            serverSettings.hearts.map((el) => `<@!${el}>`).join(" | ") ||
-              "No one :("
+            config.hearts.map((el) => `<@!${el}>`).join(" | ") || "No one :("
           );
 
         // send hearts embed
         await channel.send(heartsEmbed);
+
+        // Create embed containing blocked users
+        const blockedEmbed = new MessageEmbed()
+          .setTitle("Blocked")
+          .setFooter("These users will not receive my assistance.")
+          .setDescription(
+            config.blocked.map((el) => `<@!${el}>`).join(" | ") || "No one :)"
+          );
+
+        // send blocked embed
+        await channel.send(blockedEmbed);
         return;
       }
 
@@ -156,6 +164,7 @@ const config: CommandInt = {
           "moderator_role",
           "custom_welcome",
           "hearts",
+          "blocked",
         ].includes(key)
       ) {
         await message.reply(
@@ -202,7 +211,7 @@ const config: CommandInt = {
       }
 
       // If setting hearts, check for valid user.
-      if (key === "hearts") {
+      if (key === "hearts" || key === "blocked") {
         const peeps = await guild.members.fetch();
         const success = peeps.find(
           (mem) => mem.id === value.replace(/\D/g, "")
@@ -233,14 +242,29 @@ const config: CommandInt = {
       // Save settings.
       const newSettings = await setSetting(guild.id, guild.name, key, value);
 
-      // Send confirmation.F
-      await channel.send(
-        key === "hearts"
-          ? !newSettings.hearts.includes(value.replace(/\D/g, ""))
-            ? `Okay, I will stop giving hearts to ${value}!`
-            : `Okay, I will give hearts to ${value}!`
-          : `Okay, I have set ${key} to ${value}!`
-      );
+      // Set confirmation response
+      let confirmation = `Okay, I have set ${key} to ${value}`;
+
+      // Handle hearts
+      if (key === "hearts") {
+        if (!newSettings.hearts.includes(value.replace(/\D/g, ""))) {
+          confirmation = `Okay, I will stop giving hearts to ${value}!`;
+        } else {
+          confirmation = `Okay, I will give hearts to ${value}!`;
+        }
+      }
+
+      // Handle blocked
+      if (key === "blocked") {
+        if (!newSettings.blocked.includes(value.replace(/\D/g, ""))) {
+          confirmation = `Okay, I will resume helping ${value}!`;
+        } else {
+          confirmation = `Okay, I will stop helping ${value}!`;
+        }
+      }
+
+      // Send confirmation.
+      await channel.send(confirmation);
     } catch (error) {
       console.log(
         `${message.guild?.name} had the following error with the config command:`

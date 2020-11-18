@@ -9,7 +9,7 @@ const unrestrict: CommandInt = {
     "`<user>`: @name of the user to restore.",
     "`<?reason>`: reason for restoring the user.",
   ],
-  run: async (message) => {
+  run: async (message, config) => {
     try {
       const {
         author,
@@ -31,11 +31,9 @@ const unrestrict: CommandInt = {
         return;
       }
 
-      const serverSettings = await bot.getSettings(guild.id, guild.name);
-
       // Get the restricted role.
       const restrictedRole = guild.roles.cache.find(
-        (role) => role.id === serverSettings.restricted_role
+        (role) => role.id === config.restricted_role
       );
 
       // Check if the restricted role does not exist.

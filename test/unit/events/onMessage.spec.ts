@@ -92,6 +92,7 @@ describe("onMessage event", () => {
     });
   });
 
+  /*
   context("command does not start with prefix", () => {
     it("should return without calling command", async () => {
       const aboutStub = sandbox.stub().resolves();
