@@ -1,5 +1,4 @@
 import ListenerInt from "@Interfaces/ListenerInt";
-import ToggleModel from "@Models/ToggleModel";
 import UserModel, { UserIntRequired } from "@Models/UserModel";
 
 /**
@@ -13,21 +12,19 @@ const levelListener: ListenerInt = {
   run: async (message) => {
     try {
       // Get the author and current guild from the message.
-      const { author, guild } = message;
+      const { author, guild, bot } = message;
 
       // Check if the author is not a bot and the guild is valid.
       if (author.bot || !guild) {
         return;
       }
 
+      const serverSettings = await bot.getSettings(guild.id, guild.name);
       // Get levels toggle from database
-      const shouldLevel = await ToggleModel.findOne({
-        server_id: guild.id,
-        key: "levels",
-      });
+      const shouldLevel = serverSettings.levels === "on";
 
       // If levels is off, return
-      if (!shouldLevel || !shouldLevel.value) {
+      if (!shouldLevel) {
         return;
       }
 
@@ -55,7 +52,7 @@ const levelListener: ListenerInt = {
       // Get the new user level.
       const newLevel = user.points % 100;
 
-      // Get the current experiencie.
+      // Get the current experience
       const currentExp = user.points;
 
       // Change the user last seen.

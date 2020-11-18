@@ -1,7 +1,11 @@
 import ClientInt from "@Interfaces/ClientInt";
-import { GuildMember, MessageEmbed, PartialGuildMember } from "discord.js";
+import {
+  GuildMember,
+  MessageEmbed,
+  PartialGuildMember,
+  TextChannel,
+} from "discord.js";
 import { sleep } from "@Utils/extendsMessageToMessageInt";
-import SettingModel from "@Models/SettingModel";
 
 /**
  * Send a message when a new user join to the server,
@@ -29,10 +33,11 @@ async function onGuildMemberAdd(
     return;
   }
 
+  const serverSettings = await client.getSettings(guild.id, guild.name);
+
   // Get the welcomes channel from the database.
-  const welcomesChannel = await client.getTextChannelFromSettings(
-    "join_leave_channel",
-    guild
+  const welcomesChannel = guild.channels.cache.find(
+    (chan) => chan.id === serverSettings.welcome_channel
   );
 
   // Check if the welcomes channel exists.
@@ -45,14 +50,11 @@ async function onGuildMemberAdd(
     "Hello `{@username}`! Welcome to {@servername}! My name is Becca, and I am here to help!";
 
   // Get the custom welcome message from the database.
-  const welcomeMessageSetting = await SettingModel.findOne({
-    server_id: guild.id,
-    key: "welcome_message",
-  });
+  const welcomeMessageSetting = serverSettings.custom_welcome;
 
   // Check if the custom welcome message exists and replace the default for it.
   if (welcomeMessageSetting) {
-    welcomeMessage = welcomeMessageSetting.value;
+    welcomeMessage = welcomeMessageSetting;
   }
 
   // Replace the custom elements.
@@ -60,13 +62,13 @@ async function onGuildMemberAdd(
     .replace(/{@username}/gi, user.username)
     .replace(/{@servername}/gi, guild.name);
 
-  welcomesChannel.startTyping();
+  (welcomesChannel as TextChannel).startTyping();
   await sleep(3000);
 
-  welcomesChannel.stopTyping();
+  (welcomesChannel as TextChannel).stopTyping();
 
   // Send an embed message to the welcomes channel.
-  await welcomesChannel.send(
+  await (welcomesChannel as TextChannel).send(
     new MessageEmbed()
       .setColor("#AB47E6")
       .setTitle("A new user has joined! 🙃")

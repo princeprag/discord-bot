@@ -1,5 +1,10 @@
 import ClientInt from "@Interfaces/ClientInt";
-import { GuildMember, MessageEmbed, PartialGuildMember } from "discord.js";
+import {
+  GuildMember,
+  MessageEmbed,
+  PartialGuildMember,
+  TextChannel,
+} from "discord.js";
 import { sleep } from "@Utils/extendsMessageToMessageInt";
 
 async function onGuildMemberRemove(
@@ -14,10 +19,11 @@ async function onGuildMemberRemove(
     return;
   }
 
+  const serverSettings = await client.getSettings(guild.id, guild.name);
+
   // Get the goodbye channel from the database.
-  const goodbyeChannel = await client.getTextChannelFromSettings(
-    "join_leave_channel",
-    guild
+  const goodbyeChannel = guild.channels.cache.find(
+    (chan) => chan.id === serverSettings.welcome_channel
   );
 
   // Check if the goodbye channel exists.
@@ -25,13 +31,13 @@ async function onGuildMemberRemove(
     return;
   }
 
-  goodbyeChannel.startTyping();
+  (goodbyeChannel as TextChannel).startTyping();
   await sleep(3000);
 
-  goodbyeChannel.stopTyping();
+  (goodbyeChannel as TextChannel).stopTyping();
 
   // Send an embed message to the goodbye channel.
-  await goodbyeChannel.send(
+  await (goodbyeChannel as TextChannel).send(
     new MessageEmbed()
       .setColor("#AB47E7")
       .setTitle("A user has left us!")

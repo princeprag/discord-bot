@@ -1,5 +1,5 @@
 import CommandLogModel from "@Models/CommandLogModel";
-import SettingModel from "@Models/SettingModel";
+import ServerModel from "@Models/ServerModel";
 import UserModel from "@Models/UserModel";
 import { Client, Guild, WebhookClient } from "discord.js";
 
@@ -43,15 +43,7 @@ async function onGuildDelete(
       }
 
       // Get the settings of the server.
-      const settings = await SettingModel.find({ server_id: id });
-
-      // Check if the server has custom settings.
-      if (settings.length) {
-        for await (const setting of settings) {
-          // Delete the setting.
-          await SettingModel.findByIdAndDelete(setting._id);
-        }
-      }
+      await ServerModel.findOneAndDelete({ serverID: id });
 
       // Get the users of the server.
       const users = await UserModel.find({ server_id: id });

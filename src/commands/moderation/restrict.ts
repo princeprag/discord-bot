@@ -31,10 +31,11 @@ const restrict: CommandInt = {
         return;
       }
 
+      const serverSettings = await bot.getSettings(guild.id, guild.name);
+
       // Get the moderator role.
-      const moderatorRole = await bot.getRoleFromSettings(
-        "moderator_role",
-        guild
+      const moderatorRole = guild.roles.cache.find(
+        (role) => role.id === serverSettings.moderator_role
       );
 
       // Check if the moderator role does not exist.
@@ -46,9 +47,8 @@ const restrict: CommandInt = {
       }
 
       // Get the restricted role.
-      const restrictedRole = await bot.getRoleFromSettings(
-        "restricted_role",
-        guild
+      const restrictedRole = guild.roles.cache.find(
+        (role) => role.id === serverSettings.restricted_role
       );
 
       // Check if the restricted role does not exist.

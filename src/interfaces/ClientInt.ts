@@ -1,5 +1,4 @@
-import { SettingModelInt } from "@Models/SettingModel";
-import { ToggleModelInt } from "@Models/ToggleModel";
+import { ServerModelInt } from "@Models/ServerModel";
 import { Client, Guild, MessageEmbed, Role, TextChannel } from "discord.js";
 import CommandInt from "./CommandInt";
 import ListenerInt from "./ListenerInt";
@@ -46,72 +45,33 @@ interface ClientInt extends Client {
   customListeners: { [key: string]: ListenerInt };
 
   /**
-   * Update a setting of the database or create one if not exists.
+   * Update a setting from the database or create one if not exists.
    *
    * @async
    * @function
-   * @param { string } server_id
+   * @param { string } serverID
+   * @param {string} serverName
    * @param { string } key
    * @param { string } value
-   * @returns { Promise<SettingModelInt> }
+   * @returns { Promise<ServerModelInt> }
    */
   setSetting(
-    server_id: string,
+    serverID: string,
+    serverName: string,
     key: string,
     value: string
-  ): Promise<SettingModelInt>;
+  ): Promise<ServerModelInt>;
 
   /**
-   * Update a toggle in the database or create one if not exists.
+   * Get a server's settings from the database.
    *
    * @async
    * @function
-   * @param { string } key
-   * @param { string } guild
-   * @param { boolean } value
-   * @returns { Promise<ToggleModelInt> }
+   * @param {string} serverID
+   * @param {string} serverName
+   * @returns {Promise<ServerModelInt>}
    */
-  setToggle(
-    server_id: string,
-    key: string,
-    value: boolean
-  ): Promise<ToggleModelInt>;
-
-  /**
-   * Get a text channel from the database by its id.
-   *
-   * @async
-   * @function
-   * @param { string } key
-   * @param { Guild } guild
-   * @returns { Promise<TextChannel | null> }
-   */
-  getTextChannelFromSettings(
-    key: string,
-    guild: Guild
-  ): Promise<TextChannel | null>;
-
-  /**
-   * Get a role from the database by its id.
-   *
-   * @async
-   * @function
-   * @param { string } key
-   * @param { Guild } guild
-   * @returns { Promise<Role | null> }
-   */
-  getRoleFromSettings(key: string, guild: Guild): Promise<Role | null>;
-
-  /**
-   * Get a toggle from the database by its id.
-   *
-   * @async
-   * @function
-   * @param {string} key
-   * @param {Guild} guild
-   * @returns {Promise<boolean | null> }
-   */
-  getToggleFromSettings(key: string, guild: Guild): Promise<boolean | null>;
+  getSettings(serverID: string, serverName: string): Promise<ServerModelInt>;
 
   /**
    * Send a message to the logs channel.

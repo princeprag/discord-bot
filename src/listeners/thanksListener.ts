@@ -1,5 +1,4 @@
 import ListenerInt from "@Interfaces/ListenerInt";
-import ToggleModel from "@Models/ToggleModel";
 import botMentionListener from "./botMentionListener";
 
 const thanksListener: ListenerInt = {
@@ -15,14 +14,13 @@ const thanksListener: ListenerInt = {
         return;
       }
 
+      const serverSettings = await bot.getSettings(guild.id, guild.name);
+
       // Confirm feature enabled for server
-      const shouldThank = await ToggleModel.findOne({
-        server_id: guild.id,
-        key: "thanks",
-      });
+      const shouldThank = serverSettings.thanks === "on";
 
       // If disabled, call mention listener.
-      if (!shouldThank || !shouldThank.value) {
+      if (!shouldThank) {
         await botMentionListener.run(message);
         return;
       }
