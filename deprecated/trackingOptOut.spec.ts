@@ -64,11 +64,7 @@ describe("command opt-out", () => {
 
   context("when subcommand invalid", () => {
     it("return error message", async () => {
-      const testMessage = buildMessageInt(
-        "|optout",
-        "123456789",
-        "author"
-      );
+      const testMessage = buildMessageInt("|optout", "123456789", "author");
       testMessage.channel.send = sandbox.stub();
 
       await trackingOptOut.run(testMessage);
