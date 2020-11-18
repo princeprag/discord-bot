@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { Message } from "discord.js";
 import Sinon, { createSandbox } from "sinon";
-import {buildMessage} from "../../testSetup";
+import { buildMessage } from "../../testSetup";
 
 import * as TrackingList from "@Utils/commands/trackingList";
 import { getTrackingInterceptor } from "@Interceptors/trackingOptOutInterceptor";

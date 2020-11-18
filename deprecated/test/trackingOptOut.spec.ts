@@ -12,7 +12,7 @@ import {
   addCallBack,
   trackingOptOut,
 } from "@Commands/bot/trackingOptOut";
-import { buildMessageInt } from "../../../testSetup";
+import { buildMessageInt } from "../test/testSetup";
 
 describe("command opt-out", () => {
   let sandbox = createSandbox();

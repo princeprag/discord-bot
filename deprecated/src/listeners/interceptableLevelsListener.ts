@@ -1,6 +1,5 @@
 import { BaseInterceptableListener } from "@Listeners/interceptableListener";
 import MessageInt from "@Interfaces/MessageInt";
-import { getTrackingInterceptor } from "../interceptors/trackingOptOutInterceptor";
 import levelsListener from "@Listeners/levelsListener";
 
 class InterceptableLevelsListener extends BaseInterceptableListener {
@@ -13,7 +12,5 @@ class InterceptableLevelsListener extends BaseInterceptableListener {
 }
 
 export const interceptedLevelsListener = new InterceptableLevelsListener();
-const trackingInterceptor = getTrackingInterceptor();
-interceptedLevelsListener.register(trackingInterceptor);
 
 export default interceptedLevelsListener;

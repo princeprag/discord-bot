@@ -20,7 +20,7 @@ describe("interceptedUsageListener", () => {
       name: "Stub Usage",
       description: "Stub Desc",
       run: usageListenrRun,
-    }
+    };
 
     ImportMock.mockOther(TrackingList, "isTrackableUser", isTrackableUser);
     ImportMock.mockOther(UsageListener, "default", usageStub);

@@ -1,7 +1,6 @@
 import { expect } from "chai";
 import { createSandbox, SinonSandbox, SinonStub } from "sinon";
 import { ImportMock } from "ts-mock-imports";
-import * as TrackingList from "@Utils/commands/trackingList";
 import * as LevelsListener from "@Listeners/levelsListener";
 import { MessageInt } from "@Interfaces/MessageInt";
 
@@ -20,7 +19,7 @@ describe("interceptedLevelsListener", () => {
       name: "Stub Levels",
       description: "Stub Desc",
       run: levelsListenrRun,
-    }
+    };
 
     ImportMock.mockOther(TrackingList, "isTrackableUser", isTrackableUser);
     ImportMock.mockOther(LevelsListener, "default", levelsStub);
