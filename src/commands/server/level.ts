@@ -1,6 +1,5 @@
 import CommandInt from "@Interfaces/CommandInt";
 import LevelModel from "@Models/LevelModel";
-import ServerModel from "@Models/ServerModel";
 import { MessageEmbed } from "discord.js";
 
 const level: CommandInt = {
