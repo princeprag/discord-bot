@@ -1,7 +1,7 @@
 import CommandInt from "@Interfaces/CommandInt";
 import MazeInt, { MazeSolveInt } from "@Interfaces/commands/MazeInt";
 import axios from "axios";
-import { MessageEmbed } from "discord.js";
+import { Channel, MessageEmbed } from "discord.js";
 
 const maze: CommandInt = {
   name: "maze",
@@ -141,6 +141,14 @@ const maze: CommandInt = {
       // Send the maze embed to the current channel.
       await channel.send(mazeEmbed);
     } catch (error) {
+      if (error.response.status === 400) {
+        const challengeEmbed = new MessageEmbed();
+        challengeEmbed.setTitle("Challenge solution");
+        challengeEmbed.setDescription(error.response.data.message);
+        challengeEmbed.addField("Result", error.response.data.result);
+        message.channel.send(challengeEmbed);
+        return;
+      }
       console.log(
         `${message.guild?.name} had the following error with the maze command:`
       );
