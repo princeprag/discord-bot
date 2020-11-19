@@ -15,7 +15,7 @@ const joke: CommandInt = {
         headers: {
           Accept: "application/json",
           "User-Agent":
-            "BeccaBot (https://www.nhcarrigan.com/BeccaBot-documentation",
+            "Becca Lyria (https://www.nhcarrigan.com/Becca-Lyria-documentation)",
         },
       });
 

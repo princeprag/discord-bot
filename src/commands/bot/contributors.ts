@@ -10,7 +10,7 @@ const contributors: CommandInt = {
     try {
       //get the data from the file - Axios won't target the local file :(
       const data = await Axios.get(
-        "https://raw.githubusercontent.com/nhcarrigan/BeccaBot/main/.all-contributorsrc"
+        "https://raw.githubusercontent.com/nhcarrigan/Becca-Lyria/main/.all-contributorsrc"
       );
       const contributors = data.data.contributors;
 
@@ -18,7 +18,7 @@ const contributors: CommandInt = {
       const contribEmbed = new MessageEmbed();
       contribEmbed.setTitle("My contributors!");
       contribEmbed.setDescription(
-        "I give my thanks to these many wonderful people! [Would you like to contribute too?](https://github.com/nhcarrigan/BeccaBot)"
+        "I give my thanks to these many wonderful people! [Would you like to contribute too?](https://github.com/nhcarrigan/Becca-Lyria)"
       );
 
       //add contributors

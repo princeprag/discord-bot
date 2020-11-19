@@ -23,7 +23,7 @@ describe("command: report", () => {
     {
       name: "description",
       value:
-        "Did I do something wrong? Report an issue [here](https://github.com/nhcarrigan/BeccaBot/issues/choose).",
+        "Did I do something wrong? Report an issue [here](https://github.com/nhcarrigan/Becca-Lyria/issues/choose).",
     },
   ].forEach(({ name, value }) => {
     it(`should set ${name} appropriately`, async () => {
