@@ -3,6 +3,7 @@ import ClientInt from "@Interfaces/ClientInt";
 import { sleep } from "./extendsMessageToMessageInt";
 import ServerModel, { ServerModelInt } from "@Models/ServerModel";
 import { prefix as defaultPrefix } from "../../default_config.json";
+import { isObject } from "util";
 
 /**
  * See `./src/interfaces/ClientInt.ts` for more information.
@@ -28,7 +29,8 @@ async function setSetting(
     | "moderator_role"
     | "custom_welcome"
     | "hearts"
-    | "blocked",
+    | "blocked"
+    | "self_roles",
   value: string
 ): Promise<ServerModelInt> {
   let server = await ServerModel.findOne({
@@ -49,6 +51,7 @@ async function setSetting(
       custom_welcome: "",
       hearts: [],
       blocked: [],
+      self_roles: [],
     });
   }
 
@@ -69,6 +72,15 @@ async function setSetting(
     } else {
       server.blocked.push(value.replace(/\D/g, ""));
       server.markModified("blocked");
+    }
+  } else if (key === "self_roles") {
+    if (server.self_roles.includes(value.replace(/\D/g, ""))) {
+      const index = server.self_roles.indexOf(value.replace(/\D/g, ""));
+      server.self_roles.splice(index, 1);
+      server.markModified("self_roles");
+    } else {
+      server.self_roles.push(value.replace(/\D/g, ""));
+      server.markModified("self_roles");
     }
   } else if (
     key !== "custom_welcome" &&
@@ -117,6 +129,7 @@ async function getSettings(
       custom_welcome: "",
       hearts: [],
       blocked: [],
+      self_roles: [],
     });
   }
 

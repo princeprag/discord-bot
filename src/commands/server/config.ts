@@ -130,6 +130,18 @@ const config: CommandInt = {
 
         // send blocked embed
         await channel.send(blockedEmbed);
+
+        // Create embed for assignable roles
+        const rolesEmbed = new MessageEmbed()
+          .setTitle("Self-Assignable Roles")
+          .setFooter("These roles can be assigned with my `role` command.")
+          .setDescription(
+            config.self_roles.map((el) => `<@&${el}`).join(" | ") ||
+              "No roles :("
+          );
+
+        // send roles embed
+        await channel.send(rolesEmbed);
         return;
       }
 
@@ -165,6 +177,7 @@ const config: CommandInt = {
           "custom_welcome",
           "hearts",
           "blocked",
+          "self_roles",
         ].includes(key)
       ) {
         await message.reply(
@@ -198,19 +211,17 @@ const config: CommandInt = {
       }
 
       // If setting role, check for valid role.
-      if (key === "restricted_role" || key === "moderator_role") {
+      if (
+        key === "restricted_role" ||
+        key === "moderator_role" ||
+        key === "self_roles"
+      ) {
         const success = guild.roles.cache.find(
           (role) => role.id === value.replace(/\D/g, "")
         );
         if (!success) {
           await message.reply(
             `I am so sorry, but ${value} does not appear to be a valid role.`
-          );
-          return;
-        }
-        if (value.replace(/\D/g, "") === process.env.OWNER_ID) {
-          await message.reply(
-            "The love I have for my darling can never be stopped."
           );
           return;
         }
@@ -230,7 +241,9 @@ const config: CommandInt = {
         }
         if (value.replace(/\D/g, "") === process.env.OWNER_ID) {
           await message.reply(
-            "Wait a moment! I will not refuse to help my beloved."
+            key === "blocked"
+              ? "Wait a moment! I will not refuse to help my beloved."
+              : "My love for my darling can never be stopped."
           );
           return;
         }
@@ -272,6 +285,15 @@ const config: CommandInt = {
           confirmation = `Okay, I will resume helping ${value}!`;
         } else {
           confirmation = `Okay, I will stop helping ${value}!`;
+        }
+      }
+
+      // Handle self roles
+      if (key === "self_roles") {
+        if (!newSettings.self_roles.includes(value.replace(/\D/g, ""))) {
+          confirmation = `Okay, ${value} is no longer self-assignable.`;
+        } else {
+          confirmation = `Okay, ${value} is now self-assignable.`;
         }
       }
 
