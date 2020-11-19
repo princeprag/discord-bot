@@ -13,6 +13,7 @@ export interface ServerModelInt extends Document {
   custom_welcome: string;
   hearts: string[];
   blocked: string[];
+  self_roles: string[];
 }
 
 export const Server = new Schema({
@@ -26,8 +27,9 @@ export const Server = new Schema({
   restricted_role: String,
   moderator_role: String,
   custom_welcome: String,
-  hearts: [Object],
-  blocked: [Object],
+  hearts: [String],
+  blocked: [String],
+  self_roles: [String],
 });
 
 export default model<ServerModelInt>("server", Server);
