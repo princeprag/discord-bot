@@ -6,7 +6,7 @@ const role: CommandInt = {
   parameters: ["`<@role>`: The role to assign."],
   run: async (message, config) => {
     try {
-      const { author, channel, guild, bot, commandArguments } = message;
+      const { author, channel, guild, commandArguments } = message;
 
       if (!guild) {
         return;

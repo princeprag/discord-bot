@@ -3,7 +3,6 @@ import ClientInt from "@Interfaces/ClientInt";
 import { sleep } from "./extendsMessageToMessageInt";
 import ServerModel, { ServerModelInt } from "@Models/ServerModel";
 import { prefix as defaultPrefix } from "../../default_config.json";
-import { isObject } from "util";
 
 /**
  * See `./src/interfaces/ClientInt.ts` for more information.
