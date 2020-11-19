@@ -70,7 +70,33 @@ const pokenum: CommandInt = {
         pokeEmbed.setTitle(pokemon.name);
         pokeEmbed.setDescription(`#${pokemon.id}`);
         pokeEmbed.setThumbnail(pokemon.sprites.front_default);
-
+        pokeEmbed.addFields(
+          {
+            name: "Abilities",
+            value:
+              pokemon.abilities.map((el) => el.ability.name).join(", ") ||
+              "no abilities found",
+          },
+          {
+            name: "Forms",
+            value:
+              pokemon.forms.map((el) => el.name).join(", ") || "no forms found",
+          },
+          {
+            name: "Held Items",
+            value:
+              pokemon.held_items.map((el) => el.item.name).join(", ") ||
+              "no items found",
+          },
+          {
+            name: "Stats",
+            value:
+              pokemon.stats
+                .map((el) => `${el.stat.name}: ${el.base_stat}`)
+                .join(", ") || "no stats found",
+          }
+        );
+        pokeEmbed.setColor(bot.color);
         pokeEmbed.setFooter(
           `Weight: ${pokemon.weight}, Height: ${pokemon.height}`
         );
