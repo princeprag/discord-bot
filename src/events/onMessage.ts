@@ -3,7 +3,6 @@ import MessageInt from "@Interfaces/MessageInt";
 import { prefix as defaultPrefix } from "../../default_config.json";
 import extendsMessageToMessageInt from "@Utils/extendsMessageToMessageInt";
 import ClientInt from "@Interfaces/ClientInt";
-import ServerModel from "@Models/ServerModel";
 
 /**
  * Execute when a user sends a message in a channel.
@@ -24,8 +23,8 @@ async function onMessage(
   // Add the bot client to the message.
   message.bot = client;
 
-  // Get the attachments, author, current channel, content and current guild from the message.
-  const { attachments, author, channel, content, guild } = message;
+  // Get the author, current channel, content and current guild from the message.
+  const { author, channel, content, guild } = message;
 
   // Separate the message content by whitespaces.
   message.commandArguments = content.split(" ");
@@ -45,49 +44,27 @@ async function onMessage(
   if (!guild) {
     return;
   }
+
+  // Get the config for that server
+  const serverConfig = await client.getSettings(guild.id, guild.name);
+
   // Get the heartsListener, levelsListener and usageListener from the listeners list.
   const {
     heartsListener,
     thanksListener,
-    blockedUserListener,
+    levelsListener,
+    usageListener,
   } = client.customListeners;
-  const levelsListener = client.customListeners.interceptableLevelsListener;
-  const usageListener = client.customListeners.interceptableUsageListener;
 
   // Check if the heartsListener and levelsListener exists.
   if (heartsListener && levelsListener) {
     // Execute the hearts listener.
-    await heartsListener.run(message);
+    await heartsListener.run(message, serverConfig);
 
     // Execute the levels listener.
-    await levelsListener.run(message);
+    await levelsListener.run(message, serverConfig);
   }
-  // Check if the file has attachments (Files, images or videos).
-  if (attachments.array().length) {
-    let haveAFile = false;
 
-    // Check if the attachments has a valid height.
-    for (const attachment of attachments.array()) {
-      if (!attachment.height) {
-        haveAFile = true;
-        break;
-      }
-    }
-
-    // If the message has a file attachment, delete it and send a warning.
-    if (haveAFile) {
-      if (message.deletable) {
-        await message.delete();
-      }
-
-      await message.showTypingAndSendMessage(
-        "I am so sorry, but I am not permitted to allow file uploads. Please share videos or images only.",
-        3000
-      );
-
-      return;
-    }
-  }
   // Get the current Discord server id.
   const server_id = guild.id;
 
@@ -96,13 +73,11 @@ async function onMessage(
 
   if (!prefix.length) {
     // Get the custom prefix for the server from the database.
-    const prefixSetting = await ServerModel.findOne({
-      serverID: server_id,
-    });
+    const prefixSetting = serverConfig.prefix;
 
     // Check if the server has a custom prefix.
     if (prefixSetting) {
-      client.prefix[server_id] = prefixSetting.prefix;
+      client.prefix[server_id] = prefixSetting;
     } else {
       client.prefix[server_id] = defaultPrefix;
     }
@@ -112,7 +87,7 @@ async function onMessage(
   // Check if the content of the message starts with the server prefix.
   if (!content.startsWith(prefix)) {
     if (thanksListener) {
-      await thanksListener.run(message);
+      await thanksListener.run(message, serverConfig);
     }
     return;
   }
@@ -136,7 +111,7 @@ async function onMessage(
     channel.startTyping();
 
     // check for block
-    const blockCheck = await blockedUserListener.run(message);
+    const blockCheck = serverConfig.blocked.includes(author.id);
     if (blockCheck) {
       //log it
       console.log("But they were blocked.");
@@ -153,7 +128,7 @@ async function onMessage(
     // Check if the usage listener exists.
     if (usageListener) {
       // Execute the usage listener.
-      await usageListener.run(message);
+      await usageListener.run(message, serverConfig);
     }
 
     // Respond to bot owner.
@@ -170,7 +145,7 @@ async function onMessage(
     channel.stopTyping();
 
     // Execute the command.
-    await command.run(message);
+    await command.run(message, serverConfig);
     return;
   }
 }

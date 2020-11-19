@@ -2,6 +2,7 @@ import { Client, Guild, MessageEmbed, TextChannel } from "discord.js";
 import ClientInt from "@Interfaces/ClientInt";
 import { sleep } from "./extendsMessageToMessageInt";
 import ServerModel, { ServerModelInt } from "@Models/ServerModel";
+import { prefix as defaultPrefix } from "../../default_config.json";
 
 /**
  * See `./src/interfaces/ClientInt.ts` for more information.
@@ -26,7 +27,8 @@ async function setSetting(
     | "restricted_role"
     | "moderator_role"
     | "custom_welcome"
-    | "hearts",
+    | "hearts"
+    | "blocked",
   value: string
 ): Promise<ServerModelInt> {
   let server = await ServerModel.findOne({
@@ -46,6 +48,7 @@ async function setSetting(
       moderator_role: "",
       custom_welcome: "",
       hearts: [],
+      blocked: [],
     });
   }
 
@@ -57,6 +60,15 @@ async function setSetting(
     } else {
       server.hearts.push(value.replace(/\D/g, ""));
       server.markModified("hearts");
+    }
+  } else if (key === "blocked") {
+    if (server.blocked.includes(value.replace(/\D/g, ""))) {
+      const index = server.blocked.indexOf(value.replace(/\D/g, ""));
+      server.blocked.splice(index, 1);
+      server.markModified("blocked");
+    } else {
+      server.blocked.push(value.replace(/\D/g, ""));
+      server.markModified("blocked");
     }
   } else if (
     key !== "custom_welcome" &&
@@ -95,7 +107,7 @@ async function getSettings(
     server = await ServerModel.create({
       serverID: serverID,
       serverName: serverName,
-      prefix: "|",
+      prefix: defaultPrefix,
       thanks: "off",
       levels: "off",
       welcome_channel: "",
@@ -104,6 +116,7 @@ async function getSettings(
       moderator_role: "",
       custom_welcome: "",
       hearts: [],
+      blocked: [],
     });
   }
 

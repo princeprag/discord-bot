@@ -10,10 +10,10 @@ const heartReactions = ["❤️", "🧡", "💛", "💚", "💙", "💜", "🖤"
 const heartsListener: ListenerInt = {
   name: "Love",
   description: "Gives love to specific users.",
-  run: async (message) => {
+  run: async (message, config) => {
     try {
       // Get the current guild from the message.
-      const { author, guild, bot } = message;
+      const { author, guild } = message;
 
       // Check if is a valid guild.
       if (!guild) {
@@ -23,10 +23,8 @@ const heartsListener: ListenerInt = {
       // Set the default loves user ids.
       let authors = defaultLovesIDs;
 
-      const serverSetting = await bot.getSettings(guild.id, guild.name);
-
       // Get the custom loves from the database.
-      const lovesSetting = serverSetting.hearts;
+      const lovesSetting = config.hearts;
 
       // Check if the custom loves are valid.
       if (lovesSetting) {

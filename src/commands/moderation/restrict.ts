@@ -9,7 +9,7 @@ const restrict: CommandInt = {
     "`<user>`: @name of the user to restrict.",
     "`<?reason>`: reason for restricting the user.",
   ],
-  run: async (message) => {
+  run: async (message, config) => {
     try {
       const {
         author,
@@ -31,11 +31,9 @@ const restrict: CommandInt = {
         return;
       }
 
-      const serverSettings = await bot.getSettings(guild.id, guild.name);
-
       // Get the moderator role.
       const moderatorRole = guild.roles.cache.find(
-        (role) => role.id === serverSettings.moderator_role
+        (role) => role.id === config.moderator_role
       );
 
       // Check if the moderator role does not exist.
@@ -48,7 +46,7 @@ const restrict: CommandInt = {
 
       // Get the restricted role.
       const restrictedRole = guild.roles.cache.find(
-        (role) => role.id === serverSettings.restricted_role
+        (role) => role.id === config.restricted_role
       );
 
       // Check if the restricted role does not exist.

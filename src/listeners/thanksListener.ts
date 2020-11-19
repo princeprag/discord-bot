@@ -4,24 +4,22 @@ import botMentionListener from "./botMentionListener";
 const thanksListener: ListenerInt = {
   name: "Thanks",
   description: "Congratulates users who are thanked.",
-  run: async (message) => {
+  run: async (message, config) => {
     try {
       const { author, bot, channel, guild } = message;
 
       // Handle no guild
       if (!guild) {
-        await botMentionListener.run(message);
+        await botMentionListener.run(message, config);
         return;
       }
 
-      const serverSettings = await bot.getSettings(guild.id, guild.name);
-
       // Confirm feature enabled for server
-      const shouldThank = serverSettings.thanks === "on";
+      const shouldThank = config.thanks === "on";
 
       // If disabled, call mention listener.
       if (!shouldThank) {
-        await botMentionListener.run(message);
+        await botMentionListener.run(message, config);
         return;
       }
 
@@ -43,7 +41,7 @@ const thanksListener: ListenerInt = {
 
       // If no thanks, call mention listener
       if (!thankRegex.test(message.content)) {
-        await botMentionListener.run(message);
+        await botMentionListener.run(message, config);
         return;
       }
 
