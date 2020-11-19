@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js";
 const REPORT_CONSTANTS = {
   title: "Report a bug",
   description:
-    "Did I do something wrong? Report an issue [here](https://github.com/nhcarrigan/BeccaBot/issues/choose).",
+    "Did I do something wrong? Report an issue [here](https://github.com/nhcarrigan/Becca-Lyria/issues/choose).",
 };
 
 const report: CommandInt = {

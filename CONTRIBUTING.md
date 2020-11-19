@@ -8,11 +8,11 @@ We accept bug reports and feature requests from all contributors. Please follow 
 
 ### Feature Requests
 
-Do you have a feature you would like to see added to this bot? Create a [new issue](https://github.com/nhcarrigan/BeccaBot/issues/new/choose) using the "Feature Request" template and we will get started on it as soon as we are able.
+Do you have a feature you would like to see added to this bot? Create a [new issue](https://github.com/nhcarrigan/Becca-Lyria/issues/new/choose) using the "Feature Request" template and we will get started on it as soon as we are able.
 
 ### Found a Bug
 
-Did you discover a bug when interacting with this bot? Unfortunately, despite our best efforts we are still not quite perfect. You can submit a [new issue](https://github.com/nhcarrigan/BeccaBot/issues/new/choose) using the "Bug Report" template and we will address it as soon as possible.
+Did you discover a bug when interacting with this bot? Unfortunately, despite our best efforts we are still not quite perfect. You can submit a [new issue](https://github.com/nhcarrigan/Becca-Lyria/issues/new/choose) using the "Bug Report" template and we will address it as soon as possible.
 
 ## Writing Code for the bot
 
@@ -28,7 +28,7 @@ When submitting code changes, please ensure tests are added to cover your change
 
 ### Configure Your Bot
 
-To set up your own instance of the bot, please review the [Developer Documentation](https://www.nhcarrigan.com/BeccaBot-documentation/).
+To set up your own instance of the bot, please review the [Developer Documentation](https://www.nhcarrigan.com/Becca-Lyria-documentation/).
 
 ### Need Some Help?
 
@@ -39,6 +39,6 @@ Do you need more information on how to contribute? Join either of the Discord se
 If you are not comfortable with working on the codebase, there are still other ways you can contribute! You can:
 - Help test features
 - Help propose new features
-- Help keep the documentation here and in the [documentation repository](https://github.com/nhcarrigan/BeccaBot-documentation/) up to date
+- Help keep the documentation here and in the [documentation repository](https://github.com/nhcarrigan/Becca-Lyria-documentation/) up to date
 
 Big thanks to ALL of our contributors! You are awesome! 

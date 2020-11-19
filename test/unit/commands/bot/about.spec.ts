@@ -49,10 +49,10 @@ describe("command: about", () => {
   });
 
   [
-    { propName: "title", propValue: "Greetings! My name is BeccaBot!" },
+    { propName: "title", propValue: "Greetings! My name is Becca Lyria!" },
     {
       propName: "description",
-      propValue: `I am a discord bot created by [nhcarrigan](https://www.nhcarrigan.com), with help from a few contributors.  You can view my [source code and contributor list](https://github.com/nhcarrigan/BeccaBot) online.\r\n\r\nView the [official repository](https://github.com/nhcarrigan/BeccaBot) or you can join to the [official Discord server](https://discord.gg/PHqDbkg). I am named after nhcarrigan's old DnD/RP character.`,
+      propValue: `I am a discord bot created by [nhcarrigan](https://www.nhcarrigan.com), with help from a few contributors.  You can view my [source code and contributor list](https://github.com/nhcarrigan/Becca-Lyria) online.\r\n\r\nView the [official repository](https://github.com/nhcarrigan/Becca-Lyria) or you can join to the [official Discord server](https://discord.gg/PHqDbkg). I am named after nhcarrigan's old DnD/RP character.`,
     },
     { propName: "color", propValue: parseInt(botColor, 16) },
   ].forEach(({ propName, propValue }) => {
