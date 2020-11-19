@@ -1,7 +1,7 @@
 import CommandInt from "@Interfaces/CommandInt";
 import MazeInt, { MazeSolveInt } from "@Interfaces/commands/MazeInt";
 import axios from "axios";
-import { Channel, MessageEmbed } from "discord.js";
+import { MessageEmbed } from "discord.js";
 
 const maze: CommandInt = {
   name: "maze",
