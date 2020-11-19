@@ -31,15 +31,44 @@ const pokename: CommandInt = {
         // Get the pokemon data.
         const pokemon = data.data;
 
-        // Send an embed message to the current channel.
-        await channel.send(
-          new MessageEmbed()
-            .setColor(bot.color)
-            .setTitle(pokemon.name)
-            .setDescription(`#${pokemon.id}`)
-            .setThumbnail(pokemon.sprites.front_default)
-            .setFooter(`Weight: ${pokemon.weight}, Height: ${pokemon.height}`)
+        // Add the pokemon data to the embed.
+        const pokeEmbed = new MessageEmbed();
+        pokeEmbed.setTitle(pokemon.name);
+        pokeEmbed.setDescription(`#${pokemon.id}`);
+        pokeEmbed.setThumbnail(pokemon.sprites.front_default);
+        pokeEmbed.addFields(
+          {
+            name: "Abilities",
+            value:
+              pokemon.abilities.map((el) => el.ability.name).join(", ") ||
+              "no abilities found",
+          },
+          {
+            name: "Forms",
+            value:
+              pokemon.forms.map((el) => el.name).join(", ") || "no forms found",
+          },
+          {
+            name: "Held Items",
+            value:
+              pokemon.held_items.map((el) => el.item.name).join(", ") ||
+              "no items found",
+          },
+          {
+            name: "Stats",
+            value:
+              pokemon.stats
+                .map((el) => `${el.stat.name}: ${el.base_stat}`)
+                .join(", ") || "no stats found",
+          }
         );
+        pokeEmbed.setColor(bot.color);
+        pokeEmbed.setFooter(
+          `Weight: ${pokemon.weight}, Height: ${pokemon.height}`
+        );
+
+        // Send the embed message to the current channel.
+        await channel.send(pokeEmbed);
       } catch (error) {
         console.log(
           "Pokemon Name Command:",
