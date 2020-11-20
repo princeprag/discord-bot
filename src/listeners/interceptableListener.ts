@@ -28,7 +28,7 @@ export abstract class BaseInterceptableListener implements ListenerInt {
     return await this.action(message);
   }
 
-  abstract async action(message: MessageInt): Promise<void>;
+  abstract action(message: MessageInt): Promise<void>;
 
   register(interceptor: InterceptInt): void {
     this.count += 1;
