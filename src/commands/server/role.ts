@@ -25,7 +25,7 @@ const role: CommandInt = {
 
       // Check for valid role
       const guildRole = guild.roles.cache.find(
-        (role) => role.id === targetRole.replace(/\D/g, "")
+        (role) => role.name === targetRole
       );
 
       // If not a valid role, exit.
@@ -37,7 +37,7 @@ const role: CommandInt = {
       }
 
       // Check for self assignable
-      if (!config.self_roles.includes(targetRole.replace(/\D/g, ""))) {
+      if (!config.self_roles.includes(guildRole.id)) {
         await message.reply(
           "I am so sorry, but I am not permitted to assign that role."
         );
@@ -59,13 +59,13 @@ const role: CommandInt = {
       // If has role, remove it
       if (member.roles.cache.has(guildRole.id)) {
         await member.roles.remove(guildRole);
-        await channel.send(`Okay, I have removed your ${targetRole} role.`);
+        await channel.send(`Okay, I have removed your \`${targetRole}\` role.`);
         return;
       }
 
       // Add role
       await member.roles.add(guildRole);
-      await channel.send(`Okay, I have given you the ${targetRole} role.`);
+      await channel.send(`Okay, I have given you the \`${targetRole}\` role.`);
       return;
     } catch (error) {
       console.log(
