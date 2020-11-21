@@ -1,9 +1,12 @@
 import CommandInt from "@Interfaces/CommandInt";
+import { MessageEmbed } from "discord.js";
 
 const role: CommandInt = {
   name: "role",
   description: "Adds or removes an assignable role from the user.",
-  parameters: ["`<@role>`: The role to assign."],
+  parameters: [
+    "`<role>`: The name of the role to assign. Optionally use `listall` to get a list of roles.",
+  ],
   run: async (message, config) => {
     try {
       const { author, channel, guild, commandArguments } = message;
@@ -20,6 +23,20 @@ const role: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the role you would like to add or remove?"
         );
+        return;
+      }
+
+      // If argument is to list all roles
+      if (targetRole === "listall") {
+        const roleList = new MessageEmbed();
+        roleList.setColor(message.bot.color);
+        roleList.setTitle("Self-Assignable Roles");
+        roleList.setDescription(
+          "These are the roles you can assign yourself: \n" +
+            config.self_roles.map((el) => `<@&${el}>`).join("\n")
+        );
+
+        await channel.send(roleList);
         return;
       }
 
