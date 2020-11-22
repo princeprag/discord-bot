@@ -9,7 +9,7 @@ const echo: CommandInt = {
     "`<channel>` - the ID of the channel to send the message to",
     "`<message>` - the message to send",
   ],
-  run: async (message, config) => {
+  run: async (message) => {
     try {
       const { author, bot, channel, commandArguments } = message;
 
