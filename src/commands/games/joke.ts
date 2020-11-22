@@ -14,8 +14,7 @@ const joke: CommandInt = {
       const data = await axios.get<JokeInt>("https://icanhazdadjoke.com/", {
         headers: {
           Accept: "application/json",
-          "User-Agent":
-            "Becca Lyria (https://www.nhcarrigan.com/Becca-Lyria-documentation)",
+          "User-Agent": "Becca Lyria (https://beccalyria.nhcarrigan.com)",
         },
       });
 

@@ -28,7 +28,7 @@ When submitting code changes, please ensure tests are added to cover your change
 
 ### Configure Your Bot
 
-To set up your own instance of the bot, please review the [Developer Documentation](https://www.nhcarrigan.com/Becca-Lyria-documentation/).
+To set up your own instance of the bot, please review the [Developer Documentation](https://beccalyria.nhcarrigan.com/).
 
 ### Need Some Help?
 
