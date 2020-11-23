@@ -101,7 +101,7 @@ const server: CommandInt = {
 
       // Add the footer.
       serverEmbed.setFooter(
-        `Please use '${prefix[guild.id]}help' to see my commands.`
+        `The member counts are based on the people I have seen recently - so if they have not been around, I did not include them.`
       );
 
       // Send the server embed to the current channel.
