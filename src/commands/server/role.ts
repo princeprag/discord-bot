@@ -62,8 +62,7 @@ const role: CommandInt = {
       }
 
       // Get guild member from role
-      const memberList = await guild.members.fetch();
-      const member = memberList.find((el) => el.id === author.id);
+      const member = await guild.members.fetch(author);
 
       // exit if no member
       if (!member) {
