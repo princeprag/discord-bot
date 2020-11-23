@@ -47,49 +47,27 @@ const server: CommandInt = {
       serverEmbed.addField("Command prefix", prefix[guild.id], true);
 
       // Add the server members count to an embed field.
-      serverEmbed.addField("Member count", guild.memberCount, true);
+      serverEmbed.addField("Recently seen members", guild.memberCount, true);
 
       // Fetch all members, map to array
-      const guildMembers = (await guild.members.fetch()).map((u) => u);
+      const guildMembers = guild.members.cache.map((u) => u);
 
       // Add the server human members count to an embed field.
       serverEmbed.addField(
-        "Human members",
+        "Active Human members",
         guildMembers.filter((member) => !member.user.bot).length,
         true
       );
 
       // Add the server bots count to an embed field.
       serverEmbed.addField(
-        "Bot members",
+        "Active Bot members",
         guildMembers.filter((member) => member.user.bot).length,
         true
       );
 
       // Add the server users banned count to an embed field.
       serverEmbed.addField("Banned users", guild.fetchBans.length, true);
-
-      // Get the online stats.
-      const onlineStats = `🟢 ${
-        guildMembers.filter(
-          (member) => member.user.presence.status === "online"
-        ).length
-      } | 🟡 ${
-        guildMembers.filter((member) => member.user.presence.status === "idle")
-          .length
-      } | 🔴 ${
-        guildMembers.filter((member) => member.user.presence.status === "dnd")
-          .length
-      } | ⚪ ${
-        guildMembers.filter(
-          (member) =>
-            member.user.presence.status === "offline" ||
-            member.user.presence.status === "invisible"
-        ).length
-      }`;
-
-      // Add the server member status tracking to an embed field.
-      serverEmbed.addField("Member status tracking", onlineStats, true);
 
       // Add an empty field.
       serverEmbed.addField("\u200b", "\u200b", true);
@@ -101,11 +79,8 @@ const server: CommandInt = {
       serverEmbed.addField(
         "Roles",
         guild.roles.cache.map((role) => role.toString()).join(" "),
-        true
+        false
       );
-
-      // Add an empty field.
-      serverEmbed.addField("\u200b", "\u200b", true);
 
       // Add the server channels count to an embed field.
       serverEmbed.addField("Channel count", guild.channels.cache.size, true);

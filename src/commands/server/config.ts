@@ -229,11 +229,8 @@ const config: CommandInt = {
 
       // If setting hearts, check for valid user.
       if (key === "hearts" || key === "blocked") {
-        const peeps = await guild.members.fetch();
-        const success = peeps.find(
-          (mem) => mem.id === value.replace(/\D/g, "")
-        );
-        if (!success) {
+        const mem = await guild.members.fetch(value.replace(/\D/g, ""));
+        if (!mem) {
           await message.reply(
             `I am so sorry, but ${value} does not appear to be a valid user.`
           );
