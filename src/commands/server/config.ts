@@ -258,7 +258,7 @@ const config: CommandInt = {
 
       // Set client prefix.
       if (key === "prefix") {
-        prefix[guild.id] = value;
+        prefix[guild.id] = value.toLowerCase();
       }
 
       // Save settings.
