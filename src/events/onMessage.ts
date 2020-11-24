@@ -85,7 +85,7 @@ async function onMessage(
     prefix = client.prefix[server_id];
   }
   // Check if the content of the message starts with the server prefix.
-  if (!content.startsWith(prefix)) {
+  if (!content.toLowerCase().startsWith(prefix)) {
     if (thanksListener) {
       await thanksListener.run(message, serverConfig);
     }
