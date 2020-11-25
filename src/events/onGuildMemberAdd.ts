@@ -42,6 +42,9 @@ async function onGuildMemberAdd(
 
   // Check if the welcomes channel exists.
   if (!welcomesChannel) {
+    console.info(
+      `${user.username} joined ${guild.name} but the welcome channel was not found.`
+    );
     return;
   }
 
