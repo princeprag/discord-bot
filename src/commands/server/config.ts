@@ -136,7 +136,7 @@ const config: CommandInt = {
           .setTitle("Self-Assignable Roles")
           .setFooter("These roles can be assigned with my `role` command.")
           .setDescription(
-            config.self_roles.map((el) => `<@&${el}`).join(" | ") ||
+            config.self_roles.map((el) => `<@&${el}>`).join(" | ") ||
               "No roles :("
           );
 
