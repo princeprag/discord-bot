@@ -20,7 +20,7 @@ When the Bot leaves a Discord server, the data related to that server is deleted
 
 ## User Rights
 
-At any time, you have the right to request to view the Data pertaining to your Discord account. You may submit a request through the [Discord Server](https://discord.gg/yMBWgETTJu). You have the right to request the removal of relevant Data.
+At any time, you have the right to request to view the Data pertaining to your Discord account. You may submit a request through the [Discord Server](http://chat.nhcarrigan.com). You have the right to request the removal of relevant Data.
 
 ## Underage Users
 
