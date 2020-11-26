@@ -25,7 +25,7 @@ Are you interested in contributing to the development of this bot? We welcome al
 
 ## Feedback and Bugs
 
-If you have feedback or a bug report, please feel free to open a GitHub issue! You are also invited to join the [Becca Lyria support server](https://discord.gg/PHqDbkg).
+If you have feedback or a bug report, please feel free to open a GitHub issue!
 
 ## Code of Conduct
 
@@ -37,7 +37,7 @@ If you have questions regarding contributing, using the project, or any related 
 
 ## Art Credits
 
-Credit for the bot's avatar and the support server art goes to [MoonlightKCreations](https://www.instagram.com/moonlightkcreations/). If you want to show some support, consider [commissioning her!](https://meitanteimoonlight.wixsite.com/moonlightkcreations/commissions).
+Credit for the bot's avatar and the server art goes to [MoonlightKCreations](https://www.instagram.com/moonlightkcreations/). If you want to show some support, consider [commissioning her!](https://meitanteimoonlight.wixsite.com/moonlightkcreations/commissions).
 
 ## Contributors ✨
 
