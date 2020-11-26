@@ -1,4 +1,5 @@
 import ListenerInt from "@Interfaces/ListenerInt";
+import { botConnect } from "botConnect";
 
 const botMentionListener: ListenerInt = {
   name: "Becca Mention Listener",
@@ -29,6 +30,11 @@ const botMentionListener: ListenerInt = {
         );
       }
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the Becca Mentions listener. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the Becca Mentions listener:`
       );
