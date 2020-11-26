@@ -44,6 +44,11 @@ const art: CommandInt = {
       //send it!
       await message.reply(artEmbed);
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the art command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had this error with the art command:`
       );

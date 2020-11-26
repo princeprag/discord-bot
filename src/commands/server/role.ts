@@ -84,6 +84,11 @@ const role: CommandInt = {
       await channel.send(`Okay, I have given you the \`${targetRole}\` role.`);
       return;
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the role command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the role command:`
       );

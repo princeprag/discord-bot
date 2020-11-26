@@ -24,6 +24,11 @@ const invite: CommandInt = {
           .setFooter(INVITE_CONSTANTS.footer)
       );
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the invite command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the invite command:`
       );

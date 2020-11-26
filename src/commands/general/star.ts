@@ -90,6 +90,11 @@ const star: CommandInt = {
         `Okay, I sent ${userToStarMentioned.toString()} a gold star!`
       );
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the star command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the star command:`
       );

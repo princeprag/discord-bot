@@ -70,6 +70,11 @@ const space: CommandInt = {
 
       await channel.send(spaceEmbed);
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the space command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the space command:`
       );

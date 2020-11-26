@@ -30,6 +30,11 @@ const cat: CommandInt = {
       // Send a message to the current channel.
       await channel.send("Oops! A cat walked across my keyboard!");
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the cat command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the cat command:`
       );

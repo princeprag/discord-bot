@@ -55,6 +55,11 @@ const guess: CommandInt = {
         );
       });
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the guess command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the guess command:`
       );

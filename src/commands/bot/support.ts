@@ -19,8 +19,13 @@ const support: CommandInt = {
       supportEmbed.setColor(bot.color);
       await channel.send(supportEmbed);
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the support command. Please check the logs.`
+        );
+      }
       console.log(
-        `${message.guild?.name} had the following error with the report command:`
+        `${message.guild?.name} had the following error with the support command:`
       );
       console.log(error);
       message.reply("I am so sorry, but I cannot do that at the moment.");

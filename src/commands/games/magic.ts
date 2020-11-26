@@ -71,6 +71,11 @@ const magic: CommandInt = {
       // Send the card embed to the current channel.
       await channel.send(cardEmbed);
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the magic command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the magic command:`
       );

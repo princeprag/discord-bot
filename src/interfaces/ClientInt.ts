@@ -1,5 +1,5 @@
 import { ServerModelInt } from "@Models/ServerModel";
-import { Client, Guild, MessageEmbed } from "discord.js";
+import { Client, Guild, MessageEmbed, WebhookClient } from "discord.js";
 import CommandInt from "./CommandInt";
 import ListenerInt from "./ListenerInt";
 
@@ -43,6 +43,12 @@ interface ClientInt extends Client {
    * @property
    */
   customListeners: { [key: string]: ListenerInt };
+
+  /**
+   * Debug webhook
+   *  @property
+   */
+  debugHook?: WebhookClient;
 
   /**
    * Update a setting from the database or create one if not exists.

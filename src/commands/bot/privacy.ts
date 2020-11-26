@@ -22,6 +22,11 @@ const privacy: CommandInt = {
           .setDescription(PRIVACY_CONSTANTS.description)
       );
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the privacy command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the privacy command:`
       );
