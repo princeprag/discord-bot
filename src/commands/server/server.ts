@@ -50,18 +50,18 @@ const server: CommandInt = {
       serverEmbed.addField("Recently seen members", guild.memberCount, true);
 
       // Fetch all members, map to array
-      const guildMembers = guild.members.cache.map((u) => u);
+      const guildMembers = (await guild.members.fetch()).map((u) => u);
 
       // Add the server human members count to an embed field.
       serverEmbed.addField(
-        "Active Human members",
+        "Human members",
         guildMembers.filter((member) => !member.user.bot).length,
         true
       );
 
       // Add the server bots count to an embed field.
       serverEmbed.addField(
-        "Active Bot members",
+        "Bot members",
         guildMembers.filter((member) => member.user.bot).length,
         true
       );
@@ -97,11 +97,6 @@ const server: CommandInt = {
         "Voice channel count",
         guild.channels.cache.filter((channel) => channel.type === "voice").size,
         true
-      );
-
-      // Add the footer.
-      serverEmbed.setFooter(
-        `The member counts are based on the people I have seen recently - so if they have not been around, I did not include them.`
       );
 
       // Send the server embed to the current channel.
