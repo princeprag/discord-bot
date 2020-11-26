@@ -12,7 +12,7 @@ async function onGuildMemberRemove(
   client: ClientInt
 ): Promise<void> {
   // Get the user and the current guild.
-  const { user, guild, nickname } = member;
+  const { user, guild, nickname, roles } = member;
 
   // Check if the new member is a valid user.
   if (!user) {
@@ -31,6 +31,8 @@ async function onGuildMemberRemove(
     return;
   }
 
+  const roleList = roles.cache.map((el) => el);
+
   (goodbyeChannel as TextChannel).startTyping();
   await sleep(3000);
 
@@ -44,6 +46,7 @@ async function onGuildMemberRemove(
       .setDescription(
         `${nickname || user.username} has left us. You will be missed!`
       )
+      .addField("The user had these roles:", roleList)
   );
 }
 
