@@ -46,17 +46,8 @@ const user: CommandInt = {
         true
       );
 
-      // Add an empty field.
-      userEmbed.addField("\u200b", "\u200b", true);
-
-      // Add the user status to an embed field.
-      userEmbed.addField("Status", target.presence.status, true);
-
       // Add the username to an embed field.
       userEmbed.addField("Username", target.user.tag, true);
-
-      // Add an empty field.
-      userEmbed.addField("\u200b", "\u200b", true);
 
       // Add the user roles to an embed field.
       userEmbed.addField(
