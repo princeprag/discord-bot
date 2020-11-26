@@ -1,5 +1,4 @@
 import ListenerInt from "@Interfaces/ListenerInt";
-import { botConnect } from "botConnect";
 
 const botMentionListener: ListenerInt = {
   name: "Becca Mention Listener",
