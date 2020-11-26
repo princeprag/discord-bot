@@ -61,6 +61,7 @@ async function onMessageDelete(
     const attached = message.attachments.first();
     if (attached) {
       const attachEmbed = new MessageEmbed()
+        .setTitle(attached.name)
         .setDescription(content || "No message content")
         .setImage(attached.proxyURL);
       await client.sendMessageToLogsChannel(guild, attachEmbed);
