@@ -24,6 +24,14 @@ async function onMessageDelete(
       return;
     }
 
+    const messageContent = message.embeds[0]
+      ? "See the below embed"
+      : message.attachments.first()
+      ? "See the below attachment"
+      : content
+      ? content
+      : "Sorry, but I could not find the content.";
+
     // Send an embed message to the logs channel.
     await client.sendMessageToLogsChannel(
       guild,
@@ -42,12 +50,21 @@ async function onMessageDelete(
           },
           {
             name: "Content",
-            value:
-              content ||
-              "I am so sorry, but I could not tell what the message said.",
+            value: messageContent,
           }
         )
     );
+    if (message.embeds[0]) {
+      await client.sendMessageToLogsChannel(guild, message.embeds[0]);
+    }
+
+    const attached = message.attachments.first();
+    if (attached) {
+      const attachEmbed = new MessageEmbed()
+        .setDescription(content || "No message content")
+        .setImage(attached.proxyURL);
+      await client.sendMessageToLogsChannel(guild, attachEmbed);
+    }
   } catch (error) {
     if (client.debugHook) {
       client.debugHook.send(
