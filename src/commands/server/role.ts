@@ -16,7 +16,7 @@ const role: CommandInt = {
       }
 
       // Get role mention
-      const targetRole = commandArguments.shift();
+      const targetRole = commandArguments.join(" ");
 
       // If no argument provided, exit.
       if (!targetRole) {
