@@ -126,6 +126,11 @@ const unrestrict: CommandInt = {
       //respond
       await message.reply("Okay! I have taken care of that for you.");
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the unrestrict command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the unrestrict command:`
       );

@@ -17,6 +17,11 @@ const kirby: CommandInt = {
       await sleep(1000);
       await channel.send("^('.')^");
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the kirby command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the kirby command:`
       );

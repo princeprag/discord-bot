@@ -107,8 +107,13 @@ const list: CommandInt = {
 
       return;
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the list command. Please check the logs.`
+        );
+      }
       console.log(
-        `${message.guild?.name} had the following error with the leave command:`
+        `${message.guild?.name} had the following error with the list command:`
       );
       console.log(error);
       message.reply("I am so sorry, but I cannot do that at the moment.");

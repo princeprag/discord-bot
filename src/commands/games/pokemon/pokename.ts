@@ -78,6 +78,11 @@ const pokename: CommandInt = {
         await message.reply("I am so sorry, but I could not find anything...");
       }
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the pokemon command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the pokename command:`
       );

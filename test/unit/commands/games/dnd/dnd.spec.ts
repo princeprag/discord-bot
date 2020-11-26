@@ -83,16 +83,4 @@ describe("command: games/dnd/dnd", () => {
       expect(embed[name]).to.deep.equal(value);
     });
   });
-  context("when error is thrown", () => {
-    it("should reply standard error message", async () => {
-      const message = dndMsg();
-      message.channel.send.onFirstCall().rejects();
-      message.reply.onFirstCall().resolves();
-
-      await cmd.run(message);
-      expect(message.reply).calledWith(
-        "I am so sorry, but I cannot do that at the moment."
-      );
-    });
-  });
 });

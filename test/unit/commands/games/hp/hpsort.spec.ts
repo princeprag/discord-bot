@@ -22,17 +22,7 @@ describe("command: games/hp/hpsort", () => {
   afterEach(() => {
     sandbox.restore();
   });
-  context("when an unhandled error occurs", () => {
-    it("should repy with default error message", async () => {
-      const expected = "I am so sorry, but I cannot do that at the moment.";
-      const message = buildMessageInt(baseCommand, "", "", botColor);
-      message.reply = sandbox.stub().resolves();
 
-      await cmd.run(message);
-
-      expect(message.reply).calledWith(expected);
-    });
-  });
   context("when house does not return data", () => {
     it("should repy with no data error message", async () => {
       const expected = "I am so sorry, but I could not find anything...";

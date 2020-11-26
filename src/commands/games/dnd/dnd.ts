@@ -59,6 +59,11 @@ const dnd: CommandInt = {
       // Send the embed to the current channel.
       await channel.send(dndEmbed);
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the dnd command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the dnd command:`
       );

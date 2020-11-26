@@ -1,12 +1,12 @@
 import CommandInt from "@Interfaces/CommandInt";
 import { ContributorInt } from "@Interfaces/commands/ContributorInt";
 import Axios from "axios";
-import { Message, MessageEmbed } from "discord.js";
+import { MessageEmbed } from "discord.js";
 
 const contributors: CommandInt = {
   name: "contributors",
   description: "Lists the contributors for the bot.",
-  run: async (message: Message) => {
+  run: async (message) => {
     try {
       //get the data from the file - Axios won't target the local file :(
       const data = await Axios.get(
@@ -32,6 +32,11 @@ const contributors: CommandInt = {
       //send it!
       await message.reply(contribEmbed);
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the contributors command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the contributors command:`
       );

@@ -24,6 +24,11 @@ const wiki: CommandInt = {
         `Here is what I found: https://en.wikipedia.org/wiki/${query}`
       );
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the wiki command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the wiki command:`
       );

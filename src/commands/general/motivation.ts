@@ -24,6 +24,11 @@ const motivation: CommandInt = {
           .setFooter(author)
       );
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the motivation command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the motivation command:`
       );

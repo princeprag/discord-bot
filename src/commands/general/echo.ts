@@ -80,6 +80,11 @@ const echo: CommandInt = {
         `Okay, I have sent your message to the ${targetChannel.name} channel in ${targetGuild.name}.`
       );
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the echo command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the echo command:`
       );

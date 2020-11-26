@@ -47,6 +47,11 @@ export async function botConnect(): Promise<void> {
     })
   );
 
+  // Add the debug hook
+  if (debugChannelHook) {
+    client.debugHook = debugChannelHook;
+  }
+
   // Add the bot version to the bot client.
   client.version = version;
 

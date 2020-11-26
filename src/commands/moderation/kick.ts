@@ -129,6 +129,11 @@ const kick: CommandInt = {
       // Send the embed to the logs channel.
       await bot.sendMessageToLogsChannel(guild, kickLogEmbed);
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the kick command. Please check the logs.`
+        );
+      }
       console.log("Kick Command", error);
 
       await message.reply("I am so sorry, but I cannot kick this user.");

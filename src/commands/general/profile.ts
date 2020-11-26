@@ -133,6 +133,11 @@ const profile: CommandInt = {
       );
       await channel.send(generateProfile(addData).setColor(bot.color));
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the profile command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the profile command:`
       );

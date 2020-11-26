@@ -52,19 +52,4 @@ describe("command: art", () => {
       expect(embed[name]).to.deep.equal(value);
     });
   });
-  context("when error is thrown", () => {
-    it("should reply standard error message", async () => {
-      const message = buildMessageInt(baseCommand, "", "", botColor);
-      message.reply = sandbox.stub();
-      message.reply.onFirstCall().rejects();
-      message.reply.onSecondCall().resolves();
-
-      await cmd.run(message);
-      expect(message.reply).calledTwice;
-      const secondCall: SinonSpyCall = message.reply.getCall(1);
-      expect(secondCall).calledWith(
-        "I am so sorry, but I cannot do that at the moment."
-      );
-    });
-  });
 });

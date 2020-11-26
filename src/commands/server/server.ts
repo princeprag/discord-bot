@@ -102,6 +102,11 @@ const server: CommandInt = {
       // Send the server embed to the current channel.
       await channel.send(serverEmbed);
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the server command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the server command:`
       );

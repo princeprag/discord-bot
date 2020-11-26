@@ -45,21 +45,6 @@ describe("command: games/dnd/dndschool", () => {
       );
     });
   });
-  context("when get fails", () => {
-    it("should reply with error message", async () => {
-      const dndClass = "programmer";
-      const get = sandbox.stub();
-      sandbox.replace(axios, "get", get);
-      const message = dndclassMsg(dndClass);
-      message.reply.resolves();
-
-      await cmd.run(message);
-
-      expect(message.reply).calledWith(
-        "I am so sorry, but I cannot do that at the moment."
-      );
-    });
-  });
   context("when get succeeds but data has an error", () => {
     it("should reply with error message", async () => {
       const dndClass = "programmer";
