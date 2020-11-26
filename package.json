@@ -2,7 +2,7 @@
   "name": "becca_lyria",
   "author": "Nicholas Carrigan",
   "main": "./prod/src/main.js",
-  "version": "8.0.3",
+  "version": "8.1.0",
   "license": "Hippocratic 2.1",
   "private": false,
   "engines": {
