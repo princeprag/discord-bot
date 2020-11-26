@@ -133,24 +133,6 @@ describe("command: games/hp/hpchar", () => {
     });
   });
 
-  describe("when error occurred", () => {
-    it("should reply standard error message", async () => {
-      const expected = "I am so sorry, but I cannot do that at the moment.";
-      const message = buildMessageInt(
-        `${baseCommand} harry potter`,
-        "",
-        "",
-        botColor
-      );
-      message.reply = sandbox.stub();
-      message.channel.send = sandbox.stub().rejects();
-
-      await cmd.run(message);
-
-      expect(message.reply).calledWith(expected);
-    });
-  });
-
   describe("when command is missing name", () => {
     it("should reply missing name error message", async () => {
       const expected =

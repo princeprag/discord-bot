@@ -56,26 +56,6 @@ describe("command: games/hp/hpspell", () => {
     });
   });
 
-  describe("when error occurs", () => {
-    it("shoud warn the sender", async () => {
-      const expected = "I am so sorry, but I cannot do that at the moment.";
-      const msg = buildMessageInt(
-        `${baseCommand} some spell`,
-        "",
-        "",
-        botColor
-      );
-      msg.reply = sandbox.stub();
-      const get = sandbox.stub();
-      get.rejects();
-      sandbox.replace(axios, "get", get);
-
-      await cmd.run(msg);
-
-      expect(msg.reply).calledWith(expected);
-    });
-  });
-
   describe("when found in response", () => {
     it("shoud send embedded msg", async () => {
       const msg = buildMessageInt(`${baseCommand} spell`, "", "", botColor);
