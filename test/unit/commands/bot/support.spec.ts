@@ -23,7 +23,7 @@ describe("command: support", () => {
     {
       name: "description",
       value:
-        "I am sorry if I couldn't explain things well enough. You can join my [support server](https://discord.gg/PHqDbkg) or check my [documentation page](https://beccalyria.nhcarrigan.com/) for some additional assistance.",
+        "I am sorry if I couldn't explain things well enough. You can join my [support server](http://chat.nhcarrigan.com) or check my [documentation page](https://beccalyria.nhcarrigan.com/) for some additional assistance.",
     },
   ].forEach(({ name, value }) => {
     it(`should set ${name} appropriately`, async () => {
