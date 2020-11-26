@@ -66,6 +66,11 @@ const thanksListener: ListenerInt = {
       channel.stopTyping();
       await channel.send(replies.join(`\n`));
     } catch (error) {
+      if (message.bot.debugHook) {
+        message.bot.debugHook.send(
+          `${message.guild?.name} had an error with the thanks listener. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the thanks listener:`
       );
