@@ -2,7 +2,7 @@ import { ArtInt } from "@Interfaces/commands/ArtInt";
 
 export const artList: ArtInt[] = [
   {
-    file_name: "Moonlight 6.jpg",
+    file_name: "Moonlight 1.png",
     artist: "Moonlight",
     artist_url: "https://www.instagram.com/moonlightkcreations/",
   },
@@ -22,7 +22,7 @@ export const artList: ArtInt[] = [
     artist_url: "https://www.instagram.com/moonlightkcreations/",
   },
   {
-    file_name: "Moonlight 1.png",
+    file_name: "Moonlight 6.jpg",
     artist: "Moonlight",
     artist_url: "https://www.instagram.com/moonlightkcreations/",
   },
