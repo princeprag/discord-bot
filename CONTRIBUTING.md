@@ -37,8 +37,10 @@ Do you need more information on how to contribute? Join either of the Discord se
 ## Other contributions
 
 If you are not comfortable with working on the codebase, there are still other ways you can contribute! You can:
+
 - Help test features
 - Help propose new features
 - Help keep the documentation here and in the [documentation repository](https://github.com/nhcarrigan/Becca-Lyria-documentation/) up to date
+- Create more [art](./img) for Becca!
 
-Big thanks to ALL of our contributors! You are awesome! 
+Big thanks to ALL of our contributors! You are awesome!
