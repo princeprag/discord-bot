@@ -14,7 +14,7 @@ const maze: CommandInt = {
   ],
   run: async (message) => {
     try {
-      const { bot, channel, commandArguments, guild } = message;
+      const { Becca, channel, commandArguments, guild } = message;
 
       if (!guild) {
         return;
@@ -36,7 +36,7 @@ const maze: CommandInt = {
       const mazeEmbed = new MessageEmbed();
 
       // Add the light purple color.
-      mazeEmbed.setColor(bot.color);
+      mazeEmbed.setColor(Becca.color);
 
       // Check if the action is `request`.
       if (action === "request") {
@@ -59,7 +59,7 @@ const maze: CommandInt = {
 
         mazeEmbed.setDescription(
           `When you have finished, please use \`${
-            bot.prefix[guild.id]
+            Becca.prefix[guild.id]
           }maze solve ${
             mazePath.split("/").reverse()[0]
           } <answer>\`, where answer is a null-spaced string of cardinal directions.`
@@ -149,8 +149,8 @@ const maze: CommandInt = {
         message.channel.send(challengeEmbed);
         return;
       }
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the maze command. Please check the logs.`
         );
       }

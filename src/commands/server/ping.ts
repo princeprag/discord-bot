@@ -7,7 +7,7 @@ import { MessageEmbed } from "discord.js";
  */
 const ping: CommandInt = {
   name: "ping",
-  description: "Pings the bot to verify online status.",
+  description: "Pings Becca to verify online status.",
   run: async (message) => {
     try {
       // Send the ping initial message to the current channel.
@@ -41,8 +41,8 @@ const ping: CommandInt = {
           .setFooter(speed)
       );
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the ping command. Please check the logs.`
         );
       }

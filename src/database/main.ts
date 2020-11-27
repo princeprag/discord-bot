@@ -1,4 +1,4 @@
-import ClientInt from "@Interfaces/ClientInt";
+import BeccaInt from "@Interfaces/BeccaInt";
 import { WebhookClient } from "discord.js";
 import { connect } from "mongoose";
 
@@ -12,7 +12,7 @@ import { connect } from "mongoose";
  */
 async function connectDatabase(
   debugChannelHook: WebhookClient | null,
-  client: ClientInt
+  client: BeccaInt
 ): Promise<void> {
   try {
     await connect(process.env.MONGODB || "", {

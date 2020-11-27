@@ -9,7 +9,7 @@ const magic: CommandInt = {
   parameters: ["`<card>`: name of the card to search for"],
   run: async (message) => {
     try {
-      const { bot, channel, commandArguments } = message;
+      const { Becca, channel, commandArguments } = message;
 
       // Get the arguments as a magic query.
       const query = commandArguments.join(" ");
@@ -42,7 +42,7 @@ const magic: CommandInt = {
       const { flavor, imageUrl, manaCost, name, text, types } = card;
 
       // Add the light purple color.
-      cardEmbed.setColor(bot.color);
+      cardEmbed.setColor(Becca.color);
 
       // Add the card name to the embed title.
       cardEmbed.setTitle(name);
@@ -71,8 +71,8 @@ const magic: CommandInt = {
       // Send the card embed to the current channel.
       await channel.send(cardEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the magic command. Please check the logs.`
         );
       }

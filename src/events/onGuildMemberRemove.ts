@@ -1,4 +1,4 @@
-import ClientInt from "@Interfaces/ClientInt";
+import ClientInt from "@Interfaces/BeccaInt";
 import {
   GuildMember,
   MessageEmbed,
@@ -9,7 +9,7 @@ import { sleep } from "@Utils/extendsMessageToMessageInt";
 
 async function onGuildMemberRemove(
   member: GuildMember | PartialGuildMember,
-  client: ClientInt
+  Becca: ClientInt
 ): Promise<void> {
   try {
     // Get the user and the current guild.
@@ -20,7 +20,7 @@ async function onGuildMemberRemove(
       return;
     }
 
-    const serverSettings = await client.getSettings(guild.id, guild.name);
+    const serverSettings = await Becca.getSettings(guild.id, guild.name);
 
     // Get the goodbye channel from the database.
     const goodbyeChannel = guild.channels.cache.find(
@@ -50,8 +50,8 @@ async function onGuildMemberRemove(
         .addField("The user had these roles:", roleList)
     );
   } catch (error) {
-    if (client.debugHook) {
-      client.debugHook.send(
+    if (Becca.debugHook) {
+      Becca.debugHook.send(
         `${member.guild?.name} had an error with the automatic goodbye feature. Please check the logs.`
       );
     }

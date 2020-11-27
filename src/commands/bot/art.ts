@@ -44,8 +44,8 @@ const art: CommandInt = {
       //send it!
       await message.reply(artEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the art command. Please check the logs.`
         );
       }

@@ -11,7 +11,7 @@ const pokenum: CommandInt = {
   ],
   run: async (message) => {
     try {
-      const { bot, channel, commandArguments } = message;
+      const { Becca, channel, commandArguments } = message;
 
       // Get the next argument as the pokemon number.
       const numberArg = commandArguments.shift();
@@ -45,7 +45,7 @@ const pokenum: CommandInt = {
       const pokeEmbed = new MessageEmbed();
 
       // Add the light purple color.
-      pokeEmbed.setColor(bot.color);
+      pokeEmbed.setColor(Becca.color);
 
       // Check if the number is zero.
       if (number === 0) {
@@ -96,7 +96,7 @@ const pokenum: CommandInt = {
                 .join(", ") || "no stats found",
           }
         );
-        pokeEmbed.setColor(bot.color);
+        pokeEmbed.setColor(Becca.color);
         pokeEmbed.setFooter(
           `Weight: ${pokemon.weight}, Height: ${pokemon.height}`
         );
@@ -105,8 +105,8 @@ const pokenum: CommandInt = {
       // Send the embed message to the current channel.
       await channel.send(pokeEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the pokenum command. Please check the logs.`
         );
       }

@@ -70,8 +70,8 @@ const space: CommandInt = {
 
       await channel.send(spaceEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the space command. Please check the logs.`
         );
       }

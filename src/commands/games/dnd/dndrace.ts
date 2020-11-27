@@ -108,8 +108,8 @@ const dndrace: CommandInt = {
       // Send the embed to the current channel.
       await channel.send(dndRaceEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the dndrace command. Please check the logs.`
         );
       }

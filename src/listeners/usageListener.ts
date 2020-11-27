@@ -69,8 +69,8 @@ const usageListener: ListenerInt = {
       // Save the command log.
       await commandLog.save();
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the usage listener. Please check the logs.`
         );
       }

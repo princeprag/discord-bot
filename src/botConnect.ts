@@ -1,7 +1,7 @@
 import "module-alias/register";
 import { Client, WebhookClient } from "discord.js";
 import connectDatabase from "@Database";
-import ClientInt from "@Interfaces/ClientInt";
+import BeccaInt from "@Interfaces/BeccaInt";
 import extendsClientToClientInt from "@Utils/extendsClientToClientInt";
 import { getCommands, getListeners } from "@Utils/readDirectory";
 import { version } from "../package.json";
@@ -41,7 +41,7 @@ export async function botConnect(): Promise<void> {
   }
 
   // Create a new Discord bot object.
-  const client: ClientInt = extendsClientToClientInt(
+  const Becca: BeccaInt = extendsClientToClientInt(
     new Client({
       partials: ["USER"],
     })
@@ -49,79 +49,72 @@ export async function botConnect(): Promise<void> {
 
   // Add the debug hook
   if (debugChannelHook) {
-    client.debugHook = debugChannelHook;
+    Becca.debugHook = debugChannelHook;
   }
 
-  // Add the bot version to the bot client.
-  client.version = version;
+  // Add Becca's version to the client.
+  Becca.version = version;
 
   // Load the commands.
-  client.commands = await getCommands();
+  Becca.commands = await getCommands();
 
   // Load the listeners.
-  client.customListeners = await getListeners();
+  Becca.customListeners = await getListeners();
 
-  // When the bot is logged.
-  client.on(
+  // When Becca connects...
+  Becca.on(
     "ready",
-    async () => await onReady(client, debugChannelHook, node_env)
+    async () => await onReady(Becca, debugChannelHook, node_env)
   );
 
   // On guild create event.
-  client.on(
+  Becca.on(
     "guildCreate",
-    async (guild) => await onGuildCreate(guild, debugChannelHook, client)
+    async (guild) => await onGuildCreate(guild, debugChannelHook, Becca)
   );
 
   // On guild delete event.
-  client.on(
+  Becca.on(
     "guildDelete",
-    async (guild) => await onGuildDelete(guild, debugChannelHook, client)
+    async (guild) => await onGuildDelete(guild, debugChannelHook, Becca)
   );
 
   // When a member joins to a server.
-  client.on(
+  Becca.on(
     "guildMemberAdd",
-    async (member) => await onGuildMemberAdd(member, client)
+    async (member) => await onGuildMemberAdd(member, Becca)
   );
 
   // When a member left a server.
-  client.on(
+  Becca.on(
     "guildMemberRemove",
-    async (member) => await onGuildMemberRemove(member, client)
+    async (member) => await onGuildMemberRemove(member, Becca)
   );
 
   // When an user sends a message to a channel.
-  client.on("message", async (message) => await onMessage(message, client));
+  Becca.on("message", async (message) => await onMessage(message, Becca));
 
   // When an user deletes a message from a channel.
-  client.on(
+  Becca.on(
     "messageDelete",
-    async (message) => await onMessageDelete(message, client)
+    async (message) => await onMessageDelete(message, Becca)
   );
 
   // When an user edits a message.
-  client.on(
+  Becca.on(
     "messageUpdate",
     async (oldMessage, newMessage) =>
-      await onMessageUpdate(oldMessage, newMessage, client)
+      await onMessageUpdate(oldMessage, newMessage, Becca)
   );
 
-  // Log the bot with the Discord token.
-  await client.login(process.env.DISCORD_TOKEN);
+  // Connect Becca
+  await Becca.login(process.env.DISCORD_TOKEN);
 
   //set custom status
-  await client.user?.setActivity("for people who need my help~!", {
+  await Becca.user?.setActivity("for people who need my help~!", {
     type: "WATCHING",
   });
 
   // Connect to the MongoDB database.
-  await connectDatabase(debugChannelHook, client);
-
-  // Send a debug log before turn off the bot.
-  process.once("beforeExit", () => {
-    if (debugChannelHook) {
-      debugChannelHook.send(`${client.user?.username} is shutting down.`);
-    }
-  });
+  await connectDatabase(debugChannelHook, Becca);
 }

@@ -1,5 +1,5 @@
 import { Message, MessageEmbed } from "discord.js";
-import ClientInt from "./ClientInt";
+import ClientInt from "./BeccaInt";
 
 /**
  * Message interface extended by Message of discord.js.
@@ -7,10 +7,10 @@ import ClientInt from "./ClientInt";
  */
 interface MessageInt extends Message {
   /**
-   * Bot client.
+   * Becca's client.
    * @property
    */
-  bot: ClientInt;
+  Becca: ClientInt;
 
   /**
    * Name of the command.

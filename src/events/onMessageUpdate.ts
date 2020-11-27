@@ -1,4 +1,4 @@
-import ClientInt from "@Interfaces/ClientInt";
+import ClientInt from "@Interfaces/BeccaInt";
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
 
 /**
@@ -8,13 +8,13 @@ import { Message, MessageEmbed, PartialMessage } from "discord.js";
  * @function
  * @param { Message | PartialMessage } oldMessage
  * @param { Message | PartialMessage } newMessage
- * @param { ClientInt } client
+ * @param { ClientInt } Becca
  * @returns { Promise<void> }
  */
 async function onMessageUpdate(
   oldMessage: Message | PartialMessage,
   newMessage: Message | PartialMessage,
-  client: ClientInt
+  Becca: ClientInt
 ): Promise<void> {
   try {
     // Ge the author and the current server from the new message.
@@ -26,7 +26,7 @@ async function onMessageUpdate(
     }
 
     // Send an embed message to the logs channel.
-    await client.sendMessageToLogsChannel(
+    await Becca.sendMessageToLogsChannel(
       guild,
       new MessageEmbed().setTitle("A message was updated!").addFields(
         {
@@ -50,8 +50,8 @@ async function onMessageUpdate(
       )
     );
   } catch (error) {
-    if (client.debugHook) {
-      client.debugHook.send(
+    if (Becca.debugHook) {
+      Becca.debugHook.send(
         `${oldMessage.guild?.name} had an error with the message update feature. Please check the logs.`
       );
     }

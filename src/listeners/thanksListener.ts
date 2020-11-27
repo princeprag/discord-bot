@@ -6,7 +6,7 @@ const thanksListener: ListenerInt = {
   description: "Congratulates users who are thanked.",
   run: async (message, config) => {
     try {
-      const { author, bot, channel, guild } = message;
+      const { author, Becca, channel, guild } = message;
 
       // Handle no guild
       if (!guild) {
@@ -29,8 +29,8 @@ const thanksListener: ListenerInt = {
       // Isn't this gorgeous?
       const thankRegex = /((?:^|\s)(?:(?:th(?:n[qx]|x)|t[xyq]|tn(?:[x]){0,2})|\w*\s*[.,]*\s*than[kx](?:[sxz]){0,2}|than[kx](?:[sxz]){0,2}(?:[uq]|y(?:ou)?)?)|grazie|arigato(?:[u]{0,1})|doumo|gracias?|spasibo|dhanyavaad(?:hamulu)?|o?brigad(?:o|a)|dziekuje|(?:re)?merci|multumesc|shukra?an|danke)\b/gi;
 
-      // Bot ignores itself
-      if (author === bot.user) {
+      // Becca ignores herself
+      if (author === Becca.user) {
         return;
       }
 
@@ -50,7 +50,7 @@ const thanksListener: ListenerInt = {
 
       //iterate through mentions
       for (const mention of mentions) {
-        if (mention === bot.user) {
+        if (mention === Becca.user) {
           replies.push(`Aww, you're welcome! I am very glad I could help!`);
           continue;
         }
@@ -66,8 +66,8 @@ const thanksListener: ListenerInt = {
       channel.stopTyping();
       await channel.send(replies.join(`\n`));
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the thanks listener. Please check the logs.`
         );
       }

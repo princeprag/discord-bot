@@ -2,7 +2,7 @@ import CommandInt from "@Interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
 
 const INVITE_CONSTANTS = {
-  title: "Bot invitation",
+  title: "Invite Becca!",
   description:
     "Thank you for your desire to allow me in your server. Here is an [invite link](https://discord.com/api/oauth2/authorize?client_id=716707753090875473&permissions=268527702&scope=bot) - please click to add me!.",
   footer: "I feel so happy! 💜",
@@ -10,22 +10,22 @@ const INVITE_CONSTANTS = {
 
 const invite: CommandInt = {
   name: "invite",
-  description: "Get the invitation url of the bot to your server.",
+  description: "Get a link to invite Becca to your server.",
   run: async (message) => {
     try {
-      const { bot, channel } = message;
+      const { Becca, channel } = message;
 
       // Send an embed message to the current channel.
       await channel.send(
         new MessageEmbed()
-          .setColor(bot.color)
+          .setColor(Becca.color)
           .setTitle(INVITE_CONSTANTS.title)
           .setDescription(INVITE_CONSTANTS.description)
           .setFooter(INVITE_CONSTANTS.footer)
       );
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the invite command. Please check the logs.`
         );
       }

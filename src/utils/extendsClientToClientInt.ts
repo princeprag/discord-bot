@@ -1,5 +1,5 @@
 import { Client, Guild, MessageEmbed, TextChannel } from "discord.js";
-import ClientInt from "@Interfaces/ClientInt";
+import BeccaInt from "@Interfaces/BeccaInt";
 import { sleep } from "./extendsMessageToMessageInt";
 import ServerModel, { ServerModelInt } from "@Models/ServerModel";
 import { prefix as defaultPrefix } from "../../default_config.json";
@@ -146,7 +146,7 @@ async function getSettings(
  * @returns { Promise<void> }
  */
 async function sendMessageToLogsChannel(
-  this: ClientInt,
+  this: BeccaInt,
   guild: Guild,
   message: string | MessageEmbed
 ): Promise<void> {
@@ -187,8 +187,8 @@ async function sendMessageToLogsChannel(
  * @param { Client } client
  * @returns { ClientInt }
  */
-function extendsClientToClientInt(client: Client): ClientInt {
-  const new_client = client as ClientInt;
+function extendsClientToClientInt(client: Client): BeccaInt {
+  const new_client = client as BeccaInt;
 
   new_client.prefix = {};
   new_client.color = "#AB47E6";

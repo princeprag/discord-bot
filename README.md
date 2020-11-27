@@ -17,11 +17,11 @@
 
 Welcome to the repository for `Becca Lyria`!
 
-[You can invite this bot to your own server!](https://discord.com/oauth2/authorize?client_id=716707753090875473&scope=bot&permissions=268495990)
+[You can invite Becca to your own server!](https://discord.com/oauth2/authorize?client_id=716707753090875473&scope=bot&permissions=268495990)
 
 ## Join Our Team!
 
-Are you interested in contributing to the development of this bot? We welcome all who want to assist! If you would like to contribute, you are welcome to fork the repository and make your changes. Submit a pull request when you are ready for us to review your changes. You can also submit issues for various purposes. For more information, please review our [contributing guidelines](./CONTRIBUTING.md).
+Are you interested in contributing to Becca's development? We welcome all who want to assist! If you would like to contribute, you are welcome to fork the repository and make your changes. Submit a pull request when you are ready for us to review your changes. You can also submit issues for various purposes. For more information, please review our [contributing guidelines](./CONTRIBUTING.md).
 
 ## Feedback and Bugs
 
@@ -37,7 +37,7 @@ If you have questions regarding contributing, using the project, or any related 
 
 ## Art Credits
 
-Credit for the bot's avatar and the server art goes to [MoonlightKCreations](https://www.instagram.com/moonlightkcreations/). If you want to show some support, consider [commissioning her!](https://meitanteimoonlight.wixsite.com/moonlightkcreations/commissions).
+Credit for Becca's avatar and the server art goes to [MoonlightKCreations](https://www.instagram.com/moonlightkcreations/). If you want to show some support, consider [commissioning her!](https://meitanteimoonlight.wixsite.com/moonlightkcreations/commissions).
 
 ## Contributors ✨
 

@@ -8,7 +8,7 @@ const maths: CommandInt = {
   parameters: ["`<problem>`: expression to process"],
   run: async (message) => {
     try {
-      const { bot, channel, commandArguments } = message;
+      const { Becca, channel, commandArguments } = message;
 
       // Get the arguments as the problem.
       const problem = commandArguments.join(" ");
@@ -33,15 +33,15 @@ const maths: CommandInt = {
       // Send an embed message to the current channel.
       await channel.send(
         new MessageEmbed()
-          .setColor(bot.color)
+          .setColor(Becca.color)
           .setTitle("Calculating...")
           .setDescription("I hope I did this right.")
           .addField("Input", problem)
           .addField("Result", answer)
       );
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the maths command. Please check the logs.`
         );
       }

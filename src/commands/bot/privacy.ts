@@ -10,7 +10,7 @@ const PRIVACY_CONSTANTS = {
 const privacy: CommandInt = {
   name: "privacy",
   description:
-    "Generates an embed with brief information about the bot's privacy policy.",
+    "Generates an embed with brief information about the Becca's privacy policy.",
   run: async (message) => {
     try {
       const { channel } = message;
@@ -22,8 +22,8 @@ const privacy: CommandInt = {
           .setDescription(PRIVACY_CONSTANTS.description)
       );
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the privacy command. Please check the logs.`
         );
       }

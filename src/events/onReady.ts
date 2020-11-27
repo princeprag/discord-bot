@@ -1,26 +1,26 @@
-import ClientInt from "@Interfaces/ClientInt";
+import ClientInt from "@Interfaces/BeccaInt";
 import { WebhookClient } from "discord.js";
 
 /**
- * Send logs messages when the bot is ready.
+ * Send logs messages when Becca is ready.
  *
  * @async
  * @function
  * @returns { Promise<void> }
  */
 async function onReady(
-  client: ClientInt,
+  Becca: ClientInt,
   debugChannelHook: WebhookClient | null,
   node_env: string
 ): Promise<void> {
   console.log("Activate the Omega");
 
   if (debugChannelHook) {
-    // Get the user from the bot client.
-    const { user, version } = client;
+    // Get the user from the client.
+    const { user, version } = Becca;
 
-    // Add the bot updtime timestamp.
-    client.uptime_timestamp = Date.now();
+    // Add the uptime timestamp.
+    Becca.uptime_timestamp = Date.now();
 
     if (user) {
       // Send a message to the debug channel.

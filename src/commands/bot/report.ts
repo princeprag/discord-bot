@@ -12,18 +12,18 @@ const report: CommandInt = {
   description: "Generates a link to the issues page",
   run: async (message) => {
     try {
-      const { bot, channel } = message;
+      const { Becca, channel } = message;
 
       // Send an embed message to the current channel.
       await channel.send(
         new MessageEmbed()
-          .setColor(bot.color)
+          .setColor(Becca.color)
           .setTitle(REPORT_CONSTANTS.title)
           .setDescription(REPORT_CONSTANTS.description)
       );
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the report command. Please check the logs.`
         );
       }

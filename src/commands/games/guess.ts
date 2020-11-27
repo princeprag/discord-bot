@@ -4,7 +4,7 @@ import { Message } from "discord.js";
 const guess: CommandInt = {
   name: "guess",
   description:
-    "Play a Guess the Number game! Bot will choose a number between 1 and 1000. Players have 10 seconds to guess. Closest guess wins!",
+    "Play a Guess the Number game! Becca will choose a number between 1 and 1000. Players have 10 seconds to guess. Closest guess wins!",
   run: async (message) => {
     try {
       const { channel } = message;
@@ -55,8 +55,8 @@ const guess: CommandInt = {
         );
       });
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the guess command. Please check the logs.`
         );
       }

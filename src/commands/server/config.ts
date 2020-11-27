@@ -4,15 +4,15 @@ import { MessageEmbed } from "discord.js";
 const config: CommandInt = {
   name: "config",
   description:
-    "Returns the bot configuration for this server. (The parameters are only for server administrators)",
+    "Returns Becca's configuration for this server. (The parameters are only for server administrators)",
   parameters: [
     "`<setting>` - The setting you would like to set. See the docs for available options.",
     "`<value>` - The value of that setting. See the docs for available options.",
   ],
   run: async (message, config) => {
     try {
-      // Get the bot client, current channel, command arguments and current guild, mentions and member of the message.
-      const { bot, channel, commandArguments, guild, member } = message;
+      // Get the client, current channel, command arguments and current guild, mentions and member of the message.
+      const { Becca, channel, commandArguments, guild, member } = message;
 
       // Check if the guild and member are valid.
       if (!guild || !member) {
@@ -29,8 +29,8 @@ const config: CommandInt = {
         return;
       }
 
-      // Get `getTextChannelFromSettings`, the prefix and `setSetting` from the bot client.
-      const { prefix, setSetting } = bot;
+      // Get `getTextChannelFromSettings`, the prefix and `setSetting` from the client.
+      const { prefix, setSetting } = Becca;
 
       // Get the next argument as the config type.
       const configType = commandArguments.shift();
@@ -297,8 +297,8 @@ const config: CommandInt = {
       // Send confirmation.
       await channel.send(confirmation);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the config command. Please check the logs.`
         );
       }

@@ -1,4 +1,4 @@
-import ClientInt from "@Interfaces/ClientInt";
+import ClientInt from "@Interfaces/BeccaInt";
 import {
   GuildMember,
   MessageEmbed,
@@ -18,12 +18,12 @@ import { sleep } from "@Utils/extendsMessageToMessageInt";
  * @async
  * @function
  * @param { GuildMember | PartialGuildMember } member
- * @param { ClientInt } client
+ * @param { ClientInt } Becca
  * @returns { Promise<void> }
  */
 async function onGuildMemberAdd(
   member: GuildMember | PartialGuildMember,
-  client: ClientInt
+  Becca: ClientInt
 ): Promise<void> {
   try {
     // Get the user and the current guild.
@@ -34,7 +34,7 @@ async function onGuildMemberAdd(
       return;
     }
 
-    const serverSettings = await client.getSettings(guild.id, guild.name);
+    const serverSettings = await Becca.getSettings(guild.id, guild.name);
 
     // Get the welcomes channel from the database.
     const welcomesChannel = guild.channels.cache.find(
@@ -76,8 +76,8 @@ async function onGuildMemberAdd(
         .setDescription(welcomeMessage)
     );
   } catch (error) {
-    if (client.debugHook) {
-      client.debugHook.send(
+    if (Becca.debugHook) {
+      Becca.debugHook.send(
         `${member.guild?.name} had an error with the automatic welcome feature. Please check the logs.`
       );
     }

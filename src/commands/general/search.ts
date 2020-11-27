@@ -26,8 +26,8 @@ const search: CommandInt = {
         `I found something! https://google.com/search?q=${query}`
       );
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the search command. Please check the logs.`
         );
       }

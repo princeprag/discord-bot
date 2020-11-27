@@ -13,14 +13,14 @@ const star: CommandInt = {
     try {
       const {
         author,
-        bot,
+        Becca,
         channel,
         commandArguments,
         guild,
         mentions,
       } = message;
 
-      const { user } = bot;
+      const { user } = Becca;
 
       if (!guild || !user) {
         return;
@@ -90,8 +90,8 @@ const star: CommandInt = {
         `Okay, I sent ${userToStarMentioned.toString()} a gold star!`
       );
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the star command. Please check the logs.`
         );
       }

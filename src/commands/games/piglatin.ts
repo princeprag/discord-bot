@@ -68,8 +68,8 @@ const pigLatin: CommandInt = {
 
       await channel.send(pigEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the piglatin command. Please check the logs.`
         );
       }

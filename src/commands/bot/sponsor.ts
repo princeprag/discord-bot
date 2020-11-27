@@ -6,7 +6,7 @@ const sponsor: CommandInt = {
   description: "Returns an embed containing the sponsor links.",
   run: async (message) => {
     try {
-      const { channel, bot } = message;
+      const { channel, Becca } = message;
 
       //create embed
       const sponsorEmbed = new MessageEmbed()
@@ -14,7 +14,7 @@ const sponsor: CommandInt = {
         .setDescription(
           "Are you interested in sponsoring my development and helping fund my improvement? Thank you very much! Words cannot express my appreciation!"
         )
-        .setColor(bot.color)
+        .setColor(Becca.color)
         .addFields(
           {
             name: "Monthly Donation",
@@ -29,8 +29,8 @@ const sponsor: CommandInt = {
         );
       await channel.send(sponsorEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the sponsor command. Please check the logs.`
         );
       }
