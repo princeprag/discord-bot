@@ -5,7 +5,7 @@ import ServerModel, { ServerModelInt } from "@Models/ServerModel";
 import { prefix as defaultPrefix } from "../../default_config.json";
 
 /**
- * See `./src/interfaces/ClientInt.ts` for more information.
+ * See `./src/interfaces/BeccaInt.ts` for more information.
  *
  * @async
  * @function
@@ -99,7 +99,7 @@ async function setSetting(
 }
 
 /**
- * See `./src/interfaces/ClientInt.ts` for more information.
+ * See `./src/interfaces/BeccaInt.ts` for more information.
  *
  * @async
  * @function
@@ -136,11 +136,11 @@ async function getSettings(
 }
 
 /**
- * See `./src/interfaces/ClientInt.ts` for more information.
+ * See `./src/interfaces/BeccaInt.ts` for more information.
  *
  * @async
  * @function
- * @param { ClientInt } this
+ * @param { BeccaInt } this
  * @param { Guild } guild
  * @param { string | MessageEmbed } message
  * @returns { Promise<void> }
@@ -181,13 +181,13 @@ async function sendMessageToLogsChannel(
 }
 
 /**
- * Add the ClientInt methods to a Discord Client interface.
+ * Add the BeccaInt methods to a Discord Client interface.
  *
  * @function
  * @param { Client } client
- * @returns { ClientInt }
+ * @returns { BeccaInt }
  */
-function extendsClientToClientInt(client: Client): BeccaInt {
+function extendsClientToBeccaInt(client: Client): BeccaInt {
   const new_client = client as BeccaInt;
 
   new_client.prefix = {};
@@ -200,4 +200,4 @@ function extendsClientToClientInt(client: Client): BeccaInt {
   return new_client;
 }
 
-export default extendsClientToClientInt;
+export default extendsClientToBeccaInt;

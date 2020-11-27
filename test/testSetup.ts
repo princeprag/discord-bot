@@ -10,9 +10,10 @@ import {
   Collection,
   UserManager,
   Channel,
+  Guild,
 } from "discord.js";
 import { mock } from "ts-mockito";
-import ClientInt from "@Interfaces/ClientInt";
+import BeccaInt from "@Interfaces/BeccaInt";
 import MessageInt from "@Interfaces/MessageInt";
 
 const TEST_ENV_FILE = process.env.DOT_CONFIG_PATH ?? "./test.env";
@@ -63,7 +64,7 @@ export const buildMessage = (content: string): Message => {
   return msg;
 };
 
-export const buildClientInt = ({
+export const buildBeccaInt = ({
   version,
   botColor,
   channel,
@@ -77,8 +78,8 @@ export const buildClientInt = ({
   users?: UserManager;
   guilds?: GuildManager;
   prefix?: string;
-}) => {
-  const client: Client & ClientInt = mock<Client>();
+}): any => {
+  const client: Client & BeccaInt = mock<Client>();
   client.color = `#${botColor}`;
   client.version = version;
   client.prefix = { default: prefix, server_id: prefix };
@@ -105,7 +106,7 @@ export const buildMessageInt = (
   const channel: TextChannel = buildTextChannel();
   const guilds: GuildManager = buildGuildManager();
   const users: UserManager = buildUserManager();
-  const bot: ClientInt = buildClientInt({
+  const bot: BeccaInt = buildBeccaInt({
     version: "test-1.0",
     botColor,
     channel,

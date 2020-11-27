@@ -2,7 +2,7 @@ import "module-alias/register";
 import { Client, WebhookClient } from "discord.js";
 import connectDatabase from "@Database";
 import BeccaInt from "@Interfaces/BeccaInt";
-import extendsClientToClientInt from "@Utils/extendsClientToClientInt";
+import extendsClientToBeccaInt from "@Utils/extendsClientToBeccaInt";
 import { getCommands, getListeners } from "@Utils/readDirectory";
 import { version } from "../package.json";
 
@@ -41,7 +41,7 @@ export async function botConnect(): Promise<void> {
   }
 
   // Create a new Discord bot object.
-  const Becca: BeccaInt = extendsClientToClientInt(
+  const Becca: BeccaInt = extendsClientToBeccaInt(
     new Client({
       partials: ["USER"],
     })

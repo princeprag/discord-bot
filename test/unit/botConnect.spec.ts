@@ -10,7 +10,7 @@ import { botConnect } from "../../src/botConnect";
 describe("main - botConnect()", () => {
   let sandbox: SinonSandbox;
   let connectDatabase: SinonStub;
-  let extendsClientToClientInt: SinonStub;
+  let extendsClientToBeccaInt: SinonStub;
   let loadCurrentTrackingOptOutList: SinonStub;
   let mockClient: MockManager<discordjs.Util>;
 
@@ -31,8 +31,8 @@ describe("main - botConnect()", () => {
       }
     );
 
-    extendsClientToClientInt = sandbox.stub();
-    extendsClientToClientInt.returns(mockClassClient);
+    extendsClientToBeccaInt = sandbox.stub();
+    extendsClientToBeccaInt.returns(mockClassClient);
 
     connectDatabase = sandbox.stub();
     connectDatabase.resolves();

@@ -1,4 +1,4 @@
-import ClientInt from "@Interfaces/BeccaInt";
+import BeccaInt from "@Interfaces/BeccaInt";
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
 
 /**
@@ -8,13 +8,13 @@ import { Message, MessageEmbed, PartialMessage } from "discord.js";
  * @function
  * @param { Message | PartialMessage } oldMessage
  * @param { Message | PartialMessage } newMessage
- * @param { ClientInt } Becca
+ * @param { BeccaInt } Becca
  * @returns { Promise<void> }
  */
 async function onMessageUpdate(
   oldMessage: Message | PartialMessage,
   newMessage: Message | PartialMessage,
-  Becca: ClientInt
+  Becca: BeccaInt
 ): Promise<void> {
   try {
     // Ge the author and the current server from the new message.

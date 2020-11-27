@@ -2,7 +2,7 @@ import { Message } from "discord.js";
 import MessageInt from "@Interfaces/MessageInt";
 import { prefix as defaultPrefix } from "../../default_config.json";
 import extendsMessageToMessageInt from "@Utils/extendsMessageToMessageInt";
-import ClientInt from "@Interfaces/BeccaInt";
+import BeccaInt from "@Interfaces/BeccaInt";
 
 /**
  * Execute when a user sends a message in a channel.
@@ -10,12 +10,12 @@ import ClientInt from "@Interfaces/BeccaInt";
  * @async
  * @function
  * @param { Message } message_discord
- * @param { ClientInt } Becca
+ * @param { BeccaInt } Becca
  * @returns { Promise<void> }
  */
 async function onMessage(
   message_discord: Message,
-  Becca: ClientInt
+  Becca: BeccaInt
 ): Promise<void> {
   // Create a new message interface using the `MessageInt`.
   const message: MessageInt = extendsMessageToMessageInt(message_discord);

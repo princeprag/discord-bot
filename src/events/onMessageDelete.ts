@@ -1,5 +1,5 @@
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
-import ClientInt from "@Interfaces/BeccaInt";
+import BeccaInt from "@Interfaces/BeccaInt";
 
 /**
  * When a messages is deleted on a channel.
@@ -7,12 +7,12 @@ import ClientInt from "@Interfaces/BeccaInt";
  * @async
  * @function
  * @param { Message | PartialMessage } message
- * @param { ClientInt } Becca
+ * @param { BeccaInt } Becca
  * @returns { Promise<void> }
  */
 async function onMessageDelete(
   message: Message | PartialMessage,
-  Becca: ClientInt
+  Becca: BeccaInt
 ): Promise<void> {
   try {
     // Get the author, current channel, content and current server

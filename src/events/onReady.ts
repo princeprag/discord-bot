@@ -1,4 +1,4 @@
-import ClientInt from "@Interfaces/BeccaInt";
+import BeccaInt from "@Interfaces/BeccaInt";
 import { WebhookClient } from "discord.js";
 
 /**
@@ -9,7 +9,7 @@ import { WebhookClient } from "discord.js";
  * @returns { Promise<void> }
  */
 async function onReady(
-  Becca: ClientInt,
+  Becca: BeccaInt,
   debugChannelHook: WebhookClient | null,
   node_env: string
 ): Promise<void> {

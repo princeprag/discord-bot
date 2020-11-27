@@ -1,4 +1,4 @@
-import ClientInt from "@Interfaces/BeccaInt";
+import BeccaInt from "@Interfaces/BeccaInt";
 import {
   GuildMember,
   MessageEmbed,
@@ -18,12 +18,12 @@ import { sleep } from "@Utils/extendsMessageToMessageInt";
  * @async
  * @function
  * @param { GuildMember | PartialGuildMember } member
- * @param { ClientInt } Becca
+ * @param { BeccaInt } Becca
  * @returns { Promise<void> }
  */
 async function onGuildMemberAdd(
   member: GuildMember | PartialGuildMember,
-  Becca: ClientInt
+  Becca: BeccaInt
 ): Promise<void> {
   try {
     // Get the user and the current guild.

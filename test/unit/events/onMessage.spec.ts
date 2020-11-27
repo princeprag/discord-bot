@@ -2,7 +2,7 @@ import { SinonSandbox, createSandbox, SinonStub, replace } from "sinon";
 import { mock, reset } from "ts-mockito";
 import { expect } from "chai";
 import * as discordjs from "discord.js";
-import extendsClientToClientInt from "@Utils/extendsClientToClientInt";
+import extendsClientToBeccaInt from "@Utils/extendsClientToBeccaInt";
 import CommandInt from "@Interfaces/CommandInt";
 import ListenerInt from "@Interfaces/ListenerInt";
 import onMessage from "@Events/onMessage";
@@ -53,13 +53,13 @@ describe("onMessage event", () => {
       msg.channel.type = "dm";
       msg.guild.id = "server_id";
 
-      const clientInt = extendsClientToClientInt(client);
-      clientInt.prefix = { server_id: testPrefix };
-      clientInt.user = mock<discordjs.User>();
-      clientInt.user.id = "2";
-      clientInt.commands = { about: mockCmd("about", aboutStub) };
+      const BeccaInt = extendsClientToBeccaInt(client);
+      BeccaInt.prefix = { server_id: testPrefix };
+      BeccaInt.user = mock<discordjs.User>();
+      BeccaInt.user.id = "2";
+      BeccaInt.commands = { about: mockCmd("about", aboutStub) };
 
-      const msgPromise = onMessage(msg, clientInt);
+      const msgPromise = onMessage(msg, BeccaInt);
       await sandbox.clock.tickAsync(MAGIC_TIMEOUT);
       await msgPromise;
 
@@ -81,12 +81,12 @@ describe("onMessage event", () => {
       msg.attachments = new discordjs.Collection();
       msg.guild = null;
 
-      const clientInt = extendsClientToClientInt(client);
-      clientInt.prefix = { server_id: testPrefix };
-      clientInt.user = mock<discordjs.User>();
-      clientInt.commands = { about: mockCmd("about", aboutStub) };
+      const BeccaInt = extendsClientToBeccaInt(client);
+      BeccaInt.prefix = { server_id: testPrefix };
+      BeccaInt.user = mock<discordjs.User>();
+      BeccaInt.commands = { about: mockCmd("about", aboutStub) };
 
-      await onMessage(msg, clientInt);
+      await onMessage(msg, BeccaInt);
 
       expect(aboutStub).not.called;
     });
@@ -108,11 +108,11 @@ describe("onMessage event", () => {
       msg.channel.send = sandbox.stub().resolves();
       msg.guild.id = "server_id";
 
-      const clientInt = extendsClientToClientInt(client);
-      clientInt.prefix = { server_id: testPrefix };
-      clientInt.commands = { about: mockCmd("about", aboutStub) };
+      const BeccaInt = extendsClientToBeccaInt(client);
+      BeccaInt.prefix = { server_id: testPrefix };
+      BeccaInt.commands = { about: mockCmd("about", aboutStub) };
 
-      await onMessage(msg, clientInt);
+      await onMessage(msg, BeccaInt);
 
       expect(aboutStub).not.called;
     });
@@ -132,17 +132,17 @@ describe("onMessage event", () => {
       msg.channel.send = sandbox.stub().resolves();
       msg.guild.id = "server_id";
 
-      const clientInt = extendsClientToClientInt(client);
-      clientInt.prefix = { server_id: testPrefix };
-      clientInt.commands = { about: mockCmd("about", aboutStub) };
-      clientInt.customListeners = await getListeners();
-      Object.keys(clientInt.customListeners).forEach((key) => {
+      const BeccaInt = extendsClientToBeccaInt(client);
+      BeccaInt.prefix = { server_id: testPrefix };
+      BeccaInt.commands = { about: mockCmd("about", aboutStub) };
+      BeccaInt.customListeners = await getListeners();
+      Object.keys(BeccaInt.customListeners).forEach((key) => {
         const stub = sandbox.stub();
         stub.resolves();
-        clientInt.customListeners[key] = mockListener(key, stub);
+        BeccaInt.customListeners[key] = mockListener(key, stub);
       });
 
-      const msgPromise = onMessage(msg, clientInt);
+      const msgPromise = onMessage(msg, BeccaInt);
       await sandbox.clock.tickAsync(MAGIC_TIMEOUT);
 
       await msgPromise;
