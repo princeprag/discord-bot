@@ -11,11 +11,11 @@ const art: CommandInt = {
       const random = Math.floor(Math.random() * artList.length);
 
       //get values for random art object
-      const { file_name, artist, artist_url } = artList[random];
+      const { file_name, art_name, artist, artist_url } = artList[random];
 
       //create embed
       const artEmbed = new MessageEmbed();
-      artEmbed.setTitle(file_name);
+      artEmbed.setTitle(art_name);
       artEmbed.setDescription(
         `Art generously provided by [${artist}](${artist_url})!`
       );
