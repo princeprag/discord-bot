@@ -24,7 +24,7 @@ const art: CommandInt = {
       artEmbed.setImage(
         `https://beccalyria.nhcarrigan.com/assets/img/art/${file_name.replace(
           /\s/g,
-          ""
+          "%20"
         )}`
       );
 
