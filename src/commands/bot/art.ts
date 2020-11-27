@@ -1,6 +1,6 @@
 import CommandInt from "@Interfaces/CommandInt";
 import { artList } from "@Utils/commands/artList";
-import { MessageAttachment, MessageEmbed } from "discord.js";
+import { MessageEmbed } from "discord.js";
 
 const ART_CONSTANTS = {
   error: "I am so sorry, but I cannot do that at the moment.",
