@@ -5,7 +5,7 @@ const user: CommandInt = {
   name: "user",
   description: "Returns information on your account.",
   run: async (message) => {
-    const { bot, channel, guild, member } = message;
+    const { Becca, channel, guild, member } = message;
 
     // Check if the current guild and the member are not valid.
     if (!guild || !member) {
@@ -19,7 +19,7 @@ const user: CommandInt = {
       const userEmbed = new MessageEmbed();
 
       // Add the light purple color.
-      userEmbed.setColor(bot.color);
+      userEmbed.setColor(Becca.color);
 
       // Add the user name to the embed title.
       userEmbed.setTitle(target.displayName);
@@ -58,8 +58,8 @@ const user: CommandInt = {
       // Send the user embed to the current channel.
       await channel.send(userEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the user command. Please check the logs.`
         );
       }

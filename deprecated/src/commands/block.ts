@@ -15,7 +15,7 @@ const block: CommandInt = {
       // Check for add/remove
       const action = commandArguments.shift();
 
-      // Lock command to bot owner
+      // Lock command to Becca's owner
       if (author.id !== process.env.OWNER_ID) {
         await message.reply(
           `I am so sorry, but I can only do this for <@!${process.env.OWNER_ID}>.`

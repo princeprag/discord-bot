@@ -22,18 +22,18 @@ export function getUptime(bot_uptime_timestamp: number): number[] {
 
 const uptime: CommandInt = {
   name: "uptime",
-  description: "Generates the time the bot has been awake.",
+  description: "Generates the time Becca has been awake.",
   run: async (message) => {
     try {
-      // Get the channel and the bot client of the message.
-      const { channel, bot } = message;
+      // Get the channel and the client of the message.
+      const { channel, Becca } = message;
 
-      const [hours, minutes, seconds] = getUptime(bot.uptime_timestamp);
+      const [hours, minutes, seconds] = getUptime(Becca.uptime_timestamp);
 
       // Send an embed message to the current channel.
       await channel.send(
         new MessageEmbed()
-          .setColor(bot.color)
+          .setColor(Becca.color)
           .setTitle("Becca's uptime")
           .setDescription(
             `I have been awake for... ${hours} hour${
@@ -45,8 +45,8 @@ const uptime: CommandInt = {
           .setTimestamp()
       );
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the uptime command. Please check the logs.`
         );
       }

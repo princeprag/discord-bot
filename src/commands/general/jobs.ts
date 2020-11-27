@@ -29,8 +29,8 @@ const jobs: CommandInt = {
           .setDescription(`[Here are some potential jobs for you.](${url})`)
       );
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the jobs command. Please check the logs.`
         );
       }

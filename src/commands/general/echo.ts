@@ -3,7 +3,7 @@ import CommandInt from "@Interfaces/CommandInt";
 const echo: CommandInt = {
   name: "echo",
   description:
-    "Sends the [message] to the [guild] [channel]. Restricted to bot owner",
+    "Sends the [message] to the [guild] [channel]. Restricted to Becca's owner",
   parameters: [
     "`<guild>` - the ID of the guild to send the message to",
     "`<channel>` - the ID of the channel to send the message to",
@@ -11,7 +11,7 @@ const echo: CommandInt = {
   ],
   run: async (message) => {
     try {
-      const { author, bot, channel, commandArguments } = message;
+      const { author, Becca, channel, commandArguments } = message;
 
       // Restrict to owner
       if (author.id !== process.env.OWNER_ID) {
@@ -32,7 +32,7 @@ const echo: CommandInt = {
       }
 
       // find guild
-      const targetGuild = bot.guilds.cache.find((g) => g.id === guildArg);
+      const targetGuild = Becca.guilds.cache.find((g) => g.id === guildArg);
 
       if (!targetGuild) {
         await message.reply(
@@ -80,8 +80,8 @@ const echo: CommandInt = {
         `Okay, I have sent your message to the ${targetChannel.name} channel in ${targetGuild.name}.`
       );
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the echo command. Please check the logs.`
         );
       }

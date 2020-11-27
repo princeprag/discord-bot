@@ -1,5 +1,5 @@
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
-import ClientInt from "@Interfaces/ClientInt";
+import BeccaInt from "@Interfaces/BeccaInt";
 
 /**
  * When a messages is deleted on a channel.
@@ -7,12 +7,12 @@ import ClientInt from "@Interfaces/ClientInt";
  * @async
  * @function
  * @param { Message | PartialMessage } message
- * @param { ClientInt } client
+ * @param { BeccaInt } Becca
  * @returns { Promise<void> }
  */
 async function onMessageDelete(
   message: Message | PartialMessage,
-  client: ClientInt
+  Becca: BeccaInt
 ): Promise<void> {
   try {
     // Get the author, current channel, content and current server
@@ -33,7 +33,7 @@ async function onMessageDelete(
       : "Sorry, but I could not find the content.";
 
     // Send an embed message to the logs channel.
-    await client.sendMessageToLogsChannel(
+    await Becca.sendMessageToLogsChannel(
       guild,
       new MessageEmbed()
         .setTitle("A message was deleted")
@@ -55,7 +55,7 @@ async function onMessageDelete(
         )
     );
     if (message.embeds[0]) {
-      await client.sendMessageToLogsChannel(guild, message.embeds[0]);
+      await Becca.sendMessageToLogsChannel(guild, message.embeds[0]);
     }
 
     const attached = message.attachments.first();
@@ -64,11 +64,11 @@ async function onMessageDelete(
         .setTitle(attached.name)
         .setDescription(content || "No message content")
         .setImage(attached.proxyURL);
-      await client.sendMessageToLogsChannel(guild, attachEmbed);
+      await Becca.sendMessageToLogsChannel(guild, attachEmbed);
     }
   } catch (error) {
-    if (client.debugHook) {
-      client.debugHook.send(
+    if (Becca.debugHook) {
+      Becca.debugHook.send(
         `${message.guild?.name} had an error with the message delete feature. Please check the logs.`
       );
     }

@@ -49,8 +49,8 @@ const title: CommandInt = {
         `I present to you: ${author.toString()}, the ${mood} ${occupation} of ${adjective} ${noun}!`
       );
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the title command. Please check the logs.`
         );
       }

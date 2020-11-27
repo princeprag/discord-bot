@@ -35,7 +35,7 @@ const profile: CommandInt = {
   ],
   run: async (message) => {
     try {
-      const { author, bot, channel, commandArguments } = message;
+      const { author, Becca, channel, commandArguments } = message;
       const target = message.mentions.users.first();
 
       // Mentioned a user
@@ -50,7 +50,7 @@ const profile: CommandInt = {
           return;
         }
         const profileEmbed = generateProfile(data);
-        profileEmbed.setColor(bot.color);
+        profileEmbed.setColor(Becca.color);
         await channel.send(profileEmbed);
         return;
       }
@@ -68,7 +68,7 @@ const profile: CommandInt = {
           return;
         }
         const profileEmbed = generateProfile(data);
-        profileEmbed.setColor(bot.color);
+        profileEmbed.setColor(Becca.color);
         await channel.send(profileEmbed);
         return;
       }
@@ -103,7 +103,7 @@ const profile: CommandInt = {
         await channel.send(
           `Okay, I have removed ${website} from your profile. Here is what you have now:`
         );
-        await channel.send(generateProfile(data).setColor(bot.color));
+        await channel.send(generateProfile(data).setColor(Becca.color));
         return;
       }
       if (!url.startsWith("http")) {
@@ -131,10 +131,10 @@ const profile: CommandInt = {
       await message.reply(
         `Okay, I have set your ${website} to <${url}>. Here is your profile:`
       );
-      await channel.send(generateProfile(addData).setColor(bot.color));
+      await channel.send(generateProfile(addData).setColor(Becca.color));
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the profile command. Please check the logs.`
         );
       }

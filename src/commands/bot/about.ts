@@ -11,19 +11,19 @@ const ABOUT_CONSTANT = {
 };
 
 /**
- * See the bot information.
+ * See Becca's information.
  * @constant
  */
 const about: CommandInt = {
   name: "about",
-  description: "Provides details about the bot.",
+  description: "Provides details about Becca.",
   run: async (message) => {
     try {
-      // Get the bot client and the current channel from the message.
-      const { bot, channel } = message;
+      // Get the client and the current channel from the message.
+      const { Becca, channel } = message;
 
-      // Get the commands and the version of the bot.
-      const { color, commands, guilds, users, version } = bot;
+      // Get Becca's commands and version.
+      const { color, commands, guilds, users, version } = Becca;
 
       // Create a new empty embed.
       const aboutEmbed = new MessageEmbed();
@@ -37,16 +37,16 @@ const about: CommandInt = {
       // Add the description.
       aboutEmbed.setDescription(ABOUT_CONSTANT.description);
 
-      // Add the bot version.
+      // Add Becca's version.
       aboutEmbed.addField("Version", version, true);
 
-      // Add the bot creation date.
+      // Add Becca's creation date.
       aboutEmbed.addField("Creation date", ABOUT_CONSTANT.creationDate, true);
 
-      // Add the bot servers count.
+      // Add Becca's servers count.
       aboutEmbed.addField("Servers", guilds.cache.size, true);
 
-      // Add the bot users count.
+      // Add Becca's users count.
       aboutEmbed.addField("Users", users.cache.size, true);
 
       // Add the available commands length.
@@ -74,8 +74,8 @@ const about: CommandInt = {
       // Send the embed to the current channel.
       await channel.send(aboutEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the about command. Please check the logs.`
         );
       }

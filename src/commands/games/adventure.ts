@@ -46,9 +46,9 @@ const adventure: CommandInt = {
   ],
   run: async (message) => {
     try {
-      const { author, bot, channel, commandArguments, guild } = message;
+      const { author, Becca, channel, commandArguments, guild } = message;
 
-      const { color, prefix } = bot;
+      const { color, prefix } = Becca;
 
       if (!guild) {
         return;
@@ -145,8 +145,8 @@ const adventure: CommandInt = {
       // Send the embed to the current channel.
       await channel.send(adventureEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the adventure command. Please check the logs.`
         );
       }

@@ -82,8 +82,8 @@ const dndclass: CommandInt = {
       // Send the embed to the current channel.
       await channel.send(dndClassEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the dndclass command. Please check the logs.`
         );
       }

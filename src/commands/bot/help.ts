@@ -2,7 +2,7 @@ import CommandInt from "@Interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
 
 const HELP_CONSTANTS = {
-  title: "Bot commands",
+  title: "Becca's commands",
   description: (prefix: string) =>
     `My available commands are below. The command name must be prefixed with \`${prefix}\`, just like the \`${prefix}help\` command used to get this message. For information on a specific command, please use \`${prefix}help <command>\`.`,
   footer: "I hope I could help!",
@@ -19,9 +19,9 @@ const help: CommandInt = {
   ],
   run: async (message) => {
     try {
-      const { bot, channel, commandArguments, guild } = message;
+      const { Becca, channel, commandArguments, guild } = message;
 
-      const { color, commands, prefix } = bot;
+      const { color, commands, prefix } = Becca;
 
       if (!guild) {
         return;
@@ -110,8 +110,8 @@ const help: CommandInt = {
       // Send the embed to the current channel.
       await channel.send(helpEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the help command. Please check the logs.`
         );
       }

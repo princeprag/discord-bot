@@ -13,7 +13,7 @@ const habitica: CommandInt = {
   parameters: ["`<id>`: the user id of the profile to look up"],
   run: async (message) => {
     try {
-      const { bot, channel, commandArguments } = message;
+      const { Becca, channel, commandArguments } = message;
 
       // Get the next argument as the user id.
       const id = commandArguments.shift();
@@ -56,7 +56,7 @@ const habitica: CommandInt = {
       const userEmbed = new MessageEmbed();
 
       // Add the light purple color.
-      userEmbed.setColor(bot.color);
+      userEmbed.setColor(Becca.color);
 
       // Add the profile name to the embed title.
       userEmbed.setTitle(profile.name);
@@ -140,7 +140,7 @@ const habitica: CommandInt = {
       const achievementsEmbed = new MessageEmbed();
 
       // Add the light purple color.
-      achievementsEmbed.setColor(bot.color);
+      achievementsEmbed.setColor(Becca.color);
 
       // Add the profile name to the embed title.
       achievementsEmbed.setTitle(profile.name);
@@ -182,7 +182,7 @@ const habitica: CommandInt = {
       const questsEmbed = new MessageEmbed();
 
       // Add the light purple color.
-      questsEmbed.setColor(bot.color);
+      questsEmbed.setColor(Becca.color);
 
       // Add the profile name to the embed title.
       questsEmbed.setTitle(profile.name);
@@ -212,8 +212,8 @@ const habitica: CommandInt = {
         );
       });
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the habitica command. Please check the logs.`
         );
       }

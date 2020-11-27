@@ -93,8 +93,8 @@ const levelListener: ListenerInt = {
         );
       }
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the levels listener. Please check the logs.`
         );
       }

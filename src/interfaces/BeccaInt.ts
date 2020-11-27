@@ -7,7 +7,7 @@ import ListenerInt from "./ListenerInt";
  * Client interface extended by Client of discord.js.
  * @interface
  */
-interface ClientInt extends Client {
+interface BeccaInt extends Client {
   /**
    * Light purple color.
    * @property
@@ -27,7 +27,7 @@ interface ClientInt extends Client {
   version: string;
 
   /**
-   * Get the last uptime timestamp of the bot.
+   * Get the last uptime timestamp of Becca.
    * @property
    */
   uptime_timestamp: number;
@@ -94,4 +94,4 @@ interface ClientInt extends Client {
   ): Promise<void>;
 }
 
-export default ClientInt;
+export default BeccaInt;

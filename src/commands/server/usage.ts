@@ -9,7 +9,7 @@ const usage: CommandInt = {
   parameters: ["`<command>`: name of the command to check"],
   run: async (message) => {
     try {
-      const { bot, channel, commandArguments, guild } = message;
+      const { Becca, channel, commandArguments, guild } = message;
 
       // Get the next argument as the command name.
       const command = commandArguments.shift();
@@ -42,8 +42,8 @@ const usage: CommandInt = {
       // Send an embed message to the current channel.
       await channel.send(
         new MessageEmbed()
-          .setColor(bot.color)
-          .setTitle(bot.prefix[guild.id] + command)
+          .setColor(Becca.color)
+          .setTitle(Becca.prefix[guild.id] + command)
           .setDescription("Here's what I have for this command:")
           .addFields(
             {
@@ -71,8 +71,8 @@ const usage: CommandInt = {
           )
       );
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the usage command. Please check the logs.`
         );
       }

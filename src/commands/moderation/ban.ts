@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js";
 const ban: CommandInt = {
   name: "ban",
   description:
-    "Ban an user of the server. Optionally provide a **reason**. Only available to server moderators. Bot will log this action if log channel is available.",
+    "Ban an user of the server. Optionally provide a **reason**. Only available to server moderators. Becca will log this action if log channel is available.",
   parameters: [
     "`<user>`: @name of the user to ban",
     "`<?reason>`: reason for banning the user",
@@ -13,14 +13,14 @@ const ban: CommandInt = {
     try {
       const {
         author,
-        bot,
+        Becca,
         commandArguments,
         guild,
         member,
         mentions,
       } = message;
 
-      const { user } = bot;
+      const { user } = Becca;
 
       // Check if the member has the ban members permission.
       if (!guild || !user || !member || !member.hasPermission("BAN_MEMBERS")) {
@@ -73,7 +73,7 @@ const ban: CommandInt = {
         return;
       }
 
-      // Check if the user id or member id are the bot id.
+      // Check if the user id or member id are Becca's id.
       if (
         userToBanMentioned.id === user.id ||
         memberToBanMentioned.id === user.id
@@ -150,7 +150,7 @@ const ban: CommandInt = {
         banEmbed.setTimestamp();
 
         // Send the embed to the logs channel.
-        await bot.sendMessageToLogsChannel(guild, banEmbed);
+        await Becca.sendMessageToLogsChannel(guild, banEmbed);
 
         // Ban the user.
         await memberToBanMentioned.ban({ reason });
@@ -161,8 +161,8 @@ const ban: CommandInt = {
         );
       }
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the ban command. Please check the logs.`
         );
       }

@@ -20,7 +20,7 @@ const hpspell: CommandInt = {
   ],
   run: async (message) => {
     try {
-      const { bot, channel, commandArguments } = message;
+      const { Becca, channel, commandArguments } = message;
 
       // Get the arguments as the name.
       const name = commandArguments.join(" ");
@@ -58,14 +58,14 @@ const hpspell: CommandInt = {
       // Send the embed message to the current channel.
       await channel.send(
         new MessageEmbed()
-          .setColor(bot.color)
+          .setColor(Becca.color)
           .setTitle(spell)
           .setDescription(effect)
           .setFooter(`Type: ${type}`)
       );
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the hpspell command. Please check the logs.`
         );
       }

@@ -12,15 +12,15 @@ const support: CommandInt = {
   description: "Provides a link to the support server.",
   run: async (message) => {
     try {
-      const { bot, channel } = message;
+      const { Becca, channel } = message;
       const supportEmbed = new MessageEmbed();
       supportEmbed.setTitle(SUPPORT_CONSTANTS.title);
       supportEmbed.setDescription(SUPPORT_CONSTANTS.description);
-      supportEmbed.setColor(bot.color);
+      supportEmbed.setColor(Becca.color);
       await channel.send(supportEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the support command. Please check the logs.`
         );
       }

@@ -24,8 +24,8 @@ const motivation: CommandInt = {
           .setFooter(author)
       );
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the motivation command. Please check the logs.`
         );
       }

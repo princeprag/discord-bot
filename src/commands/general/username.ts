@@ -11,7 +11,7 @@ const username: CommandInt = {
   ],
   run: async (message) => {
     try {
-      const { author, channel, bot, commandArguments } = message;
+      const { author, channel, Becca, commandArguments } = message;
 
       // get length
       const lengthString = commandArguments.shift();
@@ -24,7 +24,7 @@ const username: CommandInt = {
 
       // Build embed
       const usernameEmbed = new MessageEmbed();
-      usernameEmbed.setColor(bot.color);
+      usernameEmbed.setColor(Becca.color);
       usernameEmbed.setAuthor(
         `${author.username}'s new DigitalOcean Username`,
         author.avatarURL() || undefined
@@ -41,8 +41,8 @@ const username: CommandInt = {
       // send it
       await channel.send(usernameEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the username command. Please check the logs.`
         );
       }

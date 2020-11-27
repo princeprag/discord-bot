@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js";
 const warn: CommandInt = {
   name: "warn",
   description:
-    "Send a warning to the **user**. Optionally provide a **reason**. Only available to server moderators. Bot will log this action if log channel is available.",
+    "Send a warning to the **user**. Optionally provide a **reason**. Only available to server moderators. Becca will log this action if log channel is available.",
   parameters: [
     "`<user>`: @name of the user to warn",
     "`<?reason>`: reason for warning the user",
@@ -13,14 +13,14 @@ const warn: CommandInt = {
     try {
       const {
         author,
-        bot,
+        Becca,
         commandArguments,
         guild,
         member,
         mentions,
       } = message;
 
-      const { user } = bot;
+      const { user } = Becca;
 
       // Check if the member has the kick members permission.
       if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
@@ -73,7 +73,7 @@ const warn: CommandInt = {
         return;
       }
 
-      // Check if the user id or member id are the bot id.
+      // Check if the user id or member id are Becca's id.
       if (
         userToWarnMentioned.id === user.id ||
         memberToWarnMentioned.id === user.id
@@ -114,15 +114,15 @@ const warn: CommandInt = {
       warnLogEmbed.setTimestamp();
 
       // Send the embed to the logs channel.
-      await bot.sendMessageToLogsChannel(guild, warnLogEmbed);
+      await Becca.sendMessageToLogsChannel(guild, warnLogEmbed);
 
       // Send a message to the user.
       await userToWarnMentioned.send(
         `**[Warning]** ${author.toString()} has warned you for the following reason: ${reason}`
       );
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the warn command. Please check the logs.`
         );
       }

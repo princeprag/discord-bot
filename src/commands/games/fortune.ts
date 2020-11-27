@@ -14,8 +14,8 @@ const fortune: CommandInt = {
       // Send the random fortune message to the current channel.
       await channel.send(fortunesList[random]);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the fortune command. Please check the logs.`
         );
       }

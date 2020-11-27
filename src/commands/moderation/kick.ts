@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js";
 const kick: CommandInt = {
   name: "kick",
   description:
-    "Kick **user** from the channel. Optionally provide a **reason**. Only available to server moderators. Bot will log this action if the log channel is available.",
+    "Kick **user** from the channel. Optionally provide a **reason**. Only available to server moderators. Becca will log this action if the log channel is available.",
   parameters: [
     "`<user>`: @name of the user to kick",
     "`<?reason>`: reason for kicking the user",
@@ -13,14 +13,14 @@ const kick: CommandInt = {
     try {
       const {
         author,
-        bot,
+        Becca,
         commandArguments,
         guild,
         member,
         mentions,
       } = message;
 
-      const { user } = bot;
+      const { user } = Becca;
 
       // Check if the member has the kick members permission.
       if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
@@ -73,7 +73,7 @@ const kick: CommandInt = {
         return;
       }
 
-      // Check if the user id or member id are the bot id.
+      // Check if the user id or member id are Becca's id.
       if (
         userToKickMentioned.id === user.id ||
         memberToKickMentioned.id === user.id
@@ -127,10 +127,10 @@ const kick: CommandInt = {
       kickLogEmbed.setTimestamp();
 
       // Send the embed to the logs channel.
-      await bot.sendMessageToLogsChannel(guild, kickLogEmbed);
+      await Becca.sendMessageToLogsChannel(guild, kickLogEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the kick command. Please check the logs.`
         );
       }

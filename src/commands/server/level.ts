@@ -11,7 +11,7 @@ const level: CommandInt = {
     try {
       const {
         author,
-        bot,
+        Becca,
         channel,
         commandArguments,
         guild,
@@ -78,7 +78,7 @@ const level: CommandInt = {
       const levelEmbed = new MessageEmbed();
 
       // Add the light purple color.
-      levelEmbed.setColor(bot.color);
+      levelEmbed.setColor(Becca.color);
 
       // Add the title.
       levelEmbed.setTitle(`${username}'s ranking`);
@@ -103,8 +103,8 @@ const level: CommandInt = {
       // Send the embed to the current channel.
       await channel.send(levelEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the level command. Please check the logs.`
         );
       }

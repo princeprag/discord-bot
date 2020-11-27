@@ -13,11 +13,11 @@ import { Client, Guild, WebhookClient } from "discord.js";
 async function onGuildCreate(
   guild: Guild,
   debugChannelHook: WebhookClient | null,
-  client: Client
+  Becca: Client
 ): Promise<void> {
   if (debugChannelHook) {
-    // Get the user from the bot client.
-    const { user } = client;
+    // Get the user from the client.
+    const { user } = Becca;
 
     if (user) {
       // Get the server name from the current guild.

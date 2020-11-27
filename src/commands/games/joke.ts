@@ -7,7 +7,7 @@ const joke: CommandInt = {
   name: "joke",
   description: "Returns a random joke.",
   run: async (message) => {
-    const { bot, channel } = message;
+    const { Becca, channel } = message;
 
     try {
       // Get the data from the joke API.
@@ -31,13 +31,13 @@ const joke: CommandInt = {
       // Send an embed message to the current channel.
       await channel.send(
         new MessageEmbed()
-          .setColor(bot.color)
+          .setColor(Becca.color)
           .setTitle("I giggled at this:")
           .setDescription(joke)
       );
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the joke command. Please check the logs.`
         );
       }

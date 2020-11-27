@@ -5,7 +5,7 @@ import { MessageEmbed } from "discord.js";
 
 const contributors: CommandInt = {
   name: "contributors",
-  description: "Lists the contributors for the bot.",
+  description: "Lists the contributors for Becca.",
   run: async (message) => {
     try {
       //get the data from the file - Axios won't target the local file :(
@@ -32,8 +32,8 @@ const contributors: CommandInt = {
       //send it!
       await message.reply(contribEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the contributors command. Please check the logs.`
         );
       }

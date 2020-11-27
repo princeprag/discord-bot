@@ -3,13 +3,13 @@ import { MessageEmbed } from "discord.js";
 
 const list: CommandInt = {
   name: "list",
-  description: "Returns a list of servers the bot is in.",
+  description: "Returns a list of servers Becca is in.",
   parameters: ["<?page> - Page of the servers list."],
   run: async (message) => {
     try {
       //extract values
-      const { bot, channel, commandArguments } = message;
-      const { guilds } = bot;
+      const { Becca, channel, commandArguments } = message;
+      const { guilds } = Becca;
 
       // Get the first argument as the page.
       const pageStr = commandArguments.shift();
@@ -34,7 +34,7 @@ const list: CommandInt = {
       //set length to variable to avoid recounting
       const length = servers.length;
 
-      // loop through guilds bot is in;
+      // loop through guilds Becca is in;
       for (let i = 0; i < length; i++) {
         // Assign for less typing
         const guild = servers[i];
@@ -52,7 +52,7 @@ const list: CommandInt = {
 
           ownerList.push(`${guild.owner.user.username} (${guild.ownerID})`);
         } else {
-          const targetUser = await bot.users.fetch(guild.ownerID);
+          const targetUser = await Becca.users.fetch(guild.ownerID);
           ownerList.push(`${targetUser.username} (${guild.ownerID})`);
         }
 
@@ -75,7 +75,7 @@ const list: CommandInt = {
 
       const serverEmbed = new MessageEmbed()
         .setTitle(`Server List part ${currentPage}`)
-        .setColor(bot.color);
+        .setColor(Becca.color);
 
       const pageCount = ~~(currentPage * serversPerPage);
 
@@ -107,8 +107,8 @@ const list: CommandInt = {
 
       return;
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the list command. Please check the logs.`
         );
       }

@@ -46,8 +46,8 @@ const roll: CommandInt = {
         `You rolled a ${numValue}-sided die and got: ${result}`
       );
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the roll command. Please check the logs.`
         );
       }

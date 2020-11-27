@@ -6,9 +6,9 @@ const server: CommandInt = {
   description: "Gives the current status of this server.",
   run: async (message) => {
     try {
-      const { bot, channel, guild } = message;
+      const { Becca, channel, guild } = message;
 
-      const { color, prefix } = bot;
+      const { color, prefix } = Becca;
 
       // Check if the guild is not valid.
       if (!guild) {
@@ -102,8 +102,8 @@ const server: CommandInt = {
       // Send the server embed to the current channel.
       await channel.send(serverEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the server command. Please check the logs.`
         );
       }

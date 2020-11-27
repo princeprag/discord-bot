@@ -9,17 +9,17 @@ import LevelModel from "@Models/LevelModel";
  * @function
  * @param { Guild } guild
  * @param { WebhookClient | null } debugChannelHook
- * @param { Client } client
+ * @param { Client } Becca
  * @returns { Promise<void> }
  */
 async function onGuildDelete(
   guild: Guild,
   debugChannelHook: WebhookClient | null,
-  client: Client
+  Becca: Client
 ): Promise<void> {
   if (debugChannelHook) {
-    // Get the user from the bot client.
-    const { user } = client;
+    // Get the user from the client.
+    const { user } = Becca;
 
     if (user) {
       // Get the name and id of the server from the current guild.

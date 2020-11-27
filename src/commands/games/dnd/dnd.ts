@@ -12,9 +12,9 @@ const dnd: CommandInt = {
   description: "List of the available Dungeons and Dragons commands",
   run: async (message) => {
     try {
-      const { bot, channel, guild } = message;
+      const { Becca, channel, guild } = message;
 
-      const { commands, prefix } = bot;
+      const { commands, prefix } = Becca;
 
       if (!guild) {
         return;
@@ -59,8 +59,8 @@ const dnd: CommandInt = {
       // Send the embed to the current channel.
       await channel.send(dndEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the dnd command. Please check the logs.`
         );
       }

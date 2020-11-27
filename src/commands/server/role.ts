@@ -29,7 +29,7 @@ const role: CommandInt = {
       // If argument is to list all roles
       if (targetRole === "listall") {
         const roleList = new MessageEmbed();
-        roleList.setColor(message.bot.color);
+        roleList.setColor(message.Becca.color);
         roleList.setTitle("Self-Assignable Roles");
         roleList.setDescription(
           "These are the roles you can assign yourself: \n" +
@@ -84,8 +84,8 @@ const role: CommandInt = {
       await channel.send(`Okay, I have given you the \`${targetRole}\` role.`);
       return;
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the role command. Please check the logs.`
         );
       }

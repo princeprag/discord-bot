@@ -2,7 +2,7 @@ import { Message } from "discord.js";
 import MessageInt from "@Interfaces/MessageInt";
 import { prefix as defaultPrefix } from "../../default_config.json";
 import extendsMessageToMessageInt from "@Utils/extendsMessageToMessageInt";
-import ClientInt from "@Interfaces/ClientInt";
+import BeccaInt from "@Interfaces/BeccaInt";
 
 /**
  * Execute when a user sends a message in a channel.
@@ -10,18 +10,18 @@ import ClientInt from "@Interfaces/ClientInt";
  * @async
  * @function
  * @param { Message } message_discord
- * @param { ClientInt } client
+ * @param { BeccaInt } Becca
  * @returns { Promise<void> }
  */
 async function onMessage(
   message_discord: Message,
-  client: ClientInt
+  Becca: BeccaInt
 ): Promise<void> {
   // Create a new message interface using the `MessageInt`.
   const message: MessageInt = extendsMessageToMessageInt(message_discord);
 
-  // Add the bot client to the message.
-  message.bot = client;
+  // Add the client to the message.
+  message.Becca = Becca;
 
   // Get the author, current channel, content and current guild from the message.
   const { author, channel, content, guild } = message;
@@ -31,7 +31,7 @@ async function onMessage(
 
   // Check if the message is sended to a private channel (Direct Message)
   // and send a warning to the current channel.
-  if (channel.type === "dm" && author.id !== client.user?.id) {
+  if (channel.type === "dm" && author.id !== Becca.user?.id) {
     message.showTypingAndSendMessage(
       "I am so sorry, but would you please talk to me in a server instead of a private message?\nIf you need a server to join, you are welcome to join our server: http://chat.nhcarrigan.com",
       3000
@@ -46,7 +46,7 @@ async function onMessage(
   }
 
   // Get the config for that server
-  const serverConfig = await client.getSettings(guild.id, guild.name);
+  const serverConfig = await Becca.getSettings(guild.id, guild.name);
 
   // Get the heartsListener, levelsListener and usageListener from the listeners list.
   const {
@@ -54,7 +54,7 @@ async function onMessage(
     thanksListener,
     levelsListener,
     usageListener,
-  } = client.customListeners;
+  } = Becca.customListeners;
 
   // Check if the heartsListener and levelsListener exists.
   if (heartsListener && levelsListener) {
@@ -69,7 +69,7 @@ async function onMessage(
   const server_id = guild.id;
 
   // Get the default prefix.
-  let prefix: string = client.prefix[server_id] || "";
+  let prefix: string = Becca.prefix[server_id] || "";
 
   if (!prefix.length) {
     // Get the custom prefix for the server from the database.
@@ -77,12 +77,12 @@ async function onMessage(
 
     // Check if the server has a custom prefix.
     if (prefixSetting) {
-      client.prefix[server_id] = prefixSetting;
+      Becca.prefix[server_id] = prefixSetting;
     } else {
-      client.prefix[server_id] = defaultPrefix;
+      Becca.prefix[server_id] = defaultPrefix;
     }
 
-    prefix = client.prefix[server_id];
+    prefix = Becca.prefix[server_id];
   }
   // Check if the content of the message starts with the server prefix.
   if (!content.toLowerCase().startsWith(prefix)) {
@@ -98,7 +98,7 @@ async function onMessage(
   message.commandName = message.commandName.slice(prefix.length);
 
   // Get the command by its name.
-  const command = client.commands[message.commandName.toLowerCase()];
+  const command = Becca.commands[message.commandName.toLowerCase()];
 
   // Check if the command exists.
   if (command) {
@@ -131,7 +131,7 @@ async function onMessage(
       await usageListener.run(message, serverConfig);
     }
 
-    // Respond to bot owner.
+    // Respond to Becca's owner.
     if (message.author.id === process.env.OWNER_ID) {
       channel.stopTyping();
       await message.channel.send(

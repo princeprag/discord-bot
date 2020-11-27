@@ -40,7 +40,7 @@ const hpsort: CommandInt = {
   name: "hpsort",
   description: "Sorts you into a Hogwarts house.",
   run: async (message) => {
-    const { bot, channel } = message;
+    const { Becca, channel } = message;
 
     try {
       // Get the sort data from the Harry Potter API.
@@ -80,7 +80,7 @@ const hpsort: CommandInt = {
       } = targetHouse;
 
       // Add the light purple color.
-      houseEmbed.setColor(bot.color);
+      houseEmbed.setColor(Becca.color);
 
       // Add the title.
       houseEmbed.setTitle(HPSORT_CONSTANT.title);
@@ -121,8 +121,8 @@ const hpsort: CommandInt = {
       // Send the embed to the current channel.
       await channel.send(houseEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the hpsort command. Please check the logs.`
         );
       }

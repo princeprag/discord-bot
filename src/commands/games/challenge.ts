@@ -16,9 +16,9 @@ const challenge: CommandInt = {
     "`<?answer>`: the challenge answer",
   ],
   run: async (message) => {
-    const { bot, channel, commandArguments, guild } = message;
+    const { Becca, channel, commandArguments, guild } = message;
 
-    const { prefix } = bot;
+    const { prefix } = Becca;
 
     if (!guild) {
       return;
@@ -54,7 +54,7 @@ const challenge: CommandInt = {
         // Send an embed to the current channel.
         await channel.send(
           new MessageEmbed()
-            .setColor(bot.color)
+            .setColor(Becca.color)
             .setTitle("Start the challenge!")
             .setDescription(
               `Welcome to the challenge game! To get your first challenge, please call this command: \`${
@@ -79,7 +79,7 @@ const challenge: CommandInt = {
         const challengeEmbed = new MessageEmbed();
 
         // Add the light purple color.
-        challengeEmbed.setColor(bot.color);
+        challengeEmbed.setColor(Becca.color);
 
         // Check if the action is `request`.
         if (action === "request") {
@@ -167,8 +167,8 @@ const challenge: CommandInt = {
         await channel.send(challengeEmbed);
       }
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the challenge command. Please check the logs.`
         );
       }

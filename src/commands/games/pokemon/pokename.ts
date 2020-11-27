@@ -9,7 +9,7 @@ const pokename: CommandInt = {
   parameters: ["`<name>`: name of the Pokemon to search for"],
   run: async (message) => {
     try {
-      const { bot, channel, commandArguments } = message;
+      const { Becca, channel, commandArguments } = message;
 
       // Get the next parameter as the pokemon name.
       const name = commandArguments.shift();
@@ -62,7 +62,7 @@ const pokename: CommandInt = {
                 .join(", ") || "no stats found",
           }
         );
-        pokeEmbed.setColor(bot.color);
+        pokeEmbed.setColor(Becca.color);
         pokeEmbed.setFooter(
           `Weight: ${pokemon.weight}, Height: ${pokemon.height}`
         );
@@ -78,8 +78,8 @@ const pokename: CommandInt = {
         await message.reply("I am so sorry, but I could not find anything...");
       }
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the pokemon command. Please check the logs.`
         );
       }

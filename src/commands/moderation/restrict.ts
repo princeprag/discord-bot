@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js";
 const restrict: CommandInt = {
   name: "restrict",
   description:
-    "Restrict **user**'s access to the channel. Optionally provide a **reason**. Only available to server moderators. Bot will log this action if log channel is available.",
+    "Restrict **user**'s access to the channel. Optionally provide a **reason**. Only available to server moderators. Becca will log this action if log channel is available.",
   parameters: [
     "`<user>`: @name of the user to restrict.",
     "`<?reason>`: reason for restricting the user.",
@@ -13,14 +13,14 @@ const restrict: CommandInt = {
     try {
       const {
         author,
-        bot,
+        Becca,
         commandArguments,
         guild,
         member,
         mentions,
       } = message;
 
-      const { user } = bot;
+      const { user } = Becca;
 
       // Check if the member has the kick members permission.
       if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
@@ -86,7 +86,7 @@ const restrict: CommandInt = {
               allow,
             },
             {
-              id: user.id, // Bot ID.
+              id: user.id, // Becca's ID.
               allow,
             },
           ],
@@ -139,7 +139,7 @@ const restrict: CommandInt = {
         return;
       }
 
-      // Check if the user id or member id are the bot id.
+      // Check if the user id or member id are Becca's id.
       if (
         userToRestrictMentioned.id === user.id ||
         memberToRestrictMentioned.id === user.id
@@ -212,7 +212,7 @@ const restrict: CommandInt = {
       );
 
       // Send an embed message to the logs channel.
-      await bot.sendMessageToLogsChannel(
+      await Becca.sendMessageToLogsChannel(
         guild,
         new MessageEmbed()
           .setColor("#FF0000")
@@ -227,8 +227,8 @@ const restrict: CommandInt = {
       //respond
       await message.reply("Okay! I have taken care of that for you.");
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the restrict command. Please check the logs.`
         );
       }

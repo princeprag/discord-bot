@@ -7,9 +7,9 @@ const closeChannel: CommandInt = {
     "Closes the channel - only available for automatically generated appeal channels. Only available to moderators.",
   run: async (message) => {
     try {
-      const { author, channel, bot, guild, member } = message;
+      const { author, channel, Becca, guild, member } = message;
 
-      const { user } = bot;
+      const { user } = Becca;
 
       // Check if the member has the manage channels permission.
       if (
@@ -44,7 +44,7 @@ const closeChannel: CommandInt = {
       }
 
       // Send a message embed to the logs channel.
-      await bot.sendMessageToLogsChannel(
+      await Becca.sendMessageToLogsChannel(
         guild,
         new MessageEmbed()
           .setTitle("Channel deleted")
@@ -57,8 +57,8 @@ const closeChannel: CommandInt = {
           .setTimestamp()
       );
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the close command. Please check the logs.`
         );
       }

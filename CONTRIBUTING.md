@@ -8,27 +8,27 @@ We accept bug reports and feature requests from all contributors. Please follow 
 
 ### Feature Requests
 
-Do you have a feature you would like to see added to this bot? Create a [new issue](https://github.com/nhcarrigan/Becca-Lyria/issues/new/choose) using the "Feature Request" template and we will get started on it as soon as we are able.
+Do you have a feature you would like to see added to Becca? Create a [new issue](https://github.com/nhcarrigan/Becca-Lyria/issues/new/choose) using the "Feature Request" template and we will get started on it as soon as we are able.
 
 ### Found a Bug
 
-Did you discover a bug when interacting with this bot? Unfortunately, despite our best efforts we are still not quite perfect. You can submit a [new issue](https://github.com/nhcarrigan/Becca-Lyria/issues/new/choose) using the "Bug Report" template and we will address it as soon as possible.
+Did you discover a bug when interacting with Becca? Unfortunately, despite our best efforts we are still not quite perfect. You can submit a [new issue](https://github.com/nhcarrigan/Becca-Lyria/issues/new/choose) using the "Bug Report" template and we will address it as soon as possible.
 
-## Writing Code for the bot
+## Writing Code for Becca
 
-If you want to propose a new feature or bug fix for the bot's code, feel free to do so! We've included some helpful resources for you if you have any questions.
+If you want to propose a new feature or bug fix for Becca's code, feel free to do so! We've included some helpful resources for you if you have any questions.
 
-### Bot Test Server
+### Becca's Server
 
-You are welcome to join the [Discord Server](https://discord.gg/PHqDbkg) to work with other developers and test your changes to the bot. Remember that you'll need to send us an invite link for your bot to join, and you'll need to have the bot running (this can be done locally while you're working on the files).
+You are welcome to join the [Discord Server](https://discord.gg/PHqDbkg) to work with other developers and ask questions about Becca's code.
 
 ### Code Coverage
 
 When submitting code changes, please ensure tests are added to cover your change or the expected behavior of code. We are using several frameworks to make implementing tests easier, and there are test-helper functions to keep these clean in `testSetup.ts`.
 
-### Configure Your Bot
+### Configure Becca
 
-To set up your own instance of the bot, please review the [Developer Documentation](https://beccalyria.nhcarrigan.com/).
+To set up your own instance of Becca, please review the [Developer Documentation](https://beccalyria.nhcarrigan.com/).
 
 ### Need Some Help?
 

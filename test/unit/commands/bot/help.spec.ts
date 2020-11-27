@@ -3,7 +3,7 @@ import { mock, reset } from "ts-mockito";
 import { expect } from "chai";
 import * as discordjs from "discord.js";
 import MessageInt from "@Interfaces/MessageInt";
-import ClientInt from "@Interfaces/ClientInt";
+import BeccaInt from "@Interfaces/BeccaInt";
 import CommandInt from "@Interfaces/CommandInt";
 import help from "@Commands/bot/help";
 
@@ -22,9 +22,9 @@ describe("command: help", () => {
 
   context("when not on a discord server", () => {
     it("should return without calling any commands", async () => {
-      const msg: discordjs.Message & { guild: discordjs.Guild | null } = mock<
-        discordjs.Message
-      >();
+      const msg: discordjs.Message & {
+        guild: discordjs.Guild | null;
+      } = mock<discordjs.Message>();
       msg.guild = null;
       msg.channel.send = sandbox.stub();
 
@@ -41,7 +41,7 @@ describe("command: help", () => {
       const content = `${testPrefix}help`;
       const mockCommand = mock<CommandInt>();
       msg = mock<discordjs.Message>();
-      const bot: discordjs.Client & ClientInt = mock<discordjs.Client>();
+      const bot: discordjs.Client & BeccaInt = mock<discordjs.Client>();
       msg.channel.send = sandbox.stub();
       msg.content = content;
       msg.guild.id = "server_id";
@@ -114,7 +114,7 @@ describe("command: help", () => {
     beforeEach(() => {
       const content = `${testPrefix}help mock`;
       msg = mock<discordjs.Message>();
-      const bot: discordjs.Client & ClientInt = mock<discordjs.Client>();
+      const bot: discordjs.Client & BeccaInt = mock<discordjs.Client>();
       msg.channel.send = sandbox.stub();
       msg.content = content;
       msg.guild.id = "server_id";
@@ -163,7 +163,7 @@ describe("command: help", () => {
       const content = `${testPrefix}help yooo`;
       const mockCommand = mock<CommandInt>();
       const msg: discordjs.Message & MessageInt = mock<discordjs.Message>();
-      const bot: discordjs.Client & ClientInt = mock<discordjs.Client>();
+      const bot: discordjs.Client & BeccaInt = mock<discordjs.Client>();
       msg.reply = sandbox.stub();
       msg.content = content;
       msg.guild.id = "server_id";
@@ -187,7 +187,7 @@ describe("command: help", () => {
     const content = `${testPrefix}help`;
     const mockCommand = mock<CommandInt>();
     const msg: discordjs.Message & MessageInt = mock<discordjs.Message>();
-    const bot: discordjs.Client & ClientInt = mock<discordjs.Client>();
+    const bot: discordjs.Client & BeccaInt = mock<discordjs.Client>();
     msg.channel.send = sandbox.stub();
     msg.content = content;
     msg.guild.id = "server_id";

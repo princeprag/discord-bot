@@ -47,7 +47,7 @@ const hpchar: CommandInt = {
   parameters: ["`<name>`: the first and last name of the character."],
   run: async (message) => {
     try {
-      const { bot, channel, commandArguments } = message;
+      const { Becca, channel, commandArguments } = message;
 
       // Get the arguments as an Harry Potter API query.
       const characterName = commandArguments.join("%20");
@@ -83,7 +83,7 @@ const hpchar: CommandInt = {
       } = data.data[0];
 
       // Add the light purple color.
-      hpEmbed.setColor(bot.color);
+      hpEmbed.setColor(Becca.color);
 
       // Add the character name to the embed title.
       hpEmbed.setTitle(name);
@@ -127,8 +127,8 @@ const hpchar: CommandInt = {
       // Send the hp embed to the current channel.
       await channel.send(hpEmbed);
     } catch (error) {
-      if (message.bot.debugHook) {
-        message.bot.debugHook.send(
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the hpchar command. Please check the logs.`
         );
       }
