@@ -25,7 +25,9 @@ async function onReady(
     if (user) {
       // Send a message to the debug channel.
       await debugChannelHook.send(
-        `\`${user.username}\` is alive! She is in ${node_env} mode with version ${version}.`
+        `Becca ${
+          node_env === "development" ? "Test " : ""
+        }is alive! She is in ${node_env} mode with version ${version}.`
       );
     }
   }

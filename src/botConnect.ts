@@ -116,5 +116,5 @@ export async function botConnect(): Promise<void> {
   });
 
   // Connect to the MongoDB database.
-  await connectDatabase(debugChannelHook, Becca);
+  await connectDatabase(debugChannelHook, Becca, node_env);
 }

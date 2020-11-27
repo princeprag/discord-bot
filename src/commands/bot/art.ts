@@ -9,7 +9,6 @@ const ART_CONSTANTS = {
     `Here is some Becca art! Art kindly done by [${artist}](${artist_url})!`,
   attachment_name: "becca.png",
   attachment_path: (file_name: string): string => `./img/${file_name}`,
-  image: "attachment://becca.png",
 };
 
 const art: CommandInt = {
@@ -28,18 +27,13 @@ const art: CommandInt = {
       artEmbed.setTitle(ART_CONSTANTS.title);
       artEmbed.setDescription(ART_CONSTANTS.description(artist, artist_url));
 
-      //local files require a bit of hacking
-      const attachment = [];
-      attachment.push(
-        new MessageAttachment(
-          ART_CONSTANTS.attachment_path(file_name),
-          ART_CONSTANTS.attachment_name
-        )
-      );
-
       //add local file
-      artEmbed.attachFiles(attachment);
-      artEmbed.setImage(ART_CONSTANTS.image);
+      artEmbed.setImage(
+        `https://beccalyria.nhcarrigan.com/assets/img/art/${file_name.replace(
+          /\s/g,
+          ""
+        )}`
+      );
 
       //send it!
       await message.reply(artEmbed);
