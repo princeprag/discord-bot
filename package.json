@@ -79,7 +79,7 @@
     "ts-mock-imports": "^1.3.1",
     "ts-mockito": "^2.6.1",
     "ts-node": "^9.1.1",
-    "typescript": "^4.1.2"
+    "typescript": "^4.1.3"
   },
   "lint-staged": {
     "*.ts": [
