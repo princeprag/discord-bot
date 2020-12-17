@@ -31,10 +31,6 @@ If you have feedback or a bug report, please feel free to open a GitHub issue!
 
 Before interacting with our community, please read our [Code of Conduct](CODE_OF_CONDUCT.md).
 
-## Questions
-
-If you have questions regarding contributing, using the project, or any related topic, you can reach us at our [Discord Server](http://chat.nhcarrigan.com) where we would be happy to help!
-
 ## Art Credits
 
 Credit for Becca's avatar and the server art goes to [MoonlightKCreations](https://www.instagram.com/moonlightkcreations/). If you want to show some support, consider [commissioning her!](https://meitanteimoonlight.wixsite.com/moonlightkcreations/commissions).
@@ -80,4 +76,4 @@ The full license terms may be viewed in the [LICENSE.md file](./LICENSE.md)
 
 ## Contact
 
-I may be contacted through my [Discord Server](http://chat.nhcarrigan.com) or via [email form](https://contact.nhcarrigan.com).
+We may be contacted through our [Discord Server](http://chat.nhcarrigan.com) or via [email form](https://contact.nhcarrigan.com).
