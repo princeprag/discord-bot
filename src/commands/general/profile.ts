@@ -47,11 +47,13 @@ const profile: CommandInt = {
           await channel.send(
             `I am so sorry, but <@!${target.id}> does not have a profile set up yet.`
           );
+          await message.react(message.Becca.no);
           return;
         }
         const profileEmbed = generateProfile(data);
         profileEmbed.setColor(Becca.color);
         await channel.send(profileEmbed);
+        await message.react(message.Becca.yes);
         return;
       }
 
@@ -65,11 +67,13 @@ const profile: CommandInt = {
           await channel.send(
             "I am so sorry, but you have not set your profile up yet."
           );
+          await message.react(message.Becca.no);
           return;
         }
         const profileEmbed = generateProfile(data);
         profileEmbed.setColor(Becca.color);
         await channel.send(profileEmbed);
+        await message.react(message.Becca.yes);
         return;
       }
 
@@ -79,6 +83,7 @@ const profile: CommandInt = {
             "-"
           )}`
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -87,6 +92,7 @@ const profile: CommandInt = {
         await message.reply(
           `Would you please try the command again, and provide the URL you would like me to add for your ${website}?`
         );
+        await message.react(message.Becca.no);
         return;
       }
       if (url === "remove") {
@@ -95,6 +101,7 @@ const profile: CommandInt = {
           await message.reply(
             "I am so sorry, but you do not have a profile set up yet."
           );
+          await message.react(message.Becca.no);
           return;
         }
         const target = data.profiles.findIndex((el) => el.website === website);
@@ -104,12 +111,14 @@ const profile: CommandInt = {
           `Okay, I have removed ${website} from your profile. Here is what you have now:`
         );
         await channel.send(generateProfile(data).setColor(Becca.color));
+        await message.react(message.Becca.yes);
         return;
       }
       if (!url.startsWith("http")) {
         await message.reply(
           `${url} is not a valid URL format. Would you please try the command again?`
         );
+        await message.react(message.Becca.no);
         return;
       }
       let addData = await ProfileModel.findOne({ userId: author.id });
@@ -124,6 +133,7 @@ const profile: CommandInt = {
         await message.reply(
           "I am so sorry, but you have the maximum number of profiles."
         );
+        await message.react(message.Becca.no);
         return;
       }
       addData.profiles.push({ website, url });
@@ -132,9 +142,9 @@ const profile: CommandInt = {
         `Okay, I have set your ${website} to <${url}>. Here is your profile:`
       );
       await channel.send(generateProfile(addData).setColor(Becca.color));
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the profile command. Please check the logs.`

@@ -36,7 +36,7 @@ const challenge: CommandInt = {
           prefix[guild.id]
         }challenge solve <id> <answer>\`?`
       );
-
+      await message.react(message.Becca.no);
       return;
     }
 
@@ -73,6 +73,7 @@ const challenge: CommandInt = {
           await message.reply(
             "Would you please try the command again, and enter the challenge id?"
           );
+          await message.react(message.Becca.no);
           return;
         }
 
@@ -113,7 +114,7 @@ const challenge: CommandInt = {
             await message.reply(
               "Would you please try the command again, and enter the challenge answer?"
             );
-
+            await message.react(message.Becca.no);
             return;
           }
           console.log({ answer });
@@ -150,9 +151,7 @@ const challenge: CommandInt = {
                 nextQuestion.split("/").reverse()[0]
               );
             }
-            await message.react("791758203145945128");
           } catch (error) {
-            await message.react("791758203204796446");
             // if error not in answer, throw it to higher try catch
             if (error?.status !== 400) {
               throw error;
@@ -168,9 +167,9 @@ const challenge: CommandInt = {
         // Send the challenge embed to the current channel.
         await channel.send(challengeEmbed);
       }
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the challenge command. Please check the logs.`

@@ -40,9 +40,9 @@ const listeners: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(listenerEmbed);
-      await message.react("791758203145945128");
+      await message.react(Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the listeners command. Please check the logs.`

@@ -55,6 +55,12 @@ export async function botConnect(): Promise<void> {
   // Add Becca's version to the client.
   Becca.version = version;
 
+  // Add Becca's Emotes
+  Becca.yes = process.env.BECCA_YES || "✅";
+  Becca.no = process.env.BECCA_NO || "❌";
+  Becca.think = process.env.BECCA_THINK || "🤔";
+  Becca.love = process.env.BECCA_LOVE || "💜";
+
   // Load the commands.
   Becca.commands = await getCommands();
 

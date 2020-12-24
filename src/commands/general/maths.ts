@@ -26,7 +26,7 @@ const maths: CommandInt = {
         await message.reply(
           "I am so sorry, but that does not appear to be a valid math expression."
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -39,9 +39,9 @@ const maths: CommandInt = {
           .addField("Input", problem)
           .addField("Result", answer)
       );
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the maths command. Please check the logs.`

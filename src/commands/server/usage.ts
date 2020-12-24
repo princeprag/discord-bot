@@ -19,7 +19,7 @@ const usage: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the command you want me to look for?"
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -33,7 +33,7 @@ const usage: CommandInt = {
         await message.reply(
           `I am so sorry, but no one has used the ${command} command yet.`
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -70,9 +70,9 @@ const usage: CommandInt = {
             }
           )
       );
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the usage command. Please check the logs.`

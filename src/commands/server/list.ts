@@ -61,6 +61,7 @@ const list: CommandInt = {
       }
 
       if (serverList.length !== ownerList.length) {
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -70,6 +71,7 @@ const list: CommandInt = {
       // Check if the current page is valid.
       if (isNaN(currentPage) || currentPage <= 0 || currentPage > totalPages) {
         await message.reply("I am so sorry, but I cannot look at that page.");
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -104,11 +106,9 @@ const list: CommandInt = {
           ownerCount === 1 ? "s" : ""
         }.`
       );
-
-      return;
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the list command. Please check the logs.`

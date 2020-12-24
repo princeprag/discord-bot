@@ -41,6 +41,7 @@ const title: CommandInt = {
         await channel.send(
           "I am so sorry, but I seem to have lost the necessary paperwork to assign you a title."
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -48,9 +49,9 @@ const title: CommandInt = {
       await channel.send(
         `I present to you: ${author.toString()}, the ${mood} ${occupation} of ${adjective} ${noun}!`
       );
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the title command. Please check the logs.`

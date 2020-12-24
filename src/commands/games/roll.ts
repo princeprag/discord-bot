@@ -18,6 +18,7 @@ const roll: CommandInt = {
         await message.reply(
           "Would you please try the command again, and tell me what `num` die you want me to roll?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -26,6 +27,7 @@ const roll: CommandInt = {
         await message.reply(
           "Would you please try the command again, and be sure that your die value starts with `d`? For example, `d20` is a 20-sided die."
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -35,6 +37,7 @@ const roll: CommandInt = {
       // Check if the number is NaN.
       if (isNaN(numValue)) {
         await message.reply(`I am so sorry, but ${num} is not a valid number.`);
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -45,9 +48,9 @@ const roll: CommandInt = {
       await channel.send(
         `You rolled a ${numValue}-sided die and got: ${result}`
       );
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the roll command. Please check the logs.`

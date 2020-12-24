@@ -16,6 +16,7 @@ const config: CommandInt = {
 
       // Check if the guild and member are valid.
       if (!guild || !member) {
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -26,6 +27,7 @@ const config: CommandInt = {
         await message.reply(
           `I am so sorry, but I can only perform this for moderators with the permission to manage the server.`
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -142,6 +144,7 @@ const config: CommandInt = {
 
         // send roles embed
         await channel.send(rolesEmbed);
+        await message.react(message.Becca.yes);
         return;
       }
 
@@ -150,6 +153,7 @@ const config: CommandInt = {
         await message.reply(
           `I am so sorry, but ${configType} is not a valid action for me to take.`
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -161,6 +165,7 @@ const config: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the setting you would like me to change?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -183,6 +188,7 @@ const config: CommandInt = {
         await message.reply(
           `I am so sorry, but ${key} is not a valid action for me to take.`
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -194,6 +200,7 @@ const config: CommandInt = {
         await message.reply(
           "Would you please try the command again, and tell me the value you would like me to set?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -206,6 +213,7 @@ const config: CommandInt = {
           await message.reply(
             `I am so sorry, but ${value} does not appear to be a valid channel.`
           );
+          await message.react(message.Becca.no);
           return;
         }
       }
@@ -223,6 +231,7 @@ const config: CommandInt = {
           await message.reply(
             `I am so sorry, but ${value} does not appear to be a valid role.`
           );
+          await message.react(message.Becca.no);
           return;
         }
       }
@@ -234,6 +243,7 @@ const config: CommandInt = {
           await message.reply(
             `I am so sorry, but ${value} does not appear to be a valid user.`
           );
+          await message.react(message.Becca.no);
           return;
         }
         if (value.replace(/\D/g, "") === process.env.OWNER_ID) {
@@ -242,6 +252,7 @@ const config: CommandInt = {
               ? "Wait a moment! I will not refuse to help my beloved."
               : "My love for my darling can never be stopped."
           );
+          await message.react(message.Becca.no);
           return;
         }
       }
@@ -252,6 +263,7 @@ const config: CommandInt = {
           await message.reply(
             `I am so sorry, but ${value} is not a valid option for ${key}. Please try again and tell me if you want ${key} to be turned \`on\` or \`off\`.`
           );
+          await message.react(message.Becca.no);
           return;
         }
       }
@@ -296,9 +308,9 @@ const config: CommandInt = {
 
       // Send confirmation.
       await channel.send(confirmation);
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the config command. Please check the logs.`

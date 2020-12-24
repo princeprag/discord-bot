@@ -27,7 +27,7 @@ const warn: CommandInt = {
         await message.reply(
           "I am so sorry, but I can only do this for moderators with permission to kick members."
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -42,6 +42,7 @@ const warn: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user you want me to warn?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -53,12 +54,14 @@ const warn: CommandInt = {
         await message.reply(
           `I am so sorry, but ${userToWarnMentioned.toString()} is not a valid user.`
         );
+        await message.react(message.Becca.no);
         return;
       }
 
       // Check if trying to warn itself.
       if (userToWarnMentioned.id === author.id) {
         await message.reply("Wait, what? You cannot warn yourself!");
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -70,6 +73,7 @@ const warn: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user you want me to warn?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -81,6 +85,7 @@ const warn: CommandInt = {
         await message.reply(
           "You want to warn me? Oh no! Did I do something wrong?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -120,9 +125,9 @@ const warn: CommandInt = {
       await userToWarnMentioned.send(
         `**[Warning]** ${author.toString()} has warned you for the following reason: ${reason}`
       );
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the warn command. Please check the logs.`

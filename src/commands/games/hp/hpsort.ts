@@ -54,6 +54,7 @@ const hpsort: CommandInt = {
       // Check if the houses are valid.
       if (!houses.data.length || !houses.data[0]) {
         await message.reply(HPSORT_CONSTANT.error.noData);
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -63,6 +64,7 @@ const hpsort: CommandInt = {
       // Check if the target house is valid.
       if (!targetHouse) {
         await message.reply(HPSORT_CONSTANT.error.noData);
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -120,9 +122,9 @@ const hpsort: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(houseEmbed);
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the hpsort command. Please check the logs.`

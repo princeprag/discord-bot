@@ -27,7 +27,7 @@ const unrestrict: CommandInt = {
         await message.reply(
           "I am so sorry, but I can only do this for moderators with permission to kick members."
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -41,6 +41,7 @@ const unrestrict: CommandInt = {
         await message.reply(
           "I am so sorry, but I do not have a record for your restricted role."
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -59,6 +60,7 @@ const unrestrict: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user you want me to unrestrict?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -70,12 +72,14 @@ const unrestrict: CommandInt = {
         await message.reply(
           `I am so sorry, but ${userToUnrestrictMentioned.toString()} is not a valid user.`
         );
+        await message.react(message.Becca.no);
         return;
       }
 
       // Check if trying to restrict itself.
       if (userToUnrestrictMentioned.id === author.id) {
         await message.reply("Wait, what? You cannot unrestrict yourself.");
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -87,6 +91,7 @@ const unrestrict: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user you want me to unrestrict?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -95,7 +100,7 @@ const unrestrict: CommandInt = {
         await message.reply(
           `I am so sorry, but ${userToUnrestrictMentioned.toString()} is not restricted.`
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -125,9 +130,9 @@ const unrestrict: CommandInt = {
 
       //respond
       await message.reply("Okay! I have taken care of that for you.");
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the unrestrict command. Please check the logs.`

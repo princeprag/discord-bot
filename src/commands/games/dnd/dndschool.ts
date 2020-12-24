@@ -35,6 +35,7 @@ const dndschool: CommandInt = {
       // Check if the query is not empty.
       if (!query || !query.length) {
         await message.reply(DNDSCHOOL_CONST.error.no_query);
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -46,6 +47,7 @@ const dndschool: CommandInt = {
       // Check if the dnd school is not valid.
       if (!data.data || data.data.error) {
         await message.reply(DNDSCHOOL_CONST.error.bad_data);
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -65,9 +67,9 @@ const dndschool: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(dndSchoolEmbed);
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the dndschool command. Please check the logs.`

@@ -19,7 +19,7 @@ const http: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the status code you want me to look for?"
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -28,7 +28,7 @@ const http: CommandInt = {
         await message.reply(
           `I am so sorry, but ${status} appears to be an invalid status code.`
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -38,9 +38,9 @@ const http: CommandInt = {
           .setTitle(`HTTP status: ${status}`)
           .setImage(`https://http.cat/${status}.jpg`)
       );
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the http command. Please check the logs.`

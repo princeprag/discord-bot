@@ -12,6 +12,7 @@ const server: CommandInt = {
 
       // Check if the guild is not valid.
       if (!guild) {
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -101,9 +102,9 @@ const server: CommandInt = {
 
       // Send the server embed to the current channel.
       await channel.send(serverEmbed);
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the server command. Please check the logs.`

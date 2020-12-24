@@ -19,6 +19,7 @@ const magic: CommandInt = {
         await message.reply(
           "Would you please try the command again, and tell me the card name you want me to search for?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -33,6 +34,7 @@ const magic: CommandInt = {
       // Check if the data is not valid.
       if (!data.data || !data.data.cards.length || !card) {
         await message.reply("I am so sorry, but I could not find anything.");
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -70,9 +72,9 @@ const magic: CommandInt = {
 
       // Send the card embed to the current channel.
       await channel.send(cardEmbed);
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the magic command. Please check the logs.`

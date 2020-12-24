@@ -18,6 +18,7 @@ const echo: CommandInt = {
         await message.reply(
           "I am so sorry, but I can only do this for my beloved."
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -28,6 +29,7 @@ const echo: CommandInt = {
         await message.reply(
           "Would you please try the command again, and tell me the id of the guild you want to message?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -39,6 +41,7 @@ const echo: CommandInt = {
           "I am so sorry, but I could not find a guild with the ID of " +
             guildArg
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -49,6 +52,7 @@ const echo: CommandInt = {
         await message.reply(
           "Would you please try the command again, and tell me the id of the channel you want me to message?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -62,6 +66,7 @@ const echo: CommandInt = {
           "I am so sorry, but I could not find a channel with the ID of " +
             channelArg
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -69,6 +74,7 @@ const echo: CommandInt = {
         await message.reply(
           `I am so sorry, but I can only send messages to text channels, not ${targetChannel.type} channels.`
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -79,9 +85,9 @@ const echo: CommandInt = {
       await channel.send(
         `Okay, I have sent your message to the ${targetChannel.name} channel in ${targetGuild.name}.`
       );
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the echo command. Please check the logs.`

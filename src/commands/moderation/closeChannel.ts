@@ -21,7 +21,7 @@ const closeChannel: CommandInt = {
         await message.reply(
           "I am so sorry, but I can only do this for moderators with permission to manage channels."
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -33,7 +33,7 @@ const closeChannel: CommandInt = {
         await message.reply(
           "I am so sorry, but I am only allowed to close the `suspended-user` channels."
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -56,9 +56,9 @@ const closeChannel: CommandInt = {
           .setFooter(`The channel ID was ${channelToDelete.id}`)
           .setTimestamp()
       );
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the close command. Please check the logs.`
