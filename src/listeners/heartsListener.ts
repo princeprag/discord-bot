@@ -1,7 +1,7 @@
 import ListenerInt from "@Interfaces/ListenerInt";
 import { love as defaultLovesIDs } from "../../default_config.json";
 
-const heartReactions = ["❤️", "🧡", "💛", "💚", "💙", "💜", "🖤", "🤍"];
+const heartReaction = "791758203909177355";
 
 /**
  * React with a heart to specific users messages.
@@ -33,16 +33,10 @@ const heartsListener: ListenerInt = {
 
       // Check if the message author id is in the loves user ids.
       if (authors.includes(author.id)) {
-        // Get a random heart reaction.
-        const randomHeartReaction = ~~(
-          Math.random() * heartReactions.length -
-          1
-        );
-
         // Check if the message is not deleted.
         if (!message.deleted) {
           // React to the user message.
-          await message.react(heartReactions[randomHeartReaction]);
+          await message.react(heartReaction);
         }
       }
     } catch (error) {
