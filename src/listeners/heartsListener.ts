@@ -1,8 +1,6 @@
 import ListenerInt from "@Interfaces/ListenerInt";
 import { love as defaultLovesIDs } from "../../default_config.json";
 
-const heartReaction = "791758203909177355";
-
 /**
  * React with a heart to specific users messages.
  * @constant
@@ -36,7 +34,7 @@ const heartsListener: ListenerInt = {
         // Check if the message is not deleted.
         if (!message.deleted) {
           // React to the user message.
-          await message.react(heartReaction);
+          await message.react(message.Becca.love);
         }
       }
     } catch (error) {
