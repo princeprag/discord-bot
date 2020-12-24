@@ -51,6 +51,7 @@ const adventure: CommandInt = {
       const { color, prefix } = Becca;
 
       if (!guild) {
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -64,7 +65,7 @@ const adventure: CommandInt = {
             prefix[guild.id]
           }adventure move <room> <direction>\`?`
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -120,6 +121,7 @@ const adventure: CommandInt = {
           await message.reply(
             "Would you please try the command again, and enter the direction?"
           );
+          await message.react(message.Becca.no);
           return;
         }
 
@@ -144,9 +146,9 @@ const adventure: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(adventureEmbed);
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the adventure command. Please check the logs.`

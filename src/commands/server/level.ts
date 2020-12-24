@@ -19,6 +19,7 @@ const level: CommandInt = {
       } = message;
 
       if (!guild) {
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -43,6 +44,7 @@ const level: CommandInt = {
           await message.reply(
             `I am so sorry, but ${userToStr} is not a valid user.`
           );
+          await message.react(message.Becca.no);
           return;
         }
 
@@ -60,6 +62,7 @@ const level: CommandInt = {
         await message.reply(
           "I am so sorry, but I have no record of that server."
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -71,6 +74,7 @@ const level: CommandInt = {
         await message.reply(
           `I am so sorry, but I have no record of <@!${user_id}>. Please encourage them to interact more!`
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -102,9 +106,9 @@ const level: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(levelEmbed);
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the level command. Please check the logs.`

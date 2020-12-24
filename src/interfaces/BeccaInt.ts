@@ -15,6 +15,14 @@ interface BeccaInt extends Client {
   color: string;
 
   /**
+   * Emotes
+   */
+  yes: string;
+  no: string;
+  love: string;
+  think: string;
+
+  /**
    * Prefix of the messages.
    * @property
    */

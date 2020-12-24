@@ -27,7 +27,7 @@ const restrict: CommandInt = {
         await message.reply(
           "I am so sorry, but I can only do this for moderators with permission to kick members."
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -41,6 +41,7 @@ const restrict: CommandInt = {
         await message.reply(
           "I am so sorry, but I do not have a record for your moderator role."
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -54,6 +55,7 @@ const restrict: CommandInt = {
         await message.reply(
           "I am so sorry, but I do not have a record for your restricted role."
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -108,6 +110,7 @@ const restrict: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user you want me to restrict?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -119,12 +122,14 @@ const restrict: CommandInt = {
         await message.reply(
           `I am so sorry, but ${userToRestrictMentioned.toString()} is not a valid user.`
         );
+        await message.react(message.Becca.no);
         return;
       }
 
       // Check if trying to restrict itself.
       if (userToRestrictMentioned.id === author.id) {
         await message.reply("Wait, what? You cannot restrict yourself!");
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -136,6 +141,7 @@ const restrict: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user you want me to restrict?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -147,6 +153,7 @@ const restrict: CommandInt = {
         await message.reply(
           "You want to restrict me? Oh no! Did I do something wrong?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -155,7 +162,7 @@ const restrict: CommandInt = {
         await message.reply(
           `I am so sorry, but ${userToRestrictMentioned.toString()} is already restricted.`
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -226,9 +233,9 @@ const restrict: CommandInt = {
 
       //respond
       await message.reply("Okay! I have taken care of that for you.");
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the restrict command. Please check the logs.`

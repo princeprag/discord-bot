@@ -76,16 +76,16 @@ const role: CommandInt = {
       if (member.roles.cache.has(guildRole.id)) {
         await member.roles.remove(guildRole);
         await channel.send(`Okay, I have removed your \`${targetRole}\` role.`);
+        await message.react(message.Becca.yes);
         return;
       }
 
       // Add role
       await member.roles.add(guildRole);
       await channel.send(`Okay, I have given you the \`${targetRole}\` role.`);
-      return;
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the role command. Please check the logs.`

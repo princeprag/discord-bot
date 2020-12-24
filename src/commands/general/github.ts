@@ -20,6 +20,7 @@ const github: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the username you want me to search for?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -36,6 +37,7 @@ const github: CommandInt = {
         await channel.send(
           "I am so sorry, but I was not able to find anything..."
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -95,9 +97,9 @@ const github: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(ghEmbed);
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the github command. Please check the logs.`

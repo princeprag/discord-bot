@@ -27,7 +27,7 @@ const kick: CommandInt = {
         await message.reply(
           "I am so sorry, but I can only do this for moderators with permission to kick members."
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -42,6 +42,7 @@ const kick: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user you want me to kick?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -53,12 +54,14 @@ const kick: CommandInt = {
         await message.reply(
           `I am so sorry, but ${userToKickMentioned.toString()} is not a valid user.`
         );
+        await message.react(message.Becca.no);
         return;
       }
 
       // Check if trying to kick itself.
       if (userToKickMentioned.id === author.id) {
         await message.reply("Wait, what? You cannot kick yourself!");
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -70,6 +73,7 @@ const kick: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user you want me to kick?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -81,6 +85,7 @@ const kick: CommandInt = {
         await message.reply(
           "You want to kick me? Oh no! Did I do something wrong?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -128,9 +133,9 @@ const kick: CommandInt = {
 
       // Send the embed to the logs channel.
       await Becca.sendMessageToLogsChannel(guild, kickLogEmbed);
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the kick command. Please check the logs.`

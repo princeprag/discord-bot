@@ -23,6 +23,7 @@ const habitica: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user id you want me to search for?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -45,6 +46,7 @@ const habitica: CommandInt = {
       // Check if the user data result is not success.
       if (!user.data.success) {
         await message.reply("I am so sorry, but I could not find that user...");
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -116,6 +118,7 @@ const habitica: CommandInt = {
         await message.reply(
           "I am so sorry, but I could not find that user's achievements..."
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -210,10 +213,12 @@ const habitica: CommandInt = {
         await message.reply(
           "I am so sorry, but the user has completed too many quests. I cannot carry this much information!"
         );
+        await message.react(message.Becca.no);
+        return;
       });
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the habitica command. Please check the logs.`

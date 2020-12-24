@@ -51,6 +51,7 @@ const pigLatin: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the sentence you would like me to translate?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -67,9 +68,9 @@ const pigLatin: CommandInt = {
         );
 
       await channel.send(pigEmbed);
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the piglatin command. Please check the logs.`

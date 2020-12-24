@@ -16,7 +16,7 @@ const leave: CommandInt = {
         await message.reply(
           "I am so sorry, but I can only do this for nhcarrigan."
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -28,6 +28,7 @@ const leave: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the server ID you wish for me to leave?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -39,15 +40,15 @@ const leave: CommandInt = {
         await message.reply(
           `I am so sorry, but \`${serverID}\` is not a valid server ID.`
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
       // Leave the target guild.
       await targetGuild.leave();
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the leave command. Please check the logs.`

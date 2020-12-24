@@ -54,9 +54,9 @@ const guess: CommandInt = {
           `And the winner is... <@!${winAuth}>! My number was ${random} and the winning guess was ${winGuess}.`
         );
       });
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the guess command. Please check the logs.`

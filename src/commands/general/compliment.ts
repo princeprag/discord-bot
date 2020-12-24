@@ -20,9 +20,9 @@ const compliment: CommandInt = {
           .setDescription(compliments[random])
           .setFooter("I love you. 💜")
       );
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the compliment command. Please check the logs.`

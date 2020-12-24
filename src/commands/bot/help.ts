@@ -24,6 +24,7 @@ const help: CommandInt = {
       const { color, commands, prefix } = Becca;
 
       if (!guild) {
+        await message.react(Becca.no);
         return;
       }
 
@@ -40,6 +41,7 @@ const help: CommandInt = {
           await message.reply(
             HELP_CONSTANTS.notFound(prefix[guild.id], commandName)
           );
+          await message.react(Becca.no);
           return;
         }
 
@@ -79,6 +81,7 @@ const help: CommandInt = {
 
         // Send the embed to the current channel.
         await channel.send(commandEmbed);
+        await message.react(Becca.yes);
         return;
       }
 
@@ -109,9 +112,9 @@ const help: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(helpEmbed);
-      await message.react("791758203145945128");
+      await message.react(Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the help command. Please check the logs.`

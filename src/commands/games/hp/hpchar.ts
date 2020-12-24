@@ -55,6 +55,7 @@ const hpchar: CommandInt = {
       //check for query
       if (!characterName) {
         await message.reply(HPCHAR_CONSTANT.error.missingName);
+        await message.react(message.Becca.no);
         return;
       }
       // Get the character information from the Harry Potter API.
@@ -65,6 +66,7 @@ const hpchar: CommandInt = {
       // Check if the first element exists.
       if (!data.data.length || !data.data[0]) {
         await message.reply(HPCHAR_CONSTANT.error.noData);
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -126,9 +128,9 @@ const hpchar: CommandInt = {
 
       // Send the hp embed to the current channel.
       await channel.send(hpEmbed);
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the hpchar command. Please check the logs.`

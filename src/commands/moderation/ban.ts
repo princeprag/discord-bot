@@ -27,7 +27,7 @@ const ban: CommandInt = {
         await message.reply(
           "I am sorry, but I can only do this for moderators who are allowed to ban members."
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -42,6 +42,7 @@ const ban: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user you want me to ban?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -53,12 +54,14 @@ const ban: CommandInt = {
         await message.reply(
           `I am so sorry, but ${userToBanMentioned.toString()} is not a valid user.`
         );
+        await message.react(message.Becca.no);
         return;
       }
 
       // Check if trying to ban itself.
       if (userToBanMentioned.id === author.id) {
         await message.reply("Wait, what? You cannot ban yourself!");
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -70,6 +73,7 @@ const ban: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user you want me to ban?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -81,6 +85,7 @@ const ban: CommandInt = {
         await message.reply(
           "You want to ban me? Oh no! Did I do something wrong?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -89,6 +94,7 @@ const ban: CommandInt = {
         await message.reply(
           `I am so sorry, but I cannot ban ${memberToBanMentioned.toString()}.`
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -159,10 +165,10 @@ const ban: CommandInt = {
         await userToBanMentioned.send(
           `**[Ban]** ${author.toString()} has banned you for the following reason: ${reason}`
         );
+        await message.react(message.Becca.yes);
       }
-      await message.react("791758203145945128");
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the ban command. Please check the logs.`

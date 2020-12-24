@@ -10,7 +10,7 @@ const botMentionListener: ListenerInt = {
         return;
       }
       if (Becca.user && message.mentions.users?.has(Becca.user.id)) {
-        await message.react("791758203091681280");
+        await message.react(Becca.think);
         if (message.author.id === process.env.OWNER_ID) {
           channel.startTyping();
           await message.sleep(3000);

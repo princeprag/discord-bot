@@ -21,7 +21,7 @@ const dndmon: CommandInt = {
   parameters: ["`<monster>`: the name of the monster to search"],
   run: async (message) => {
     try {
-      const { channel, commandArguments } = message;
+      const { channel, commandArguments, Becca } = message;
 
       // Join all command arguments with `-`.
       const query = commandArguments.join("-");
@@ -29,6 +29,7 @@ const dndmon: CommandInt = {
       // Check if the query is not empty.
       if (!query || !query.length) {
         await message.reply(DNDCLASS_CONSTANT.error.no_query);
+        await message.react(Becca.no);
         return;
       }
 
@@ -40,6 +41,7 @@ const dndmon: CommandInt = {
       // Check if the dnd monster is not valid.
       if (!data.data || data.data.error) {
         await message.reply(DNDCLASS_CONSTANT.error.bad_data);
+        await message.react(Becca.no);
         return;
       }
 
@@ -88,9 +90,9 @@ const dndmon: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(dndMonsterEmbed);
-      await message.react("791758203145945128");
+      await message.react(Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.yes);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the dndmon command. Please check the logs.`

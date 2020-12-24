@@ -25,6 +25,7 @@ const joke: CommandInt = {
         await message.reply(
           "I am so sorry, but I seem to have lost my book of jokes!"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -35,9 +36,9 @@ const joke: CommandInt = {
           .setTitle("I giggled at this:")
           .setDescription(joke)
       );
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the joke command. Please check the logs.`

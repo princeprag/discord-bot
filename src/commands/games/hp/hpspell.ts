@@ -28,6 +28,7 @@ const hpspell: CommandInt = {
       // check if query is empty
       if (!name) {
         await message.reply(HPSPECLL_CONSTANT.error.noName);
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -50,6 +51,7 @@ const hpspell: CommandInt = {
       // Check if the target spell is not valid.
       if (!targetSpell) {
         await message.reply(HPSPECLL_CONSTANT.error.notFound);
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -63,9 +65,9 @@ const hpspell: CommandInt = {
           .setDescription(effect)
           .setFooter(`Type: ${type}`)
       );
-      await message.react("791758203145945128");
+      await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react("791758203204796446");
+      await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the hpspell command. Please check the logs.`
