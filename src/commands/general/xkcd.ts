@@ -53,7 +53,9 @@ const xkcd: CommandInt = {
 
         // Send the embed to the current channel.
         await channel.send(xkcdEmbed);
+        await message.react("791758203145945128");
       } catch (error) {
+        await message.react("791758203204796446");
         console.log(
           "Xkcd Command:",
           error?.response?.data?.message ?? "Unknown error."
@@ -61,7 +63,9 @@ const xkcd: CommandInt = {
 
         await message.reply("I am so sorry, but I could not find anything...");
       }
+      await message.react("791758203145945128");
     } catch (error) {
+      await message.react("791758203204796446");
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the xkcd command. Please check the logs.`

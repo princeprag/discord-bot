@@ -57,7 +57,9 @@ const user: CommandInt = {
 
       // Send the user embed to the current channel.
       await channel.send(userEmbed);
+      await message.react("791758203145945128");
     } catch (error) {
+      await message.react("791758203204796446");
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the user command. Please check the logs.`

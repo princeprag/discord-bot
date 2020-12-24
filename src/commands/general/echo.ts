@@ -79,7 +79,9 @@ const echo: CommandInt = {
       await channel.send(
         `Okay, I have sent your message to the ${targetChannel.name} channel in ${targetGuild.name}.`
       );
+      await message.react("791758203145945128");
     } catch (error) {
+      await message.react("791758203204796446");
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the echo command. Please check the logs.`

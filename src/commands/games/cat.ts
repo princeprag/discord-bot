@@ -29,7 +29,9 @@ const cat: CommandInt = {
 
       // Send a message to the current channel.
       await channel.send("Oops! A cat walked across my keyboard!");
+      await message.react("791758203145945128");
     } catch (error) {
+      await message.react("791758203204796446");
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the cat command. Please check the logs.`

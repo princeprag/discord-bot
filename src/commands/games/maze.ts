@@ -140,7 +140,9 @@ const maze: CommandInt = {
 
       // Send the maze embed to the current channel.
       await channel.send(mazeEmbed);
+      await message.react("791758203145945128");
     } catch (error) {
+      await message.react("791758203204796446");
       if (error.response.status === 400) {
         const challengeEmbed = new MessageEmbed();
         challengeEmbed.setTitle("Challenge solution");

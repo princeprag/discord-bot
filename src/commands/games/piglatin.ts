@@ -67,7 +67,9 @@ const pigLatin: CommandInt = {
         );
 
       await channel.send(pigEmbed);
+      await message.react("791758203145945128");
     } catch (error) {
+      await message.react("791758203204796446");
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the piglatin command. Please check the logs.`

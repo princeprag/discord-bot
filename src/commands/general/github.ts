@@ -95,7 +95,9 @@ const github: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(ghEmbed);
+      await message.react("791758203145945128");
     } catch (error) {
+      await message.react("791758203204796446");
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the github command. Please check the logs.`
