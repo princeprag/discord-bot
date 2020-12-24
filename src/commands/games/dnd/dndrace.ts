@@ -107,7 +107,9 @@ const dndrace: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(dndRaceEmbed);
+      await message.react("791758203145945128");
     } catch (error) {
+      await message.react("791758203204796446");
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the dndrace command. Please check the logs.`

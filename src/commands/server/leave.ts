@@ -45,7 +45,9 @@ const leave: CommandInt = {
 
       // Leave the target guild.
       await targetGuild.leave();
+      await message.react("791758203145945128");
     } catch (error) {
+      await message.react("791758203204796446");
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the leave command. Please check the logs.`

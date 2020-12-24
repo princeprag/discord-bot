@@ -125,7 +125,9 @@ const unrestrict: CommandInt = {
 
       //respond
       await message.reply("Okay! I have taken care of that for you.");
+      await message.react("791758203145945128");
     } catch (error) {
+      await message.react("791758203204796446");
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the unrestrict command. Please check the logs.`

@@ -69,7 +69,9 @@ const pokename: CommandInt = {
 
         // Send the embed message to the current channel.
         await channel.send(pokeEmbed);
+        await message.react("791758203145945128");
       } catch (error) {
+        await message.react("791758203204796446");
         console.log(
           "Pokemon Name Command:",
           error?.response?.data?.message ?? "Unknown error."
@@ -77,7 +79,9 @@ const pokename: CommandInt = {
 
         await message.reply("I am so sorry, but I could not find anything...");
       }
+      await message.react("791758203145945128");
     } catch (error) {
+      await message.react("791758203204796446");
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the pokemon command. Please check the logs.`

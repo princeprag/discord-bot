@@ -126,7 +126,9 @@ const riddle: CommandInt = {
               "Next Riddle ID",
               solved.nextRiddlePath.split("/").reverse()[0]
             );
+            await message.react("791758203145945128");
           } catch (error) {
+            await message.react("791758203204796446");
             // if error not in answer, throw it to higher try catch
             if (error?.status !== 400) {
               throw error;
@@ -142,7 +144,9 @@ const riddle: CommandInt = {
 
       // Send the riddle embed to the current channel.
       await channel.send(riddleEmbed);
+      await message.react("791758203145945128");
     } catch (error) {
+      await message.react("791758203204796446");
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the riddle command. Please check the logs.`

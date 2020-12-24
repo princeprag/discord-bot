@@ -45,7 +45,9 @@ const roll: CommandInt = {
       await channel.send(
         `You rolled a ${numValue}-sided die and got: ${result}`
       );
+      await message.react("791758203145945128");
     } catch (error) {
+      await message.react("791758203204796446");
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the roll command. Please check the logs.`

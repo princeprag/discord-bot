@@ -83,7 +83,9 @@ const role: CommandInt = {
       await member.roles.add(guildRole);
       await channel.send(`Okay, I have given you the \`${targetRole}\` role.`);
       return;
+      await message.react("791758203145945128");
     } catch (error) {
+      await message.react("791758203204796446");
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the role command. Please check the logs.`

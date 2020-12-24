@@ -150,7 +150,9 @@ const challenge: CommandInt = {
                 nextQuestion.split("/").reverse()[0]
               );
             }
+            await message.react("791758203145945128");
           } catch (error) {
+            await message.react("791758203204796446");
             // if error not in answer, throw it to higher try catch
             if (error?.status !== 400) {
               throw error;
@@ -166,7 +168,9 @@ const challenge: CommandInt = {
         // Send the challenge embed to the current channel.
         await channel.send(challengeEmbed);
       }
+      await message.react("791758203145945128");
     } catch (error) {
+      await message.react("791758203204796446");
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
           `${message.guild?.name} had an error with the challenge command. Please check the logs.`
