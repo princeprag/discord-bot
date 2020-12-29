@@ -28,26 +28,29 @@ async function onMessageUpdate(
     // Send an embed message to the logs channel.
     await Becca.sendMessageToLogsChannel(
       guild,
-      new MessageEmbed().setTitle("A message was updated!").addFields(
-        {
-          name: "Old content",
-          value:
-            oldMessage.content ||
-            "I am so sorry, but I could not find that message.",
-        },
-        {
-          name: "New content",
-          value:
-            newMessage.content ||
-            "I am so sorry, but I could not find that message.",
-        },
-        {
-          name: "Author",
-          value:
-            author.toString() ||
-            "I am so sorry, but I could not find that user.",
-        }
-      )
+      new MessageEmbed()
+        .setTitle("A message was updated!")
+        .setURL(newMessage.url)
+        .addFields(
+          {
+            name: "Old content",
+            value:
+              oldMessage.content ||
+              "I am so sorry, but I could not find that message.",
+          },
+          {
+            name: "New content",
+            value:
+              newMessage.content ||
+              "I am so sorry, but I could not find that message.",
+          },
+          {
+            name: "Author",
+            value:
+              author.toString() ||
+              "I am so sorry, but I could not find that user.",
+          }
+        )
     );
   } catch (error) {
     if (Becca.debugHook) {
