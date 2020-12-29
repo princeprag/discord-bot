@@ -17,7 +17,7 @@ async function onMessageUpdate(
   Becca: BeccaInt
 ): Promise<void> {
   try {
-    // Ge the author and the current server from the new message.
+    // Get the author and the current server from the new message.
     const { author, guild } = newMessage;
 
     // Check if the message is sended in a Discord server or the author is a bot.
