@@ -78,7 +78,7 @@ const star: CommandInt = {
       // Send an embed message with the star to the user.
       await channel.send(
         new MessageEmbed()
-          .setTitle(`Congragulations, ${userToStarMentioned.toString()}, you got a gold star!`)
+          .setTitle(`Congratulations, ${userToStarMentioned.toString()}, you got a gold star!`)
           .setDescription(
             `${author.toString()} has given this shiny gold star to you!`
           )
