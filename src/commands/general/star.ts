@@ -76,9 +76,11 @@ const star: CommandInt = {
       attachment.push(new MessageAttachment("./img/star.png", "star.png"));
 
       // Send an embed message with the star to the user.
-      await userToStarMentioned.send(
+      await channel.send(
         new MessageEmbed()
-          .setTitle("You got a gold star!")
+          .setTitle(
+            `Congratulations, ${userToStarMentioned.username}, you got a gold star!`
+          )
           .setDescription(
             `${author.toString()} has given this shiny gold star to you!`
           )
@@ -88,10 +90,6 @@ const star: CommandInt = {
           .setFooter("I am so proud of you! 🙃")
       );
 
-      // Send a success message to the current channel.
-      await channel.send(
-        `Okay, I sent ${userToStarMentioned.toString()} a gold star!`
-      );
       await message.react(message.Becca.yes);
     } catch (error) {
       await message.react(message.Becca.no);
