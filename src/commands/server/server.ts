@@ -2,16 +2,17 @@ import CommandInt from "@Interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
 
 const server: CommandInt = {
-  names: ["server", "serverinfo"],
+  name: "server",
   description: "Gives the current status of this server.",
   run: async (message) => {
     try {
-      const { bot, channel, guild } = message;
+      const { Becca, channel, guild } = message;
 
-      const { color, prefix } = bot;
+      const { color, prefix } = Becca;
 
       // Check if the guild is not valid.
       if (!guild) {
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -47,7 +48,7 @@ const server: CommandInt = {
       serverEmbed.addField("Command prefix", prefix[guild.id], true);
 
       // Add the server members count to an embed field.
-      serverEmbed.addField("Member count", guild.memberCount, true);
+      serverEmbed.addField("Recently seen members", guild.memberCount, true);
 
       // Fetch all members, map to array
       const guildMembers = (await guild.members.fetch()).map((u) => u);
@@ -69,28 +70,6 @@ const server: CommandInt = {
       // Add the server users banned count to an embed field.
       serverEmbed.addField("Banned users", guild.fetchBans.length, true);
 
-      // Get the online stats.
-      const onlineStats = `🟢 ${
-        guildMembers.filter(
-          (member) => member.user.presence.status === "online"
-        ).length
-      } | 🟡 ${
-        guildMembers.filter((member) => member.user.presence.status === "idle")
-          .length
-      } | 🔴 ${
-        guildMembers.filter((member) => member.user.presence.status === "dnd")
-          .length
-      } | ⚪ ${
-        guildMembers.filter(
-          (member) =>
-            member.user.presence.status === "offline" ||
-            member.user.presence.status === "invisible"
-        ).length
-      }`;
-
-      // Add the server member status tracking to an embed field.
-      serverEmbed.addField("Member status tracking", onlineStats, true);
-
       // Add an empty field.
       serverEmbed.addField("\u200b", "\u200b", true);
 
@@ -101,11 +80,8 @@ const server: CommandInt = {
       serverEmbed.addField(
         "Roles",
         guild.roles.cache.map((role) => role.toString()).join(" "),
-        true
+        false
       );
-
-      // Add an empty field.
-      serverEmbed.addField("\u200b", "\u200b", true);
 
       // Add the server channels count to an embed field.
       serverEmbed.addField("Channel count", guild.channels.cache.size, true);
@@ -124,14 +100,16 @@ const server: CommandInt = {
         true
       );
 
-      // Add the footer.
-      serverEmbed.setFooter(
-        `Please use '${prefix[guild.id]}help' to see my commands.`
-      );
-
       // Send the server embed to the current channel.
       await channel.send(serverEmbed);
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the server command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the server command:`
       );

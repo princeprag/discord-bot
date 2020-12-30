@@ -41,7 +41,7 @@ const translator = (str: string): string => {
 };
 
 const pigLatin: CommandInt = {
-  names: ["piglatin", "pig"],
+  name: "piglatin",
   description: "Translates the given string into piglatin.",
   run: async (message) => {
     try {
@@ -51,6 +51,7 @@ const pigLatin: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the sentence you would like me to translate?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -67,7 +68,14 @@ const pigLatin: CommandInt = {
         );
 
       await channel.send(pigEmbed);
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the piglatin command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the pig latin command:`
       );

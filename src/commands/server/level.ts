@@ -1,5 +1,5 @@
 import CommandInt from "@Interfaces/CommandInt";
-import UserModel from "@Models/UserModel";
+import LevelModel from "@Models/LevelModel";
 import { MessageEmbed } from "discord.js";
 
 const level: CommandInt = {
@@ -11,7 +11,7 @@ const level: CommandInt = {
     try {
       const {
         author,
-        bot,
+        Becca,
         channel,
         commandArguments,
         guild,
@@ -19,6 +19,7 @@ const level: CommandInt = {
       } = message;
 
       if (!guild) {
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -43,6 +44,7 @@ const level: CommandInt = {
           await message.reply(
             `I am so sorry, but ${userToStr} is not a valid user.`
           );
+          await message.react(message.Becca.no);
           return;
         }
 
@@ -50,17 +52,29 @@ const level: CommandInt = {
         username = userTo.username;
       }
 
-      // Get the user info from the database.
-      const userInfo = await UserModel.findOne({
-        server_id: guild.id,
-        user_id,
+      // Get the server info from the database.
+      const server = await LevelModel.findOne({
+        serverID: guild.id,
       });
 
-      // Check if the user info does not exist.
-      if (!userInfo) {
+      // Check if the server info does not exist.
+      if (!server) {
         await message.reply(
-          "I am so sorry, but I have no record of that user. Please encourage them to talk!"
+          "I am so sorry, but I have no record of that server."
         );
+        await message.react(message.Becca.no);
+        return;
+      }
+
+      // get the user ID from the server
+      const user = server.users.find((u) => u.userID === user_id);
+
+      // Check if no user
+      if (!user) {
+        await message.reply(
+          `I am so sorry, but I have no record of <@!${user_id}>. Please encourage them to interact more!`
+        );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -68,7 +82,7 @@ const level: CommandInt = {
       const levelEmbed = new MessageEmbed();
 
       // Add the light purple color.
-      levelEmbed.setColor(bot.color);
+      levelEmbed.setColor(Becca.color);
 
       // Add the title.
       levelEmbed.setTitle(`${username}'s ranking`);
@@ -78,15 +92,28 @@ const level: CommandInt = {
         `Here is the record I have for you in \`${guild.name}!\``
       );
 
-      // Add the user experiencie.
-      levelEmbed.addField("Experience points", userInfo.points, true);
+      // Add the user experience.
+      levelEmbed.addField("Experience points", user.points, true);
 
       // Add the user level.
-      levelEmbed.addField("Level", ~~(userInfo.points / 100), true);
+      levelEmbed.addField("Level", ~~(user.points / 100), true);
+
+      // Add the time they were last seen
+      levelEmbed.addField(
+        "Last Seen",
+        `I last saw them on ${user.lastSeen.toLocaleDateString()}`
+      );
 
       // Send the embed to the current channel.
       await channel.send(levelEmbed);
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the level command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the level command:`
       );

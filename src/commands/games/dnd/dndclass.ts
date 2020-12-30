@@ -29,6 +29,7 @@ const dndclass: CommandInt = {
       // Check if the query is not empty.
       if (!query || !query.length) {
         await message.reply(DNDCLASS_CONSTANT.error.no_query);
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -40,6 +41,7 @@ const dndclass: CommandInt = {
       // Check if the dnd class is not valid.
       if (!data.data || data.data.error) {
         await message.reply(DNDCLASS_CONSTANT.error.bad_data);
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -81,7 +83,14 @@ const dndclass: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(dndClassEmbed);
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the dndclass command. Please check the logs.`
+        );
+      }
       console.error(
         `${message.guild?.name} had the following error with the dndclass command:`
       );

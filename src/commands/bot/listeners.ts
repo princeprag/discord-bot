@@ -8,18 +8,18 @@ const LISTENERS_CONSTANT = {
 };
 
 const listeners: CommandInt = {
-  names: ["listen", "listeners"],
+  name: "listeners",
   description:
-    "Provides information on the active listener features for the bot.",
+    "Provides information on the active listener features for Becca.",
   run: async (message) => {
     try {
-      const { bot, channel } = message;
+      const { Becca, channel } = message;
 
       // Create a new empty embed.
       const listenerEmbed = new MessageEmbed();
 
       // Add the light purple color.
-      listenerEmbed.setColor(bot.color);
+      listenerEmbed.setColor(Becca.color);
 
       // Add the title.
       listenerEmbed.setTitle(LISTENERS_CONSTANT.title);
@@ -28,7 +28,7 @@ const listeners: CommandInt = {
       listenerEmbed.setDescription(LISTENERS_CONSTANT.description);
 
       // Create list of UNIQUE listeners
-      const listenerList = Object.values(bot.customListeners);
+      const listenerList = Object.values(Becca.customListeners);
       const listeners = listenerList.filter(
         (l, i, self) => self.findIndex((el) => el.name === l.name) === i
       );
@@ -40,7 +40,14 @@ const listeners: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(listenerEmbed);
+      await message.react(Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the listeners command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the listeners command:`
       );

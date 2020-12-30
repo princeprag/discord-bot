@@ -1,29 +1,25 @@
 import ListenerInt from "@Interfaces/ListenerInt";
-import ToggleModel from "@Models/ToggleModel";
 import botMentionListener from "./botMentionListener";
 
 const thanksListener: ListenerInt = {
   name: "Thanks",
   description: "Congratulates users who are thanked.",
-  run: async (message) => {
+  run: async (message, config) => {
     try {
-      const { author, bot, channel, guild } = message;
+      const { author, Becca, channel, guild } = message;
 
       // Handle no guild
       if (!guild) {
-        await botMentionListener.run(message);
+        await botMentionListener.run(message, config);
         return;
       }
 
       // Confirm feature enabled for server
-      const shouldThank = await ToggleModel.findOne({
-        server_id: guild.id,
-        key: "thanks",
-      });
+      const shouldThank = config.thanks === "on";
 
       // If disabled, call mention listener.
-      if (!shouldThank || !shouldThank.value) {
-        await botMentionListener.run(message);
+      if (!shouldThank) {
+        await botMentionListener.run(message, config);
         return;
       }
 
@@ -33,8 +29,8 @@ const thanksListener: ListenerInt = {
       // Isn't this gorgeous?
       const thankRegex = /((?:^|\s)(?:(?:th(?:n[qx]|x)|t[xyq]|tn(?:[x]){0,2})|\w*\s*[.,]*\s*than[kx](?:[sxz]){0,2}|than[kx](?:[sxz]){0,2}(?:[uq]|y(?:ou)?)?)|grazie|arigato(?:[u]{0,1})|doumo|gracias?|spasibo|dhanyavaad(?:hamulu)?|o?brigad(?:o|a)|dziekuje|(?:re)?merci|multumesc|shukra?an|danke)\b/gi;
 
-      // Bot ignores itself
-      if (author === bot.user) {
+      // Becca ignores herself
+      if (author === Becca.user) {
         return;
       }
 
@@ -45,7 +41,7 @@ const thanksListener: ListenerInt = {
 
       // If no thanks, call mention listener
       if (!thankRegex.test(message.content)) {
-        await botMentionListener.run(message);
+        await botMentionListener.run(message, config);
         return;
       }
 
@@ -54,7 +50,7 @@ const thanksListener: ListenerInt = {
 
       //iterate through mentions
       for (const mention of mentions) {
-        if (mention === bot.user) {
+        if (mention === Becca.user) {
           replies.push(`Aww, you're welcome! I am very glad I could help!`);
           continue;
         }
@@ -70,6 +66,11 @@ const thanksListener: ListenerInt = {
       channel.stopTyping();
       await channel.send(replies.join(`\n`));
     } catch (error) {
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the thanks listener. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the thanks listener:`
       );

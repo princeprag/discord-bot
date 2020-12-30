@@ -16,6 +16,7 @@ const wiki: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the term you want me to search for?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -23,7 +24,14 @@ const wiki: CommandInt = {
       await channel.send(
         `Here is what I found: https://en.wikipedia.org/wiki/${query}`
       );
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the wiki command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the wiki command:`
       );

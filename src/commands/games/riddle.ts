@@ -17,9 +17,10 @@ const riddle: CommandInt = {
     "`<?answer>`: the riddle answer",
   ],
   run: async (message) => {
-    const { author, bot, channel, commandArguments, guild } = message;
+    const { author, Becca, channel, commandArguments, guild } = message;
 
     if (!guild) {
+      await message.react(message.Becca.no);
       return;
     }
 
@@ -31,7 +32,7 @@ const riddle: CommandInt = {
       await message.reply(
         "Would you please try the command again, and tell me if you want to `start`, `request`, or `solve` a riddle?"
       );
-
+      await message.react(message.Becca.no);
       return;
     }
 
@@ -40,7 +41,7 @@ const riddle: CommandInt = {
       const riddleEmbed = new MessageEmbed();
 
       // Add the light purple color.
-      riddleEmbed.setColor(bot.color);
+      riddleEmbed.setColor(Becca.color);
 
       // Check if the action is `start`.
       if (action === "start") {
@@ -63,7 +64,7 @@ const riddle: CommandInt = {
 
         riddleEmbed.setDescription(
           `Welcome to the riddles game! To get your first riddle, please call this command: \`${
-            bot.prefix[guild.id]
+            Becca.prefix[guild.id]
           }riddle request ${start.riddlePath.split("/").reverse()[0]}\``
         );
       }
@@ -77,6 +78,7 @@ const riddle: CommandInt = {
           await message.reply(
             "Would you please try the command again, and provide the riddle id?"
           );
+          await message.react(message.Becca.no);
           return;
         }
 
@@ -104,6 +106,7 @@ const riddle: CommandInt = {
             await message.reply(
               "Would you please try the command again, and provide the riddle answer?"
             );
+            await message.react(message.Becca.no);
             return;
           }
 
@@ -142,7 +145,14 @@ const riddle: CommandInt = {
 
       // Send the riddle embed to the current channel.
       await channel.send(riddleEmbed);
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the riddle command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the riddle command:`
       );

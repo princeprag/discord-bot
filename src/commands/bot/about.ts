@@ -2,8 +2,8 @@ import CommandInt from "@Interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
 
 const ABOUT_CONSTANT = {
-  title: "Greetings! My name is BeccaBot!",
-  description: `I am a discord bot created by [nhcarrigan](https://www.nhcarrigan.com), with help from a few contributors.  You can view my [source code and contributor list](https://github.com/nhcarrigan/BeccaBot) online.\r\n\r\nView the [official repository](https://github.com/nhcarrigan/BeccaBot) or you can join to the [official Discord server](https://discord.gg/PHqDbkg). I am named after nhcarrigan's old DnD/RP character.`,
+  title: "Greetings! My name is Becca Lyria!",
+  description: `I am a discord bot created by [nhcarrigan](https://www.nhcarrigan.com), with help from a few contributors.  You can view my [source code and contributor list](https://github.com/nhcarrigan/Becca-Lyria) online.\r\n\r\nView the [official repository](https://github.com/nhcarrigan/Becca-Lyria) or you can join to the [official Discord server](https://discord.gg/PHqDbkg). I am named after nhcarrigan's old DnD/RP character.`,
   creationDate: `Sun May 31 2020`,
   commandSuffix: " 🙃",
   favouriteColor: "PURPLE! 💜",
@@ -11,19 +11,19 @@ const ABOUT_CONSTANT = {
 };
 
 /**
- * See the bot information.
+ * See Becca's information.
  * @constant
  */
 const about: CommandInt = {
   name: "about",
-  description: "Provides details about the bot.",
+  description: "Provides details about Becca.",
   run: async (message) => {
     try {
-      // Get the bot client and the current channel from the message.
-      const { bot, channel } = message;
+      // Get the client and the current channel from the message.
+      const { Becca, channel } = message;
 
-      // Get the commands and the version of the bot.
-      const { color, commands, guilds, users, version } = bot;
+      // Get Becca's commands and version.
+      const { color, commands, guilds, users, version } = Becca;
 
       // Create a new empty embed.
       const aboutEmbed = new MessageEmbed();
@@ -37,16 +37,16 @@ const about: CommandInt = {
       // Add the description.
       aboutEmbed.setDescription(ABOUT_CONSTANT.description);
 
-      // Add the bot version.
+      // Add Becca's version.
       aboutEmbed.addField("Version", version, true);
 
-      // Add the bot creation date.
+      // Add Becca's creation date.
       aboutEmbed.addField("Creation date", ABOUT_CONSTANT.creationDate, true);
 
-      // Add the bot servers count.
+      // Add Becca's servers count.
       aboutEmbed.addField("Servers", guilds.cache.size, true);
 
-      // Add the bot users count.
+      // Add Becca's users count.
       aboutEmbed.addField("Users", users.cache.size, true);
 
       // Add the available commands length.
@@ -73,7 +73,14 @@ const about: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(aboutEmbed);
+      await message.react(Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the about command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had this error with the about command:`
       );

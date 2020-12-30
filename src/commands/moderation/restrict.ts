@@ -2,39 +2,38 @@ import CommandInt from "@Interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
 
 const restrict: CommandInt = {
-  names: ["restrict", "mute"],
+  name: "restrict",
   description:
-    "Restrict **user**'s access to the channel. Optionally provide a **reason**. Only available to server moderators. Bot will log this action if log channel is available.",
+    "Restrict **user**'s access to the channel. Optionally provide a **reason**. Only available to server moderators. Becca will log this action if log channel is available.",
   parameters: [
     "`<user>`: @name of the user to restrict.",
     "`<?reason>`: reason for restricting the user.",
   ],
-  run: async (message) => {
+  run: async (message, config) => {
     try {
       const {
         author,
-        bot,
+        Becca,
         commandArguments,
         guild,
         member,
         mentions,
       } = message;
 
-      const { user } = bot;
+      const { user } = Becca;
 
       // Check if the member has the kick members permission.
       if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
         await message.reply(
           "I am so sorry, but I can only do this for moderators with permission to kick members."
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
       // Get the moderator role.
-      const moderatorRole = await bot.getRoleFromSettings(
-        "moderator_role",
-        guild
+      const moderatorRole = guild.roles.cache.find(
+        (role) => role.id === config.moderator_role
       );
 
       // Check if the moderator role does not exist.
@@ -42,13 +41,13 @@ const restrict: CommandInt = {
         await message.reply(
           "I am so sorry, but I do not have a record for your moderator role."
         );
+        await message.react(message.Becca.no);
         return;
       }
 
       // Get the restricted role.
-      const restrictedRole = await bot.getRoleFromSettings(
-        "restricted_role",
-        guild
+      const restrictedRole = guild.roles.cache.find(
+        (role) => role.id === config.restricted_role
       );
 
       // Check if the restricted role does not exist.
@@ -56,6 +55,7 @@ const restrict: CommandInt = {
         await message.reply(
           "I am so sorry, but I do not have a record for your restricted role."
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -88,7 +88,7 @@ const restrict: CommandInt = {
               allow,
             },
             {
-              id: user.id, // Bot ID.
+              id: user.id, // Becca's ID.
               allow,
             },
           ],
@@ -110,6 +110,7 @@ const restrict: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user you want me to restrict?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -121,12 +122,14 @@ const restrict: CommandInt = {
         await message.reply(
           `I am so sorry, but ${userToRestrictMentioned.toString()} is not a valid user.`
         );
+        await message.react(message.Becca.no);
         return;
       }
 
       // Check if trying to restrict itself.
       if (userToRestrictMentioned.id === author.id) {
         await message.reply("Wait, what? You cannot restrict yourself!");
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -138,10 +141,11 @@ const restrict: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user you want me to restrict?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
-      // Check if the user id or member id are the bot id.
+      // Check if the user id or member id are Becca's id.
       if (
         userToRestrictMentioned.id === user.id ||
         memberToRestrictMentioned.id === user.id
@@ -149,6 +153,7 @@ const restrict: CommandInt = {
         await message.reply(
           "You want to restrict me? Oh no! Did I do something wrong?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -157,7 +162,7 @@ const restrict: CommandInt = {
         await message.reply(
           `I am so sorry, but ${userToRestrictMentioned.toString()} is already restricted.`
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -214,7 +219,7 @@ const restrict: CommandInt = {
       );
 
       // Send an embed message to the logs channel.
-      await bot.sendMessageToLogsChannel(
+      await Becca.sendMessageToLogsChannel(
         guild,
         new MessageEmbed()
           .setColor("#FF0000")
@@ -228,7 +233,14 @@ const restrict: CommandInt = {
 
       //respond
       await message.reply("Okay! I have taken care of that for you.");
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the restrict command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the restrict command:`
       );

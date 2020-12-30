@@ -1,3 +1,4 @@
+import { ServerModelInt } from "@Models/ServerModel";
 import MessageInt from "./MessageInt";
 
 /**
@@ -9,13 +10,7 @@ interface CommandInt {
    * Name of the command.
    * @property
    */
-  name?: string;
-
-  /**
-   * Multiple names for the command.
-   * @property
-   */
-  names?: string[];
+  name: string;
 
   /**
    * Description of the command.
@@ -37,7 +32,7 @@ interface CommandInt {
    * @param { MessageInt } message
    * @returns { Promise<void> }
    */
-  run(message: MessageInt): Promise<void>;
+  run(message: MessageInt, config: ServerModelInt): Promise<void>;
 }
 
 export default CommandInt;

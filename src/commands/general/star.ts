@@ -13,16 +13,17 @@ const star: CommandInt = {
     try {
       const {
         author,
-        bot,
+        Becca,
         channel,
         commandArguments,
         guild,
         mentions,
       } = message;
 
-      const { user } = bot;
+      const { user } = Becca;
 
       if (!guild || !user) {
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -37,6 +38,7 @@ const star: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user mention that you want me to send a star to?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -48,6 +50,7 @@ const star: CommandInt = {
         await message.reply(
           `I am so sorry, but ${userToStarMentioned.toString()} is not a valid user.`
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -56,7 +59,7 @@ const star: CommandInt = {
         await message.reply(
           "I am so sorry, but you cannot give yourself a star! I still love you though."
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -89,7 +92,14 @@ const star: CommandInt = {
       await channel.send(
         `Okay, I sent ${userToStarMentioned.toString()} a gold star!`
       );
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the star command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the star command:`
       );

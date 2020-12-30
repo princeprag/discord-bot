@@ -7,15 +7,14 @@ const joke: CommandInt = {
   name: "joke",
   description: "Returns a random joke.",
   run: async (message) => {
-    const { bot, channel } = message;
+    const { Becca, channel } = message;
 
     try {
       // Get the data from the joke API.
       const data = await axios.get<JokeInt>("https://icanhazdadjoke.com/", {
         headers: {
           Accept: "application/json",
-          "User-Agent":
-            "BeccaBot (https://www.nhcarrigan.com/BeccaBot-documentation",
+          "User-Agent": "Becca Lyria (https://beccalyria.nhcarrigan.com)",
         },
       });
 
@@ -26,17 +25,25 @@ const joke: CommandInt = {
         await message.reply(
           "I am so sorry, but I seem to have lost my book of jokes!"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
       // Send an embed message to the current channel.
       await channel.send(
         new MessageEmbed()
-          .setColor(bot.color)
+          .setColor(Becca.color)
           .setTitle("I giggled at this:")
           .setDescription(joke)
       );
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the joke command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the joke command:`
       );

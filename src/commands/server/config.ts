@@ -1,454 +1,321 @@
 import CommandInt from "@Interfaces/CommandInt";
-import SettingModel from "@Models/SettingModel";
 import { MessageEmbed } from "discord.js";
 
 const config: CommandInt = {
   name: "config",
   description:
-    "Returns the bot configuration for this server. (The parameters are only for server administrators)",
+    "Returns Becca's configuration for this server. (The parameters are only for server administrators)",
   parameters: [
-    "`<?action (set/add/remove/toggle)>`: set a channel, role or the prefix to the bot server configuration, or add or remove an user to heart listener.",
-    "`<?sub-action (channel/role/prefix/hearts/thanks/levels)>`: use this with `{@prefix}config <action>`",
-    "`<?type (logs/welcomes/restricted/moderator/welcome-message)>`: type of the channel or role, use this whit `{@prefix}config set channel <type>` or `{@prefix}config set role <type>`",
-    "`<?mention (role/channel)>`: channel or role mention, use this with `{@prefix}config set channel <type> <mention>` or `{@prefix}config set role <type> <mention>`",
-    "`<?mention (user)>`: user mention, use this `{@prefix}config add hearts <mention>` or `{@prefix}config remove hearts <mention>`",
-    "`<?prefix>`: the new prefix, use this with `{@prefix}config set prefix <prefix>`",
+    "`<setting>` - The setting you would like to set. See the docs for available options.",
+    "`<value>` - The value of that setting. See the docs for available options.",
   ],
-  run: async (message) => {
+  run: async (message, config) => {
     try {
-      // Get the bot client, current channel, command arguments and current guild, mentions and member of the message.
-      const {
-        bot,
-        channel,
-        commandArguments,
-        guild,
-        mentions,
-        member,
-      } = message;
+      // Get the client, current channel, command arguments and current guild, mentions and member of the message.
+      const { Becca, channel, commandArguments, guild, member } = message;
 
       // Check if the guild and member are valid.
       if (!guild || !member) {
+        await message.react(message.Becca.no);
         return;
       }
 
-      // Get `getTextChannelFromSettings`, the prefix and `setSetting` from the bot client.
-      const {
-        getTextChannelFromSettings,
-        getToggleFromSettings,
-        prefix,
-        setSetting,
-        setToggle,
-        getRoleFromSettings,
-      } = bot;
+      if (
+        !member.hasPermission("MANAGE_GUILD") &&
+        member.id !== process.env.OWNER_ID
+      ) {
+        await message.reply(
+          `I am so sorry, but I can only perform this for moderators with the permission to manage the server.`
+        );
+        await message.react(message.Becca.no);
+        return;
+      }
+
+      // Get `getTextChannelFromSettings`, the prefix and `setSetting` from the client.
+      const { prefix, setSetting } = Becca;
 
       // Get the next argument as the config type.
       const configType = commandArguments.shift();
 
-      // Check if the config type is `set`, `add` or `remove`.
-      if (
-        configType === "set" ||
-        configType === "add" ||
-        configType === "remove" ||
-        configType === "toggle"
-      ) {
-        // Check if the author has the administrator permission.
-        //NOTE: nhcarrigan hard-coded for development purposes.
-        if (
-          !member.hasPermission("MANAGE_GUILD") &&
-          member.id !== process.env.OWNER_ID
-        ) {
-          await message.reply(
-            "I am so sorry, but I can only do this for moderators with permission to manage server."
-          );
-          return;
-        }
+      if (!configType) {
+        // Create a new empty embed.
+        const configEmbed = new MessageEmbed();
 
-        // Get the next argument as the set type.
-        const setType = commandArguments.shift();
+        // Add the title.
+        configEmbed.setTitle("Here is my record for your server.");
 
-        if (configType === "toggle") {
-          if (setType === "thanks" || setType === "levels") {
-            const toggleSetting = await getToggleFromSettings(setType, guild);
-            await setToggle(guild.id, setType, !toggleSetting);
-            await message.reply(
-              `I have turned the ${setType} feature ${
-                !toggleSetting ? "on" : "off"
-              }`
-            );
-            return;
-          }
-          await message.reply(
-            `I am so sorry, but ${setType} is not a valid option to toggle.`
-          );
-          return;
-        } else if (configType === "set") {
-          // Check if the set type is `channel`.
-          if (setType === "channel") {
-            // Get the next argument as the channel type.
-            const channelType = commandArguments.shift();
-
-            // Get the next argument as the channel mention.
-            const channelMention = commandArguments.shift();
-
-            // Get the first channel mentioned.
-            const channelMentioned = mentions.channels.first();
-
-            if (channelMention && channelMentioned) {
-              // Check if the channel mention and channel mentioned are equals.
-              if (channelMention !== channelMentioned.toString()) {
-                await message.reply(
-                  `I am so sorry, but ${channelMention} is not a valid channel.`
-                );
-
-                return;
-              }
-            }
-
-            // Check if the channel mentioned is valid.
-            if (channelMentioned) {
-              let channelConfigured = "";
-
-              // Check if the channel type is `logs`.
-              if (channelType === "logs") {
-                await setSetting(guild.id, "logs_channel", channelMentioned.id);
-
-                channelConfigured = "logs";
-              }
-              // Check if the channel type is `welcomes`.
-              else if (channelType === "welcomes") {
-                await setSetting(
-                  guild.id,
-                  "join_leave_channel",
-                  channelMentioned.id
-                );
-
-                channelConfigured = "welcomes";
-              } else {
-                await message.reply(
-                  `'I am so sorry, but ${channelType}' is not a valid channel type for \`${
-                    prefix[guild.id]
-                  }config set channel\`.`
-                );
-
-                return;
-              }
-
-              await message.reply(
-                `Okay! I have set ${channelMentioned.toString()} as the ${channelConfigured} channel.`
-              );
-            } else if (channelType) {
-              await message.reply(
-                "Would you please try the command again, and provide the channel you want me to use?"
-              );
-            } else {
-              await message.reply(
-                "Would you please try the command again, and tell me if this is the `logs` or `welcomes` channel?"
-              );
-            }
-
-            return;
-          }
-          // Check if the set type is 'role'.
-          else if (setType === "role") {
-            // Get the next argument as the role type.
-            const roleType = commandArguments.shift();
-
-            // Get the next argument as the role mention.
-            const roleMention = commandArguments.shift();
-
-            // Get the first role mentioned.
-            const roleMentioned = mentions.roles.first();
-
-            if (roleMention && roleMentioned) {
-              // Check if the role mention and role mentioned are equals.
-              if (roleMention !== roleMentioned.toString()) {
-                await message.reply(
-                  `I am so sorry, but ${roleMention} is not a valid role.`
-                );
-                return;
-              }
-            }
-
-            // Check if the role mentioned is valid.
-            if (roleMentioned) {
-              let roleConfigured = "";
-
-              // Check if the role type is `restricted`.
-              if (roleType === "restricted") {
-                await setSetting(guild.id, "restricted_role", roleMentioned.id);
-
-                roleConfigured = "restricted";
-              }
-              // Check if the role type is `moderator`.
-              else if (roleType === "moderator") {
-                await setSetting(guild.id, "moderator_role", roleMentioned.id);
-
-                roleConfigured = "moderator";
-              } else {
-                await message.reply(
-                  `I am so sorry, but '${roleType}' is not a valid role type for \`${
-                    prefix[guild.id]
-                  }config set role\`.`
-                );
-
-                return;
-              }
-
-              await message.reply(
-                `Okay! I have set ${roleMentioned.toString()} as the ${roleConfigured} role.`
-              );
-            } else if (roleType) {
-              await message.reply(
-                "Would you please try the command again, and provide the role you want me to use?"
-              );
-            } else {
-              await message.reply(
-                "Would you please try the command again, and tell me if this is the `restricted` or `moderator` role?"
-              );
-            }
-
-            return;
-          }
-          // Check if the set type is `prefix`.
-          else if (setType === "prefix") {
-            // Get the next argument as the new prefix.
-            const newPrefix = commandArguments.shift();
-
-            // Check if the new prefix does not exist.
-            if (!newPrefix) {
-              await message.reply(
-                "Would you please try the command again, and provide the new prefix you would like me to watch for?"
-              );
-            } else {
-              message.bot.prefix[guild.id] = newPrefix;
-              await setSetting(guild.id, "prefix", newPrefix);
-
-              await message.reply(
-                `Okay! I have set '${newPrefix}' as the new commands prefix.`
-              );
-            }
-
-            return;
-          } else if (setType === "welcome-message") {
-            const welcomeMessage = commandArguments.join(" ");
-            if (welcomeMessage.length > 1000) {
-              await message.reply(
-                "Sorry, but that message is too long. Would you please try the command again with a shorter message?"
-              );
-              return;
-            }
-            await setSetting(guild.id, "welcome_message", welcomeMessage);
-            await message.reply(
-              "Okay, I have set your custom welcome message."
-            );
-            return;
-          }
-        } else {
-          // Check if the set type is `hearts`.
-          if (setType === "hearts") {
-            // Get the next argument as the user mention.
-            let userMention = commandArguments.shift();
-
-            // Get the first user mentioned.
-            const userMentioned = mentions.users.first();
-
-            if (userMention && userMentioned) {
-              // Remove the `<@!` and `>` from the mention to get the id.
-              userMention = userMention.replace(/[<@!>]/gi, "");
-
-              // Check if the user mention and user mentioned are equals.
-              if (userMention !== userMentioned.id) {
-                await message.reply(
-                  `I am so sorry, but ${userMention} is not a valid user.`
-                );
-                return;
-              }
-            }
-
-            if (userMentioned) {
-              const currentUsers = await SettingModel.findOne({
-                server_id: guild.id,
-                key: "loves",
-              });
-
-              if (currentUsers) {
-                const users = currentUsers.value.split(",");
-                let messageReply: string;
-
-                if (configType === "add") {
-                  if (users.includes(userMentioned.id)) {
-                    await message.reply(
-                      `Okay! I have added ${userMentioned.username} to the hearts listener.`
-                    );
-
-                    return;
-                  }
-
-                  users.push(userMentioned.id);
-                  currentUsers.value += users.join(",");
-                  messageReply = "I added the user to hearts listener.";
-                } else {
-                  const userIndex = users.findIndex(
-                    (id) => id === userMentioned.id
-                  );
-
-                  if (userIndex < 0) {
-                    await message.reply(
-                      `I am sorry, but ${userMentioned.username} is not in the hearts listener.`
-                    );
-
-                    return;
-                  }
-
-                  users.splice(userIndex, 1);
-                  currentUsers.value = users.join(",");
-                  messageReply =
-                    "Okay! I removed the user from hearts listener.";
-                }
-
-                await currentUsers.save();
-                await message.reply(messageReply);
-                return;
-              } else if (configType === "add") {
-                await SettingModel.create({
-                  server_id: guild.id,
-                  key: "loves",
-                  value: userMentioned.id,
-                });
-
-                await message.reply(
-                  "Okay! I added the user to hearts listener."
-                );
-
-                return;
-              } else {
-                await message.reply(
-                  `I am sorry, but ${userMentioned.username} is not in the hearts listener.`
-                );
-
-                return;
-              }
-            }
-          }
-        }
-
-        await message.reply(
-          `I am so sorry, but '${setType}' is not a valid configuration for \`${
-            prefix[guild.id]
-          }config ${configType}\`.`
+        // Add the logs channel to an embed field.
+        configEmbed.addField(
+          "Log channel",
+          config.log_channel
+            ? `Moderation activity, such as kicks, bans, warnings, and deleted messages will go to the <#${config.log_channel}> channel.`
+            : `Please configure a logs channel using \`${
+                prefix[guild.id]
+              }config set log_channel #channel)\`.`
         );
 
-        return;
-      } else if (configType) {
-        await message.reply(
-          `I am so sorry, but '${configType}' is not a valid configuration type.`
+        // Add the welcomes channel to an embed field.
+        configEmbed.addField(
+          "Welcome Channel",
+          config.welcome_channel
+            ? `Members will be welcomed (and member departures will be mentioned) in the <#${config.welcome_channel}> channel.`
+            : `Please configure a welcomes channel using \`${
+                prefix[guild.id]
+              }config set welcome_channel #channel)\`.`
         );
+
+        // Add the restricted role to an embed field.
+        configEmbed.addField(
+          "Restricted Role",
+          config.restricted_role
+            ? `The restrict and unrestrict role for the server is <@&${config.restricted_role}>`
+            : `Please configure a restrict role using \`${
+                prefix[guild.id]
+              }config set restricted_role @role\`.`
+        );
+
+        // Add the moderator role to an embed field.
+        configEmbed.addField(
+          "Moderator Role",
+          config.moderator_role
+            ? `The moderator role for the restrict command is <@&${config.moderator_role}>`
+            : `Please configure a moderator role using \`${
+                prefix[guild.id]
+              }config set moderator_role @role\`.`
+        );
+
+        // Add the thanks setting to an embed field.
+        configEmbed.addField(
+          "Thanks",
+          `I will${
+            config.thanks === "on" ? "" : " NOT"
+          } congratulate users when another user thanks them.`
+        );
+
+        // Add the levels setting to an embed field.
+        configEmbed.addField(
+          "Levels",
+          `I will${
+            config.levels === "on" ? "" : " NOT"
+          } give users experience points for being active.`
+        );
+
+        // Add welcome message status to embed
+        configEmbed.addField(
+          "Welcome Message",
+          config.custom_welcome
+            ? config.custom_welcome
+            : "Hello `{@username}`! Welcome to `{@servername}`! My name is Becca, and I am here to help!"
+        );
+
+        // Send the embed to the current channel.
+        await channel.send(configEmbed);
+
+        // Create embed containing hearts users
+        const heartsEmbed = new MessageEmbed()
+          .setTitle("Hearts")
+          .setFooter("These users will receive my love!")
+          .setDescription(
+            config.hearts.map((el) => `<@!${el}>`).join(" | ") || "No one :("
+          );
+
+        // send hearts embed
+        await channel.send(heartsEmbed);
+
+        // Create embed containing blocked users
+        const blockedEmbed = new MessageEmbed()
+          .setTitle("Blocked")
+          .setFooter("These users will not receive my assistance.")
+          .setDescription(
+            config.blocked.map((el) => `<@!${el}>`).join(" | ") || "No one :)"
+          );
+
+        // send blocked embed
+        await channel.send(blockedEmbed);
+
+        // Create embed for assignable roles
+        const rolesEmbed = new MessageEmbed()
+          .setTitle("Self-Assignable Roles")
+          .setFooter("These roles can be assigned with my `role` command.")
+          .setDescription(
+            config.self_roles.map((el) => `<@&${el}>`).join(" | ") ||
+              "No roles :("
+          );
+
+        // send roles embed
+        await channel.send(rolesEmbed);
+        await message.react(message.Becca.yes);
         return;
       }
 
-      // Create a new empty embed.
-      const configEmbed = new MessageEmbed();
+      // Check for valid type
+      if (configType !== "set") {
+        await message.reply(
+          `I am so sorry, but ${configType} is not a valid action for me to take.`
+        );
+        await message.react(message.Becca.no);
+        return;
+      }
 
-      // Add the title.
-      configEmbed.setTitle("Here is my record for your server.");
+      // Get setting to set
+      const key = commandArguments.shift();
 
-      // Get the logs channel from the database.
-      const logsChannel = await getTextChannelFromSettings(
-        "logs_channel",
-        guild
-      );
+      // If no setting provided, end.
+      if (!key) {
+        await message.reply(
+          "Would you please try the command again, and provide the setting you would like me to change?"
+        );
+        await message.react(message.Becca.no);
+        return;
+      }
 
-      // Add the logs channel to an embed field.
-      configEmbed.addField(
-        "Log channel",
-        logsChannel
-          ? `Moderation activity, such as kicks, bans, warnings, and deleted messages will go to the ${logsChannel.toString()} channel.`
-          : `Please configure a logs channel using \`${
-              prefix[guild.id]
-            }config set channel logs #logs-channel)\`.`
-      );
+      // If invalid setting provided, end.
+      if (
+        ![
+          "prefix",
+          "thanks",
+          "levels",
+          "welcome_channel",
+          "log_channel",
+          "restricted_role",
+          "moderator_role",
+          "custom_welcome",
+          "hearts",
+          "blocked",
+          "self_roles",
+        ].includes(key)
+      ) {
+        await message.reply(
+          `I am so sorry, but ${key} is not a valid action for me to take.`
+        );
+        await message.react(message.Becca.no);
+        return;
+      }
 
-      // Get the welcomes channel from the database.
-      const welcomesChannel = await getTextChannelFromSettings(
-        "join_leave_channel",
-        guild
-      );
+      // Get value for setting.
+      const value = commandArguments.join(" ");
 
-      // Add the welcomes channel to an embed field.
-      configEmbed.addField(
-        "Welcome Channel",
-        welcomesChannel
-          ? `Members will be welcomed (and member departures will be mentioned) in the ${welcomesChannel.toString()} channel.`
-          : `Please configure a welcomes channel using \`${
-              prefix[guild.id]
-            }config set channel welcomes #welcomes-channel)\`.`
-      );
+      // If no value provided, end.
+      if (!value) {
+        await message.reply(
+          "Would you please try the command again, and tell me the value you would like me to set?"
+        );
+        await message.react(message.Becca.no);
+        return;
+      }
 
-      // Get the restricted role from the database
-      const restrictRole = await getRoleFromSettings("restricted_role", guild);
+      // If setting channel, check for valid channel.
+      if (key === "welcome_channel" || key === "log_channel") {
+        const success = guild.channels.cache.find(
+          (chan) => chan.id === value.replace(/\D/g, "")
+        );
+        if (!success) {
+          await message.reply(
+            `I am so sorry, but ${value} does not appear to be a valid channel.`
+          );
+          await message.react(message.Becca.no);
+          return;
+        }
+      }
 
-      // Add the restricted role to an embed field.
-      configEmbed.addField(
-        "Restricted Role",
-        restrictRole
-          ? `The restrict and unrestrict role for the server is ${restrictRole.toString()}`
-          : `Please configure a restrict role using \`${
-              prefix[guild.id]
-            }config set role restricted @role\`.`
-      );
+      // If setting role, check for valid role.
+      if (
+        key === "restricted_role" ||
+        key === "moderator_role" ||
+        key === "self_roles"
+      ) {
+        const success = guild.roles.cache.find(
+          (role) => role.id === value.replace(/\D/g, "")
+        );
+        if (!success) {
+          await message.reply(
+            `I am so sorry, but ${value} does not appear to be a valid role.`
+          );
+          await message.react(message.Becca.no);
+          return;
+        }
+      }
 
-      // Get the moderator role from the database
-      const modRole = await getRoleFromSettings("moderator_role", guild);
+      // If setting hearts, check for valid user.
+      if (key === "hearts" || key === "blocked") {
+        const mem = await guild.members.fetch(value.replace(/\D/g, ""));
+        if (!mem) {
+          await message.reply(
+            `I am so sorry, but ${value} does not appear to be a valid user.`
+          );
+          await message.react(message.Becca.no);
+          return;
+        }
+        if (value.replace(/\D/g, "") === process.env.OWNER_ID) {
+          await message.reply(
+            key === "blocked"
+              ? "Wait a moment! I will not refuse to help my beloved."
+              : "My love for my darling can never be stopped."
+          );
+          await message.react(message.Becca.no);
+          return;
+        }
+      }
 
-      // Add the moderator role to an embed field.
-      configEmbed.addField(
-        "Moderator Role",
-        modRole
-          ? `The moderator role for the restrict command is ${modRole.toString()}`
-          : `Please configure a moderator role using \`${
-              prefix[guild.id]
-            }config set role moderator @role\`.`
-      );
+      // If setting toggle, check for off/on.
+      if (key === "thanks" || key === "levels") {
+        if (value !== "on" && value !== "off") {
+          await message.reply(
+            `I am so sorry, but ${value} is not a valid option for ${key}. Please try again and tell me if you want ${key} to be turned \`on\` or \`off\`.`
+          );
+          await message.react(message.Becca.no);
+          return;
+        }
+      }
 
-      // Get the thanks setting from the database
-      const shouldThank = await getToggleFromSettings("thanks", guild);
+      // Set client prefix.
+      if (key === "prefix") {
+        prefix[guild.id] = value.toLowerCase();
+      }
 
-      // Add the thanks setting to an embed field.
-      configEmbed.addField(
-        "Thanks",
-        `I will${
-          shouldThank ? "" : " NOT"
-        } congratulate users when another user thanks them.`
-      );
+      // Save settings.
+      const newSettings = await setSetting(guild.id, guild.name, key, value);
 
-      //get the levels setting from the database
-      const shouldLevel = await getToggleFromSettings("levels", guild);
+      // Set confirmation response
+      let confirmation = `Okay, I have set ${key} to ${value}`;
 
-      // Add the levels setting to an embed field.
-      configEmbed.addField(
-        "Levels",
-        `I will${
-          shouldLevel ? "" : " NOT"
-        } give users experience points for being active.`
-      );
+      // Handle hearts
+      if (key === "hearts") {
+        if (!newSettings.hearts.includes(value.replace(/\D/g, ""))) {
+          confirmation = `Okay, I will stop giving hearts to ${value}!`;
+        } else {
+          confirmation = `Okay, I will give hearts to ${value}!`;
+        }
+      }
 
-      //get the custom welcome message from the database:
-      const activeWelcomeMessage = await SettingModel.findOne({
-        server_id: guild.id,
-        key: "welcome_message",
-      });
+      // Handle blocked
+      if (key === "blocked") {
+        if (!newSettings.blocked.includes(value.replace(/\D/g, ""))) {
+          confirmation = `Okay, I will resume helping ${value}!`;
+        } else {
+          confirmation = `Okay, I will stop helping ${value}!`;
+        }
+      }
 
-      // Add welcome message status to embed
-      configEmbed.addField(
-        "Welcome Message",
-        activeWelcomeMessage
-          ? activeWelcomeMessage.value
-          : "Hello `{@username}`! Welcome to {@servername}! My name is Becca, and I am here to help!"
-      );
+      // Handle self roles
+      if (key === "self_roles") {
+        if (!newSettings.self_roles.includes(value.replace(/\D/g, ""))) {
+          confirmation = `Okay, ${value} is no longer self-assignable.`;
+        } else {
+          confirmation = `Okay, ${value} is now self-assignable.`;
+        }
+      }
 
-      // Send the embed to the current channel.
-      await channel.send(configEmbed);
+      // Send confirmation.
+      await channel.send(confirmation);
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the config command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the config command:`
       );

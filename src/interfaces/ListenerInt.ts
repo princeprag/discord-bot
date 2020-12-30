@@ -1,3 +1,4 @@
+import { ServerModelInt } from "@Models/ServerModel";
 import MessageInt from "./MessageInt";
 
 /**
@@ -25,7 +26,10 @@ interface ListenerInt {
    * @param { MessageInt } message
    * @returns { Promise<void> }
    */
-  run(message: MessageInt): Promise<void> | Promise<boolean>;
+  run(
+    message: MessageInt,
+    config: ServerModelInt
+  ): Promise<void> | Promise<boolean>;
 }
 
 export default ListenerInt;

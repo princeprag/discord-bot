@@ -16,7 +16,7 @@ const trivia: CommandInt = {
     "Provides a trivia question. 30 seconds later, will provide the answer.",
   run: async (message) => {
     try {
-      const { bot, channel } = message;
+      const { Becca, channel } = message;
 
       const letters = ["A", "B", "C", "D"];
 
@@ -53,7 +53,7 @@ const trivia: CommandInt = {
       // Send an embed message to the current channel.
       await channel.send(
         new MessageEmbed()
-          .setColor(bot.color)
+          .setColor(Becca.color)
           .setTitle(category)
           .setDescription(replaceHTML(question))
           .addField("A", answers[0], true)
@@ -101,7 +101,14 @@ const trivia: CommandInt = {
             : "No one got this question correct :("
         );
       });
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the trivia command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the trivia command:`
       );

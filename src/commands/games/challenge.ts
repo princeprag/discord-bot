@@ -16,9 +16,9 @@ const challenge: CommandInt = {
     "`<?answer>`: the challenge answer",
   ],
   run: async (message) => {
-    const { bot, channel, commandArguments, guild } = message;
+    const { Becca, channel, commandArguments, guild } = message;
 
-    const { prefix } = bot;
+    const { prefix } = Becca;
 
     if (!guild) {
       return;
@@ -36,7 +36,7 @@ const challenge: CommandInt = {
           prefix[guild.id]
         }challenge solve <id> <answer>\`?`
       );
-
+      await message.react(message.Becca.no);
       return;
     }
 
@@ -54,7 +54,7 @@ const challenge: CommandInt = {
         // Send an embed to the current channel.
         await channel.send(
           new MessageEmbed()
-            .setColor(bot.color)
+            .setColor(Becca.color)
             .setTitle("Start the challenge!")
             .setDescription(
               `Welcome to the challenge game! To get your first challenge, please call this command: \`${
@@ -73,13 +73,14 @@ const challenge: CommandInt = {
           await message.reply(
             "Would you please try the command again, and enter the challenge id?"
           );
+          await message.react(message.Becca.no);
           return;
         }
 
         const challengeEmbed = new MessageEmbed();
 
         // Add the light purple color.
-        challengeEmbed.setColor(bot.color);
+        challengeEmbed.setColor(Becca.color);
 
         // Check if the action is `request`.
         if (action === "request") {
@@ -113,7 +114,7 @@ const challenge: CommandInt = {
             await message.reply(
               "Would you please try the command again, and enter the challenge answer?"
             );
-
+            await message.react(message.Becca.no);
             return;
           }
           console.log({ answer });
@@ -166,7 +167,14 @@ const challenge: CommandInt = {
         // Send the challenge embed to the current channel.
         await channel.send(challengeEmbed);
       }
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the challenge command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the challenge command:`
       );

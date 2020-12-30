@@ -2,39 +2,38 @@ import CommandInt from "@Interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
 
 const unrestrict: CommandInt = {
-  names: ["unrestrict", "unmute"],
+  name: "unrestrict",
   description:
-    "Restore **user**'s access to the channel. Optionally provide a **reason**. Only available to server moderators. Bot will log this action if log channel is available.",
+    "Restore **user**'s access to the channel. Optionally provide a **reason**. Only available to server moderators. Becca will log this action if log channel is available.",
   parameters: [
     "`<user>`: @name of the user to restore.",
     "`<?reason>`: reason for restoring the user.",
   ],
-  run: async (message) => {
+  run: async (message, config) => {
     try {
       const {
         author,
-        bot,
+        Becca,
         commandArguments,
         guild,
         member,
         mentions,
       } = message;
 
-      const { user } = bot;
+      const { user } = Becca;
 
       // Check if the member has the kick members permission.
       if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
         await message.reply(
           "I am so sorry, but I can only do this for moderators with permission to kick members."
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
       // Get the restricted role.
-      const restrictedRole = await bot.getRoleFromSettings(
-        "restricted_role",
-        guild
+      const restrictedRole = guild.roles.cache.find(
+        (role) => role.id === config.restricted_role
       );
 
       // Check if the restricted role does not exist.
@@ -42,6 +41,7 @@ const unrestrict: CommandInt = {
         await message.reply(
           "I am so sorry, but I do not have a record for your restricted role."
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -60,6 +60,7 @@ const unrestrict: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user you want me to unrestrict?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -71,12 +72,14 @@ const unrestrict: CommandInt = {
         await message.reply(
           `I am so sorry, but ${userToUnrestrictMentioned.toString()} is not a valid user.`
         );
+        await message.react(message.Becca.no);
         return;
       }
 
       // Check if trying to restrict itself.
       if (userToUnrestrictMentioned.id === author.id) {
         await message.reply("Wait, what? You cannot unrestrict yourself.");
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -88,6 +91,7 @@ const unrestrict: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user you want me to unrestrict?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -96,7 +100,7 @@ const unrestrict: CommandInt = {
         await message.reply(
           `I am so sorry, but ${userToUnrestrictMentioned.toString()} is not restricted.`
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -112,7 +116,7 @@ const unrestrict: CommandInt = {
       memberToUnrestrictMentioned.roles.remove(restrictedRole);
 
       // Send an embed message to the logs channel.
-      await bot.sendMessageToLogsChannel(
+      await Becca.sendMessageToLogsChannel(
         guild,
         new MessageEmbed()
           .setColor("#00FF00")
@@ -126,7 +130,14 @@ const unrestrict: CommandInt = {
 
       //respond
       await message.reply("Okay! I have taken care of that for you.");
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the unrestrict command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the unrestrict command:`
       );

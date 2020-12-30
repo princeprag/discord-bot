@@ -4,14 +4,14 @@ import axios from "axios";
 import { MessageEmbed } from "discord.js";
 
 const pokenum: CommandInt = {
-  names: ["pokenum", "pokemonnum"],
+  name: "pokenum",
   description: "Searches for the Pokemon by the **number** provided.",
   parameters: [
     "<number>: the number to search for; optionally use the string 'random' instead",
   ],
   run: async (message) => {
     try {
-      const { bot, channel, commandArguments } = message;
+      const { Becca, channel, commandArguments } = message;
 
       // Get the next argument as the pokemon number.
       const numberArg = commandArguments.shift();
@@ -21,6 +21,7 @@ const pokenum: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the Pokemon number you want me to search for?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -45,7 +46,7 @@ const pokenum: CommandInt = {
       const pokeEmbed = new MessageEmbed();
 
       // Add the light purple color.
-      pokeEmbed.setColor(bot.color);
+      pokeEmbed.setColor(Becca.color);
 
       // Check if the number is zero.
       if (number === 0) {
@@ -70,7 +71,33 @@ const pokenum: CommandInt = {
         pokeEmbed.setTitle(pokemon.name);
         pokeEmbed.setDescription(`#${pokemon.id}`);
         pokeEmbed.setThumbnail(pokemon.sprites.front_default);
-
+        pokeEmbed.addFields(
+          {
+            name: "Abilities",
+            value:
+              pokemon.abilities.map((el) => el.ability.name).join(", ") ||
+              "no abilities found",
+          },
+          {
+            name: "Forms",
+            value:
+              pokemon.forms.map((el) => el.name).join(", ") || "no forms found",
+          },
+          {
+            name: "Held Items",
+            value:
+              pokemon.held_items.map((el) => el.item.name).join(", ") ||
+              "no items found",
+          },
+          {
+            name: "Stats",
+            value:
+              pokemon.stats
+                .map((el) => `${el.stat.name}: ${el.base_stat}`)
+                .join(", ") || "no stats found",
+          }
+        );
+        pokeEmbed.setColor(Becca.color);
         pokeEmbed.setFooter(
           `Weight: ${pokemon.weight}, Height: ${pokemon.height}`
         );
@@ -78,7 +105,14 @@ const pokenum: CommandInt = {
 
       // Send the embed message to the current channel.
       await channel.send(pokeEmbed);
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the pokenum command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the pokenum command:`
       );

@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js";
 const warn: CommandInt = {
   name: "warn",
   description:
-    "Send a warning to the **user**. Optionally provide a **reason**. Only available to server moderators. Bot will log this action if log channel is available.",
+    "Send a warning to the **user**. Optionally provide a **reason**. Only available to server moderators. Becca will log this action if log channel is available.",
   parameters: [
     "`<user>`: @name of the user to warn",
     "`<?reason>`: reason for warning the user",
@@ -13,21 +13,21 @@ const warn: CommandInt = {
     try {
       const {
         author,
-        bot,
+        Becca,
         commandArguments,
         guild,
         member,
         mentions,
       } = message;
 
-      const { user } = bot;
+      const { user } = Becca;
 
       // Check if the member has the kick members permission.
       if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
         await message.reply(
           "I am so sorry, but I can only do this for moderators with permission to kick members."
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -42,6 +42,7 @@ const warn: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user you want me to warn?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -53,12 +54,14 @@ const warn: CommandInt = {
         await message.reply(
           `I am so sorry, but ${userToWarnMentioned.toString()} is not a valid user.`
         );
+        await message.react(message.Becca.no);
         return;
       }
 
       // Check if trying to warn itself.
       if (userToWarnMentioned.id === author.id) {
         await message.reply("Wait, what? You cannot warn yourself!");
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -70,10 +73,11 @@ const warn: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user you want me to warn?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
-      // Check if the user id or member id are the bot id.
+      // Check if the user id or member id are Becca's id.
       if (
         userToWarnMentioned.id === user.id ||
         memberToWarnMentioned.id === user.id
@@ -81,6 +85,7 @@ const warn: CommandInt = {
         await message.reply(
           "You want to warn me? Oh no! Did I do something wrong?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -114,13 +119,20 @@ const warn: CommandInt = {
       warnLogEmbed.setTimestamp();
 
       // Send the embed to the logs channel.
-      await bot.sendMessageToLogsChannel(guild, warnLogEmbed);
+      await Becca.sendMessageToLogsChannel(guild, warnLogEmbed);
 
       // Send a message to the user.
       await userToWarnMentioned.send(
         `**[Warning]** ${author.toString()} has warned you for the following reason: ${reason}`
       );
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the warn command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the warn command:`
       );

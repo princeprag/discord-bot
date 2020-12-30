@@ -35,6 +35,7 @@ const dndspell: CommandInt = {
       // Check if the query is not empty.
       if (!query || !query.length) {
         await message.reply(DNDSPELL_CONST.error.no_query);
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -46,6 +47,7 @@ const dndspell: CommandInt = {
       // Check if the dnd spell is not valid.
       if (!data.data || data.data.error) {
         await message.reply(DNDSPELL_CONST.error.bad_data);
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -92,7 +94,14 @@ const dndspell: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(dndSpellEmbed);
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the dndspell command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the dndspell command:`
       );

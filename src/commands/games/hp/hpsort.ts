@@ -40,7 +40,7 @@ const hpsort: CommandInt = {
   name: "hpsort",
   description: "Sorts you into a Hogwarts house.",
   run: async (message) => {
-    const { bot, channel } = message;
+    const { Becca, channel } = message;
 
     try {
       // Get the sort data from the Harry Potter API.
@@ -54,6 +54,7 @@ const hpsort: CommandInt = {
       // Check if the houses are valid.
       if (!houses.data.length || !houses.data[0]) {
         await message.reply(HPSORT_CONSTANT.error.noData);
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -63,6 +64,7 @@ const hpsort: CommandInt = {
       // Check if the target house is valid.
       if (!targetHouse) {
         await message.reply(HPSORT_CONSTANT.error.noData);
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -80,7 +82,7 @@ const hpsort: CommandInt = {
       } = targetHouse;
 
       // Add the light purple color.
-      houseEmbed.setColor(bot.color);
+      houseEmbed.setColor(Becca.color);
 
       // Add the title.
       houseEmbed.setTitle(HPSORT_CONSTANT.title);
@@ -120,7 +122,14 @@ const hpsort: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(houseEmbed);
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the hpsort command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the hpsort command:`
       );

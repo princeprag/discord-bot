@@ -25,6 +25,7 @@ const space: CommandInt = {
           await message.reply(
             `I am so sorry, but ${userDate} is not a valid date. Would you please try the command again, and use the format \`YYYY-MM-DD\`?`
           );
+          await message.react(message.Becca.no);
           return;
         }
 
@@ -39,7 +40,7 @@ const space: CommandInt = {
       const { code, copyright, date, explanation, hdurl, title } = space.data;
 
       // Check if the code is 404.
-      if (code === 404) {
+      if (code === 404 || !space.data) {
         // Add the error title to the embed title.
         spaceEmbed.setTitle("SPAAAAACE");
 
@@ -50,6 +51,7 @@ const space: CommandInt = {
 
         // Send the space embed to the current channel.
         await channel.send(spaceEmbed);
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -67,7 +69,16 @@ const space: CommandInt = {
 
       // Add the space image copyright to the embed footer.
       spaceEmbed.setFooter(`© ${copyright || "No copyright provided"}`);
+
+      await channel.send(spaceEmbed);
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the space command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the space command:`
       );

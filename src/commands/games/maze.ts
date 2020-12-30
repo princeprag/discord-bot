@@ -14,9 +14,10 @@ const maze: CommandInt = {
   ],
   run: async (message) => {
     try {
-      const { bot, channel, commandArguments, guild } = message;
+      const { Becca, channel, commandArguments, guild } = message;
 
       if (!guild) {
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -28,7 +29,7 @@ const maze: CommandInt = {
         await message.reply(
           "Would you please try the command again, and let me know if you want to `request` a maze or `solve` a maze?"
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -36,7 +37,7 @@ const maze: CommandInt = {
       const mazeEmbed = new MessageEmbed();
 
       // Add the light purple color.
-      mazeEmbed.setColor(bot.color);
+      mazeEmbed.setColor(Becca.color);
 
       // Check if the action is `request`.
       if (action === "request") {
@@ -59,7 +60,7 @@ const maze: CommandInt = {
 
         mazeEmbed.setDescription(
           `When you have finished, please use \`${
-            bot.prefix[guild.id]
+            Becca.prefix[guild.id]
           }maze solve ${
             mazePath.split("/").reverse()[0]
           } <answer>\`, where answer is a null-spaced string of cardinal directions.`
@@ -83,7 +84,7 @@ const maze: CommandInt = {
             map[0].toString().length + 2
           )}\r\n\`\`\``
         );
-
+        await message.react(message.Becca.yes);
         return;
       }
       // Otherwise, the action is `solve`.
@@ -96,6 +97,7 @@ const maze: CommandInt = {
           await message.reply(
             "Would you please try the command again, and provide the maze id?"
           );
+          await message.react(message.Becca.no);
           return;
         }
 
@@ -107,6 +109,7 @@ const maze: CommandInt = {
           await message.reply(
             "Would you please try the command again, and provide the maze answer?"
           );
+          await message.react(message.Becca.no);
           return;
         }
 
@@ -140,7 +143,22 @@ const maze: CommandInt = {
 
       // Send the maze embed to the current channel.
       await channel.send(mazeEmbed);
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (error.response.status === 400) {
+        const challengeEmbed = new MessageEmbed();
+        challengeEmbed.setTitle("Challenge solution");
+        challengeEmbed.setDescription(error.response.data.message);
+        challengeEmbed.addField("Result", error.response.data.result);
+        message.channel.send(challengeEmbed);
+        return;
+      }
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the maze command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the maze command:`
       );

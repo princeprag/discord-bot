@@ -8,7 +8,7 @@ const fact: CommandInt = {
   description: "Returns a fun fact!",
   run: async (message) => {
     try {
-      const { bot, channel } = message;
+      const { Becca, channel } = message;
 
       // Get the data information from the random API.
       const data = await axios.get<FactInt>(
@@ -20,12 +20,19 @@ const fact: CommandInt = {
       // Send the embed to the current channel.
       await channel.send(
         new MessageEmbed()
-          .setColor(bot.color)
+          .setColor(Becca.color)
           .setTitle("Did you know?")
           .setURL(source_url)
           .setDescription(text)
       );
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the fact command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the fact command:`
       );

@@ -2,14 +2,15 @@ import ListenerInt from "@Interfaces/ListenerInt";
 
 const botMentionListener: ListenerInt = {
   name: "Becca Mention Listener",
-  description: "Listens for the bot being mentioned.",
+  description: "Listens for Becca being mentioned.",
   run: async (message) => {
     try {
-      const { bot, channel, guild } = message;
+      const { Becca, channel, guild } = message;
       if (!guild) {
         return;
       }
-      if (bot.user && message.mentions.users?.has(bot.user.id)) {
+      if (Becca.user && message.mentions.users?.has(Becca.user.id)) {
+        await message.react(Becca.think);
         if (message.author.id === process.env.OWNER_ID) {
           channel.startTyping();
           await message.sleep(3000);
@@ -24,11 +25,16 @@ const botMentionListener: ListenerInt = {
         channel.stopTyping();
         await message.channel.send(
           `Hello! Was there something I could help you with? Try \`${
-            bot.prefix[guild.id]
+            Becca.prefix[guild.id]
           }help\` to see what I can do for you! 💜`
         );
       }
     } catch (error) {
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the Becca Mentions listener. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the Becca Mentions listener:`
       );

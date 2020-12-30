@@ -12,11 +12,12 @@ const dnd: CommandInt = {
   description: "List of the available Dungeons and Dragons commands",
   run: async (message) => {
     try {
-      const { bot, channel, guild } = message;
+      const { Becca, channel, guild } = message;
 
-      const { commands, prefix } = bot;
+      const { commands, prefix } = Becca;
 
       if (!guild) {
+        await message.react(Becca.no);
         return;
       }
 
@@ -33,10 +34,9 @@ const dnd: CommandInt = {
       const dndCommands: Set<CommandInt> = new Set(
         Object.values(commands).filter(
           (command) =>
-            (command.name &&
-              command.name.startsWith("dnd") &&
-              command.name !== "dnd") ||
-            (command.names && command.names.find((el) => el.startsWith("dnd")))
+            command.name &&
+            command.name.startsWith("dnd") &&
+            command.name !== "dnd"
         )
       );
 
@@ -45,9 +45,7 @@ const dnd: CommandInt = {
         for (const dndCommand of dndCommands) {
           dndEmbed.addField(
             prefix[guild.id] +
-              (dndCommand.names
-                ? dndCommand.names.join("/")
-                : dndCommand.name) +
+              dndCommand.name +
               (dndCommand.parameters
                 ? ` ${dndCommand.parameters
                     .join(" ")
@@ -61,7 +59,14 @@ const dnd: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(dndEmbed);
+      await message.react(Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the dnd command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the dnd command:`
       );

@@ -47,7 +47,7 @@ const hpchar: CommandInt = {
   parameters: ["`<name>`: the first and last name of the character."],
   run: async (message) => {
     try {
-      const { bot, channel, commandArguments } = message;
+      const { Becca, channel, commandArguments } = message;
 
       // Get the arguments as an Harry Potter API query.
       const characterName = commandArguments.join("%20");
@@ -55,6 +55,7 @@ const hpchar: CommandInt = {
       //check for query
       if (!characterName) {
         await message.reply(HPCHAR_CONSTANT.error.missingName);
+        await message.react(message.Becca.no);
         return;
       }
       // Get the character information from the Harry Potter API.
@@ -65,6 +66,7 @@ const hpchar: CommandInt = {
       // Check if the first element exists.
       if (!data.data.length || !data.data[0]) {
         await message.reply(HPCHAR_CONSTANT.error.noData);
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -83,7 +85,7 @@ const hpchar: CommandInt = {
       } = data.data[0];
 
       // Add the light purple color.
-      hpEmbed.setColor(bot.color);
+      hpEmbed.setColor(Becca.color);
 
       // Add the character name to the embed title.
       hpEmbed.setTitle(name);
@@ -126,7 +128,14 @@ const hpchar: CommandInt = {
 
       // Send the hp embed to the current channel.
       await channel.send(hpEmbed);
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the hpchar command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the hpchar command:`
       );

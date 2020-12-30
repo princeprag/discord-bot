@@ -13,7 +13,7 @@ const habitica: CommandInt = {
   parameters: ["`<id>`: the user id of the profile to look up"],
   run: async (message) => {
     try {
-      const { bot, channel, commandArguments } = message;
+      const { Becca, channel, commandArguments } = message;
 
       // Get the next argument as the user id.
       const id = commandArguments.shift();
@@ -23,6 +23,7 @@ const habitica: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user id you want me to search for?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -45,6 +46,7 @@ const habitica: CommandInt = {
       // Check if the user data result is not success.
       if (!user.data.success) {
         await message.reply("I am so sorry, but I could not find that user...");
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -56,7 +58,7 @@ const habitica: CommandInt = {
       const userEmbed = new MessageEmbed();
 
       // Add the light purple color.
-      userEmbed.setColor(bot.color);
+      userEmbed.setColor(Becca.color);
 
       // Add the profile name to the embed title.
       userEmbed.setTitle(profile.name);
@@ -116,6 +118,7 @@ const habitica: CommandInt = {
         await message.reply(
           "I am so sorry, but I could not find that user's achievements..."
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -140,7 +143,7 @@ const habitica: CommandInt = {
       const achievementsEmbed = new MessageEmbed();
 
       // Add the light purple color.
-      achievementsEmbed.setColor(bot.color);
+      achievementsEmbed.setColor(Becca.color);
 
       // Add the profile name to the embed title.
       achievementsEmbed.setTitle(profile.name);
@@ -182,7 +185,7 @@ const habitica: CommandInt = {
       const questsEmbed = new MessageEmbed();
 
       // Add the light purple color.
-      questsEmbed.setColor(bot.color);
+      questsEmbed.setColor(Becca.color);
 
       // Add the profile name to the embed title.
       questsEmbed.setTitle(profile.name);
@@ -210,8 +213,17 @@ const habitica: CommandInt = {
         await message.reply(
           "I am so sorry, but the user has completed too many quests. I cannot carry this much information!"
         );
+        await message.react(message.Becca.no);
+        return;
       });
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the habitica command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the habitica command:`
       );

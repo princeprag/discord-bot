@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js";
 const kick: CommandInt = {
   name: "kick",
   description:
-    "Kick **user** from the channel. Optionally provide a **reason**. Only available to server moderators. Bot will log this action if the log channel is available.",
+    "Kick **user** from the channel. Optionally provide a **reason**. Only available to server moderators. Becca will log this action if the log channel is available.",
   parameters: [
     "`<user>`: @name of the user to kick",
     "`<?reason>`: reason for kicking the user",
@@ -13,21 +13,21 @@ const kick: CommandInt = {
     try {
       const {
         author,
-        bot,
+        Becca,
         commandArguments,
         guild,
         member,
         mentions,
       } = message;
 
-      const { user } = bot;
+      const { user } = Becca;
 
       // Check if the member has the kick members permission.
       if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
         await message.reply(
           "I am so sorry, but I can only do this for moderators with permission to kick members."
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -42,6 +42,7 @@ const kick: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user you want me to kick?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -53,12 +54,14 @@ const kick: CommandInt = {
         await message.reply(
           `I am so sorry, but ${userToKickMentioned.toString()} is not a valid user.`
         );
+        await message.react(message.Becca.no);
         return;
       }
 
       // Check if trying to kick itself.
       if (userToKickMentioned.id === author.id) {
         await message.reply("Wait, what? You cannot kick yourself!");
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -70,10 +73,11 @@ const kick: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the user you want me to kick?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
-      // Check if the user id or member id are the bot id.
+      // Check if the user id or member id are Becca's id.
       if (
         userToKickMentioned.id === user.id ||
         memberToKickMentioned.id === user.id
@@ -81,6 +85,7 @@ const kick: CommandInt = {
         await message.reply(
           "You want to kick me? Oh no! Did I do something wrong?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -127,8 +132,15 @@ const kick: CommandInt = {
       kickLogEmbed.setTimestamp();
 
       // Send the embed to the logs channel.
-      await bot.sendMessageToLogsChannel(guild, kickLogEmbed);
+      await Becca.sendMessageToLogsChannel(guild, kickLogEmbed);
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the kick command. Please check the logs.`
+        );
+      }
       console.log("Kick Command", error);
 
       await message.reply("I am so sorry, but I cannot kick this user.");

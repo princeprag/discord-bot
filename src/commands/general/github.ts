@@ -4,7 +4,7 @@ import axios from "axios";
 import { MessageEmbed } from "discord.js";
 
 const github: CommandInt = {
-  names: ["github", "gh"],
+  name: "github",
   description: "Gets information on the <user>'s GitHub profile.",
   parameters: ["`<user>`: The user to look for on GitHub"],
   run: async (message) => {
@@ -20,6 +20,7 @@ const github: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the username you want me to search for?"
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -36,6 +37,7 @@ const github: CommandInt = {
         await channel.send(
           "I am so sorry, but I was not able to find anything..."
         );
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -95,7 +97,14 @@ const github: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(ghEmbed);
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the github command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the github command:`
       );

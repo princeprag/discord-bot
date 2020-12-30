@@ -28,7 +28,14 @@ const jobs: CommandInt = {
           .setTitle("Job search!")
           .setDescription(`[Here are some potential jobs for you.](${url})`)
       );
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the jobs command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the jobs command:`
       );

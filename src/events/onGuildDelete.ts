@@ -1,7 +1,6 @@
-import CommandLogModel from "@Models/CommandLogModel";
-import SettingModel from "@Models/SettingModel";
-import UserModel from "@Models/UserModel";
+import ServerModel from "@Models/ServerModel";
 import { Client, Guild, WebhookClient } from "discord.js";
+import LevelModel from "@Models/LevelModel";
 
 /**
  * Send a debug message when a guild has been deleted.
@@ -10,17 +9,17 @@ import { Client, Guild, WebhookClient } from "discord.js";
  * @function
  * @param { Guild } guild
  * @param { WebhookClient | null } debugChannelHook
- * @param { Client } client
+ * @param { Client } Becca
  * @returns { Promise<void> }
  */
 async function onGuildDelete(
   guild: Guild,
   debugChannelHook: WebhookClient | null,
-  client: Client
+  Becca: Client
 ): Promise<void> {
   if (debugChannelHook) {
-    // Get the user from the bot client.
-    const { user } = client;
+    // Get the user from the client.
+    const { user } = Becca;
 
     if (user) {
       // Get the name and id of the server from the current guild.
@@ -31,38 +30,11 @@ async function onGuildDelete(
         `${user.username} has left the ${name} server!`
       );
 
-      // Get the command logs of the server.
-      const commandLogs = await CommandLogModel.find({ server_id: id });
-
-      // Check if the server has command logs.
-      if (commandLogs.length) {
-        for await (const commandLog of commandLogs) {
-          // Delete the command log.
-          await CommandLogModel.findByIdAndDelete(commandLog._id);
-        }
-      }
-
-      // Get the settings of the server.
-      const settings = await SettingModel.find({ server_id: id });
-
-      // Check if the server has custom settings.
-      if (settings.length) {
-        for await (const setting of settings) {
-          // Delete the setting.
-          await SettingModel.findByIdAndDelete(setting._id);
-        }
-      }
+      // Delete the server settings.
+      await ServerModel.findOneAndDelete({ serverID: id });
 
       // Get the users of the server.
-      const users = await UserModel.find({ server_id: id });
-
-      // Check if the server has users.
-      if (users.length) {
-        for await (const user of users) {
-          // Delete the user.
-          await UserModel.findByIdAndDelete(user._id);
-        }
-      }
+      await LevelModel.findOneAndDelete({ serverID: id });
     }
   }
 }

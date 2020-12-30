@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js";
 const SUPPORT_CONSTANTS = {
   title: "Do you need some help?",
   description:
-    "I am sorry if I couldn't explain things well enough. You can join my [support server](https://discord.gg/PHqDbkg) or check my [documentation page](https://www.nhcarrigan.com/BeccaBot-documentation/) for some additional assistance.",
+    "I am sorry if I couldn't explain things well enough. You can join my [support server](http://chat.nhcarrigan.com) or check my [documentation page](https://beccalyria.nhcarrigan.com/) for some additional assistance.",
 };
 
 const support: CommandInt = {
@@ -12,15 +12,22 @@ const support: CommandInt = {
   description: "Provides a link to the support server.",
   run: async (message) => {
     try {
-      const { bot, channel } = message;
+      const { Becca, channel } = message;
       const supportEmbed = new MessageEmbed();
       supportEmbed.setTitle(SUPPORT_CONSTANTS.title);
       supportEmbed.setDescription(SUPPORT_CONSTANTS.description);
-      supportEmbed.setColor(bot.color);
+      supportEmbed.setColor(Becca.color);
       await channel.send(supportEmbed);
+      await message.react(Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the support command. Please check the logs.`
+        );
+      }
       console.log(
-        `${message.guild?.name} had the following error with the report command:`
+        `${message.guild?.name} had the following error with the support command:`
       );
       console.log(error);
       message.reply("I am so sorry, but I cannot do that at the moment.");

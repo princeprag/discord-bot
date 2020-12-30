@@ -2,7 +2,7 @@ import CommandInt from "@Interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
 
 const HELP_CONSTANTS = {
-  title: "Bot commands",
+  title: "Becca's commands",
   description: (prefix: string) =>
     `My available commands are below. The command name must be prefixed with \`${prefix}\`, just like the \`${prefix}help\` command used to get this message. For information on a specific command, please use \`${prefix}help <command>\`.`,
   footer: "I hope I could help!",
@@ -19,11 +19,12 @@ const help: CommandInt = {
   ],
   run: async (message) => {
     try {
-      const { bot, channel, commandArguments, guild } = message;
+      const { Becca, channel, commandArguments, guild } = message;
 
-      const { color, commands, prefix } = bot;
+      const { color, commands, prefix } = Becca;
 
       if (!guild) {
+        await message.react(Becca.no);
         return;
       }
 
@@ -40,6 +41,7 @@ const help: CommandInt = {
           await message.reply(
             HELP_CONSTANTS.notFound(prefix[guild.id], commandName)
           );
+          await message.react(Becca.no);
           return;
         }
 
@@ -79,6 +81,7 @@ const help: CommandInt = {
 
         // Send the embed to the current channel.
         await channel.send(commandEmbed);
+        await message.react(Becca.yes);
         return;
       }
 
@@ -98,11 +101,7 @@ const help: CommandInt = {
 
       // Get the unique commands.
       for (const command of new Set(Object.values(commands)).values()) {
-        if (command.name) {
-          commandNames.push(`\`${command.name}\``);
-        } else if (command.names) {
-          commandNames.push(`\`${command.names.join("/")}\``);
-        }
+        commandNames.push(`\`${command.name}\``);
       }
 
       // Add the available commands.
@@ -113,7 +112,14 @@ const help: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(helpEmbed);
+      await message.react(Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the help command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the help command:`
       );

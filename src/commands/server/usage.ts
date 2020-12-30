@@ -3,13 +3,13 @@ import CommandLogModel from "@Models/CommandLogModel";
 import { MessageEmbed } from "discord.js";
 
 const usage: CommandInt = {
-  names: ["usage", "commandusage"],
+  name: "usage",
   description:
     "Gets the number of times a particular **command** has been used.",
   parameters: ["`<command>`: name of the command to check"],
   run: async (message) => {
     try {
-      const { bot, channel, commandArguments, guild } = message;
+      const { Becca, channel, commandArguments, guild } = message;
 
       // Get the next argument as the command name.
       const command = commandArguments.shift();
@@ -19,38 +19,65 @@ const usage: CommandInt = {
         await message.reply(
           "Would you please try the command again, and provide the command you want me to look for?"
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
       // Get the command log from the database.
       const commandLog = await CommandLogModel.findOne({
-        command,
-        server_id: guild.id,
+        commandName: command,
       });
 
       // Check if the command log does not exist.
       if (!commandLog) {
         await message.reply(
-          "I am so sorry, but no one has used this command yet."
+          `I am so sorry, but no one has used the ${command} command yet.`
         );
-
+        await message.react(message.Becca.no);
         return;
       }
 
-      const { last_called, last_caller, uses } = commandLog;
+      const serverLog = commandLog.servers.find((s) => s.serverID === guild.id);
 
       // Send an embed message to the current channel.
       await channel.send(
         new MessageEmbed()
-          .setColor(bot.color)
-          .setTitle(bot.prefix[guild.id] + command)
-          .setDescription(`This command has been used ${uses} times!`)
-          .setFooter(
-            `The command was last called by ${last_caller} on ${last_called}`
+          .setColor(Becca.color)
+          .setTitle(Becca.prefix[guild.id] + command)
+          .setDescription("Here's what I have for this command:")
+          .addFields(
+            {
+              name: "Global Usage",
+              value: commandLog
+                ? `This command has been used a total of ${
+                    commandLog.uses
+                  } times. It was last used by ${
+                    commandLog.lastUser
+                  } on ${commandLog.lastUsed.toLocaleDateString()}`
+                : "This command has not been used yet!",
+            },
+            {
+              name: "Server Usage",
+              value: serverLog
+                ? `This command has been used in ${
+                    serverLog.serverName
+                  } a total of ${
+                    serverLog.serverUses
+                  } times. It was last used by ${
+                    serverLog.serverLastUser
+                  } on ${serverLog.serverLastUsed.toLocaleDateString()}`
+                : `This command has not been used in ${guild.name} yet!`,
+            }
           )
       );
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the usage command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the usage command:`
       );

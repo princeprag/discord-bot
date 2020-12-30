@@ -3,13 +3,13 @@ import { MessageEmbed } from "discord.js";
 
 const list: CommandInt = {
   name: "list",
-  description: "Returns a list of servers the bot is in.",
+  description: "Returns a list of servers Becca is in.",
   parameters: ["<?page> - Page of the servers list."],
   run: async (message) => {
     try {
       //extract values
-      const { bot, channel, commandArguments } = message;
-      const { guilds } = bot;
+      const { Becca, channel, commandArguments } = message;
+      const { guilds } = Becca;
 
       // Get the first argument as the page.
       const pageStr = commandArguments.shift();
@@ -34,7 +34,7 @@ const list: CommandInt = {
       //set length to variable to avoid recounting
       const length = servers.length;
 
-      // loop through guilds bot is in;
+      // loop through guilds Becca is in;
       for (let i = 0; i < length; i++) {
         // Assign for less typing
         const guild = servers[i];
@@ -52,7 +52,7 @@ const list: CommandInt = {
 
           ownerList.push(`${guild.owner.user.username} (${guild.ownerID})`);
         } else {
-          const targetUser = await bot.users.fetch(guild.ownerID);
+          const targetUser = await Becca.users.fetch(guild.ownerID);
           ownerList.push(`${targetUser.username} (${guild.ownerID})`);
         }
 
@@ -61,6 +61,7 @@ const list: CommandInt = {
       }
 
       if (serverList.length !== ownerList.length) {
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -70,12 +71,13 @@ const list: CommandInt = {
       // Check if the current page is valid.
       if (isNaN(currentPage) || currentPage <= 0 || currentPage > totalPages) {
         await message.reply("I am so sorry, but I cannot look at that page.");
+        await message.react(message.Becca.no);
         return;
       }
 
       const serverEmbed = new MessageEmbed()
         .setTitle(`Server List part ${currentPage}`)
-        .setColor(bot.color);
+        .setColor(Becca.color);
 
       const pageCount = ~~(currentPage * serversPerPage);
 
@@ -104,11 +106,16 @@ const list: CommandInt = {
           ownerCount === 1 ? "s" : ""
         }.`
       );
-
-      return;
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the list command. Please check the logs.`
+        );
+      }
       console.log(
-        `${message.guild?.name} had the following error with the leave command:`
+        `${message.guild?.name} had the following error with the list command:`
       );
       console.log(error);
       message.reply("I am so sorry, but I cannot do that at the moment.");

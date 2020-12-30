@@ -41,7 +41,14 @@ const sus: CommandInt = {
       embed.setColor(colours[i]);
 
       message.channel.send(embed);
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the sus command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the sus command:`
       );

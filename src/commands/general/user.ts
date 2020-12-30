@@ -2,10 +2,10 @@ import CommandInt from "@Interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
 
 const user: CommandInt = {
-  names: ["user", "userinfo", "me"],
+  name: "user",
   description: "Returns information on your account.",
   run: async (message) => {
-    const { bot, channel, guild, member } = message;
+    const { Becca, channel, guild, member } = message;
 
     // Check if the current guild and the member are not valid.
     if (!guild || !member) {
@@ -19,7 +19,7 @@ const user: CommandInt = {
       const userEmbed = new MessageEmbed();
 
       // Add the light purple color.
-      userEmbed.setColor(bot.color);
+      userEmbed.setColor(Becca.color);
 
       // Add the user name to the embed title.
       userEmbed.setTitle(target.displayName);
@@ -46,17 +46,8 @@ const user: CommandInt = {
         true
       );
 
-      // Add an empty field.
-      userEmbed.addField("\u200b", "\u200b", true);
-
-      // Add the user status to an embed field.
-      userEmbed.addField("Status", target.presence.status, true);
-
       // Add the username to an embed field.
       userEmbed.addField("Username", target.user.tag, true);
-
-      // Add an empty field.
-      userEmbed.addField("\u200b", "\u200b", true);
 
       // Add the user roles to an embed field.
       userEmbed.addField(
@@ -66,7 +57,14 @@ const user: CommandInt = {
 
       // Send the user embed to the current channel.
       await channel.send(userEmbed);
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the user command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the user command:`
       );

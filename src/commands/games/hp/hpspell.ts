@@ -20,7 +20,7 @@ const hpspell: CommandInt = {
   ],
   run: async (message) => {
     try {
-      const { bot, channel, commandArguments } = message;
+      const { Becca, channel, commandArguments } = message;
 
       // Get the arguments as the name.
       const name = commandArguments.join(" ");
@@ -28,6 +28,7 @@ const hpspell: CommandInt = {
       // check if query is empty
       if (!name) {
         await message.reply(HPSPECLL_CONSTANT.error.noName);
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -50,6 +51,7 @@ const hpspell: CommandInt = {
       // Check if the target spell is not valid.
       if (!targetSpell) {
         await message.reply(HPSPECLL_CONSTANT.error.notFound);
+        await message.react(message.Becca.no);
         return;
       }
 
@@ -58,12 +60,19 @@ const hpspell: CommandInt = {
       // Send the embed message to the current channel.
       await channel.send(
         new MessageEmbed()
-          .setColor(bot.color)
+          .setColor(Becca.color)
           .setTitle(spell)
           .setDescription(effect)
           .setFooter(`Type: ${type}`)
       );
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the hpspell command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the hpspell command:`
       );

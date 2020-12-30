@@ -1,4 +1,4 @@
-import ClientInt from "@Interfaces/ClientInt";
+import BeccaInt from "@Interfaces/BeccaInt";
 import { WebhookClient } from "discord.js";
 import { connect } from "mongoose";
 
@@ -8,11 +8,13 @@ import { connect } from "mongoose";
  * @async
  * @function
  * @param { WebhookClient | null } debugChannelHook
+ * @param { string } node_env
  * @returns { Promise<void> }
  */
 async function connectDatabase(
   debugChannelHook: WebhookClient | null,
-  client: ClientInt
+  client: BeccaInt,
+  node_env: string
 ): Promise<void> {
   try {
     await connect(process.env.MONGODB || "", {
@@ -24,7 +26,9 @@ async function connectDatabase(
 
     if (debugChannelHook) {
       await debugChannelHook.send(
-        `\`${client.user?.username}\` has connected to the database.`
+        `Becca ${
+          node_env === "development" ? "Test " : ""
+        }has connected to the database.`
       );
     }
   } catch (e) {

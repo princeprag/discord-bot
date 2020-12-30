@@ -46,7 +46,7 @@ const dndrace: CommandInt = {
   parameters: ["`<race>`: the name of the race to search"],
   run: async (message) => {
     try {
-      const { channel, commandArguments } = message;
+      const { channel, commandArguments, Becca } = message;
 
       // Join all command arguments with `-`.
       const query = commandArguments.join("-");
@@ -54,6 +54,7 @@ const dndrace: CommandInt = {
       // Check if the query is not empty.
       if (!query || !query.length) {
         await message.reply(DNDRACE_CONST.error.no_query);
+        await message.react(Becca.no);
         return;
       }
 
@@ -65,6 +66,7 @@ const dndrace: CommandInt = {
       // Check if the dnd race is not valid.
       if (!data.data || data.data.error) {
         await message.reply(DNDRACE_CONST.error.bad_data);
+        await message.react(Becca.no);
         return;
       }
 
@@ -107,7 +109,14 @@ const dndrace: CommandInt = {
 
       // Send the embed to the current channel.
       await channel.send(dndRaceEmbed);
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the dndrace command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the dndrace command:`
       );

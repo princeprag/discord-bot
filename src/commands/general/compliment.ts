@@ -20,7 +20,14 @@ const compliment: CommandInt = {
           .setDescription(compliments[random])
           .setFooter("I love you. 💜")
       );
+      await message.react(message.Becca.yes);
     } catch (error) {
+      await message.react(message.Becca.no);
+      if (message.Becca.debugHook) {
+        message.Becca.debugHook.send(
+          `${message.guild?.name} had an error with the compliment command. Please check the logs.`
+        );
+      }
       console.log(
         `${message.guild?.name} had the following error with the compliment command:`
       );
