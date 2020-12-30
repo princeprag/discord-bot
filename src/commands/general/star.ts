@@ -88,10 +88,6 @@ const star: CommandInt = {
           .setFooter("I am so proud of you! 🙃")
       );
 
-      // Send a success message to the current channel.
-      await channel.send(
-        `Okay, I sent ${userToStarMentioned.toString()} a gold star!`
-      );
       await message.react(message.Becca.yes);
     } catch (error) {
       await message.react(message.Becca.no);
