@@ -76,9 +76,9 @@ const star: CommandInt = {
       attachment.push(new MessageAttachment("./img/star.png", "star.png"));
 
       // Send an embed message with the star to the user.
-      await userToStarMentioned.send(
+      await channel.send(
         new MessageEmbed()
-          .setTitle("You got a gold star!")
+          .setTitle(`Congragulations, ${userToStarMentioned.toString()}, you got a gold star!`)
           .setDescription(
             `${author.toString()} has given this shiny gold star to you!`
           )
