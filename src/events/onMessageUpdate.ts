@@ -17,7 +17,7 @@ async function onMessageUpdate(
   Becca: BeccaInt
 ): Promise<void> {
   try {
-    // Ge the author and the current server from the new message.
+    // Get the author and the current server from the new message.
     const { author, guild } = newMessage;
 
     // Check if the message is sended in a Discord server or the author is a bot.
@@ -46,6 +46,12 @@ async function onMessageUpdate(
           value:
             author.toString() ||
             "I am so sorry, but I could not find that user.",
+        },
+        {
+          name: "Message URL",
+          value:
+            newMessage.url ||
+            "I am so sorry, but I could not find that message's url.",
         }
       )
     );
