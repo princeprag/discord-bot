@@ -1,9 +1,7 @@
 # Becca Lyria
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
-
+[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![License: Hippocratic-2.1](https://img.shields.io/github/license/nhcarrigan/Becca-Lyria?color=purple)](https://firstdonoharm.dev/)
@@ -44,20 +42,21 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="http://www.nhcarrigan.com"><img src="https://avatars1.githubusercontent.com/u/63889819?v=4" width="100px;" alt=""/><br /><sub><b>Nicholas Carrigan (he/him)</b></sub></a><br /><a href="#projectManagement-nhcarrigan" title="Project Management">📆</a> <a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=nhcarrigan" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/adprasad"><img src="https://avatars2.githubusercontent.com/u/2387136?v=4" width="100px;" alt=""/><br /><sub><b>adprasad</b></sub></a><br /><a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=adprasad" title="Code">💻</a> <a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=adprasad" title="Tests">⚠️</a> <a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=adprasad" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://www.danielsolartech.com/"><img src="https://avatars2.githubusercontent.com/u/66956234?v=4" width="100px;" alt=""/><br /><sub><b>Daniel Solarte</b></sub></a><br /><a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=danielsolartech" title="Code">💻</a> <a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=danielsolartech" title="Tests">⚠️</a></td>
-    <td align="center"><a href="http://landonlloyd.github.io"><img src="https://avatars0.githubusercontent.com/u/65516863?v=4" width="100px;" alt=""/><br /><sub><b>Landon Lloyd</b></sub></a><br /><a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=LandonLloyd" title="Documentation">📖</a> <a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=LandonLloyd" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/Andreybest"><img src="https://avatars0.githubusercontent.com/u/20759487?v=4" width="100px;" alt=""/><br /><sub><b>Andrew</b></sub></a><br /><a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=Andreybest" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/zephy20"><img src="https://avatars2.githubusercontent.com/u/7047892?v=4" width="100px;" alt=""/><br /><sub><b>Kartik V</b></sub></a><br /><a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=zephy20" title="Code">💻</a></td>
-    <td align="center"><a href="https://shadowtime2000.github.io"><img src="https://avatars1.githubusercontent.com/u/66655515?v=4" width="100px;" alt=""/><br /><sub><b>shadowtime2000</b></sub></a><br /><a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=shadowtime2000" title="Code">💻</a></td>
+    <td align="center"><a href="http://www.nhcarrigan.com"><img src="https://avatars1.githubusercontent.com/u/63889819?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nicholas Carrigan (he/him)</b></sub></a><br /><a href="#projectManagement-nhcarrigan" title="Project Management">📆</a> <a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=nhcarrigan" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/adprasad"><img src="https://avatars2.githubusercontent.com/u/2387136?v=4?s=100" width="100px;" alt=""/><br /><sub><b>adprasad</b></sub></a><br /><a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=adprasad" title="Code">💻</a> <a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=adprasad" title="Tests">⚠️</a> <a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=adprasad" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://www.danielsolartech.com/"><img src="https://avatars2.githubusercontent.com/u/66956234?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Daniel Solarte</b></sub></a><br /><a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=danielsolartech" title="Code">💻</a> <a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=danielsolartech" title="Tests">⚠️</a></td>
+    <td align="center"><a href="http://landonlloyd.github.io"><img src="https://avatars0.githubusercontent.com/u/65516863?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Landon Lloyd</b></sub></a><br /><a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=LandonLloyd" title="Documentation">📖</a> <a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=LandonLloyd" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Andreybest"><img src="https://avatars0.githubusercontent.com/u/20759487?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Andrew</b></sub></a><br /><a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=Andreybest" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/zephy20"><img src="https://avatars2.githubusercontent.com/u/7047892?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kartik V</b></sub></a><br /><a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=zephy20" title="Code">💻</a></td>
+    <td align="center"><a href="https://shadowtime2000.github.io"><img src="https://avatars1.githubusercontent.com/u/66655515?v=4?s=100" width="100px;" alt=""/><br /><sub><b>shadowtime2000</b></sub></a><br /><a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=shadowtime2000" title="Code">💻</a></td>
   </tr>
   <tr>
-    <td align="center"><a href="http://catalactics.now.sh"><img src="https://avatars1.githubusercontent.com/u/45566099?v=4" width="100px;" alt=""/><br /><sub><b>Joshua Pelealu</b></sub></a><br /><a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=JoshuaPelealu" title="Code">💻</a></td>
+    <td align="center"><a href="http://catalactics.now.sh"><img src="https://avatars1.githubusercontent.com/u/45566099?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Joshua Pelealu</b></sub></a><br /><a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=JoshuaPelealu" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Vyvy-vi"><img src="https://avatars0.githubusercontent.com/u/62864373?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Vyom Jain</b></sub></a><br /><a href="https://github.com/nhcarrigan/Becca-Lyria/commits?author=Vyvy-vi" title="Code">💻</a></td>
   </tr>
 </table>
 
-<!-- markdownlint-enable -->
+<!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
