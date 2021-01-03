@@ -1,5 +1,5 @@
 import ListenerInt from "@Interfaces/ListenerInt";
-import CommandLogModel, { CommandLogInt } from "@Models/CommandLogModel";
+import CommandLogModel from "@Models/CommandLogModel";
 
 const usageListener: ListenerInt = {
   name: "Command uses",
@@ -21,7 +21,7 @@ const usageListener: ListenerInt = {
 
       // Check if the command log does not exist and create one.
       if (!commandLog) {
-        await CommandLogModel.create<CommandLogInt>({
+        await CommandLogModel.create({
           commandName: commandName,
           uses: 1,
           lastUsed: new Date(Date.now()),
