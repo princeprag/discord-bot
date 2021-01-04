@@ -11,8 +11,7 @@ const caniuse: CommandInt = {
       const { channel, commandArguments } = message;
 
       const feature = commandArguments.shift();
-
-      // Check if the feature is not valid.
+      
       if (!feature) {
         await message.reply(
           "Would you please try the command again, and provide the browser feature you want me to look for?"
@@ -23,7 +22,7 @@ const caniuse: CommandInt = {
       await channel.send(
         new MessageEmbed()
           .setTitle(`Caniuse: ${feature}`)
-          .setImage(`https://caniuse.bitsofco.de/image/${feature.replaceAll(' ','-')}.webp`)
+          .setImage(`https://caniuse.bitsofco.de/image/${feature.replace(/ /g,'-')}.webp`)
       );
       await message.react(message.Becca.yes);
     } catch (error) {
