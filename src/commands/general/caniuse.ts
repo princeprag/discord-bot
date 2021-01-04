@@ -5,13 +5,12 @@ const caniuse: CommandInt = {
   name: "caniuse",
   description:
     "Returns an up-to-date browser support table for a feature",
-  parameters: ["`<feature>`: the HTTP status to define"],
+  parameters: ["`<feature>`: the browser feature to define"],
   run: async (message) => {
     try {
       const { channel, commandArguments } = message;
 
-      // Get the next argument as the status.
-      const status = commandArguments.shift();
+      const feature = commandArguments.shift();
 
       // Check if the feature is not valid.
       if (!feature) {
@@ -23,8 +22,8 @@ const caniuse: CommandInt = {
       }
       await channel.send(
         new MessageEmbed()
-          .setTitle(`Caniuse: ${status}`)
-          .setImage(`https://caniuse.bitsofco.de/image/${statuse.replaceAll(' ','-')}.webp`)
+          .setTitle(`Caniuse: ${feature}`)
+          .setImage(`https://caniuse.bitsofco.de/image/${feature.replaceAll(' ','-')}.webp`)
       );
       await message.react(message.Becca.yes);
     } catch (error) {
