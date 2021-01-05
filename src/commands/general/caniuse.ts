@@ -10,7 +10,7 @@ const caniuse: CommandInt = {
     try {
       const { channel, commandArguments } = message;
 
-      const feature = commandArguments.shift();
+      const feature = commandArguments.join("-");
       
       if (!feature) {
         await message.reply(
