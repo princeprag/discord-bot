@@ -22,7 +22,7 @@ const caniuse: CommandInt = {
       await channel.send(
         new MessageEmbed()
           .setTitle(`Caniuse: ${feature}`)
-          .setImage(`https://caniuse.bitsofco.de/image/${feature.replace(/ /g,'-')}.webp`)
+          .setImage(`https://caniuse.bitsofco.de/image/${feature}.webp`)
       );
       await message.react(message.Becca.yes);
     } catch (error) {
