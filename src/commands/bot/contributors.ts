@@ -21,6 +21,7 @@ const contributors: CommandInt = {
       contribEmbed.setDescription(contributors.map(contributorName).join(", "));
       //add contributors
       contribEmbed.setFooter("https://github.com/nhcarrigan/Becca-Lyria");
+      contribEmbed.setColor(message.Becca.color);
 
       //send it!
       await message.reply(contribEmbed);
