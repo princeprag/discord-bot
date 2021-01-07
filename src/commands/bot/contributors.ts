@@ -13,21 +13,14 @@ const contributors: CommandInt = {
         "https://raw.githubusercontent.com/nhcarrigan/Becca-Lyria/main/.all-contributorsrc"
       );
       const contributors = data.data.contributors;
-
+      // mappping list for contributor names
+      const contributorName = (cont: ContributorInt) => cont.name;
       //construct initial embed
       const contribEmbed = new MessageEmbed();
-      contribEmbed.setTitle("My contributors!");
-      contribEmbed.setDescription(
-        "I give my thanks to these many wonderful people! [Would you like to contribute too?](https://github.com/nhcarrigan/Becca-Lyria)"
-      );
-
+      contribEmbed.setTitle("Thanks to these wonderful contributors:");
+      contribEmbed.setDescription(contributors.map(contributorName).join(", "));
       //add contributors
-      contributors.forEach((cont: ContributorInt) => {
-        contribEmbed.addField(
-          cont.name,
-          `[${cont.contributions.join(", ")}](${cont.profile})`
-        );
-      });
+      contribEmbed.setFooter("https://github.com/nhcarrigan/Becca-Lyria");
 
       //send it!
       await message.reply(contribEmbed);
