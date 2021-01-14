@@ -5,6 +5,8 @@ import BeccaInt from "@Interfaces/BeccaInt";
 import extendsClientToBeccaInt from "@Utils/extendsClientToBeccaInt";
 import { getCommands, getListeners } from "@Utils/readDirectory";
 import { version } from "../package.json";
+import dotenv from "dotenv";
+dotenv.config();
 
 // Events
 import onReady from "@Events/onReady";
@@ -19,15 +21,6 @@ import onGuildMemberRemove from "@Events/onGuildMemberRemove";
 export async function botConnect(): Promise<void> {
   // Get the node_env from the environment.
   const node_env = process.env.NODE_ENV || "development";
-
-  // Check if the node_env is not production and load the .env file.
-  if (node_env !== "production") {
-    // Import `dotenv` package.
-    const dotenv = await import("dotenv");
-
-    // Load `.env` configuration.
-    dotenv.config();
-  }
 
   // Debug channel hook (Send messages here when is debugging).
   let debugChannelHook: WebhookClient | null = null;
