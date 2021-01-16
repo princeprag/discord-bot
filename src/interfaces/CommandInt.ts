@@ -28,7 +28,7 @@ interface CommandInt {
    * Command Category (for help command).
    * @property
    */
-  category: "bot" | "game" | "moderation" | "server" | "general";
+  category: "bot" | "game" | "moderation" | "server" | "general" | "emote";
 
   /**
    * Execute the command.
