@@ -7,6 +7,7 @@ const magic: CommandInt = {
   name: "magic",
   description: "Returns a Magic: The Gathering card that matches the **name**.",
   parameters: ["`<card>`: name of the card to search for"],
+  category: "game",
   run: async (message) => {
     try {
       const { Becca, channel, commandArguments } = message;

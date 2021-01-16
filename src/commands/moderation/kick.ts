@@ -9,6 +9,7 @@ const kick: CommandInt = {
     "`<user>`: @name of the user to kick",
     "`<?reason>`: reason for kicking the user",
   ],
+  category: "moderation",
   run: async (message) => {
     try {
       const {

@@ -4,6 +4,7 @@ const search: CommandInt = {
   name: "search",
   description: "Returns a Google search link for the provided **query**.",
   parameters: ["`<query>`: the string to search for"],
+  category: "general",
   run: async (message) => {
     try {
       const { channel, commandArguments } = message;

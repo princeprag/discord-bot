@@ -5,6 +5,7 @@ const guess: CommandInt = {
   name: "guess",
   description:
     "Play a Guess the Number game! Becca will choose a number between 1 and 1000. Players have 10 seconds to guess. Closest guess wins!",
+  category: "game",
   run: async (message) => {
     try {
       const { channel } = message;

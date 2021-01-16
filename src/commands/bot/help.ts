@@ -17,6 +17,7 @@ const help: CommandInt = {
   parameters: [
     "`<?command>`: name of the command to get more information about",
   ],
+  category: "bot",
   run: async (message) => {
     try {
       const { Becca, channel, commandArguments, guild } = message;
@@ -97,16 +98,55 @@ const help: CommandInt = {
       // Add the description.
       helpEmbed.setDescription(HELP_CONSTANTS.description(prefix[guild.id]));
 
-      const commandNames: string[] = [];
+      // Get commands by category
+      const botCommandNames: string[] = [];
+      const gameCommandNames: string[] = [];
+      const generalCommandNames: string[] = [];
+      const moderationCommandNames: string[] = [];
+      const serverCommandNames: string[] = [];
 
       // Get the unique commands.
       for (const command of new Set(Object.values(commands)).values()) {
-        commandNames.push(`\`${command.name}\``);
+        switch (command.category) {
+          case "bot":
+            botCommandNames.push(`\`${command.name}\``);
+            break;
+          case "game":
+            gameCommandNames.push(`\`${command.name}\``);
+            break;
+          case "general":
+            generalCommandNames.push(`\`${command.name}\``);
+            break;
+          case "moderation":
+            moderationCommandNames.push(`\`${command.name}\``);
+            break;
+          case "server":
+            serverCommandNames.push(`\`${command.name}\``);
+            break;
+        }
       }
 
       // Add the available commands.
-      helpEmbed.addField("Available commands", commandNames.sort().join(" | "));
-
+      helpEmbed.addField(
+        "Bot-related Commands",
+        botCommandNames.sort().join(" | ")
+      );
+      helpEmbed.addField(
+        "Game-related Commands",
+        gameCommandNames.sort().join(" | ")
+      );
+      helpEmbed.addField(
+        "General Commands",
+        generalCommandNames.sort().join(" | ")
+      );
+      helpEmbed.addField(
+        "Moderation Commands",
+        moderationCommandNames.sort().join(" | ")
+      );
+      helpEmbed.addField(
+        "Server Commands",
+        serverCommandNames.sort().join(" | ")
+      );
       // Add the footer.
       helpEmbed.setFooter(HELP_CONSTANTS.footer);
 

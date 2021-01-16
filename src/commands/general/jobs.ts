@@ -6,6 +6,7 @@ const jobs: CommandInt = {
   description:
     "Returns a LinkedIn job search for developers. Optionally narrows the search by **location**.",
   parameters: ["`<?location>`: the specific location to search for jobs."],
+  category: "general",
   run: async (message) => {
     try {
       const { channel, commandArguments } = message;

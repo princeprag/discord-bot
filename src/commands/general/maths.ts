@@ -6,6 +6,7 @@ const maths: CommandInt = {
   name: "maths",
   description: "Returns the result of evaluating the expression.",
   parameters: ["`<problem>`: expression to process"],
+  category: "general",
   run: async (message) => {
     try {
       const { Becca, channel, commandArguments } = message;

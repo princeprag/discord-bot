@@ -11,6 +11,7 @@ const INVITE_CONSTANTS = {
 const invite: CommandInt = {
   name: "invite",
   description: "Get a link to invite Becca to your server.",
+  category: "bot",
   run: async (message) => {
     try {
       const { Becca, channel } = message;

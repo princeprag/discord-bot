@@ -4,6 +4,7 @@ import { MessageEmbed } from "discord.js";
 const beccaCommand: CommandInt = {
   name: "becca",
   description: "Returns information about Becca's character.",
+  category: "general",
   run: async (message) => {
     try {
       const { Becca, channel } = message;

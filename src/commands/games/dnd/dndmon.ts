@@ -19,6 +19,7 @@ const dndmon: CommandInt = {
   description:
     "Gets information on the provided Dungeons and Dragons **monster**.",
   parameters: ["`<monster>`: the name of the monster to search"],
+  category: "game",
   run: async (message) => {
     try {
       const { channel, commandArguments, Becca } = message;

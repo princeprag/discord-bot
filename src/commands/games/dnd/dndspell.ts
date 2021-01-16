@@ -25,6 +25,7 @@ const dndspell: CommandInt = {
   description:
     "Gets information on the provided Dungeons and Dragons **spell**",
   parameters: ["`<spell>`: name of the spell to search"],
+  category: "game",
   run: async (message) => {
     try {
       const { channel, commandArguments } = message;

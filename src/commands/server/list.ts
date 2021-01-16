@@ -5,6 +5,7 @@ const list: CommandInt = {
   name: "list",
   description: "Returns a list of servers Becca is in.",
   parameters: ["<?page> - Page of the servers list."],
+  category: "server",
   run: async (message) => {
     try {
       //extract values

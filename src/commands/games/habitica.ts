@@ -11,6 +11,7 @@ const habitica: CommandInt = {
   name: "habitica",
   description: "Gets user profile information on the given <id>.",
   parameters: ["`<id>`: the user id of the profile to look up"],
+  category: "game",
   run: async (message) => {
     try {
       const { Becca, channel, commandArguments } = message;

@@ -9,6 +9,7 @@ const warn: CommandInt = {
     "`<user>`: @name of the user to warn",
     "`<?reason>`: reason for warning the user",
   ],
+  category: "moderation",
   run: async (message) => {
     try {
       const {

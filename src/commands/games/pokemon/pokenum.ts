@@ -9,6 +9,7 @@ const pokenum: CommandInt = {
   parameters: [
     "<number>: the number to search for; optionally use the string 'random' instead",
   ],
+  category: "game",
   run: async (message) => {
     try {
       const { Becca, channel, commandArguments } = message;

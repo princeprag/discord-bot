@@ -6,6 +6,7 @@ import { MessageEmbed } from "discord.js";
 const joke: CommandInt = {
   name: "joke",
   description: "Returns a random joke.",
+  category: "game",
   run: async (message) => {
     const { Becca, channel } = message;
 

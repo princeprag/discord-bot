@@ -6,6 +6,7 @@ const motivation: CommandInt = {
   name: "motivation",
   description:
     "Provides a little bit of motivation, courtesy of [freeCodeCamp](https://freecodecamp.org).",
+  category: "general",
   run: async (message) => {
     try {
       const { channel } = message;

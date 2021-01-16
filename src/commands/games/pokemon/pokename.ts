@@ -7,6 +7,7 @@ const pokename: CommandInt = {
   name: "pokename",
   description: "Provides information on the Pokemon named **name**.",
   parameters: ["`<name>`: name of the Pokemon to search for"],
+  category: "game",
   run: async (message) => {
     try {
       const { Becca, channel, commandArguments } = message;

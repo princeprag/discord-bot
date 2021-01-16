@@ -17,6 +17,7 @@ const ABOUT_CONSTANT = {
 const about: CommandInt = {
   name: "about",
   description: "Provides details about Becca.",
+  category: "bot",
   run: async (message) => {
     try {
       // Get the client and the current channel from the message.

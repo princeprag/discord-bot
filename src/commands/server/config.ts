@@ -9,6 +9,7 @@ const config: CommandInt = {
     "`<setting>` - The setting you would like to set. See the docs for available options.",
     "`<value>` - The value of that setting. See the docs for available options.",
   ],
+  category: "server",
   run: async (message, config) => {
     try {
       // Get the client, current channel, command arguments and current guild, mentions and member of the message.

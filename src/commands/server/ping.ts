@@ -8,6 +8,7 @@ import { MessageEmbed } from "discord.js";
 const ping: CommandInt = {
   name: "ping",
   description: "Pings Becca to verify online status.",
+  category: "server",
   run: async (message) => {
     try {
       // Send the ping initial message to the current channel.

@@ -3,6 +3,7 @@ import CommandInt from "@Interfaces/CommandInt";
 const cat: CommandInt = {
   name: "cat",
   description: "A cat walked across the keyboard!",
+  category: "game",
   run: async (message) => {
     try {
       const { channel, sleep } = message;

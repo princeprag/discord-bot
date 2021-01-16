@@ -4,6 +4,7 @@ const wiki: CommandInt = {
   name: "wiki",
   description: "Returns a URL to a wikipedia article based on the **query**.",
   parameters: ["`<query>`: terms to search for"],
+  category: "general",
   run: async (message) => {
     try {
       const { channel, commandArguments } = message;

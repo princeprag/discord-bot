@@ -11,6 +11,7 @@ const privacy: CommandInt = {
   name: "privacy",
   description:
     "Generates an embed with brief information about the Becca's privacy policy.",
+  category: "bot",
   run: async (message) => {
     try {
       const { channel } = message;

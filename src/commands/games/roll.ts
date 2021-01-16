@@ -6,6 +6,7 @@ const roll: CommandInt = {
   parameters: [
     "`<d number`>: number of sides to use on die; **must** be prefaced with the letter d, like d20",
   ],
+  category: "game",
   run: async (message) => {
     try {
       const { channel, commandArguments } = message;

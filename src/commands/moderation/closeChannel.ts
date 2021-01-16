@@ -5,6 +5,7 @@ const closeChannel: CommandInt = {
   name: "close",
   description:
     "Closes the channel - only available for automatically generated appeal channels. Only available to moderators.",
+  category: "moderation",
   run: async (message) => {
     try {
       const { author, channel, Becca, guild, member } = message;

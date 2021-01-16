@@ -9,6 +9,7 @@ const restrict: CommandInt = {
     "`<user>`: @name of the user to restrict.",
     "`<?reason>`: reason for restricting the user.",
   ],
+  category: "moderation",
   run: async (message, config) => {
     try {
       const {

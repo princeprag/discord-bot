@@ -9,6 +9,7 @@ const username: CommandInt = {
   parameters: [
     "`<length?>` - The maximum length of the username to generate. Defaults to 30.",
   ],
+  category: "general",
   run: async (message) => {
     try {
       const { author, channel, Becca, commandArguments } = message;

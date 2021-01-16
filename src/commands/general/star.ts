@@ -9,6 +9,7 @@ const star: CommandInt = {
     "`<user>`: @name of the user to give the star to",
     "`<?reason>`: reason for giving the star",
   ],
+  category: "general",
   run: async (message) => {
     try {
       const {

@@ -6,6 +6,7 @@ const compliment: CommandInt = {
   name: "compliment",
   description:
     "Provides a nice little compliment, courtesy of [freeCodeCamp](https://freecodecamp.org).",
+  category: "general",
   run: async (message) => {
     try {
       const { channel } = message;

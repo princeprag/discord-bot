@@ -3,15 +3,15 @@ import { MessageEmbed } from "discord.js";
 
 const caniuse: CommandInt = {
   name: "caniuse",
-  description:
-    "Returns an up-to-date browser support table for a feature",
+  description: "Returns an up-to-date browser support table for a feature",
+  category: "general",
   parameters: ["`<feature>`: the browser feature to define"],
   run: async (message) => {
     try {
       const { channel, commandArguments } = message;
 
       const feature = commandArguments.join("-");
-      
+
       if (!feature) {
         await message.reply(
           "Would you please try the command again, and provide the browser feature you want me to look for?"

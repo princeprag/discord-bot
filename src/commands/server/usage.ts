@@ -7,6 +7,7 @@ const usage: CommandInt = {
   description:
     "Gets the number of times a particular **command** has been used.",
   parameters: ["`<command>`: name of the command to check"],
+  category: "server",
   run: async (message) => {
     try {
       const { Becca, channel, commandArguments, guild } = message;

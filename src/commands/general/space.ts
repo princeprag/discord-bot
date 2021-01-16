@@ -8,6 +8,7 @@ const space: CommandInt = {
   description:
     "Gets the astronomy picture of the day! Optionally retrieve an APoD from an earlier date.",
   parameters: ["`<?date>`: date of picture to retrieve, format YYYY-MM-DD"],
+  category: "general",
   run: async (message) => {
     try {
       const { channel, commandArguments } = message;

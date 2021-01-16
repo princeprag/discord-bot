@@ -5,6 +5,7 @@ import axios from "axios";
 const title: CommandInt = {
   name: "title",
   description: "Generates a title for you.",
+  category: "game",
   run: async (message) => {
     try {
       const { author, channel } = message;

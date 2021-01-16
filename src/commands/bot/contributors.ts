@@ -6,6 +6,7 @@ import { MessageEmbed } from "discord.js";
 const contributors: CommandInt = {
   name: "contributors",
   description: "Lists the contributors for Becca.",
+  category: "bot",
   run: async (message) => {
     try {
       //get the data from the file - Axios won't target the local file :(

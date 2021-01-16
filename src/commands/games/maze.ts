@@ -12,6 +12,7 @@ const maze: CommandInt = {
     "`<?id>`: the maze id",
     "`<?answer>`: the maze directions answer",
   ],
+  category: "game",
   run: async (message) => {
     try {
       const { Becca, channel, commandArguments, guild } = message;
