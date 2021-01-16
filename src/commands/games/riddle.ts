@@ -96,6 +96,14 @@ const riddle: CommandInt = {
           riddleEmbed.setDescription(request.message);
           riddleEmbed.addField("Type", request.riddleType);
           riddleEmbed.addField("Riddle", request.riddleText);
+          riddleEmbed.addField(
+            "Solve the Riddle",
+            `Use the following command to solve the riddle: \`${
+              message.Becca.prefix[guild.id]
+            }riddle solve ${
+              request.riddlePath.split("/").reverse()[0]
+            } <answer>\``
+          );
         }
         // Otherwise, the action is `solve`.
         else {
