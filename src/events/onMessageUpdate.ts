@@ -1,4 +1,5 @@
 import BeccaInt from "@Interfaces/BeccaInt";
+import { customSubstring } from "@Utils/substringHelper";
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
 
 /**
@@ -31,15 +32,19 @@ async function onMessageUpdate(
       new MessageEmbed().setTitle("A message was updated!").addFields(
         {
           name: "Old content",
-          value:
+          value: customSubstring(
             oldMessage.content ||
-            "I am so sorry, but I could not find that message.",
+              "I am so sorry, but I could not find that message.",
+            1024
+          ),
         },
         {
           name: "New content",
-          value:
+          value: customSubstring(
             newMessage.content ||
-            "I am so sorry, but I could not find that message.",
+              "I am so sorry, but I could not find that message.",
+            1024
+          ),
         },
         {
           name: "Author",

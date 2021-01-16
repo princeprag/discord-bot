@@ -1,5 +1,6 @@
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
 import BeccaInt from "@Interfaces/BeccaInt";
+import { customSubstring } from "@Utils/substringHelper";
 
 /**
  * When a messages is deleted on a channel.
@@ -19,41 +20,44 @@ async function onMessageDelete(
     // from the deleted message.
     const { author, channel, content, guild } = message;
 
-    // Check if the message is sended in a Discord server.
+    // Check if the message is sent in a Discord server.
     if (!guild) {
       return;
     }
 
-    const messageContent = message.embeds[0]
-      ? "See the below embed"
-      : message.attachments.first()
-      ? "See the below attachment"
-      : content
-      ? content
-      : "Sorry, but I could not find the content.";
+    const deleteEmbed = new MessageEmbed()
+      .setTitle("A message was deleted")
+      .setColor("#FF0000")
+      .setDescription("Here is the record of that message:")
+      .addFields(
+        {
+          name: "Message author",
+          value: author || "I am so sorry, but I could not find that user.",
+        },
+        {
+          name: "Channel",
+          value: channel.toString(),
+        }
+      );
+
+    if (content) {
+      deleteEmbed.addField("Message Content", customSubstring(content, 1024));
+    }
+    if (message.embeds[0]) {
+      deleteEmbed.addField(
+        "Message Embeds",
+        "I'm sending the deleted message embed."
+      );
+    }
+    if (message.attachments.first()) {
+      deleteEmbed.addField(
+        "Message Attachment",
+        "I'm sending the deleted message attachment."
+      );
+    }
 
     // Send an embed message to the logs channel.
-    await Becca.sendMessageToLogsChannel(
-      guild,
-      new MessageEmbed()
-        .setTitle("A message was deleted")
-        .setColor("#FF0000")
-        .setDescription("Here is the record of that message:")
-        .addFields(
-          {
-            name: "Message author",
-            value: author || "I am so sorry, but I could not find that user.",
-          },
-          {
-            name: "Channel",
-            value: channel.toString(),
-          },
-          {
-            name: "Content",
-            value: messageContent,
-          }
-        )
-    );
+    await Becca.sendMessageToLogsChannel(guild, deleteEmbed);
     if (message.embeds[0]) {
       await Becca.sendMessageToLogsChannel(guild, message.embeds[0]);
     }
