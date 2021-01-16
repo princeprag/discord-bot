@@ -44,9 +44,9 @@ const tickle: CommandInt = {
         return;
       }
 
-      emoteEmbed.setTitle("HUG!");
+      emoteEmbed.setTitle("TICKLE!");
       emoteEmbed.setDescription(
-        `<@!${author.id}> hugs <@!${target.id}>! How sweet!`
+        `<@!${author.id}> tickles <@!${target.id}>! Glad that's not me!`
       );
       await message.channel.send(emoteEmbed);
       await message.react(Becca.yes);
