@@ -100,6 +100,7 @@ const help: CommandInt = {
 
       // Get commands by category
       const botCommandNames: string[] = [];
+      const emoteCommandNames: string[] = [];
       const gameCommandNames: string[] = [];
       const generalCommandNames: string[] = [];
       const moderationCommandNames: string[] = [];
@@ -110,6 +111,9 @@ const help: CommandInt = {
         switch (command.category) {
           case "bot":
             botCommandNames.push(`\`${command.name}\``);
+            break;
+          case "emote":
+            emoteCommandNames.push(`\`${command.name}\``);
             break;
           case "game":
             gameCommandNames.push(`\`${command.name}\``);
@@ -130,6 +134,10 @@ const help: CommandInt = {
       helpEmbed.addField(
         "Bot-related Commands",
         botCommandNames.sort().join(" | ")
+      );
+      helpEmbed.addField(
+        "Emote Commands",
+        emoteCommandNames.sort().join(" | ")
       );
       helpEmbed.addField(
         "Game-related Commands",
