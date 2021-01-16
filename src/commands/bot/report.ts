@@ -10,6 +10,7 @@ const REPORT_CONSTANTS = {
 const report: CommandInt = {
   name: "bugreport",
   description: "Generates a link to the issues page",
+  category: "bot",
   run: async (message) => {
     try {
       const { Becca, channel } = message;

@@ -15,6 +15,7 @@ const challenge: CommandInt = {
     "`<id>`: the challenge id",
     "`<?answer>`: the challenge answer",
   ],
+  category: "game",
   run: async (message) => {
     const { Becca, channel, commandArguments, guild } = message;
 

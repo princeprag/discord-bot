@@ -10,6 +10,7 @@ const DND_CONSTANTS = {
 const dnd: CommandInt = {
   name: "dnd",
   description: "List of the available Dungeons and Dragons commands",
+  category: "game",
   run: async (message) => {
     try {
       const { Becca, channel, guild } = message;

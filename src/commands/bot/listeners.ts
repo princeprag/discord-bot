@@ -11,6 +11,7 @@ const listeners: CommandInt = {
   name: "listeners",
   description:
     "Provides information on the active listener features for Becca.",
+  category: "bot",
   run: async (message) => {
     try {
       const { Becca, channel } = message;

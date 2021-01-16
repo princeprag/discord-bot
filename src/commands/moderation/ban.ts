@@ -9,6 +9,7 @@ const ban: CommandInt = {
     "`<user>`: @name of the user to ban",
     "`<?reason>`: reason for banning the user",
   ],
+  category: "moderation",
   run: async (message) => {
     try {
       const {

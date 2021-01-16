@@ -16,6 +16,7 @@ const riddle: CommandInt = {
     "`<?id>`: the riddle id",
     "`<?answer>`: the riddle answer",
   ],
+  category: "game",
   run: async (message) => {
     const { author, Becca, channel, commandArguments, guild } = message;
 

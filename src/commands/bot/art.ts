@@ -5,6 +5,7 @@ import { MessageEmbed } from "discord.js";
 const art: CommandInt = {
   name: "art",
   description: "Returns art!",
+  category: "bot",
   run: async (message) => {
     try {
       //random number

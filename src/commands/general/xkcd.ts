@@ -8,6 +8,7 @@ const xkcd: CommandInt = {
   description:
     "Returns today's XKCD comic. Optionally pass a <number> to return that specific comic.",
   parameters: ["`<?number>`: the number of the XKCD comic to return."],
+  category: "general",
   run: async (message) => {
     try {
       const { channel, commandArguments } = message;

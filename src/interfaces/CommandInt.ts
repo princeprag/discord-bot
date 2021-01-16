@@ -25,6 +25,12 @@ interface CommandInt {
   parameters?: string[];
 
   /**
+   * Command Category (for help command).
+   * @property
+   */
+  category: "bot" | "game" | "moderation" | "server" | "general";
+
+  /**
    * Execute the command.
    *
    * @async

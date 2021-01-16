@@ -10,6 +10,7 @@ const SUPPORT_CONSTANTS = {
 const support: CommandInt = {
   name: "support",
   description: "Provides a link to the support server.",
+  category: "bot",
   run: async (message) => {
     try {
       const { Becca, channel } = message;

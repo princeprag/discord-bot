@@ -4,6 +4,7 @@ import { MessageEmbed } from "discord.js";
 const sponsor: CommandInt = {
   name: "sponsor",
   description: "Returns an embed containing the sponsor links.",
+  category: "bot",
   run: async (message) => {
     try {
       const { channel, Becca } = message;

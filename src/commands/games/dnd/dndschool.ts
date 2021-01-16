@@ -25,6 +25,7 @@ const dndschool: CommandInt = {
   description:
     "Gets information on the provided Dungeons and Dragons **school** of magic.",
   parameters: ["`<school>`: name of the school of magic to search"],
+  category: "game",
   run: async (message) => {
     try {
       const { channel, commandArguments } = message;

@@ -4,6 +4,7 @@ import { MessageEmbed } from "discord.js";
 const server: CommandInt = {
   name: "server",
   description: "Gives the current status of this server.",
+  category: "server",
   run: async (message) => {
     try {
       const { Becca, channel, guild } = message;

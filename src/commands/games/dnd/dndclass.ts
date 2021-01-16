@@ -19,6 +19,7 @@ const dndclass: CommandInt = {
   description:
     "Gets information on the provided Dungeons and Dragons **class**.",
   parameters: ["`<class>`: the name of the class to search"],
+  category: "game",
   run: async (message) => {
     try {
       const { channel, commandArguments } = message;

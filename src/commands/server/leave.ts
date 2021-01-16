@@ -5,6 +5,7 @@ const leave: CommandInt = {
   description:
     "Can tell Becca to leave a specific server. Pass the ID of the target server as the parameter to leave that server. This command is specific to nhcarrigan.",
   parameters: ["<?serverID>: the ID of the server to leave"],
+  category: "server",
   run: async (message) => {
     try {
       const { author, Becca, commandArguments } = message;

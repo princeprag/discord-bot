@@ -4,6 +4,7 @@ import fortunesList from "@Utils/commands/fortunesList";
 const fortune: CommandInt = {
   name: "fortune",
   description: "Tells you a fortune.",
+  category: "game",
   run: async (message) => {
     try {
       const { channel } = message;

@@ -4,6 +4,7 @@ import { MessageEmbed } from "discord.js";
 const sus: CommandInt = {
   name: "sus",
   description: "Returns a color is sus",
+  category: "game",
   run: async (message) => {
     try {
       const names = [

@@ -23,6 +23,7 @@ export function getUptime(bot_uptime_timestamp: number): number[] {
 const uptime: CommandInt = {
   name: "uptime",
   description: "Generates the time Becca has been awake.",
+  category: "bot",
   run: async (message) => {
     try {
       // Get the channel and the client of the message.

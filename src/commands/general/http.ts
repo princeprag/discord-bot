@@ -7,6 +7,7 @@ const http: CommandInt = {
   description:
     "Returns a definition for the status parameter. Includes a cute cat photo.",
   parameters: ["`<status>`: the HTTP status to define"],
+  category: "general",
   run: async (message) => {
     try {
       const { channel, commandArguments } = message;

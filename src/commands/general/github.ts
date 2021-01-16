@@ -7,6 +7,7 @@ const github: CommandInt = {
   name: "github",
   description: "Gets information on the <user>'s GitHub profile.",
   parameters: ["`<user>`: The user to look for on GitHub"],
+  category: "general",
   run: async (message) => {
     try {
       // Get the current channel and the command arguments of the message.

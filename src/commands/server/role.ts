@@ -7,6 +7,7 @@ const role: CommandInt = {
   parameters: [
     "`<role>`: The name of the role to assign. Optionally use `listall` to get a list of roles.",
   ],
+  category: "server",
   run: async (message, config) => {
     try {
       const { author, channel, guild, commandArguments } = message;

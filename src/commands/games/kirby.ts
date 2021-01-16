@@ -3,6 +3,7 @@ import CommandInt from "@Interfaces/CommandInt";
 const kirby: CommandInt = {
   name: "kirby",
   description: "Do a little dance... make a little noise... GET DOWN TONIGHT!",
+  category: "game",
   run: async (message) => {
     try {
       const { channel, sleep } = message;

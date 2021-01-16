@@ -7,6 +7,7 @@ const level: CommandInt = {
   description:
     "Gets the user's current level. Optionally pass a **user** mention to get the record for another user.",
   parameters: ["`<?user>`: the user to fetch the data for."],
+  category: "server",
   run: async (message) => {
     try {
       const {

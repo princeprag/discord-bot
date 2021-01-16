@@ -14,6 +14,7 @@ const trivia: CommandInt = {
   name: "trivia",
   description:
     "Provides a trivia question. 30 seconds later, will provide the answer.",
+  category: "game",
   run: async (message) => {
     try {
       const { Becca, channel } = message;

@@ -44,6 +44,7 @@ const dndrace: CommandInt = {
   name: "dndrace",
   description: "Gets information the provided Dungeons and Dragons **race**.",
   parameters: ["`<race>`: the name of the race to search"],
+  category: "game",
   run: async (message) => {
     try {
       const { channel, commandArguments, Becca } = message;

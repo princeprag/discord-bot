@@ -44,6 +44,7 @@ const adventure: CommandInt = {
     "`<room>`: the ID of the room you are in",
     "`<direction>`: the direction you want to move",
   ],
+  category: "game",
   run: async (message) => {
     try {
       const { author, Becca, channel, commandArguments, guild } = message;
