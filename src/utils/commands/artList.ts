@@ -222,4 +222,34 @@ export const artList: ArtInt[] = [
     artist_url:
       "https://www.samsung.com/au/support/mobile-devices/how-to-use-ar-emoji/",
   },
+  {
+    file_name: "whisperdawn1.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me/",
+  },
+  {
+    file_name: "whisperdawn2.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me/",
+  },
+  {
+    file_name: "whisperdawn3.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me/",
+  },
+  {
+    file_name: "whisperdawn4.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me/",
+  },
+  {
+    file_name: "whisperdawn5.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me/",
+  },
 ];
