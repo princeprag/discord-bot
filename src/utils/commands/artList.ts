@@ -104,125 +104,6 @@ export const artList: ArtInt[] = [
     artist_url: "https://picrew.me/",
   },
   {
-    file_name: "samsung1.png",
-    art_name: "Angel",
-    artist: "Samsung",
-    artist_url:
-      "https://www.samsung.com/au/support/mobile-devices/how-to-use-ar-emoji/",
-  },
-  {
-    file_name: "samsung2.png",
-    art_name: "Angry",
-    artist: "Samsung",
-    artist_url:
-      "https://www.samsung.com/au/support/mobile-devices/how-to-use-ar-emoji/",
-  },
-  {
-    file_name: "samsung3.png",
-    art_name: "Confused",
-    artist: "Samsung",
-    artist_url:
-      "https://www.samsung.com/au/support/mobile-devices/how-to-use-ar-emoji/",
-  },
-  {
-    file_name: "samsung4.png",
-    art_name: "Devil",
-    artist: "Samsung",
-    artist_url:
-      "https://www.samsung.com/au/support/mobile-devices/how-to-use-ar-emoji/",
-  },
-  {
-    file_name: "samsung5.png",
-    art_name: "Giggle",
-    artist: "Samsung",
-    artist_url:
-      "https://www.samsung.com/au/support/mobile-devices/how-to-use-ar-emoji/",
-  },
-  {
-    file_name: "samsung6.png",
-    art_name: "Glare",
-    artist: "Samsung",
-    artist_url:
-      "https://www.samsung.com/au/support/mobile-devices/how-to-use-ar-emoji/",
-  },
-  {
-    file_name: "samsung7.png",
-    art_name: "Happy",
-    artist: "Samsung",
-    artist_url:
-      "https://www.samsung.com/au/support/mobile-devices/how-to-use-ar-emoji/",
-  },
-  {
-    file_name: "samsung8.png",
-    art_name: "Heart",
-    artist: "Samsung",
-    artist_url:
-      "https://www.samsung.com/au/support/mobile-devices/how-to-use-ar-emoji/",
-  },
-  {
-    file_name: "samsung9.png",
-    art_name: "Hello",
-    artist: "Samsung",
-    artist_url:
-      "https://www.samsung.com/au/support/mobile-devices/how-to-use-ar-emoji/",
-  },
-  {
-    file_name: "samsung10.png",
-    art_name: "No",
-    artist: "Samsung",
-    artist_url:
-      "https://www.samsung.com/au/support/mobile-devices/how-to-use-ar-emoji/",
-  },
-  {
-    file_name: "samsung11.png",
-    art_name: "Please",
-    artist: "Samsung",
-    artist_url:
-      "https://www.samsung.com/au/support/mobile-devices/how-to-use-ar-emoji/",
-  },
-  {
-    file_name: "samsung12.png",
-    art_name: "Sad",
-    artist: "Samsung",
-    artist_url:
-      "https://www.samsung.com/au/support/mobile-devices/how-to-use-ar-emoji/",
-  },
-  {
-    file_name: "samsung13.png",
-    art_name: "Shrug",
-    artist: "Samsung",
-    artist_url:
-      "https://www.samsung.com/au/support/mobile-devices/how-to-use-ar-emoji/",
-  },
-  {
-    file_name: "samsung14.png",
-    art_name: "Surprise",
-    artist: "Samsung",
-    artist_url:
-      "https://www.samsung.com/au/support/mobile-devices/how-to-use-ar-emoji/",
-  },
-  {
-    file_name: "samsung15.png",
-    art_name: "Think",
-    artist: "Samsung",
-    artist_url:
-      "https://www.samsung.com/au/support/mobile-devices/how-to-use-ar-emoji/",
-  },
-  {
-    file_name: "samsung16.png",
-    art_name: "Thumbs Up",
-    artist: "Samsung",
-    artist_url:
-      "https://www.samsung.com/au/support/mobile-devices/how-to-use-ar-emoji/",
-  },
-  {
-    file_name: "samsung17.png",
-    art_name: "Tired",
-    artist: "Samsung",
-    artist_url:
-      "https://www.samsung.com/au/support/mobile-devices/how-to-use-ar-emoji/",
-  },
-  {
     file_name: "whisperdawn1.png",
     art_name: "Spells in the Snow",
     artist: "Whisperdawn, via Picrew",
@@ -251,5 +132,119 @@ export const artList: ArtInt[] = [
     art_name: "Late-night Study",
     artist: "Whisperdawn, via Picrew",
     artist_url: "https://picrew.me/",
+  },
+  {
+    file_name: "whisperdawn8.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
+  },
+  {
+    file_name: "whisperdawn9.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
+  },
+  {
+    file_name: "whisperdawn10.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
+  },
+  {
+    file_name: "whisperdawn11.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
+  },
+  {
+    file_name: "whisperdawn12.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
+  },
+  {
+    file_name: "whisperdawn13.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
+  },
+  {
+    file_name: "whisperdawn14.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
+  },
+  {
+    file_name: "whisperdawn15.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
+  },
+  {
+    file_name: "whisperdawn16.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
+  },
+  {
+    file_name: "whisperdawn17.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
+  },
+  {
+    file_name: "whisperdawn18.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
+  },
+  {
+    file_name: "whisperdawn19.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
+  },
+  {
+    file_name: "whisperdawn20.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
+  },
+  {
+    file_name: "whisperdawn21.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
+  },
+  {
+    file_name: "whisperdawn22.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
+  },
+  {
+    file_name: "whisperdawn23.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
+  },
+  {
+    file_name: "whisperdawn24.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
+  },
+  {
+    file_name: "whisperdawn25.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
+  },
+  {
+    file_name: "whisperdawn26.png",
+    art_name: "Untitled",
+    artist: "Whisperdawn, via Picrew",
+    artist_url: "https://picrew.me",
   },
 ];
