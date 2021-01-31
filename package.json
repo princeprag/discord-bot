@@ -24,9 +24,10 @@
     "build": "tsc",
     "dev": "nodemon",
     "dev:command": "npm run build && npm run start:ts",
-    "lint": "eslint src --fix",
+    "lint": "eslint src",
     "start": "node ./prod/src/serve.js",
-    "start:ts": "ts-node -r ./src/serve.ts"
+    "start:ts": "ts-node -r ./src/serve.ts",
+    "test": "echo 'No tests yet. Would you like to contribute some?'"
   },
   "_moduleAliases": {
     "@Commands": "prod/src/commands",
