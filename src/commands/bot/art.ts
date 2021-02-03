@@ -12,18 +12,18 @@ const art: CommandInt = {
       const random = Math.floor(Math.random() * artList.length);
 
       //get values for random art object
-      const { file_name, art_name, artist, artist_url } = artList[random];
+      const { fileName, artName, artist, artistUrl } = artList[random];
 
       //create embed
       const artEmbed = new MessageEmbed();
-      artEmbed.setTitle(art_name);
+      artEmbed.setTitle(artName);
       artEmbed.setDescription(
-        `Art generously provided by [${artist}](${artist_url})!`
+        `Art generously provided by [${artist}](${artistUrl})!`
       );
 
       //add local file
       artEmbed.setImage(
-        `https://beccalyria.nhcarrigan.com/assets/img/art/${file_name.replace(
+        `https://beccalyria.nhcarrigan.com/assets/img/art/${fileName.replace(
           /\s/g,
           "%20"
         )}`
