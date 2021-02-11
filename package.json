@@ -47,7 +47,7 @@
     "mongoose": "^5.11.15"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.14",
+    "@types/chai": "^4.2.15",
     "@types/expect": "^24.3.0",
     "@types/mathjs": "^6.0.11",
     "@types/mocha": "^8.2.0",
