@@ -50,7 +50,7 @@
     "@types/chai": "^4.2.15",
     "@types/expect": "^24.3.0",
     "@types/mathjs": "^6.0.11",
-    "@types/mocha": "^8.2.0",
+    "@types/mocha": "^8.2.1",
     "@types/mongoose": "^5.10.3",
     "@types/node": "^14.14.28",
     "@types/sinon": "^9.0.10",
