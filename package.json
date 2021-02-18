@@ -2,7 +2,7 @@
   "name": "becca_lyria",
   "author": "Nicholas Carrigan",
   "main": "./prod/src/main.js",
-  "version": "10.1.4",
+  "version": "10.2.0",
   "license": "AGPL-3.0-or-later",
   "private": false,
   "engines": {
@@ -25,7 +25,7 @@
     "dev": "nodemon",
     "dev:command": "npm run build && npm run start:ts",
     "lint": "eslint src",
-    "start": "node ./prod/src/serve.js",
+    "start": "node -r dotenv/config ./prod/src/serve.js",
     "start:ts": "ts-node -r ./src/serve.ts",
     "test": "echo 'No tests yet. Would you like to contribute some?'"
   },
@@ -44,7 +44,8 @@
     "discord.js": "^12.5.1",
     "mathjs": "^9.2.0",
     "module-alias": "^2.2.2",
-    "mongoose": "^5.11.17"
+    "mongoose": "^5.11.17",
+    "mongoose-encryption": "^2.0.3"
   },
   "devDependencies": {
     "@types/chai": "^4.2.15",

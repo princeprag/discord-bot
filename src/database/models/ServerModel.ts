@@ -1,4 +1,5 @@
 import { Document, model, Schema } from "mongoose";
+import encrypt from "mongoose-encryption";
 
 export interface ServerModelInt extends Document {
   serverID: string;
@@ -30,6 +31,16 @@ export const Server = new Schema({
   hearts: [String],
   blocked: [String],
   self_roles: [String],
+});
+
+const encryptionKey = process.env.ENCRYPTION_KEY;
+const signingKey = process.env.SIGNING_KEY;
+
+Server.plugin(encrypt, {
+  encryptionKey,
+  signingKey,
+  excludeFromEncryption: ["serverID"],
+  requireAuthenticationCode: false,
 });
 
 export default model<ServerModelInt>("server", Server);
