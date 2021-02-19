@@ -53,7 +53,6 @@ async function onMessage(
     heartsListener,
     thanksListener,
     levelsListener,
-    usageListener,
   } = Becca.customListeners;
 
   // Check if the heartsListener and levelsListener exists.
@@ -123,12 +122,6 @@ async function onMessage(
         "I am so sorry, but I am not allowed to help you."
       );
       return;
-    }
-
-    // Check if the usage listener exists.
-    if (usageListener) {
-      // Execute the usage listener.
-      await usageListener.run(message, serverConfig);
     }
 
     // Respond to Becca's owner.
