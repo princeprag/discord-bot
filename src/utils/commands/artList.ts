@@ -337,4 +337,10 @@ export const artList: ArtInt[] = [
     artist: "Whisperdawn, via Picrew",
     artistUrl: "https://picrew.me",
   },
+  {
+    fileName: "Starfazers.png",
+    artName: "Untitled",
+    artist: "Starfazers",
+    artistUrl: "https://instagram.com/starfazers",
+  },
 ];
