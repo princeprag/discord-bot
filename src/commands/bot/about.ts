@@ -24,7 +24,7 @@ const about: CommandInt = {
       const { Becca, channel } = message;
 
       // Get Becca's commands and version.
-      const { color, commands, guilds, users, version } = Becca;
+      const { color, commands, guilds, version } = Becca;
 
       // Create a new empty embed.
       const aboutEmbed = new MessageEmbed();
@@ -46,9 +46,6 @@ const about: CommandInt = {
 
       // Add Becca's servers count.
       aboutEmbed.addField("Servers", guilds.cache.size, true);
-
-      // Add Becca's users count.
-      aboutEmbed.addField("Users", users.cache.size, true);
 
       // Add the available commands length.
       aboutEmbed.addField(
