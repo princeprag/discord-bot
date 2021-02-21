@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js";
 const PRIVACY_CONSTANTS = {
   title: "Privacy Policy",
   description:
-    "As part of my features, I collect and use some specific Discord related information. This information includes, but may not be limited to, your user name, nickname, and Discord ID. If you do not want this information to be collected, please use my `optout` command. This will disable some cool features for your account, like my levelling system! [View my full policy](https://github.com/nhcarrigan/Becca-Lyria/blob/main/PRIVACY.md)",
+    "As part of my features, I collect and use some specific Discord related information. This information includes, but may not be limited to, your user name, nickname, and Discord ID. [View my full policy](https://github.com/BeccaLyria/discord-bot/blob/main/PRIVACY.md)",
 };
 
 const privacy: CommandInt = {

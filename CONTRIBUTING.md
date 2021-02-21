@@ -6,7 +6,7 @@ Please ensure all pull requests and contributions comply with the [Developer Cer
 
 First, fork this repository to your own account. Then use `git clone <url>` to bring your forked repository down to your local machine (remember to get the URL for *your* repository, not the original). Optionally, use `git remote add upstream <url>` to add the original repository as the upstream (this is helpful for keeping your fork up-to-date).
 
-You will need to configure environment variables - for instructions on how to set these, visit [Becca's documentation page](https://beccalyria.nhcarrigan.com).
+You will need to configure environment variables - for instructions on how to set these, visit [Becca's documentation page](https://www.beccalyria.com/discord-documentation).
 
 ## Claiming an Issue
 

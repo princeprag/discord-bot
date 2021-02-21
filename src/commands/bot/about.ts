@@ -3,7 +3,7 @@ import { MessageEmbed } from "discord.js";
 
 const ABOUT_CONSTANT = {
   title: "Greetings! My name is Becca Lyria!",
-  description: `I am a discord bot created by [nhcarrigan](https://www.nhcarrigan.com), with help from a few contributors.  You can view my [source code and contributor list](https://github.com/nhcarrigan/Becca-Lyria) online.\r\n\r\nView the [official repository](https://github.com/nhcarrigan/Becca-Lyria) or you can join to the [official Discord server](https://discord.gg/PHqDbkg). I am named after nhcarrigan's old DnD/RP character.`,
+  description: `I am a discord bot created by [nhcarrigan](https://www.nhcarrigan.com), with help from a few contributors.  You can view my [source code and contributor list](https://github.com/BeccaLyria/discord-bot) online.\r\n\r\nJoin the [official chat server](http://chat.nhcarrigan.com). I am named after nhcarrigan's old [DnD/RP character.](https://www.beccalyria.com)`,
   creationDate: `Sun May 31 2020`,
   commandSuffix: " 🙃",
   favouriteColor: "PURPLE! 💜",

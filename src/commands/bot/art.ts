@@ -23,7 +23,7 @@ const art: CommandInt = {
 
       //add local file
       artEmbed.setImage(
-        `https://beccalyria.nhcarrigan.com/assets/img/art/${fileName.replace(
+        `https://www.beccalyria.com/assets/art/${fileName.replace(
           /\s/g,
           "%20"
         )}`
