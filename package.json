@@ -14,11 +14,11 @@
     "bot",
     "discord-bot"
   ],
-  "repository": "https://github.com/nhcarrigan/Becca-Lyria",
+  "repository": "https://github.com/BeccaLyria/discord-bot",
   "bugs": {
-    "url": "https://github.com/nhcarrigan/Becca-Lyria/issues"
+    "url": "https://github.com/BeccaLyria/discord-bot/issues"
   },
-  "homepage": "https://github.com/nhcarrigan/Becca-Lyria#readme",
+  "homepage": "https://github.com/BeccaLyria/discord-bot#readme",
   "scripts": {
     "prebuild": "rm -rf ./prod",
     "build": "tsc",
