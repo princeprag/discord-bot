@@ -102,7 +102,7 @@ const level: CommandInt = {
       // Add the time they were last seen
       levelEmbed.addField(
         "Last Seen",
-        `I last saw them on ${user.lastSeen.toLocaleDateString()}`
+        `I last saw them on ${new Date(user.lastSeen).toLocaleDateString()}`
       );
 
       // Send the embed to the current channel.
