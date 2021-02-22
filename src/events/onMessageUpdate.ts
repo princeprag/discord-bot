@@ -22,7 +22,11 @@ async function onMessageUpdate(
     const { author, guild } = newMessage;
 
     // validation added if newMessage and oldMessage are same
-    if (      oldMessage.content &&      newMessage.content &&      oldMessage.content === newMessage.content    ) {
+    if (
+      oldMessage.content &&
+      newMessage.content &&
+      oldMessage.content === newMessage.content
+    ) {
       return;
     }
     // Check if the message is sended in a Discord server or the author is a bot.
