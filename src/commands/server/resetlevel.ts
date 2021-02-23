@@ -5,7 +5,7 @@ const resetlevel: CommandInt = {
   name: "resetlevel",
   description: "Clears the level records for the server.",
   category: "server",
-  run: async (message, config) => {
+  run: async (message) => {
     try {
       const { Becca, channel, guild, member } = message;
 
@@ -38,11 +38,11 @@ const resetlevel: CommandInt = {
       await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
         message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the level command. Please check the logs.`
+          `${message.guild?.name} had an error with the resetlevel command. Please check the logs.`
         );
       }
       console.log(
-        `${message.guild?.name} had the following error with the level command:`
+        `${message.guild?.name} had the following error with the resetlevel command:`
       );
       console.log(error);
       message.reply("I am so sorry, but I cannot do that at the moment.");
