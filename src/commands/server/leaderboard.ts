@@ -43,6 +43,7 @@ const leaderboard: CommandInt = {
               user.points / 100
             )}`
         )
+        .slice(0, 10)
         .join("\n");
 
       const levelEmbed = new MessageEmbed();
