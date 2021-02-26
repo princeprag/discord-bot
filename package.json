@@ -27,6 +27,16 @@
     "start": "node -r dotenv/config ./prod/src/serve.js",
     "test": "echo 'No tests yet. Would you like to contribute some?'"
   },
+  "_moduleAliases": {
+    "@Commands": "prod/src/commands",
+    "@Database": "prod/src/database/main.js",
+    "@Events": "prod/src/events",
+    "@Interceptors": "prod/src/interceptors",
+    "@Interfaces": "prod/src/interfaces",
+    "@Listeners": "prod/src/listeners",
+    "@Models": "prod/src/database/models",
+    "@Utils": "prod/src/utils"
+  },
   "dependencies": {
     "axios": "^0.21.1",
     "discord.js": "^12.5.1",
