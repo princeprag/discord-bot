@@ -2,7 +2,7 @@
   "name": "becca_lyria",
   "author": "Nicholas Carrigan",
   "main": "./prod/src/main.js",
-  "version": "10.4.1",
+  "version": "10.4.2",
   "license": "AGPL-3.0-or-later",
   "private": false,
   "engines": {
@@ -26,16 +26,6 @@
     "lint": "eslint src",
     "start": "node -r dotenv/config ./prod/src/serve.js",
     "test": "echo 'No tests yet. Would you like to contribute some?'"
-  },
-  "_moduleAliases": {
-    "@Commands": "prod/src/commands",
-    "@Database": "prod/src/database/main.js",
-    "@Events": "prod/src/events",
-    "@Interceptors": "prod/src/interceptors",
-    "@Interfaces": "prod/src/interfaces",
-    "@Listeners": "prod/src/listeners",
-    "@Models": "prod/src/database/models",
-    "@Utils": "prod/src/utils"
   },
   "dependencies": {
     "axios": "^0.21.1",
