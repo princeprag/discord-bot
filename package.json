@@ -2,11 +2,12 @@
   "name": "becca_lyria",
   "author": "Nicholas Carrigan",
   "main": "./prod/src/main.js",
-  "version": "10.4.1",
+  "version": "10.4.2",
   "license": "AGPL-3.0-or-later",
   "private": false,
   "engines": {
-    "node": "14.13.1"
+    "node": "^15.10.0",
+    "npm": "^7.6.0"
   },
   "keywords": [
     "DiscordJS",
@@ -22,53 +23,33 @@
   "scripts": {
     "prebuild": "rm -rf ./prod",
     "build": "tsc",
-    "dev": "nodemon",
-    "dev:command": "npm run build && npm run start:ts",
     "lint": "eslint src",
     "start": "node -r dotenv/config ./prod/src/serve.js",
-    "start:ts": "ts-node -r ./src/serve.ts",
     "test": "echo 'No tests yet. Would you like to contribute some?'"
-  },
-  "_moduleAliases": {
-    "@Commands": "prod/src/commands",
-    "@Database": "prod/src/database/main.js",
-    "@Events": "prod/src/events",
-    "@Interceptors": "prod/src/interceptors",
-    "@Interfaces": "prod/src/interfaces",
-    "@Listeners": "prod/src/listeners",
-    "@Models": "prod/src/database/models",
-    "@Utils": "prod/src/utils"
   },
   "dependencies": {
     "axios": "^0.21.1",
     "discord.js": "^12.5.1",
     "mathjs": "^9.2.0",
     "module-alias": "^2.2.2",
-    "mongoose": "^5.11.17",
+    "mongoose": "^5.11.18",
     "mongoose-encryption": "^2.0.3"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.15",
-    "@types/expect": "^24.3.0",
     "@types/mathjs": "^6.0.11",
     "@types/mocha": "^8.2.1",
     "@types/mongoose": "^5.10.3",
-    "@types/node": "^14.14.30",
-    "@types/sinon": "^9.0.10",
-    "@types/sinon-chai": "^3.2.5",
-    "@types/ws": "^7.4.0",
-    "@typescript-eslint/eslint-plugin": "^4.15.1",
-    "@typescript-eslint/parser": "^4.15.1",
+    "@types/node": "^14.14.31",
+    "@typescript-eslint/eslint-plugin": "^4.15.2",
+    "@typescript-eslint/parser": "^4.15.2",
     "dotenv": "^8.2.0",
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
-    "husky": "^5.0.9",
+    "husky": "^5.1.1",
     "lint-staged": "^10.5.4",
-    "nodemon": "^2.0.7",
     "prettier": "^2.2.1",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.1.5"
+    "typescript": "^4.2.2"
   },
   "lint-staged": {
     "*.ts": [
