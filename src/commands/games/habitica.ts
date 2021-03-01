@@ -4,7 +4,7 @@ import {
   HabiticaAchievementInt,
   HabiticaUserInt,
 } from "@Interfaces/commands/HabiticaInt";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { MessageEmbed } from "discord.js";
 
 const habitica: CommandInt = {
@@ -39,13 +39,20 @@ const habitica: CommandInt = {
       };
 
       // Get the user data from the Habitica API.
-      const user = await axios.get<HabiticaUserInt>(
-        `https://habitica.com/api/v3/members/${id}`,
-        { headers }
-      );
+      let user: AxiosResponse<HabiticaUserInt> | null = null;
+      try {
+        user = await axios.get<HabiticaUserInt>(
+          `https://habitica.com/api/v3/members/${id}`,
+          { headers }
+        );
+      } catch (err) {
+        if (err) {
+          user = null;
+        }
+      }
 
       // Check if the user data result is not success.
-      if (!user.data.success) {
+      if (!user || !user.data || !user.data.success) {
         await message.reply("I am so sorry, but I could not find that user...");
         await message.react(message.Becca.no);
         return;
