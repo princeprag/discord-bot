@@ -1,9 +1,9 @@
-import CommandInt from "@Interfaces/CommandInt";
+import CommandInt from "../../interfaces/CommandInt";
 import {
   RiddleGetInt,
   RiddleSolveInt,
   RiddleStartInt,
-} from "@Interfaces/commands/RiddleInt";
+} from "../../interfaces/commands/RiddleInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 

@@ -1,5 +1,5 @@
-import CommandInt from "@Interfaces/CommandInt";
-import WordInt from "@Interfaces/commands/WordInt";
+import CommandInt from "../../interfaces/CommandInt";
+import WordInt from "../../interfaces/commands/WordInt";
 import axios from "axios";
 
 const title: CommandInt = {

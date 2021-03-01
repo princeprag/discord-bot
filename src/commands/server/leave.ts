@@ -1,4 +1,4 @@
-import CommandInt from "@Interfaces/CommandInt";
+import CommandInt from "../../interfaces/CommandInt";
 
 const leave: CommandInt = {
   name: "leave",

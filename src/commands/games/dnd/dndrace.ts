@@ -1,6 +1,6 @@
-import CommandInt from "@Interfaces/CommandInt";
+import CommandInt from "../../../interfaces/CommandInt";
 import axios from "axios";
-import DndRaceInt from "@Interfaces/commands/dnd/DndRaceInt";
+import DndRaceInt from "../../../interfaces/commands/dnd/DndRaceInt";
 import { MessageEmbed } from "discord.js";
 
 const DNDRACE_CONST = {

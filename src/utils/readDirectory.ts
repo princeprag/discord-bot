@@ -1,5 +1,5 @@
-import CommandInt from "@Interfaces/CommandInt";
-import ListenerInt from "@Interfaces/ListenerInt";
+import CommandInt from "../interfaces/CommandInt";
+import ListenerInt from "../interfaces/ListenerInt";
 import { promises } from "fs";
 import { resolve } from "path";
 

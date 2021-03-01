@@ -1,5 +1,5 @@
-import ListenerInt from "@Interfaces/ListenerInt";
-import LevelModel from "@Models/LevelModel";
+import ListenerInt from "../interfaces/ListenerInt";
+import LevelModel from "../database/models/LevelModel";
 
 /**
  * Grants 1 to 5 experience points for each message you send, and you level up at every 100 experience points.

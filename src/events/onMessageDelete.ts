@@ -1,6 +1,6 @@
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
-import BeccaInt from "@Interfaces/BeccaInt";
-import { customSubstring } from "@Utils/substringHelper";
+import BeccaInt from "../interfaces/BeccaInt";
+import { customSubstring } from "../utils/substringHelper";
 
 /**
  * When a messages is deleted on a channel.

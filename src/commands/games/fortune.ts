@@ -1,5 +1,5 @@
-import CommandInt from "@Interfaces/CommandInt";
-import fortunesList from "@Utils/commands/fortunesList";
+import CommandInt from "../../interfaces/CommandInt";
+import fortunesList from "../../utils/commands/fortunesList";
 
 const fortune: CommandInt = {
   name: "fortune",

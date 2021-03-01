@@ -1,4 +1,4 @@
-import { ArtInt } from "@Interfaces/commands/ArtInt";
+import { ArtInt } from "../../interfaces/commands/ArtInt";
 
 export const artList: ArtInt[] = [
   {

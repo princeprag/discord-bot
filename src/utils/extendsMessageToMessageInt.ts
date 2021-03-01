@@ -1,4 +1,4 @@
-import MessageInt from "@Interfaces/MessageInt";
+import MessageInt from "../interfaces/MessageInt";
 import { Message, MessageEmbed } from "discord.js";
 
 /**

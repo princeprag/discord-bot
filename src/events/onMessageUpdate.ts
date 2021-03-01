@@ -1,5 +1,5 @@
-import BeccaInt from "@Interfaces/BeccaInt";
-import { customSubstring } from "@Utils/substringHelper";
+import BeccaInt from "../interfaces/BeccaInt";
+import { customSubstring } from "../utils/substringHelper";
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
 
 /**

@@ -1,4 +1,4 @@
-import BeccaInt from "@Interfaces/BeccaInt";
+import BeccaInt from "../interfaces/BeccaInt";
 import { WebhookClient } from "discord.js";
 
 /**

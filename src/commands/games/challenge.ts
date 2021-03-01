@@ -1,8 +1,8 @@
-import CommandInt from "@Interfaces/CommandInt";
+import CommandInt from "../../interfaces/CommandInt";
 import ChallengeInt, {
   ChallengeSolveInt,
   ChallengeStartInt,
-} from "@Interfaces/commands/ChallengeInt";
+} from "../../interfaces/commands/ChallengeInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 

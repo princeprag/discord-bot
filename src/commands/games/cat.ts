@@ -1,4 +1,4 @@
-import CommandInt from "@Interfaces/CommandInt";
+import CommandInt from "../../interfaces/CommandInt";
 
 const cat: CommandInt = {
   name: "cat",

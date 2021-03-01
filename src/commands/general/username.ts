@@ -1,5 +1,5 @@
-import CommandInt from "@Interfaces/CommandInt";
-import { generate } from "@Utils/commands/usernameGenerator";
+import CommandInt from "../../interfaces/CommandInt";
+import { generate } from "../../utils/commands/usernameGenerator";
 import { MessageEmbed } from "discord.js";
 
 const username: CommandInt = {

@@ -1,11 +1,11 @@
-import BeccaInt from "@Interfaces/BeccaInt";
+import BeccaInt from "../interfaces/BeccaInt";
 import {
   GuildMember,
   MessageEmbed,
   PartialGuildMember,
   TextChannel,
 } from "discord.js";
-import { sleep } from "@Utils/extendsMessageToMessageInt";
+import { sleep } from "../utils/extendsMessageToMessageInt";
 
 /**
  * Send a message when a new user join to the server,

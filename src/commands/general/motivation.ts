@@ -1,5 +1,5 @@
-import CommandInt from "@Interfaces/CommandInt";
-import { motivationalQuotes } from "@Utils/commands/motivational-quotes.json";
+import CommandInt from "../../interfaces/CommandInt";
+import { motivationalQuotes } from "../../utils/commands/motivational-quotes.json";
 import { MessageEmbed } from "discord.js";
 
 const motivation: CommandInt = {
