@@ -89,6 +89,7 @@ const star: CommandInt = {
 
       if (targetUser) {
         targetUser.stars++;
+        targetUser.userName = userToStarMentioned.username;
       } else {
         starData.users.push({
           userID: userToStarMentioned.id,
