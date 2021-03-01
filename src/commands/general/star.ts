@@ -1,5 +1,6 @@
 import CommandInt from "../../interfaces/CommandInt";
 import { MessageAttachment, MessageEmbed } from "discord.js";
+import StarCountModel from "../../database/models/StarModel";
 
 const star: CommandInt = {
   name: "star",
@@ -72,6 +73,36 @@ const star: CommandInt = {
         reason = "I am sorry, but the user did not provide a reason.";
       }
 
+      let starData = await StarCountModel.findOne({ serverID: guild.id });
+
+      if (!starData) {
+        starData = await StarCountModel.create({
+          serverID: guild.id,
+          serverName: guild.name,
+          users: [],
+        });
+      }
+
+      const targetUser = starData.users.find(
+        (user) => user.userID === userToStarMentioned.id
+      );
+
+      if (targetUser) {
+        targetUser.stars++;
+        targetUser.userName = userToStarMentioned.username;
+      } else {
+        starData.users.push({
+          userID: userToStarMentioned.id,
+          userName: userToStarMentioned.username,
+          stars: 1,
+        });
+      }
+
+      starData.markModified("users");
+      await starData.save();
+
+      const starTotal = targetUser ? targetUser.stars : 1;
+
       //create message attachment
       const attachment = [];
       attachment.push(new MessageAttachment("./img/star.png", "star.png"));
@@ -88,7 +119,7 @@ const star: CommandInt = {
           .addField("Reason", reason)
           .attachFiles(attachment)
           .setImage("attachment://star.png")
-          .setFooter("I am so proud of you! 🙃")
+          .setFooter(`You now have ${starTotal} stars!`)
       );
 
       await message.react(message.Becca.yes);
