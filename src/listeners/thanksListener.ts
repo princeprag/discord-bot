@@ -1,4 +1,4 @@
-import ListenerInt from "@Interfaces/ListenerInt";
+import ListenerInt from "../interfaces/ListenerInt";
 import botMentionListener from "./botMentionListener";
 
 const thanksListener: ListenerInt = {

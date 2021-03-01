@@ -1,4 +1,4 @@
-import { ServerModelInt } from "@Models/ServerModel";
+import { ServerModelInt } from "../database/models/ServerModel";
 import { Client, Guild, MessageEmbed, WebhookClient } from "discord.js";
 import CommandInt from "./CommandInt";
 import ListenerInt from "./ListenerInt";

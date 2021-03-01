@@ -1,5 +1,5 @@
-import CommandInt from "@Interfaces/CommandInt";
-import httpStatusList from "@Utils/commands/httpStatusList";
+import CommandInt from "../../interfaces/CommandInt";
+import httpStatusList from "../../utils/commands/httpStatusList";
 import { MessageEmbed } from "discord.js";
 
 const http: CommandInt = {

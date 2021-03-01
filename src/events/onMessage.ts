@@ -1,8 +1,8 @@
 import { Message } from "discord.js";
-import MessageInt from "@Interfaces/MessageInt";
+import MessageInt from "../interfaces/MessageInt";
 import { prefix as defaultPrefix } from "../../default_config.json";
-import extendsMessageToMessageInt from "@Utils/extendsMessageToMessageInt";
-import BeccaInt from "@Interfaces/BeccaInt";
+import extendsMessageToMessageInt from "../utils/extendsMessageToMessageInt";
+import BeccaInt from "../interfaces/BeccaInt";
 
 /**
  * Execute when a user sends a message in a channel.

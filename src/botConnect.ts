@@ -1,22 +1,21 @@
-import "module-alias/register";
 import { Client, WebhookClient } from "discord.js";
-import connectDatabase from "@Database";
-import BeccaInt from "@Interfaces/BeccaInt";
-import extendsClientToBeccaInt from "@Utils/extendsClientToBeccaInt";
-import { getCommands, getListeners } from "@Utils/readDirectory";
+import connectDatabase from "./database/main";
+import BeccaInt from "./interfaces/BeccaInt";
+import extendsClientToBeccaInt from "./utils/extendsClientToBeccaInt";
+import { getCommands, getListeners } from "./utils/readDirectory";
 import { version } from "../package.json";
 import dotenv from "dotenv";
 dotenv.config();
 
 // Events
-import onReady from "@Events/onReady";
-import onGuildCreate from "@Events/onGuildCreate";
-import onGuildDelete from "@Events/onGuildDelete";
-import onGuildMemberAdd from "@Events/onGuildMemberAdd";
-import onMessage from "@Events/onMessage";
-import onMessageDelete from "@Events/onMessageDelete";
-import onMessageUpdate from "@Events/onMessageUpdate";
-import onGuildMemberRemove from "@Events/onGuildMemberRemove";
+import onReady from "./events/onReady";
+import onGuildCreate from "./events/onGuildCreate";
+import onGuildDelete from "./events/onGuildDelete";
+import onGuildMemberAdd from "./events/onGuildMemberAdd";
+import onMessage from "./events/onMessage";
+import onMessageDelete from "./events/onMessageDelete";
+import onMessageUpdate from "./events/onMessageUpdate";
+import onGuildMemberRemove from "./events/onGuildMemberRemove";
 
 export async function botConnect(): Promise<void> {
   // Get the node_env from the environment.

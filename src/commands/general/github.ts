@@ -1,5 +1,5 @@
-import CommandInt from "@Interfaces/CommandInt";
-import { GithubInt, GithubRepoInt } from "@Interfaces/commands/GitHubInt";
+import CommandInt from "../../interfaces/CommandInt";
+import { GithubInt, GithubRepoInt } from "../../interfaces/commands/GitHubInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 

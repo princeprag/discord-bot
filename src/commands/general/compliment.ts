@@ -1,5 +1,5 @@
-import CommandInt from "@Interfaces/CommandInt";
-import { compliments } from "@Utils/commands/motivational-quotes.json";
+import CommandInt from "../../interfaces/CommandInt";
+import { compliments } from "../../utils/commands/motivational-quotes.json";
 import { MessageEmbed } from "discord.js";
 
 const compliment: CommandInt = {

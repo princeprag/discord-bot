@@ -1,7 +1,7 @@
 import { Client, Guild, MessageEmbed, TextChannel } from "discord.js";
-import BeccaInt from "@Interfaces/BeccaInt";
+import BeccaInt from "../interfaces/BeccaInt";
 import { sleep } from "./extendsMessageToMessageInt";
-import ServerModel, { ServerModelInt } from "@Models/ServerModel";
+import ServerModel, { ServerModelInt } from "../database/models/ServerModel";
 import { prefix as defaultPrefix } from "../../default_config.json";
 
 /**

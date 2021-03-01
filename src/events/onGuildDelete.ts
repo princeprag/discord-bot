@@ -1,6 +1,6 @@
-import ServerModel from "@Models/ServerModel";
+import ServerModel from "../database/models/ServerModel";
 import { Client, Guild, WebhookClient } from "discord.js";
-import LevelModel from "@Models/LevelModel";
+import LevelModel from "../database/models/LevelModel";
 
 /**
  * Send a debug message when a guild has been deleted.

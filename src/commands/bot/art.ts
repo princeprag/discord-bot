@@ -1,5 +1,5 @@
-import CommandInt from "@Interfaces/CommandInt";
-import { artList } from "@Utils/commands/artList";
+import CommandInt from "../../interfaces/CommandInt";
+import { artList } from "../../utils/commands/artList";
 import { MessageEmbed } from "discord.js";
 
 const art: CommandInt = {

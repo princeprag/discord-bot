@@ -1,9 +1,9 @@
-import CommandInt from "@Interfaces/CommandInt";
+import CommandInt from "../../interfaces/CommandInt";
 import {
   AchievementInt,
   HabiticaAchievementInt,
   HabiticaUserInt,
-} from "@Interfaces/commands/HabiticaInt";
+} from "../../interfaces/commands/HabiticaInt";
 import axios, { AxiosResponse } from "axios";
 import { MessageEmbed } from "discord.js";
 

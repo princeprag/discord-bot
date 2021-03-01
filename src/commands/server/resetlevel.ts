@@ -1,5 +1,5 @@
-import CommandInt from "@Interfaces/CommandInt";
-import LevelModel from "@Models/LevelModel";
+import CommandInt from "../../interfaces/CommandInt";
+import LevelModel from "../../database/models/LevelModel";
 
 const resetlevel: CommandInt = {
   name: "resetlevel",

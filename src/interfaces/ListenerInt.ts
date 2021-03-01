@@ -1,4 +1,4 @@
-import { ServerModelInt } from "@Models/ServerModel";
+import { ServerModelInt } from "../database/models/ServerModel";
 import MessageInt from "./MessageInt";
 
 /**
