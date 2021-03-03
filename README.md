@@ -2,7 +2,7 @@
 
 Welcome to the repository for `Becca Lyria`!
 
-[You can invite Becca to your own server!](https://discord.com/oauth2/authorize?client_id=716707753090875473&scope=bot&permissions=268495990)
+[You can invite Becca to your own server!](http://invite.beccalyria.com)
 
 ## Join Our Team!
 
