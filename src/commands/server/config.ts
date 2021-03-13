@@ -6,8 +6,8 @@ const config: CommandInt = {
   description:
     "Returns Becca's configuration for this server. (The parameters are only for server administrators)",
   parameters: [
-    "`<setting>` - The setting you would like to set. See the docs for available options.",
-    "`<value>` - The value of that setting. See the docs for available options.",
+    "`<setting>`: The setting you would like to set. See the docs for available options.",
+    "`<value>`: The value of that setting. See the docs for available options.",
   ],
   category: "server",
   run: async (message, config) => {

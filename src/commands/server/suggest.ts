@@ -8,7 +8,7 @@ const suggest: CommandInt = {
     "Sends a suggestion to the configured suggestion channel. Allows members to vote on the suggestion.",
   category: "server",
   parameters: [
-    "`<suggestion>` - full sentence (space-separated) of your suggestion.",
+    "`<suggestion>`: full sentence (space-separated) of your suggestion.",
   ],
   run: async (message, config) => {
     try {
