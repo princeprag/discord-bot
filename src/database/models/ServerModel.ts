@@ -9,6 +9,7 @@ export interface ServerModelInt extends Document {
   levels: string;
   welcome_channel: string;
   log_channel: string;
+  suggestion_channel: string;
   restricted_role: string;
   moderator_role: string;
   custom_welcome: string;
@@ -25,6 +26,10 @@ export const Server = new Schema({
   levels: String,
   welcome_channel: String,
   log_channel: String,
+  suggestion_channel: {
+    type: String,
+    default: "",
+  },
   restricted_role: String,
   moderator_role: String,
   custom_welcome: String,

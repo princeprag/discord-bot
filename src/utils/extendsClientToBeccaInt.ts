@@ -24,6 +24,7 @@ async function setSetting(
     | "levels"
     | "welcome_channel"
     | "log_channel"
+    | "suggestion_channel"
     | "restricted_role"
     | "moderator_role"
     | "custom_welcome"
