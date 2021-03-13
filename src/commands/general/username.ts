@@ -7,7 +7,7 @@ const username: CommandInt = {
   description:
     "Generates a username based on the Digital Ocean username generator of optional [length]",
   parameters: [
-    "`<length?>` - The maximum length of the username to generate. Defaults to 30.",
+    "`<length?>`: The maximum length of the username to generate. Defaults to 30.",
   ],
   category: "general",
   run: async (message) => {

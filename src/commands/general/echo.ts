@@ -5,9 +5,9 @@ const echo: CommandInt = {
   description:
     "Sends the [message] to the [guild] [channel]. Restricted to Becca's owner",
   parameters: [
-    "`<guild>` - the ID of the guild to send the message to",
-    "`<channel>` - the ID of the channel to send the message to",
-    "`<message>` - the message to send",
+    "`<guild>`: the ID of the guild to send the message to",
+    "`<channel>`: the ID of the channel to send the message to",
+    "`<message>`: the message to send",
   ],
   category: "general",
   run: async (message) => {

@@ -6,8 +6,8 @@ const config: CommandInt = {
   description:
     "Returns Becca's configuration for this server. (The parameters are only for server administrators)",
   parameters: [
-    "`<setting>` - The setting you would like to set. See the docs for available options.",
-    "`<value>` - The value of that setting. See the docs for available options.",
+    "`<setting>`: The setting you would like to set. See the docs for available options.",
+    "`<value>`: The value of that setting. See the docs for available options.",
   ],
   category: "server",
   run: async (message, config) => {
@@ -63,6 +63,16 @@ const config: CommandInt = {
             : `Please configure a welcomes channel using \`${
                 prefix[guild.id]
               }config set welcome_channel #channel)\`.`
+        );
+
+        // Add the suggestion channel to an embed field.
+        configEmbed.addField(
+          "Suggestion Channel",
+          config.suggestion_channel
+            ? `I will allow users to send suggestions to the <#${
+                config.suggestion_channel
+              }> channel using my \`${prefix[guild.id]}suggest\` command.`
+            : `I will not accept suggestions from your server members.`
         );
 
         // Add the restricted role to an embed field.
@@ -178,6 +188,7 @@ const config: CommandInt = {
           "levels",
           "welcome_channel",
           "log_channel",
+          "suggestion_channel",
           "restricted_role",
           "moderator_role",
           "custom_welcome",
@@ -206,7 +217,11 @@ const config: CommandInt = {
       }
 
       // If setting channel, check for valid channel.
-      if (key === "welcome_channel" || key === "log_channel") {
+      if (
+        key === "welcome_channel" ||
+        key === "log_channel" ||
+        key === "suggestion_channel"
+      ) {
         const success = guild.channels.cache.find(
           (chan) => chan.id === value.replace(/\D/g, "")
         );
