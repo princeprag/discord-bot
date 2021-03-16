@@ -1,6 +1,6 @@
 import CommandInt from "../../interfaces/CommandInt";
 import { customSubstring } from "../../utils/substringHelper";
-import { MessageEmbed } from "discord.js";
+import { MessageEmbed, TextChannel } from "discord.js";
 
 const suggest: CommandInt = {
   name: "suggest",
@@ -29,6 +29,16 @@ const suggest: CommandInt = {
 
       const suggestion = content.split(" ").slice(1).join(" ");
 
+      const suggestionChannel = guild.channels.cache.find(
+        (channel) => channel.name === config.suggestion_channel
+      );
+
+      if (!suggestionChannel || suggestionChannel.type !== "text") {
+        await message.react(Becca.no);
+        await message.reply("Sorry, but I cannot find the suggestion channel.");
+        return;
+      }
+
       const suggestionEmbed = new MessageEmbed();
 
       suggestionEmbed.setTitle("New Suggestion!");
@@ -38,10 +48,13 @@ const suggest: CommandInt = {
       suggestionEmbed.setDescription(customSubstring(suggestion, 2048));
       suggestionEmbed.setFooter("Vote yes or no below!");
 
-      const sentMessage = await channel.send(suggestionEmbed);
+      const sentMessage = await (suggestionChannel as TextChannel).send(
+        suggestionEmbed
+      );
       await sentMessage.react(Becca.yes);
       await sentMessage.react(Becca.no);
       await message.react(Becca.yes);
+      await channel.send("Okay, I have submitted your suggestion!");
     } catch (error) {
       await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
