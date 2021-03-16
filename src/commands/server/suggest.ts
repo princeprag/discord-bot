@@ -54,7 +54,7 @@ const suggest: CommandInt = {
       await sentMessage.react(Becca.yes);
       await sentMessage.react(Becca.no);
       await message.react(Becca.yes);
-      F;
+      await channel.send("Okay, I have submitted your suggestion!");
     } catch (error) {
       await message.react(message.Becca.no);
       if (message.Becca.debugHook) {
