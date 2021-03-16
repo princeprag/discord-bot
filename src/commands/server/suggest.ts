@@ -29,11 +29,11 @@ const suggest: CommandInt = {
 
       const suggestion = content.split(" ").slice(1).join(" ");
 
-      const suggestionChannel = guild.channels.cache.find(
-        (channel) => channel.name === config.suggestion_channel
+      const suggestionChannel = await guild.channels.cache.find(
+        (channel) => channel.id === config.suggestion_channel
       );
 
-      if (!suggestionChannel || suggestionChannel.type !== "text") {
+      if (!suggestionChannel) {
         await message.react(Becca.no);
         await message.reply("Sorry, but I cannot find the suggestion channel.");
         return;
