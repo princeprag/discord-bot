@@ -2,7 +2,7 @@
   "name": "becca_lyria",
   "author": "Nicholas Carrigan",
   "main": "./prod/src/main.js",
-  "version": "11.2.1",
+  "version": "11.3.0",
   "license": "AGPL-3.0-or-later",
   "private": false,
   "engines": {
@@ -30,11 +30,13 @@
   "dependencies": {
     "axios": "^0.21.1",
     "discord.js": "^12.5.1",
+    "express": "^4.17.1",
     "mathjs": "^9.2.0",
     "mongoose": "^5.11.18",
     "mongoose-encryption": "^2.0.3"
   },
   "devDependencies": {
+    "@types/express": "^4.17.11",
     "@types/mathjs": "^6.0.11",
     "@types/mongoose": "^5.10.3",
     "@types/node": "^14.14.31",
