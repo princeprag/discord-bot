@@ -9,7 +9,7 @@ export const endpoint = (): void => {
     res.status(200).send("Ping!");
   });
 
-  const httpPort = process.env.PRODDEV === "production" ? 80 : 8080;
+  const httpPort = process.env.NODE_ENV === "production" ? 80 : 8080;
 
   const httpServer = http.createServer(HTTPEndpoint);
 
@@ -17,7 +17,7 @@ export const endpoint = (): void => {
     console.log(`http server is live on port ${httpPort}`);
   });
 
-  if (process.env.PRODDEV === "production") {
+  if (process.env.NODE_ENV === "production") {
     const httpsServer = https.createServer(HTTPEndpoint);
     httpsServer.listen(443, () => {
       console.log("https server is live on port 443");
