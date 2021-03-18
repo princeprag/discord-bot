@@ -16,6 +16,7 @@ import onMessage from "./events/onMessage";
 import onMessageDelete from "./events/onMessageDelete";
 import onMessageUpdate from "./events/onMessageUpdate";
 import onGuildMemberRemove from "./events/onGuildMemberRemove";
+import { endpoint } from "./utils/server/httpEndpoint";
 
 export async function botConnect(): Promise<void> {
   // Get the node_env from the environment.
@@ -76,10 +77,10 @@ export async function botConnect(): Promise<void> {
   });
 
   // When Becca connects...
-  Becca.on(
-    "ready",
-    async () => await onReady(Becca, debugChannelHook, node_env)
-  );
+  Becca.on("ready", async () => {
+    endpoint();
+    await onReady(Becca, debugChannelHook, node_env);
+  });
 
   // On guild create event.
   Becca.on(
@@ -120,6 +121,12 @@ export async function botConnect(): Promise<void> {
     async (oldMessage, newMessage) =>
       await onMessageUpdate(oldMessage, newMessage, Becca)
   );
+
+  // kill process on disconnect - this ties in to
+  // server monitoring through http endpoint.
+  Becca.on("disconnect", () => {
+    process.exit(1);
+  });
 
   // Connect Becca
   await Becca.login(process.env.DISCORD_TOKEN);
