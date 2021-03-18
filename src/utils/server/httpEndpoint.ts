@@ -1,8 +1,9 @@
 import express from "express";
 import http from "http";
 import https from "https";
+import { readFile } from "fs/promises";
 
-export const endpoint = (): void => {
+export const endpoint = async (): Promise<void> => {
   const HTTPEndpoint = express();
 
   HTTPEndpoint.use("/", (req, res) => {
@@ -18,7 +19,26 @@ export const endpoint = (): void => {
   });
 
   if (process.env.NODE_ENV === "production") {
-    const httpsServer = https.createServer(HTTPEndpoint);
+    const privateKey = await readFile(
+      "/etc/letsencrypt/live/example.com/privkey.pem",
+      "utf8"
+    );
+    const certificate = await readFile(
+      "/etc/letsencrypt/live/example.com/cert.pem",
+      "utf8"
+    );
+    const ca = await readFile(
+      "/etc/letsencrypt/live/example.com/chain.pem",
+      "utf8"
+    );
+
+    const credentials = {
+      key: privateKey,
+      cert: certificate,
+      ca: ca,
+    };
+
+    const httpsServer = https.createServer(credentials, HTTPEndpoint);
     httpsServer.listen(443, () => {
       console.log("https server is live on port 443");
     });

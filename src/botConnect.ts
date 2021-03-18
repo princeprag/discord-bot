@@ -78,7 +78,7 @@ export async function botConnect(): Promise<void> {
 
   // When Becca connects...
   Becca.on("ready", async () => {
-    endpoint();
+    await endpoint();
     await onReady(Becca, debugChannelHook, node_env);
   });
 
