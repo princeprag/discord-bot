@@ -20,15 +20,15 @@ export const endpoint = async (): Promise<void> => {
 
   if (process.env.NODE_ENV === "production") {
     const privateKey = await readFile(
-      "/etc/letsencrypt/live/example.com/privkey.pem",
+      "/etc/letsencrypt/live/bot.beccalyria.com/privkey.pem",
       "utf8"
     );
     const certificate = await readFile(
-      "/etc/letsencrypt/live/example.com/cert.pem",
+      "/etc/letsencrypt/live/bot.beccalyria.com/cert.pem",
       "utf8"
     );
     const ca = await readFile(
-      "/etc/letsencrypt/live/example.com/chain.pem",
+      "/etc/letsencrypt/live/bot.beccalyria.com/chain.pem",
       "utf8"
     );
 
