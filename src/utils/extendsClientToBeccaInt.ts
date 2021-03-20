@@ -153,34 +153,44 @@ async function sendMessageToLogsChannel(
   guild: Guild,
   message: string | MessageEmbed
 ): Promise<void> {
-  // Get the logs channel from the database.
-  const logsChannelSetting = (await this.getSettings(guild.id, guild.name))
-    .log_channel;
+  try {
+    // Get the logs channel from the database.
+    const logsChannelSetting = (await this.getSettings(guild.id, guild.name))
+      .log_channel;
 
-  // Check if the channel exists.
-  if (!logsChannelSetting) {
-    return;
+    // Check if the channel exists.
+    if (!logsChannelSetting) {
+      return;
+    }
+
+    const logsChannel = await guild.channels.cache.find(
+      (chan) => chan.id === logsChannelSetting && chan.type === "text"
+    );
+
+    if (!logsChannel) {
+      return;
+    }
+
+    // Start typing.
+    (logsChannel as TextChannel).startTyping();
+
+    // Sleep 3 seconds.
+    await sleep(3000);
+
+    // Stop typing.
+    (logsChannel as TextChannel).stopTyping();
+
+    // Send the message to the logs channel.
+    await (logsChannel as TextChannel).send(message);
+  } catch (err) {
+    console.error("Becca had an error with the log feature.");
+    console.error(err);
+    if (this.debugHook) {
+      this.debugHook.send(
+        `${guild.name} had an error with the logging feature. Please check the logs.`
+      );
+    }
   }
-
-  const logsChannel = await guild.channels.cache.find(
-    (chan) => chan.id === logsChannelSetting && chan.type === "text"
-  );
-
-  if (!logsChannel) {
-    return;
-  }
-
-  // Start typing.
-  (logsChannel as TextChannel).startTyping();
-
-  // Sleep 3 seconds.
-  await sleep(3000);
-
-  // Stop typing.
-  (logsChannel as TextChannel).stopTyping();
-
-  // Send the message to the logs channel.
-  await (logsChannel as TextChannel).send(message);
 }
 
 /**
