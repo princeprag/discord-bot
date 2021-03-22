@@ -55,13 +55,10 @@ async function onMessage(
     levelsListener,
   } = Becca.customListeners;
 
-  // Check if the heartsListener and levelsListener exists.
-  if (heartsListener && levelsListener) {
+  // Check if the heartsListener exists.
+  if (heartsListener) {
     // Execute the hearts listener.
     await heartsListener.run(message, serverConfig);
-
-    // Execute the levels listener.
-    await levelsListener.run(message, serverConfig);
   }
 
   // Get the current Discord server id.
@@ -87,6 +84,9 @@ async function onMessage(
   if (!content.toLowerCase().startsWith(prefix)) {
     if (thanksListener) {
       await thanksListener.run(message, serverConfig);
+    }
+    if (levelsListener) {
+      await levelsListener.run(message, serverConfig);
     }
     return;
   }
