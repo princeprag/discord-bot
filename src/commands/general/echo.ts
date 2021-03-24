@@ -1,3 +1,4 @@
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 import CommandInt from "../../interfaces/CommandInt";
 
 const echo: CommandInt = {
@@ -88,17 +89,13 @@ const echo: CommandInt = {
       );
       await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the echo command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the echo command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "echo command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

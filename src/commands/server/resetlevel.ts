@@ -1,5 +1,6 @@
 import CommandInt from "../../interfaces/CommandInt";
 import LevelModel from "../../database/models/LevelModel";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const resetlevel: CommandInt = {
   name: "resetlevel",
@@ -35,17 +36,13 @@ const resetlevel: CommandInt = {
       await message.react(Becca.yes);
       return;
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the resetlevel command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the resetlevel command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "resetlevel command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

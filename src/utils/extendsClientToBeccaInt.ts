@@ -2,7 +2,8 @@ import { Client, Guild, MessageEmbed, TextChannel } from "discord.js";
 import BeccaInt from "../interfaces/BeccaInt";
 import { sleep } from "./extendsMessageToMessageInt";
 import ServerModel, { ServerModelInt } from "../database/models/ServerModel";
-import { prefix as defaultPrefix } from "../../default_config.json";
+import { prefix as defaultPrefix } from "../default_config.json";
+import { beccaErrorHandler } from "./beccaErrorHandler";
 
 /**
  * See `./src/interfaces/BeccaInt.ts` for more information.
@@ -183,13 +184,7 @@ async function sendMessageToLogsChannel(
     // Send the message to the logs channel.
     await (logsChannel as TextChannel).send(message);
   } catch (err) {
-    console.error("Becca had an error with the log feature.");
-    console.error(err);
-    if (this.debugHook) {
-      this.debugHook.send(
-        `${guild.name} had an error with the logging feature. Please check the logs.`
-      );
-    }
+    await beccaErrorHandler(err, "Becca", "log feature", this.debugHook);
   }
 }
 

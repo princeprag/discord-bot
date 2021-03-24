@@ -1,3 +1,4 @@
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 import CommandInt from "../../interfaces/CommandInt";
 
 const leave: CommandInt = {
@@ -49,17 +50,13 @@ const leave: CommandInt = {
       await targetGuild.leave();
       await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the leave command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the leave command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "leave command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

@@ -2,6 +2,7 @@ import CommandInt from "../../../interfaces/CommandInt";
 import DndSpellInt from "../../../interfaces/commands/dnd/DndSpellInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
+import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 
 const DNDSPELL_CONST = {
   fields: {
@@ -97,17 +98,13 @@ const dndspell: CommandInt = {
       await channel.send(dndSpellEmbed);
       await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the dndspell command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the dndspell command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "dndspell command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply(DNDSPELL_CONST.error.default);
     }
   },
 };

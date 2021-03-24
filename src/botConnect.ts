@@ -3,7 +3,6 @@ import connectDatabase from "./database/main";
 import BeccaInt from "./interfaces/BeccaInt";
 import extendsClientToBeccaInt from "./utils/extendsClientToBeccaInt";
 import { getCommands, getListeners } from "./utils/readDirectory";
-import { version } from "../package.json";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -17,6 +16,7 @@ import onMessageDelete from "./events/onMessageDelete";
 import onMessageUpdate from "./events/onMessageUpdate";
 import onGuildMemberRemove from "./events/onGuildMemberRemove";
 import { endpoint } from "./utils/server/httpEndpoint";
+import { beccaLogger } from "./utils/beccaLogger";
 
 export async function botConnect(): Promise<void> {
   // Get the node_env from the environment.
@@ -47,7 +47,7 @@ export async function botConnect(): Promise<void> {
   }
 
   // Add Becca's version to the client.
-  Becca.version = version;
+  Becca.version = process.env.npm_package_version || "version not found";
 
   // Add Becca's Emotes
   Becca.yes = process.env.BECCA_YES || "✅";
@@ -66,14 +66,14 @@ export async function botConnect(): Promise<void> {
     if (Becca.debugHook) {
       Becca.debugHook.send(`Shard ${shard} is ready!`);
     }
-    console.log(`Shard ${shard} is ready!`);
+    beccaLogger.log("debug", `Shard ${shard} is ready!`);
   });
 
   Becca.on("shardError", (err, shard) => {
     if (Becca.debugHook) {
       Becca.debugHook.send(`Shard ${shard} has crashed. Please see the longs.`);
     }
-    console.error(err);
+    beccaLogger.log("error", err);
   });
 
   // When Becca connects...

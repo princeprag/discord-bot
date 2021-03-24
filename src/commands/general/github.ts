@@ -2,6 +2,7 @@ import CommandInt from "../../interfaces/CommandInt";
 import { GithubInt, GithubRepoInt } from "../../interfaces/commands/GitHubInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const github: CommandInt = {
   name: "github",
@@ -100,17 +101,13 @@ const github: CommandInt = {
       await channel.send(ghEmbed);
       await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the github command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the github command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "github command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

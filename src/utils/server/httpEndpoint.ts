@@ -2,6 +2,7 @@ import express from "express";
 import http from "http";
 import https from "https";
 import { readFile } from "fs/promises";
+import { beccaLogger } from "../beccaLogger";
 
 export const endpoint = async (): Promise<void> => {
   const HTTPEndpoint = express();
@@ -15,7 +16,7 @@ export const endpoint = async (): Promise<void> => {
   const httpServer = http.createServer(HTTPEndpoint);
 
   httpServer.listen(httpPort, () => {
-    console.log(`http server is live on port ${httpPort}`);
+    beccaLogger.log("http", `http server is live on port ${httpPort}`);
   });
 
   if (process.env.NODE_ENV === "production") {
@@ -40,7 +41,7 @@ export const endpoint = async (): Promise<void> => {
 
     const httpsServer = https.createServer(credentials, HTTPEndpoint);
     httpsServer.listen(443, () => {
-      console.log("https server is live on port 443");
+      beccaLogger.log("http", "https server is live on port 443");
     });
   }
 };

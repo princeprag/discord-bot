@@ -1,6 +1,8 @@
 import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
 import { evaluate } from "mathjs";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { beccaLogger } from "../../utils/beccaLogger";
 
 const maths: CommandInt = {
   name: "maths",
@@ -19,7 +21,7 @@ const maths: CommandInt = {
       try {
         answer = evaluate(problem);
       } catch (err) {
-        console.log(err);
+        beccaLogger.log("verbose", err);
       }
 
       // Check if the problem is empty.
@@ -42,17 +44,13 @@ const maths: CommandInt = {
       );
       await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the maths command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the maths command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "maths command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

@@ -2,6 +2,7 @@ import CommandInt from "../../../interfaces/CommandInt";
 import axios from "axios";
 import DndRaceInt from "../../../interfaces/commands/dnd/DndRaceInt";
 import { MessageEmbed } from "discord.js";
+import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 
 const DNDRACE_CONST = {
   fields: {
@@ -36,7 +37,6 @@ const DNDRACE_CONST = {
     no_query:
       "Would you please try the command again, and provide the race you want me to search for?",
     bad_data: "I am so sorry, but I was unable to find anything...",
-    default: "I am so sorry, but I cannot do that at the moment.",
   },
 };
 
@@ -112,17 +112,13 @@ const dndrace: CommandInt = {
       await channel.send(dndRaceEmbed);
       await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the dndrace command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the dndrace command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "dndrace command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply(DNDRACE_CONST.error.default);
     }
   },
 };

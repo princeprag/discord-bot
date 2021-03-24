@@ -1,3 +1,4 @@
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 import CommandInt from "../../interfaces/CommandInt";
 
 const kirby: CommandInt = {
@@ -19,17 +20,13 @@ const kirby: CommandInt = {
       await channel.send("^('.')^");
       await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the kirby command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the kirby command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "kirby command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

@@ -1,44 +1,13 @@
 {
-  "ts-node": {
-    "transpileOnly": true,
-  },
   "compilerOptions": {
-    /* Visit https://aka.ms/tsconfig.json to read more about this file */
-
-    "target": "es6" ,
-    "module": "commonjs",
-    "sourceMap": true,
+    "target": "ES6",
+    "module": "CommonJS",
+    "rootDir": "./src",
     "outDir": "./prod",
-    "resolveJsonModule": true,
     "strict": true,
-    "noImplicitAny": true,
-    "moduleResolution": "node",
-    "baseUrl": "./src",
-    "paths": {
-      "@Commands/*": ["commands/*"],
-      "@Database": ["database/main.ts"],
-      "@Events/*": ["events/*"],
-      "@Interceptors": ["interceptors/*"],
-      "@Interfaces/*": ["interfaces/*"],
-      "@Listeners/*": ["listeners/*"],
-      "@Models/*": ["database/models/*"],
-      "@Utils/*": ["utils/*"]
-    },
-    "typeRoots": [
-      "node_modules/@types",
-      "@types"
-    ],
-    "types": [
-      "node",
-    ],
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-  },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "src/**/*.ts",
-  ],
+    "resolveJsonModule": true
+  }
 }

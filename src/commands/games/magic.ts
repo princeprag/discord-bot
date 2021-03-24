@@ -2,6 +2,7 @@ import CommandInt from "../../interfaces/CommandInt";
 import MagicInt from "../../interfaces/commands/MagicInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const magic: CommandInt = {
   name: "magic",
@@ -75,17 +76,13 @@ const magic: CommandInt = {
       await channel.send(cardEmbed);
       await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the magic command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the magic command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "magic command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

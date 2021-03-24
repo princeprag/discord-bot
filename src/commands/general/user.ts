@@ -1,5 +1,6 @@
 import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const user: CommandInt = {
   name: "user",
@@ -60,17 +61,13 @@ const user: CommandInt = {
       await channel.send(userEmbed);
       await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the user command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the user command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "user command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

@@ -6,6 +6,7 @@ import {
 } from "../../interfaces/commands/HabiticaInt";
 import axios, { AxiosResponse } from "axios";
 import { MessageEmbed } from "discord.js";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const habitica: CommandInt = {
   name: "habitica",
@@ -226,17 +227,13 @@ const habitica: CommandInt = {
       });
       await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the habitica command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the habitica command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "habitica command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

@@ -1,5 +1,6 @@
 import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const HELP_CONSTANTS = {
   title: "Becca's commands",
@@ -162,17 +163,13 @@ const help: CommandInt = {
       await channel.send(helpEmbed);
       await message.react(Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the help command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the help command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "help command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

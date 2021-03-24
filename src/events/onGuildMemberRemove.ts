@@ -6,6 +6,7 @@ import {
   TextChannel,
 } from "discord.js";
 import { sleep } from "../utils/extendsMessageToMessageInt";
+import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 async function onGuildMemberRemove(
   member: GuildMember | PartialGuildMember,
@@ -50,15 +51,12 @@ async function onGuildMemberRemove(
         .addField("The user had these roles:", roleList)
     );
   } catch (error) {
-    if (Becca.debugHook) {
-      Becca.debugHook.send(
-        `${member.guild?.name} had an error with the automatic goodbye feature. Please check the logs.`
-      );
-    }
-    console.log(
-      `${member.guild?.name} had this error with the automatic goodbye feature:`
+    await beccaErrorHandler(
+      error,
+      member.guild?.name || "undefined",
+      "guildMemberRemove event",
+      Becca.debugHook
     );
-    console.log(error);
   }
 }
 

@@ -1,5 +1,6 @@
 import ListenerInt from "../interfaces/ListenerInt";
-import { love as defaultLovesIDs } from "../../default_config.json";
+import { love as defaultLovesIDs } from "../default_config.json";
+import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 /**
  * React with a heart to specific users messages.
@@ -38,15 +39,12 @@ const heartsListener: ListenerInt = {
         }
       }
     } catch (error) {
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the hearts listener. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the hearts listener:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "hearts listener",
+        message.Becca.debugHook
       );
-      console.log(error);
     }
   },
 };

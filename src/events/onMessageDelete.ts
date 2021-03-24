@@ -1,3 +1,4 @@
+import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
 import BeccaInt from "../interfaces/BeccaInt";
 import { customSubstring } from "../utils/substringHelper";
@@ -71,15 +72,12 @@ async function onMessageDelete(
       await Becca.sendMessageToLogsChannel(guild, attachEmbed);
     }
   } catch (error) {
-    if (Becca.debugHook) {
-      Becca.debugHook.send(
-        `${message.guild?.name} had an error with the message delete feature. Please check the logs.`
-      );
-    }
-    console.log(
-      `${message.guild?.name} had this error with the message delete feature:`
+    await beccaErrorHandler(
+      error,
+      message.guild?.name || "undefined",
+      "messageDelete event",
+      Becca.debugHook
     );
-    console.log(error);
   }
 }
 
