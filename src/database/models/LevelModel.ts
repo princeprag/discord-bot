@@ -9,6 +9,7 @@ export interface LevelInt extends Document {
     userName: string;
     points: number;
     lastSeen: Date;
+    cooldown: number;
   }[];
 }
 

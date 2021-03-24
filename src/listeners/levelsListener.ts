@@ -42,6 +42,7 @@ const levelListener: ListenerInt = {
               userName: author.username,
               points: ~~(Math.random() * 5) + 1,
               lastSeen: new Date(Date.now()),
+              cooldown: Date.now(),
             },
           ],
         });
@@ -58,9 +59,14 @@ const levelListener: ListenerInt = {
           userName: author.username,
           points: ~~(Math.random() * 5) + 1,
           lastSeen: new Date(Date.now()),
+          cooldown: Date.now(),
         });
         server.markModified("users");
         await server.save();
+        return;
+      }
+
+      if (Date.now() - user.cooldown < 60000) {
         return;
       }
 
@@ -81,6 +87,8 @@ const levelListener: ListenerInt = {
 
       // update username
       user.userName = author.username;
+
+      user.cooldown = Date.now();
 
       // Save the points and last seen to the database.
       server.markModified("users");
