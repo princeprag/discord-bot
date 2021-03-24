@@ -1,3 +1,4 @@
+import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
 import ListenerInt from "../interfaces/ListenerInt";
 import botMentionListener from "./botMentionListener";
 
@@ -66,15 +67,12 @@ const thanksListener: ListenerInt = {
       channel.stopTyping();
       await channel.send(replies.join(`\n`));
     } catch (error) {
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the thanks listener. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the thanks listener:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "thanks listener",
+        message.Becca.debugHook
       );
-      console.log(error);
     }
   },
 };

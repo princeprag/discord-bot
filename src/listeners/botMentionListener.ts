@@ -1,3 +1,4 @@
+import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
 import ListenerInt from "../interfaces/ListenerInt";
 
 const botMentionListener: ListenerInt = {
@@ -30,15 +31,12 @@ const botMentionListener: ListenerInt = {
         );
       }
     } catch (error) {
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the Becca Mentions listener. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the Becca Mentions listener:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "botMention listener",
+        message.Becca.debugHook
       );
-      console.log(error);
     }
   },
 };

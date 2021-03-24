@@ -1,5 +1,6 @@
 import ListenerInt from "../interfaces/ListenerInt";
 import LevelModel from "../database/models/LevelModel";
+import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
 
 /**
  * Grants 1 to 5 experience points for each message you send, and you level up at every 100 experience points.
@@ -93,15 +94,12 @@ const levelListener: ListenerInt = {
         );
       }
     } catch (error) {
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the levels listener. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the levels listener:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "levels listener",
+        message.Becca.debugHook
       );
-      console.log(error);
     }
   },
 };
