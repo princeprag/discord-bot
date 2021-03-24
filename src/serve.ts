@@ -1,6 +1,7 @@
 import { botConnect } from "./botConnect";
 import * as Sentry from "@sentry/node";
 import { RewriteFrames } from "@sentry/integrations";
+import { beccaLogger } from "./utils/beccaLogger";
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
@@ -12,4 +13,4 @@ Sentry.init({
   ],
 });
 
-botConnect().catch(console.log);
+botConnect().catch((err) => beccaLogger.log("error", err));
