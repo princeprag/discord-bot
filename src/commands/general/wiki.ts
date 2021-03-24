@@ -1,3 +1,4 @@
+import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
 import CommandInt from "../../interfaces/CommandInt";
 
 const wiki: CommandInt = {
@@ -27,17 +28,13 @@ const wiki: CommandInt = {
       );
       await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the wiki command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the wiki command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "wiki command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

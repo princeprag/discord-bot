@@ -2,6 +2,7 @@ import CommandInt from "../../interfaces/CommandInt";
 import TriviaInt from "../../interfaces/commands/TriviaInt";
 import axios from "axios";
 import { Message, MessageEmbed } from "discord.js";
+import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
 
 function replaceHTML(text: string): string {
   return text
@@ -104,17 +105,13 @@ const trivia: CommandInt = {
       });
       await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the trivia command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the trivia command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "trivia command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

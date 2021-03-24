@@ -2,6 +2,7 @@ import CommandInt from "../../interfaces/CommandInt";
 import SpaceInt from "../../interfaces/commands/SpaceInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
+import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
 
 const space: CommandInt = {
   name: "space",
@@ -74,17 +75,13 @@ const space: CommandInt = {
       await channel.send(spaceEmbed);
       await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the space command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the space command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "space command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

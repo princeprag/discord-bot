@@ -1,5 +1,6 @@
 import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
+import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
 
 const kick: CommandInt = {
   name: "kick",
@@ -136,15 +137,13 @@ const kick: CommandInt = {
       await Becca.sendMessageToLogsChannel(guild, kickLogEmbed);
       await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the kick command. Please check the logs.`
-        );
-      }
-      console.log("Kick Command", error);
-
-      await message.reply("I am so sorry, but I cannot kick this user.");
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "kick command",
+        message.Becca.debugHook,
+        message
+      );
     }
   },
 };

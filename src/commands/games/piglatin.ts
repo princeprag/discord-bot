@@ -1,5 +1,6 @@
 import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
+import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
 
 const translator = (str: string): string => {
   let end = false;
@@ -71,17 +72,13 @@ const pigLatin: CommandInt = {
       await channel.send(pigEmbed);
       await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the piglatin command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the pig latin command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "piglatin command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

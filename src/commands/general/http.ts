@@ -1,6 +1,7 @@
 import CommandInt from "../../interfaces/CommandInt";
 import httpStatusList from "../../utils/commands/httpStatusList";
 import { MessageEmbed } from "discord.js";
+import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
 
 const http: CommandInt = {
   name: "http",
@@ -41,17 +42,13 @@ const http: CommandInt = {
       );
       await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the http command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the http command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "http command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

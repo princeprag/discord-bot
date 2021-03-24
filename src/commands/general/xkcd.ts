@@ -2,6 +2,7 @@ import CommandInt from "../../interfaces/CommandInt";
 import XkcdInt from "../../interfaces/commands/XkcdInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
+import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
 
 const xkcd: CommandInt = {
   name: "xkcd",
@@ -65,17 +66,13 @@ const xkcd: CommandInt = {
         await message.reply("I am so sorry, but I could not find anything...");
       }
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the xkcd command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the xkcd command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "xkcd command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

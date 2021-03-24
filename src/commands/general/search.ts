@@ -1,3 +1,4 @@
+import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
 import CommandInt from "../../interfaces/CommandInt";
 
 const search: CommandInt = {
@@ -29,17 +30,13 @@ const search: CommandInt = {
       );
       await message.react(message.Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.no);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the search command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the search command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "search command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply("I am so sorry, but I cannot do that at the moment.");
     }
   },
 };

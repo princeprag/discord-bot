@@ -2,13 +2,13 @@ import CommandInt from "../../../interfaces/CommandInt";
 import DndMonInt from "../../../interfaces/commands/dnd/DndMonInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
+import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
 
 const DNDCLASS_CONSTANT = {
   error: {
     no_query:
       "Would you please try the command again, and provide the monster you want me to search for?",
     bad_data: "I am so sorry, but I was unable to find anything...",
-    default: "I am so sorry, but I cannot do that at the moment.",
   },
   dndApi: "https://www.dnd5eapi.co/api/monsters/",
   join_separator: ", ",
@@ -93,17 +93,13 @@ const dndmon: CommandInt = {
       await channel.send(dndMonsterEmbed);
       await message.react(Becca.yes);
     } catch (error) {
-      await message.react(message.Becca.yes);
-      if (message.Becca.debugHook) {
-        message.Becca.debugHook.send(
-          `${message.guild?.name} had an error with the dndmon command. Please check the logs.`
-        );
-      }
-      console.log(
-        `${message.guild?.name} had the following error with the dndmon command:`
+      await beccaErrorHandler(
+        error,
+        message.guild?.name || "undefined",
+        "dndmon command",
+        message.Becca.debugHook,
+        message
       );
-      console.log(error);
-      message.reply(DNDCLASS_CONSTANT.error.default);
     }
   },
 };
