@@ -6,6 +6,7 @@ import {
   TextChannel,
 } from "discord.js";
 import { sleep } from "../utils/extendsMessageToMessageInt";
+import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
 
 /**
  * Send a message when a new user join to the server,
@@ -76,15 +77,12 @@ async function onGuildMemberAdd(
         .setDescription(welcomeMessage)
     );
   } catch (error) {
-    if (Becca.debugHook) {
-      Becca.debugHook.send(
-        `${member.guild?.name} had an error with the automatic welcome feature. Please check the logs.`
-      );
-    }
-    console.log(
-      `${member.guild?.name} had this error with the automatic welcome feature:`
+    await beccaErrorHandler(
+      error,
+      member.guild?.name || "undefined",
+      "guildMemberAdd event",
+      Becca.debugHook
     );
-    console.log(error);
   }
 }
 

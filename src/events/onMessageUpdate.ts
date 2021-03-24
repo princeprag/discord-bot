@@ -1,6 +1,7 @@
 import BeccaInt from "../interfaces/BeccaInt";
 import { customSubstring } from "../utils/substringHelper";
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
+import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
 
 /**
  * When a messages is updated on a channel.
@@ -69,15 +70,12 @@ async function onMessageUpdate(
       )
     );
   } catch (error) {
-    if (Becca.debugHook) {
-      Becca.debugHook.send(
-        `${oldMessage.guild?.name} had an error with the message update feature. Please check the logs.`
-      );
-    }
-    console.log(
-      `${oldMessage.guild?.name} had this error with the message update feature:`
+    await beccaErrorHandler(
+      error,
+      oldMessage.guild?.name || "undefined",
+      "messageUpdate event",
+      Becca.debugHook
     );
-    console.log(error);
   }
 }
 
