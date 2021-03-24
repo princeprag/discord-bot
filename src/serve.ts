@@ -13,4 +13,9 @@ Sentry.init({
   ],
 });
 
-botConnect().catch((err) => beccaLogger.log("error", err));
+botConnect().catch((err) =>
+  beccaLogger.log(
+    "error",
+    JSON.stringify({ errorMessage: err.message, errorStack: err.stack })
+  )
+);

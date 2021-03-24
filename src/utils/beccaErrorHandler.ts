@@ -4,7 +4,7 @@ import MessageInt from "../interfaces/MessageInt";
 import { beccaLogger } from "./beccaLogger";
 
 export const beccaErrorHandler = async (
-  error: unknown,
+  error: Error,
   guild: string,
   event: string,
   debugHook?: WebhookClient,
@@ -25,6 +25,9 @@ export const beccaErrorHandler = async (
     "error",
     `${guild} had the following error with the ${event}:`
   );
-  beccaLogger.log("error", error);
+  beccaLogger.log(
+    "error",
+    JSON.stringify({ errorMessage: error.message, errorStack: error.stack })
+  );
   Sentry.captureException(error);
 };

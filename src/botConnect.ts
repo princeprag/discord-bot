@@ -73,7 +73,10 @@ export async function botConnect(): Promise<void> {
     if (Becca.debugHook) {
       Becca.debugHook.send(`Shard ${shard} has crashed. Please see the longs.`);
     }
-    beccaLogger.log("error", err);
+    beccaLogger.log(
+      "error",
+      JSON.stringify({ errorMessage: err.message, errorStack: err.stack })
+    );
   });
 
   // When Becca connects...
