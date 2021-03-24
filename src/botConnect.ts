@@ -3,7 +3,6 @@ import connectDatabase from "./database/main";
 import BeccaInt from "./interfaces/BeccaInt";
 import extendsClientToBeccaInt from "./utils/extendsClientToBeccaInt";
 import { getCommands, getListeners } from "./utils/readDirectory";
-import { version } from "../package.json";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -47,7 +46,7 @@ export async function botConnect(): Promise<void> {
   }
 
   // Add Becca's version to the client.
-  Becca.version = version;
+  Becca.version = process.env.npm_package_version || "version not found";
 
   // Add Becca's Emotes
   Becca.yes = process.env.BECCA_YES || "✅";

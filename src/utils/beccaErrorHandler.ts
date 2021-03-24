@@ -1,6 +1,6 @@
-import MessageInt from "@Interfaces/MessageInt";
 import * as Sentry from "@sentry/node";
 import { WebhookClient } from "discord.js";
+import MessageInt from "../interfaces/MessageInt";
 
 export const beccaErrorHandler = async (
   error: unknown,

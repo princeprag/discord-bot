@@ -1,5 +1,5 @@
 import ListenerInt from "../interfaces/ListenerInt";
-import { love as defaultLovesIDs } from "../../default_config.json";
+import { love as defaultLovesIDs } from "../default_config.json";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 /**

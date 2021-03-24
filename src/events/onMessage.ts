@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
 import MessageInt from "../interfaces/MessageInt";
-import { prefix as defaultPrefix } from "../../default_config.json";
+import { prefix as defaultPrefix } from "../default_config.json";
 import extendsMessageToMessageInt from "../utils/extendsMessageToMessageInt";
 import BeccaInt from "../interfaces/BeccaInt";
 
