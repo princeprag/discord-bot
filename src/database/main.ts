@@ -1,6 +1,7 @@
 import BeccaInt from "../interfaces/BeccaInt";
 import { WebhookClient } from "discord.js";
 import { connect } from "mongoose";
+import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
 
 /**
  * Connect to the MongoDB database.
@@ -31,8 +32,13 @@ async function connectDatabase(
         }has connected to the database.`
       );
     }
-  } catch (e) {
-    throw new Error(`Database connection failed: ${e}`);
+  } catch (error) {
+    await beccaErrorHandler(
+      error,
+      "Becca",
+      "database connection",
+      debugChannelHook || undefined
+    );
   }
 }
 
