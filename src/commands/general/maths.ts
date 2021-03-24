@@ -21,7 +21,10 @@ const maths: CommandInt = {
       try {
         answer = evaluate(problem);
       } catch (err) {
-        beccaLogger.log("verbose", err);
+        beccaLogger.log(
+          "verbose",
+          JSON.stringify({ errorMessage: err.message, errorStack: err.stack })
+        );
       }
 
       // Check if the problem is empty.
