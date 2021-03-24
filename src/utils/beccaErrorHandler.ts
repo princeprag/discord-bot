@@ -1,6 +1,7 @@
 import * as Sentry from "@sentry/node";
 import { WebhookClient } from "discord.js";
 import MessageInt from "../interfaces/MessageInt";
+import { beccaLogger } from "./beccaLogger";
 
 export const beccaErrorHandler = async (
   error: unknown,
@@ -20,7 +21,10 @@ export const beccaErrorHandler = async (
     await message.reply("Sorry, but I cannot do that right now.");
   }
 
-  console.error(`${guild} had the following error with the ${event}:`);
-  console.error(error);
+  beccaLogger.log(
+    "error",
+    `${guild} had the following error with the ${event}:`
+  );
+  beccaLogger.log("error", error);
   Sentry.captureException(error);
 };
