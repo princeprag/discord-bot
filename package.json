@@ -28,6 +28,9 @@
     "test": "echo 'No tests yet. Would you like to contribute some?'"
   },
   "dependencies": {
+    "@sentry/integrations": "^6.2.3",
+    "@sentry/node": "^6.2.3",
+    "@sentry/tracing": "^6.2.3",
     "axios": "^0.21.1",
     "discord.js": "^12.5.1",
     "express": "^4.17.1",
