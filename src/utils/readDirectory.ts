@@ -2,6 +2,7 @@ import CommandInt from "../interfaces/CommandInt";
 import ListenerInt from "../interfaces/ListenerInt";
 import { promises } from "fs";
 import { resolve } from "path";
+import { beccaLogger } from "./beccaLogger";
 
 /**
  * Get the `.js` or `.ts` files as an interface (Only modules).
@@ -77,7 +78,10 @@ async function readDirectory<T>(
 
               continue;
             } else {
-              console.log(`'${filePath}' is not a valid command.`);
+              beccaLogger.log(
+                "verbose",
+                `'${filePath}' is not a valid command.`
+              );
               continue;
             }
           }

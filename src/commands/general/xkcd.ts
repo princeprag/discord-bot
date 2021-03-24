@@ -3,6 +3,7 @@ import XkcdInt from "../../interfaces/commands/XkcdInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { beccaLogger } from "../../utils/beccaLogger";
 
 const xkcd: CommandInt = {
   name: "xkcd",
@@ -58,9 +59,9 @@ const xkcd: CommandInt = {
         await message.react(message.Becca.yes);
       } catch (error) {
         await message.react(message.Becca.no);
-        console.log(
-          "Xkcd Command:",
-          error?.response?.data?.message ?? "Unknown error."
+        beccaLogger.log(
+          "error",
+          "Xkcd Command:" + error?.response?.data?.message ?? "Unknown error."
         );
 
         await message.reply("I am so sorry, but I could not find anything...");

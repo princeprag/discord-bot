@@ -66,7 +66,7 @@ export async function botConnect(): Promise<void> {
     if (Becca.debugHook) {
       Becca.debugHook.send(`Shard ${shard} is ready!`);
     }
-    beccaLogger.log("silly", `Shard ${shard} is ready!`);
+    beccaLogger.log("debug", `Shard ${shard} is ready!`);
   });
 
   Becca.on("shardError", (err, shard) => {

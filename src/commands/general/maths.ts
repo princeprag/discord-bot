@@ -2,6 +2,7 @@ import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
 import { evaluate } from "mathjs";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { beccaLogger } from "../../utils/beccaLogger";
 
 const maths: CommandInt = {
   name: "maths",
@@ -20,7 +21,7 @@ const maths: CommandInt = {
       try {
         answer = evaluate(problem);
       } catch (err) {
-        console.log(err);
+        beccaLogger.log("verbose", err);
       }
 
       // Check if the problem is empty.

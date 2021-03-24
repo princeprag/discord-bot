@@ -1,5 +1,6 @@
 import BeccaInt from "../interfaces/BeccaInt";
 import { WebhookClient } from "discord.js";
+import { beccaLogger } from "../utils/beccaLogger";
 
 /**
  * Send logs messages when Becca is ready.
@@ -13,7 +14,7 @@ async function onReady(
   debugChannelHook: WebhookClient | null,
   node_env: string
 ): Promise<void> {
-  console.log("Activate the Omega");
+  beccaLogger.log("verbose", "Activate the Omega");
 
   if (debugChannelHook) {
     // Get the user from the client.

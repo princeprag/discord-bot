@@ -3,6 +3,7 @@ import MessageInt from "../interfaces/MessageInt";
 import { prefix as defaultPrefix } from "../default_config.json";
 import extendsMessageToMessageInt from "../utils/extendsMessageToMessageInt";
 import BeccaInt from "../interfaces/BeccaInt";
+import { beccaLogger } from "../utils/beccaLogger";
 
 /**
  * Execute when a user sends a message in a channel.
@@ -102,7 +103,8 @@ async function onMessage(
   // Check if the command exists.
   if (command) {
     // Log the command usage.
-    console.log(
+    beccaLogger.log(
+      "silly",
       `${message.author.username} called the ${message.commandName} command in ${message.guild?.name}.`
     );
 
@@ -113,7 +115,7 @@ async function onMessage(
     const blockCheck = serverConfig.blocked.includes(author.id);
     if (blockCheck) {
       //log it
-      console.log("But they were blocked.");
+      beccaLogger.log("silly", "But they were blocked.");
 
       // respond to blocked user
       await message.sleep(3000);

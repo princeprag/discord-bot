@@ -3,6 +3,7 @@ import PokemonInt from "../../../interfaces/commands/PokemonInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
+import { beccaLogger } from "../../../utils/beccaLogger";
 
 const pokename: CommandInt = {
   name: "pokename",
@@ -75,9 +76,10 @@ const pokename: CommandInt = {
         await message.react(message.Becca.yes);
       } catch (error) {
         await message.react(message.Becca.no);
-        console.log(
-          "Pokemon Name Command:",
-          error?.response?.data?.message ?? "Unknown error."
+        beccaLogger.log(
+          "verbose",
+          "Pokemon Name Command:" + error?.response?.data?.message ??
+            "Unknown error."
         );
 
         await message.reply("I am so sorry, but I could not find anything...");
