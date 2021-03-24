@@ -2,7 +2,7 @@ import CommandInt from "../../interfaces/CommandInt";
 import { GithubInt, GithubRepoInt } from "../../interfaces/commands/GitHubInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const github: CommandInt = {
   name: "github",

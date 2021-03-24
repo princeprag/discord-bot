@@ -1,6 +1,6 @@
 import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const sponsor: CommandInt = {
   name: "sponsor",

@@ -2,7 +2,7 @@ import CommandInt from "../../interfaces/CommandInt";
 import FactInt from "../../interfaces/commands/FactInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const fact: CommandInt = {
   name: "fact",

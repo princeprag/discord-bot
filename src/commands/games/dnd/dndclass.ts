@@ -2,7 +2,7 @@ import CommandInt from "../../../interfaces/CommandInt";
 import DndClassInt from "../../../interfaces/commands/dnd/DndClassInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 
 const DNDCLASS_CONSTANT = {
   error: {

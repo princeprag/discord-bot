@@ -6,7 +6,7 @@ import {
 } from "../../interfaces/commands/HabiticaInt";
 import axios, { AxiosResponse } from "axios";
 import { MessageEmbed } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const habitica: CommandInt = {
   name: "habitica",

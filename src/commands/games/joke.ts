@@ -2,7 +2,7 @@ import CommandInt from "../../interfaces/CommandInt";
 import JokeInt from "../../interfaces/commands/JokeInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const joke: CommandInt = {
   name: "joke",

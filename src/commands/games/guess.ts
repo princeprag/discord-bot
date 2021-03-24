@@ -1,6 +1,6 @@
 import CommandInt from "../../interfaces/CommandInt";
 import { Message } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const guess: CommandInt = {
   name: "guess",

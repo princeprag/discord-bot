@@ -2,7 +2,7 @@ import CommandInt from "../../../interfaces/CommandInt";
 import PokemonInt from "../../../interfaces/commands/PokemonInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 
 const pokename: CommandInt = {
   name: "pokename",

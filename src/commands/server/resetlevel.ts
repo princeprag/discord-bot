@@ -1,6 +1,6 @@
 import CommandInt from "../../interfaces/CommandInt";
 import LevelModel from "../../database/models/LevelModel";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const resetlevel: CommandInt = {
   name: "resetlevel",

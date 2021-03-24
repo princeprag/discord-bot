@@ -1,4 +1,4 @@
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 import ListenerInt from "../interfaces/ListenerInt";
 
 const botMentionListener: ListenerInt = {

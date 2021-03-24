@@ -1,4 +1,4 @@
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
 import BeccaInt from "../interfaces/BeccaInt";
 import { customSubstring } from "../utils/substringHelper";

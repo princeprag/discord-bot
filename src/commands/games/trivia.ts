@@ -2,7 +2,7 @@ import CommandInt from "../../interfaces/CommandInt";
 import TriviaInt from "../../interfaces/commands/TriviaInt";
 import axios from "axios";
 import { Message, MessageEmbed } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 function replaceHTML(text: string): string {
   return text

@@ -1,7 +1,7 @@
 import CommandInt from "../../interfaces/CommandInt";
 import httpStatusList from "../../utils/commands/httpStatusList";
 import { MessageEmbed } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const http: CommandInt = {
   name: "http",

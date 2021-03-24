@@ -6,7 +6,7 @@ import {
   TextChannel,
 } from "discord.js";
 import { sleep } from "../utils/extendsMessageToMessageInt";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 /**
  * Send a message when a new user join to the server,

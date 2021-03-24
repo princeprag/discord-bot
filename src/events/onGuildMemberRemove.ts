@@ -6,7 +6,7 @@ import {
   TextChannel,
 } from "discord.js";
 import { sleep } from "../utils/extendsMessageToMessageInt";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 async function onGuildMemberRemove(
   member: GuildMember | PartialGuildMember,

@@ -1,6 +1,6 @@
 import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const ABOUT_CONSTANT = {
   title: "Greetings! My name is Becca Lyria!",

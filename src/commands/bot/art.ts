@@ -1,7 +1,7 @@
 import CommandInt from "../../interfaces/CommandInt";
 import { artList } from "../../utils/commands/artList";
 import { MessageEmbed } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const art: CommandInt = {
   name: "art",

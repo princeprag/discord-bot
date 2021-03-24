@@ -1,6 +1,6 @@
 import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export function getUptime(bot_uptime_timestamp: number): number[] {
   // Get the time difference.

@@ -1,7 +1,7 @@
 import BeccaInt from "../interfaces/BeccaInt";
 import { customSubstring } from "../utils/substringHelper";
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 /**
  * When a messages is updated on a channel.

@@ -1,7 +1,7 @@
 import CommandInt from "../../interfaces/CommandInt";
 import { MessageAttachment, MessageEmbed } from "discord.js";
 import StarCountModel from "../../database/models/StarModel";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const star: CommandInt = {
   name: "star",

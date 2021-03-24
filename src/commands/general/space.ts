@@ -2,7 +2,7 @@ import CommandInt from "../../interfaces/CommandInt";
 import SpaceInt from "../../interfaces/commands/SpaceInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const space: CommandInt = {
   name: "space",

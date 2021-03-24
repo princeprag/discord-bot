@@ -1,6 +1,6 @@
 import ListenerInt from "../interfaces/ListenerInt";
 import { love as defaultLovesIDs } from "../../default_config.json";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 /**
  * React with a heart to specific users messages.

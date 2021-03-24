@@ -1,7 +1,7 @@
 import BeccaInt from "../interfaces/BeccaInt";
 import { WebhookClient } from "discord.js";
 import { connect } from "mongoose";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 /**
  * Connect to the MongoDB database.

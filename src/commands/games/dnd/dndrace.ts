@@ -2,7 +2,7 @@ import CommandInt from "../../../interfaces/CommandInt";
 import axios from "axios";
 import DndRaceInt from "../../../interfaces/commands/dnd/DndRaceInt";
 import { MessageEmbed } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 
 const DNDRACE_CONST = {
   fields: {

@@ -1,7 +1,7 @@
 import CommandInt from "../../interfaces/CommandInt";
 import { customSubstring } from "../../utils/substringHelper";
 import { MessageEmbed, TextChannel } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const suggest: CommandInt = {
   name: "suggest",

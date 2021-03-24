@@ -1,7 +1,7 @@
 import CommandInt from "../../interfaces/CommandInt";
 import { motivationalQuotes } from "../../utils/commands/motivational-quotes.json";
 import { MessageEmbed } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const motivation: CommandInt = {
   name: "motivation",

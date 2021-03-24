@@ -1,7 +1,7 @@
 import CommandInt from "../../interfaces/CommandInt";
 import { generate } from "../../utils/commands/usernameGenerator";
 import { MessageEmbed } from "discord.js";
-import { beccaErrorHandler } from "@Utils/beccaErrorHandler";
+import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const username: CommandInt = {
   name: "username",
