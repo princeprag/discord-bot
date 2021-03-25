@@ -1,6 +1,7 @@
 import ListenerInt from "../interfaces/ListenerInt";
 import LevelModel from "../database/models/LevelModel";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
+import { levelScale } from "../utils/commands/levelScale";
 
 /**
  * Grants 1 to 5 experience points for each message you send, and you level up at every 100 experience points.
@@ -40,6 +41,7 @@ const levelListener: ListenerInt = {
             {
               userID: author.id,
               userName: author.username,
+              level: 0,
               points: ~~(Math.random() * 5) + 1,
               lastSeen: new Date(Date.now()),
               cooldown: Date.now(),
@@ -57,7 +59,8 @@ const levelListener: ListenerInt = {
         server.users.push({
           userID: author.id,
           userName: author.username,
-          points: ~~(Math.random() * 5) + 1,
+          level: 0,
+          points: ~~(Math.random() * 20) + 5,
           lastSeen: new Date(Date.now()),
           cooldown: Date.now(),
         });
@@ -70,17 +73,16 @@ const levelListener: ListenerInt = {
         return;
       }
 
-      // Get the old user level.
-      const oldLevel = user.points % 100;
+      // condition for migrating old data w/ no current level
+      if (!user.level && user.level !== 0) {
+        const filteredLevels = Object.entries(levelScale).filter(
+          (el) => el[1] < user.points
+        );
+        user.level = parseInt(filteredLevels[filteredLevels.length - 1][0], 10);
+      }
 
       // Add more points to the user.
-      user.points += ~~(Math.random() * 5) + 1;
-
-      // Get the new user level.
-      const newLevel = user.points % 100;
-
-      // Get the current experience
-      const currentExp = user.points;
+      user.points += ~~(Math.random() * 20) + 5;
 
       // Change the user last seen.
       user.lastSeen = new Date(Date.now());
@@ -90,17 +92,18 @@ const levelListener: ListenerInt = {
 
       user.cooldown = Date.now();
 
+      if (user.points >= levelScale[user.level + 1]) {
+        user.level++;
+
+        await message.channel.send(
+          `Congratulations ${author.toString()}! You have reached level ${
+            user.level
+          }`
+        );
+      }
       // Save the points and last seen to the database.
       server.markModified("users");
       await server.save();
-
-      if (newLevel < oldLevel) {
-        const currentLevel = ~~(currentExp / 100);
-
-        await message.channel.send(
-          `Congratulations ${author.toString()}! You have reached level ${currentLevel}`
-        );
-      }
     } catch (error) {
       await beccaErrorHandler(
         error,

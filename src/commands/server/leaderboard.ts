@@ -2,6 +2,7 @@ import CommandInt from "../../interfaces/CommandInt";
 import LevelModel from "../../database/models/LevelModel";
 import { MessageEmbed } from "discord.js";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { levelScale } from "../../utils/commands/levelScale";
 
 const leaderboard: CommandInt = {
   name: "leaderboard",
@@ -29,20 +30,30 @@ const leaderboard: CommandInt = {
         (user) => user.userID === author.id
       );
 
+      // condition for migrating user levels
+      if (serverLevels.users.some((user) => !user.level && user.level !== 0)) {
+        serverLevels.users.forEach((user) => {
+          const filteredLevels = Object.entries(levelScale).filter(
+            (el) => el[1] < user.points
+          );
+          user.level = parseInt(
+            filteredLevels[filteredLevels.length - 1][0],
+            10
+          );
+        });
+      }
       const topTen = serverLevels.users.sort((a, b) => b.points - a.points);
 
       const userRank = userLevel
         ? `${member.user.username} is rank ${
             topTen.findIndex((user) => user.userID === member.id) + 1
-          } at level ${Math.floor(userLevel?.points / 100)}`
+          } at level ${userLevel.level}`
         : `${member.user.username} is not ranked yet...`;
 
       const topTenString = topTen
         .map(
           (user, index) =>
-            `#${index + 1}: ${user.userName} at level ${Math.floor(
-              user.points / 100
-            )}`
+            `#${index + 1}: ${user.userName} at level ${user.level}`
         )
         .slice(0, 10)
         .join("\n");

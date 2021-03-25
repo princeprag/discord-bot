@@ -1,4 +1,5 @@
 export const levelScale: { [key: number]: number } = {
+  0: 0,
   1: 100,
   2: 300,
   3: 600,
