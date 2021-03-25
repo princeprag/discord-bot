@@ -30,20 +30,6 @@ const leaderboard: CommandInt = {
         (user) => user.userID === author.id
       );
 
-      // condition for migrating user levels
-      if (serverLevels.users.some((user) => !user.level && user.level !== 0)) {
-        serverLevels.users.forEach((user) => {
-          const filteredLevels = Object.entries(levelScale).filter(
-            (el) => el[1] < user.points
-          );
-          user.level = parseInt(
-            filteredLevels[filteredLevels.length - 1][0],
-            10
-          );
-        });
-        serverLevels.markModified("users");
-        serverLevels.save();
-      }
       const topTen = serverLevels.users.sort((a, b) => b.points - a.points);
 
       const userRank = userLevel

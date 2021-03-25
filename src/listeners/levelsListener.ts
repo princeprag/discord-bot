@@ -73,14 +73,6 @@ const levelListener: ListenerInt = {
         return;
       }
 
-      // condition for migrating old data w/ no current level
-      if (!user.level && user.level !== 0) {
-        const filteredLevels = Object.entries(levelScale).filter(
-          (el) => el[1] < user.points
-        );
-        user.level = parseInt(filteredLevels[filteredLevels.length - 1][0], 10);
-      }
-
       // Add more points to the user.
       user.points += ~~(Math.random() * 20) + 5;
 
