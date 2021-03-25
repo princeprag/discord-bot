@@ -34,15 +34,15 @@ const leaderboard: CommandInt = {
       const userRank = userLevel
         ? `${member.user.username} is rank ${
             topTen.findIndex((user) => user.userID === member.id) + 1
-          } at level ${Math.floor(userLevel?.points / 100)}`
+          } at level ${userLevel.level}`
         : `${member.user.username} is not ranked yet...`;
 
       const topTenString = topTen
         .map(
           (user, index) =>
-            `#${index + 1}: ${user.userName} at level ${Math.floor(
-              user.points / 100
-            )}`
+            `#${index + 1}: ${user.userName} at level ${user.level} (${
+              user.points
+            } XP)`
         )
         .slice(0, 10)
         .join("\n");

@@ -98,7 +98,7 @@ const level: CommandInt = {
       levelEmbed.addField("Experience points", user.points, true);
 
       // Add the user level.
-      levelEmbed.addField("Level", ~~(user.points / 100), true);
+      levelEmbed.addField("Level", user.level, true);
 
       // Add the time they were last seen
       levelEmbed.addField(
