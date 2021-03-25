@@ -42,7 +42,7 @@ const levelListener: ListenerInt = {
               userID: author.id,
               userName: author.username,
               level: 0,
-              points: ~~(Math.random() * 5) + 1,
+              points: ~~(Math.random() * 20) + 5,
               lastSeen: new Date(Date.now()),
               cooldown: Date.now(),
             },

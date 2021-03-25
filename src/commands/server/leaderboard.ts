@@ -2,7 +2,6 @@ import CommandInt from "../../interfaces/CommandInt";
 import LevelModel from "../../database/models/LevelModel";
 import { MessageEmbed } from "discord.js";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
-import { levelScale } from "../../utils/commands/levelScale";
 
 const leaderboard: CommandInt = {
   name: "leaderboard",
