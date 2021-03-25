@@ -73,6 +73,10 @@ const levelListener: ListenerInt = {
         return;
       }
 
+      if (user.points >= levelScale[1000]) {
+        return;
+      }
+
       // Add more points to the user.
       user.points += ~~(Math.random() * 20) + 5;
 
