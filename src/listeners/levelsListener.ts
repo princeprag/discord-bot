@@ -75,7 +75,7 @@ const levelListener: ListenerInt = {
         return;
       }
 
-      if (user.points >= levelScale[1000]) {
+      if (user.level >= 100) {
         return;
       }
 
