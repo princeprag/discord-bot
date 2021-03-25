@@ -14,10 +14,10 @@ const levelListener: ListenerInt = {
   run: async (message, config) => {
     try {
       // Get the author and current guild from the message.
-      const { author, guild } = message;
+      const { author, content, guild } = message;
 
       // Check if the author is not a bot and the guild is valid.
-      if (author.bot || !guild) {
+      if (author.bot || !guild || !content) {
         return;
       }
 
@@ -28,6 +28,8 @@ const levelListener: ListenerInt = {
       if (!shouldLevel) {
         return;
       }
+
+      const bonus = Math.floor(content.length / 10);
 
       // Get the server from the database.
       const server = await LevelModel.findOne({ serverID: guild.id });
@@ -42,7 +44,7 @@ const levelListener: ListenerInt = {
               userID: author.id,
               userName: author.username,
               level: 0,
-              points: ~~(Math.random() * 20) + 5,
+              points: ~~(Math.random() * (20 + bonus)) + 5,
               lastSeen: new Date(Date.now()),
               cooldown: Date.now(),
             },
@@ -60,7 +62,7 @@ const levelListener: ListenerInt = {
           userID: author.id,
           userName: author.username,
           level: 0,
-          points: ~~(Math.random() * 20) + 5,
+          points: ~~(Math.random() * (20 + bonus)) + 5,
           lastSeen: new Date(Date.now()),
           cooldown: Date.now(),
         });
@@ -77,8 +79,10 @@ const levelListener: ListenerInt = {
         return;
       }
 
+      const pointsEarned = ~~(Math.random() * (20 + bonus)) + 5;
+
       // Add more points to the user.
-      user.points += ~~(Math.random() * 20) + 5;
+      user.points += pointsEarned;
 
       // Change the user last seen.
       user.lastSeen = new Date(Date.now());
