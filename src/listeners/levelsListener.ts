@@ -1,7 +1,7 @@
 import ListenerInt from "../interfaces/ListenerInt";
 import LevelModel from "../database/models/LevelModel";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
-import { levelScale } from "../utils/commands/levelScale";
+import levelScale from "../utils/commands/levelScale";
 
 /**
  * Grants 1 to 5 experience points for each message you send, and you level up at every 100 experience points.
@@ -69,17 +69,19 @@ const levelListener: ListenerInt = {
         return;
       }
 
+      /*
       if (Date.now() - user.cooldown < 60000) {
         return;
       }
+      */
 
       if (user.points >= levelScale[1000]) {
         return;
       }
 
       // Add more points to the user.
-      user.points += ~~(Math.random() * 20) + 5;
-
+      //user.points += ~~(Math.random() * 20) + 5;
+      user.points += 100;
       // Change the user last seen.
       user.lastSeen = new Date(Date.now());
 
