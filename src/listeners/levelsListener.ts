@@ -69,19 +69,17 @@ const levelListener: ListenerInt = {
         return;
       }
 
-      /*
       if (Date.now() - user.cooldown < 60000) {
         return;
       }
-      */
 
       if (user.points >= levelScale[1000]) {
         return;
       }
 
       // Add more points to the user.
-      //user.points += ~~(Math.random() * 20) + 5;
-      user.points += 100;
+      user.points += ~~(Math.random() * 20) + 5;
+
       // Change the user last seen.
       user.lastSeen = new Date(Date.now());
 
