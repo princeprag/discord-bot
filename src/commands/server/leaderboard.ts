@@ -40,7 +40,9 @@ const leaderboard: CommandInt = {
       const topTenString = topTen
         .map(
           (user, index) =>
-            `#${index + 1}: ${user.userName} at level ${user.level}`
+            `#${index + 1}: ${user.userName} at level ${user.level} (${
+              user.points
+            } XP)`
         )
         .slice(0, 10)
         .join("\n");
