@@ -41,6 +41,8 @@ const leaderboard: CommandInt = {
             10
           );
         });
+        serverLevels.markModified("users");
+        serverLevels.save();
       }
       const topTen = serverLevels.users.sort((a, b) => b.points - a.points);
 
