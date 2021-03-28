@@ -104,6 +104,7 @@ const levelListener: ListenerInt = {
       // Save the points and last seen to the database.
       server.markModified("users");
       await server.save();
+      await message.react("🆙");
     } catch (error) {
       await beccaErrorHandler(
         error,
