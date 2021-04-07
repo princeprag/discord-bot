@@ -58,7 +58,6 @@ const closeChannel: CommandInt = {
           .setFooter(`The channel ID was ${channelToDelete.id}`)
           .setTimestamp()
       );
-      await message.react(message.Becca.yes);
     } catch (error) {
       await beccaErrorHandler(
         error,
