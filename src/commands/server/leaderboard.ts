@@ -32,10 +32,10 @@ const leaderboard: CommandInt = {
       const topTen = serverLevels.users.sort((a, b) => b.points - a.points);
 
       const userRank = userLevel
-        ? `${member.user.username} is rank ${
+        ? `${member.nickname || member.user.username} is rank ${
             topTen.findIndex((user) => user.userID === member.id) + 1
           } at level ${userLevel.level}`
-        : `${member.user.username} is not ranked yet...`;
+        : `${member.nickname || member.user.username} is not ranked yet...`;
 
       const topTenString = topTen
         .map(

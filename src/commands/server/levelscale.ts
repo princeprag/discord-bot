@@ -1,5 +1,4 @@
 import { MessageEmbed } from "discord.js";
-import { join } from "node:path";
 import CommandInt from "../../interfaces/CommandInt";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 import levelScale from "../../utils/commands/levelScale";

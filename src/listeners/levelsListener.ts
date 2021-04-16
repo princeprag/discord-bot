@@ -14,7 +14,7 @@ const levelListener: ListenerInt = {
   run: async (message, config) => {
     try {
       // Get the author and current guild from the message.
-      const { author, content, guild } = message;
+      const { author, content, guild, member } = message;
 
       // Check if the author is not a bot and the guild is valid.
       if (author.bot || !guild || !content) {
@@ -42,7 +42,7 @@ const levelListener: ListenerInt = {
           users: [
             {
               userID: author.id,
-              userName: author.username,
+              userName: member?.nickname || author.username,
               level: 0,
               points: ~~(Math.random() * (20 + bonus)) + 5,
               lastSeen: new Date(Date.now()),
@@ -60,7 +60,7 @@ const levelListener: ListenerInt = {
       if (!user) {
         server.users.push({
           userID: author.id,
-          userName: author.username,
+          userName: member?.nickname || author.username,
           level: 0,
           points: ~~(Math.random() * (20 + bonus)) + 5,
           lastSeen: new Date(Date.now()),
@@ -88,7 +88,7 @@ const levelListener: ListenerInt = {
       user.lastSeen = new Date(Date.now());
 
       // update username
-      user.userName = author.username;
+      user.userName = member?.nickname || author.username;
 
       user.cooldown = Date.now();
 
