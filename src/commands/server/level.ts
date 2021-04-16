@@ -28,9 +28,6 @@ const level: CommandInt = {
       // Set the author id as the default user id.
       let user_id = author.id;
 
-      // Set the author username as the default username.
-      let username = author.username;
-
       // Get the next argument as the user mention string.
       let userToStr = commandArguments.shift();
 
@@ -51,7 +48,6 @@ const level: CommandInt = {
         }
 
         user_id = userTo.id;
-        username = userTo.username;
       }
 
       // Get the server info from the database.
@@ -87,7 +83,7 @@ const level: CommandInt = {
       levelEmbed.setColor(Becca.color);
 
       // Add the title.
-      levelEmbed.setTitle(`${username}'s ranking`);
+      levelEmbed.setTitle(`${user.userName}'s ranking`);
 
       // Add the description.
       levelEmbed.setDescription(
