@@ -36,7 +36,7 @@
     "express": "^4.17.1",
     "mathjs": "^9.2.0",
     "mongoose": "^5.12.4",
-    "mongoose-encryption": "^2.0.3",
+    "mongoose-encryption": "^2.1.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {
