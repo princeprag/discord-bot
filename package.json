@@ -35,7 +35,7 @@
     "discord.js": "^12.5.1",
     "express": "^4.17.1",
     "mathjs": "^9.2.0",
-    "mongoose": "^5.11.18",
+    "mongoose": "^5.12.4",
     "mongoose-encryption": "^2.0.3",
     "winston": "^3.3.3"
   },
