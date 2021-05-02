@@ -20,16 +20,8 @@ const role: CommandInt = {
       // Get role mention
       const targetRole = commandArguments.join(" ");
 
-      // If no argument provided, exit.
-      if (!targetRole) {
-        await message.reply(
-          "Would you please try the command again, and provide the role you would like to add or remove?"
-        );
-        return;
-      }
-
       // If argument is to list all roles
-      if (targetRole === "listall") {
+      if (!targetRole) {
         const roleList = new MessageEmbed();
         roleList.setColor(message.Becca.color);
         roleList.setTitle("Self-Assignable Roles");
