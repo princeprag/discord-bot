@@ -166,7 +166,6 @@ const ban: CommandInt = {
         );
         // Ban the user.
         await memberToBanMentioned.ban({ reason });
-        
         await message.react(message.Becca.yes);
       }
     } catch (error) {
