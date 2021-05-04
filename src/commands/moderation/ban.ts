@@ -160,13 +160,14 @@ const ban: CommandInt = {
         // Send the embed to the logs channel.
         await Becca.sendMessageToLogsChannel(guild, banEmbed);
 
-        // Ban the user.
-        await memberToBanMentioned.ban({ reason });
-
         // Send a message to the user.
         await userToBanMentioned.send(
           `**[Ban]** ${author.toString()} has banned you for the following reason: ${reason}`
         );
+        
+        // Ban the user.
+        await memberToBanMentioned.ban({ reason });
+        
         await message.react(message.Becca.yes);
       }
     } catch (error) {
