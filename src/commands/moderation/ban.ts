@@ -164,7 +164,6 @@ const ban: CommandInt = {
         await userToBanMentioned.send(
           `**[Ban]** ${author.toString()} has banned you for the following reason: ${reason}`
         );
-        
         // Ban the user.
         await memberToBanMentioned.ban({ reason });
         
