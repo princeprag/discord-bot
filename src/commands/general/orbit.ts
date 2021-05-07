@@ -43,7 +43,7 @@ const orbit: CommandInt = {
 
       aggregateEmbed.setTitle("Community Engagement Leaderboard");
       aggregateEmbed.setDescription(
-        "This leaderboard represents our top members across all of our community platforms."
+        "This leaderboard represents our top members across all of nhcarrigan's community platforms."
       );
       aggregateEmbed.setColor(Becca.color);
 
