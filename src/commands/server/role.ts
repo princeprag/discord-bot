@@ -6,7 +6,7 @@ const role: CommandInt = {
   name: "role",
   description: "Adds or removes an assignable role from the user.",
   parameters: [
-    "`<role>`: The name of the role to assign. Optionally use `listall` to get a list of roles.",
+    "`<role>`: The name of the role to assign. Leave blank to get a list of roles.",
   ],
   category: "server",
   run: async (message, config) => {
