@@ -17,7 +17,7 @@ const starcount: CommandInt = {
 
       const starCounts = await StarCountModel.findOne({ serverID: guild.id });
 
-      if (!starCounts) {
+      if (!starCounts || !starCounts.users.length) {
         await message.reply(
           "Sorry, but I cannot find anyone with stars in your server."
         );
