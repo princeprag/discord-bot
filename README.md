@@ -5,6 +5,7 @@ Welcome to the repository for `Becca Lyria`!
 [You can invite Becca to your own server!](http://invite.beccalyria.com)
 
 ![](https://img.shields.io/codeclimate/maintainability/BeccaLyria/discord-bot)
+![](https://img.shields.io/codeclimate/issues/BeccaLyria/discord-bot)
 ![](https://img.shields.io/codeclimate/tech-debt/BeccaLyria/discord-bot)
 ![](https://img.shields.io/lgtm/alerts/github/BeccaLyria/discord-bot)
 ![](https://img.shields.io/lgtm/grade/javascript/github/BeccaLyria/discord-bot)
