@@ -5,7 +5,6 @@ Welcome to the repository for `Becca Lyria`!
 [You can invite Becca to your own server!](http://invite.beccalyria.com)
 
 ![](https://img.shields.io/codeclimate/maintainability/BeccaLyria/discord-bot)
-![](https://img.shields.io/codeclimate/issues/BeccaLyria/discord-bot)
 ![](https://img.shields.io/codeclimate/tech-debt/BeccaLyria/discord-bot)
 ![](https://img.shields.io/lgtm/alerts/github/BeccaLyria/discord-bot)
 ![](https://img.shields.io/lgtm/grade/javascript/github/BeccaLyria/discord-bot)
@@ -24,7 +23,7 @@ Before interacting with our community, please read our [Code of Conduct](CODE_OF
 
 ## Art Credits
 
-Credit for Becca's avatar and the server art goes to [MoonlightKCreations](https://www.instagram.com/moonlightkcreations/). If you want to show some support, consider [commissioning her!](https://meitanteimoonlight.wixsite.com/moonlightkcreations/commissions).
+Credit for Becca's avatar and the server art goes to [MoonlightKCreations](https://www.instagram.com/moonlightkcreations/). If you want to show some support, consider [commissioning her](https://meitanteimoonlight.wixsite.com/moonlightkcreations/commissions)!
 
 ## Licensing
 
