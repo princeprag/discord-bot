@@ -24,7 +24,7 @@ Before interacting with our community, please read our [Code of Conduct](CODE_OF
 
 ## Art Credits
 
-Credit for Becca's avatar and the server art goes to [MoonlightKCreations](https://www.instagram.com/moonlightkcreations/). If you want to show some support, consider [commissioning her!](https://meitanteimoonlight.wixsite.com/moonlightkcreations/commissions).
+Credit for Becca's avatar and the server art goes to [MoonlightKCreations](https://www.instagram.com/moonlightkcreations/). If you want to show some support, consider [commissioning her](https://meitanteimoonlight.wixsite.com/moonlightkcreations/commissions)!
 
 ## Licensing
 
