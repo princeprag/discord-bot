@@ -49,13 +49,8 @@ const dndclass: CommandInt = {
       // Create a new empty embed.
       const dndClassEmbed = new MessageEmbed();
 
-      const {
-        hit_die,
-        name,
-        proficiencies,
-        proficiency_choices,
-        url,
-      } = data.data;
+      const { hit_die, name, proficiencies, proficiency_choices, url } =
+        data.data;
 
       // Add the class name to the embed title.
       dndClassEmbed.setTitle(name);

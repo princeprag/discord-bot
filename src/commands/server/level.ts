@@ -11,14 +11,8 @@ const level: CommandInt = {
   category: "server",
   run: async (message) => {
     try {
-      const {
-        author,
-        Becca,
-        channel,
-        commandArguments,
-        guild,
-        mentions,
-      } = message;
+      const { author, Becca, channel, commandArguments, guild, mentions } =
+        message;
 
       if (!guild) {
         await message.react(message.Becca.no);

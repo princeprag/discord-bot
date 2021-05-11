@@ -13,14 +13,8 @@ const kick: CommandInt = {
   category: "moderation",
   run: async (message) => {
     try {
-      const {
-        author,
-        Becca,
-        commandArguments,
-        guild,
-        member,
-        mentions,
-      } = message;
+      const { author, Becca, commandArguments, guild, member, mentions } =
+        message;
 
       const { user } = Becca;
 

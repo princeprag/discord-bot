@@ -50,11 +50,8 @@ async function onMessage(
   const serverConfig = await Becca.getSettings(guild.id, guild.name);
 
   // Get the heartsListener, levelsListener and usageListener from the listeners list.
-  const {
-    heartsListener,
-    thanksListener,
-    levelsListener,
-  } = Becca.customListeners;
+  const { heartsListener, thanksListener, levelsListener } =
+    Becca.customListeners;
 
   // Check if the heartsListener exists.
   if (heartsListener) {
