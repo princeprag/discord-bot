@@ -10,8 +10,16 @@ const list: CommandInt = {
   run: async (message) => {
     try {
       //extract values
-      const { Becca, channel, commandArguments } = message;
+      const { author, Becca, channel, commandArguments } = message;
       const { guilds } = Becca;
+
+      if (author.id !== process.env.OWNER_ID) {
+        await message.reply(
+          "Sorry, but this command is restricted to my beloved."
+        );
+        await message.react(Becca.no);
+        return;
+      }
 
       // Get the first argument as the page.
       const pageStr = commandArguments.shift();
