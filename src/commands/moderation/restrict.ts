@@ -170,12 +170,15 @@ const restrict: CommandInt = {
         reason = "I am sorry, but the moderator did not provide a reason.";
       }
 
+      const removedRoles: string[] = [];
+
       //remove all other roles
       memberToRestrictMentioned.roles.cache.forEach(async (role) => {
         //everyone role cannot be removed - it has same ID as guild, so skip it.
         if (role.id === guild.id) {
           return;
         }
+        removedRoles.push(`<@&${role.id}>`);
         await memberToRestrictMentioned.roles.remove(role);
       });
 
@@ -209,11 +212,6 @@ const restrict: CommandInt = {
         }
       );
 
-      // Send an advertisement to the user.
-      await memberToRestrictMentioned.send(
-        `Hello! I am sorry to bother you. It appears you have been suspended from **${guild.name}** for the following reason: ${reason} \n I have created a channel there for you to appeal this decision.`
-      );
-
       // Send an embed message to the logs channel.
       await Becca.sendMessageToLogsChannel(
         guild,
@@ -223,8 +221,17 @@ const restrict: CommandInt = {
           .addField("Moderator", author.toString(), true)
           .addField("User", userToRestrictMentioned.toString(), true)
           .addField("Reason", reason)
+          .addField(
+            "The following roles were removed:",
+            removedRoles.join("\n") || "none"
+          )
           .setFooter("Please remember to follow our rules!")
           .setTimestamp()
+      );
+
+      // Send an advertisement to the user.
+      await memberToRestrictMentioned.send(
+        `Hello! I am sorry to bother you. It appears you have been suspended from **${guild.name}** for the following reason: ${reason} \n I have created a channel there for you to appeal this decision.`
       );
 
       //respond
