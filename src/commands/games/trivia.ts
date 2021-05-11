@@ -27,12 +27,8 @@ const trivia: CommandInt = {
         "https://opentdb.com/api.php?amount=1&type=multiple"
       );
 
-      const {
-        category,
-        correct_answer,
-        incorrect_answers,
-        question,
-      } = data.data.results[0];
+      const { category, correct_answer, incorrect_answers, question } =
+        data.data.results[0];
 
       // Add the incorrect answers to a list.
       const answers = incorrect_answers.map((el) => replaceHTML(el));

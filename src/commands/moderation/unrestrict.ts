@@ -13,14 +13,8 @@ const unrestrict: CommandInt = {
   category: "moderation",
   run: async (message, config) => {
     try {
-      const {
-        author,
-        Becca,
-        commandArguments,
-        guild,
-        member,
-        mentions,
-      } = message;
+      const { author, Becca, commandArguments, guild, member, mentions } =
+        message;
 
       const { user } = Becca;
 

@@ -14,14 +14,8 @@ const star: CommandInt = {
   category: "general",
   run: async (message) => {
     try {
-      const {
-        author,
-        Becca,
-        channel,
-        commandArguments,
-        guild,
-        mentions,
-      } = message;
+      const { author, Becca, channel, commandArguments, guild, mentions } =
+        message;
 
       const { user } = Becca;
 
