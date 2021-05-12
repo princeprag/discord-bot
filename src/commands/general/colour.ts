@@ -13,8 +13,6 @@ const colour: CommandInt = {
 
       const colour = commandArguments[0].toUpperCase();
 
-      console.log(colour);
-
       if (!/^[A-F0-9]{6}$/.test(colour)) {
         await message.react(Becca.no);
         await message.reply(
