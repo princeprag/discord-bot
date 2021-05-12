@@ -27,6 +27,7 @@ const colour: CommandInt = {
       colourEmbed.setTitle(`#${colour}`);
       colourEmbed.setDescription("Here is the colour you requested:");
       colourEmbed.setImage(`https://www.colorhexa.com/${colour}.png`);
+      colourEmbed.setColor(`#${colour}`);
 
       await channel.send(colourEmbed);
     } catch (err) {
