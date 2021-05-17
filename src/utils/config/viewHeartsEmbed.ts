@@ -14,7 +14,7 @@ export const viewHeartsEmbed = (
       config.hearts
         .map((el, i) => `#${++i}. <@!${el}> - ID: ${el}`)
         .slice(start, end)
-        .join("") || "No one :("
+        .join("\n") || "No one :("
     )
     .setFooter(`Page ${page} of ${Math.ceil(config.hearts.length / 10)}`);
 
