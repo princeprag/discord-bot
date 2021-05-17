@@ -85,7 +85,7 @@ const config: CommandInt = {
         }
         await setSetting(guild.id, guild.name, key, defaultConfigValues[key]);
         if (key === "prefix") {
-          prefix[guild.id] === defaultConfigValues.prefix;
+          prefix[guild.id] = defaultConfigValues.prefix;
         }
         await channel.send(
           `Okay, I have reset the ${key} setting to my default value.`
