@@ -17,6 +17,7 @@ import onMessageUpdate from "./events/onMessageUpdate";
 import onGuildMemberRemove from "./events/onGuildMemberRemove";
 import { endpoint } from "./utils/server/httpEndpoint";
 import { beccaLogger } from "./utils/beccaLogger";
+import { beccaErrorHandler } from "./utils/beccaErrorHandler";
 
 export async function botConnect(): Promise<void> {
   // Get the node_env from the environment.
@@ -141,4 +142,22 @@ export async function botConnect(): Promise<void> {
 
   // Connect to the MongoDB database.
   await connectDatabase(debugChannelHook, Becca, node_env);
+
+  process.on("unhandledRejection", (error: Error) => {
+    beccaErrorHandler(
+      error,
+      "undefined",
+      "unhandledRejectionError",
+      Becca.debugHook
+    );
+  });
+
+  process.on("uncaughtException", (error) => {
+    beccaErrorHandler(
+      error,
+      "undefined",
+      "uncaughtExceptionError",
+      Becca.debugHook
+    );
+  });
 }
