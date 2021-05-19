@@ -14,6 +14,7 @@ export const beccaErrorHandler = async (
   if (debugHook) {
     const errorEmbed = new MessageEmbed();
     errorEmbed.setTitle(`${event} error in ${guild}`);
+    errorEmbed.setColor("#AB47E6");
     errorEmbed.setDescription(customSubstring(error.message, 2000));
     errorEmbed.addField(
       "Stack Trace:",
