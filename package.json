@@ -6,8 +6,8 @@
   "license": "AGPL-3.0-or-later",
   "private": false,
   "engines": {
-    "node": "^15.10.0",
-    "npm": "^7.6.0"
+    "node": "^16.2.0",
+    "npm": "^7.13.0"
   },
   "keywords": [
     "DiscordJS",
@@ -28,14 +28,14 @@
     "test": "echo 'No tests yet. Would you like to contribute some?'"
   },
   "dependencies": {
-    "@sentry/integrations": "^6.2.3",
-    "@sentry/node": "^6.2.3",
-    "@sentry/tracing": "^6.2.3",
+    "@sentry/integrations": "^6.4.1",
+    "@sentry/node": "^6.4.1",
+    "@sentry/tracing": "^6.4.1",
     "axios": "^0.21.1",
-    "discord.js": "^12.5.1",
+    "discord.js": "^12.5.3",
     "express": "^4.17.1",
-    "mathjs": "^9.2.0",
-    "mongoose": "^5.12.4",
+    "mathjs": "^9.4.0",
+    "mongoose": "^5.12.10",
     "mongoose-encryption": "^2.1.0",
     "winston": "^3.3.3"
   },
@@ -43,7 +43,7 @@
     "@types/express": "4.17.11",
     "@types/mathjs": "9.3.0",
     "@types/mongoose": "5.10.5",
-    "@types/node": "14.17.0",
+    "@types/node": "15.3.1",
     "@typescript-eslint/eslint-plugin": "4.24.0",
     "@typescript-eslint/parser": "4.24.0",
     "dotenv": "9.0.2",
