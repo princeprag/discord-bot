@@ -38,7 +38,7 @@ const uptime: CommandInt = {
           .setColor(Becca.color)
           .setTitle("Becca's uptime")
           .setDescription(
-            `I have been awake for... ${hours} hour${
+            `This adventure has gone on for... ${hours} hour${
               hours === 1 ? "" : "s"
             }, ${minutes} minute${
               minutes === 1 ? "" : "s"

@@ -20,8 +20,8 @@ const kick: CommandInt = {
 
       // Check if the member has the kick members permission.
       if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
-        await message.reply(
-          "I am so sorry, but I can only do this for moderators with permission to kick members."
+        await message.channel.send(
+          "You are not high enough level to use this spell."
         );
         await message.react(message.Becca.no);
         return;
@@ -35,8 +35,8 @@ const kick: CommandInt = {
 
       // Check if the user mention is valid.
       if (!userToKickMention || !userToKickMentioned || !mentions.members) {
-        await message.reply(
-          "Would you please try the command again, and provide the user you want me to kick?"
+        await message.channel.send(
+          "I do not swing my staff around like a madwoman. You need to tell me who I should hit."
         );
         await message.react(message.Becca.no);
         return;
@@ -47,7 +47,7 @@ const kick: CommandInt = {
 
       // Check if the user mention string and the first user mention id are equals.
       if (userToKickMention !== userToKickMentioned.id) {
-        await message.reply(
+        await message.channel.send(
           `I am so sorry, but ${userToKickMentioned.toString()} is not a valid user.`
         );
         await message.react(message.Becca.no);
@@ -56,7 +56,9 @@ const kick: CommandInt = {
 
       // Check if trying to kick itself.
       if (userToKickMentioned.id === author.id) {
-        await message.reply("Wait, what? You cannot kick yourself!");
+        await message.channel.send(
+          "Umm... what? Why bother me for that? You are more than capable of walking out yourself."
+        );
         await message.react(message.Becca.no);
         return;
       }
@@ -66,8 +68,8 @@ const kick: CommandInt = {
 
       // Check if the member mention exists.
       if (!memberToKickMentioned) {
-        await message.reply(
-          "Would you please try the command again, and provide the user you want me to kick?"
+        await message.channel.send(
+          "I do not swing my staff around like a madwoman. You need to tell me who I should hit."
         );
         await message.react(message.Becca.no);
         return;
@@ -78,8 +80,8 @@ const kick: CommandInt = {
         userToKickMentioned.id === user.id ||
         memberToKickMentioned.id === user.id
       ) {
-        await message.reply(
-          "You want to kick me? Oh no! Did I do something wrong?"
+        await message.channel.send(
+          "I have no intention of walking away from here yet."
         );
         await message.react(message.Becca.no);
         return;
@@ -90,21 +92,13 @@ const kick: CommandInt = {
 
       // Add a default reason if it not provided.
       if (!reason || !reason.length) {
-        reason = "I am sorry, but the moderator did not give a reason.";
+        reason = "They did not tell me why.";
       }
 
       // Check if the user is kickable.
       if (!memberToKickMentioned.kickable) {
         throw new Error(`Not kickable user: ${userToKickMentioned.username}`);
       }
-
-      // Kick the user with the reason.
-      await memberToKickMentioned.kick(reason);
-
-      // Send a message to the user.
-      await userToKickMentioned.send(
-        `**[Kick]** ${author.toString()} has kicked you for the following reason: ${reason}`
-      );
 
       // Create a new empty embed.
       const kickLogEmbed = new MessageEmbed();
@@ -129,6 +123,22 @@ const kick: CommandInt = {
 
       // Send the embed to the logs channel.
       await Becca.sendMessageToLogsChannel(guild, kickLogEmbed);
+
+      // Send a message to the user.
+      await userToKickMentioned
+        .send(
+          `**[Kick]** ${author.toString()} has kicked you for the following reason: ${reason}`
+        )
+        .catch(async () => {
+          await message.channel.send(
+            "I was not able to notify the user that this is happening."
+          );
+        });
+
+      // Kick the user with the reason.
+      await memberToKickMentioned.kick(reason);
+      await message.channel.send("They have been evicted.");
+
       await message.react(message.Becca.yes);
     } catch (error) {
       await beccaErrorHandler(

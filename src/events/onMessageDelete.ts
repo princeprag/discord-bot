@@ -33,7 +33,7 @@ async function onMessageDelete(
       .addFields(
         {
           name: "Message author",
-          value: author || "I am so sorry, but I could not find that user.",
+          value: author || "This user is a ghost...",
         },
         {
           name: "Channel",
@@ -47,13 +47,13 @@ async function onMessageDelete(
     if (message.embeds[0]) {
       deleteEmbed.addField(
         "Message Embeds",
-        "I'm sending the deleted message embed."
+        "I suppose I'll go get that message embed..."
       );
     }
     if (message.attachments.first()) {
       deleteEmbed.addField(
         "Message Attachment",
-        "I'm sending the deleted message attachment."
+        "Fine. I'll fetch the message attachment."
       );
     }
 
@@ -67,7 +67,7 @@ async function onMessageDelete(
     if (attached) {
       const attachEmbed = new MessageEmbed()
         .setTitle(attached.name)
-        .setDescription(content || "No message content")
+        .setDescription(content || "*this message was blank...*")
         .setImage(attached.proxyURL);
       await Becca.sendMessageToLogsChannel(guild, attachEmbed);
     }

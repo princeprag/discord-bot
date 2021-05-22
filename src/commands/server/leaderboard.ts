@@ -18,8 +18,8 @@ const leaderboard: CommandInt = {
       const serverLevels = await LevelModel.findOne({ serverID: guild.id });
 
       if (!serverLevels) {
-        await message.reply(
-          "Sorry, but I cannot find level data for your server."
+        await message.channel.send(
+          "It would appear that rankings are not enabled here."
         );
         await message.react(Becca.no);
         return;

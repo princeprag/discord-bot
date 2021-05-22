@@ -29,8 +29,8 @@ const maths: CommandInt = {
 
       // Check if the problem is empty.
       if (!answer || !problem) {
-        await message.reply(
-          "I am so sorry, but that does not appear to be a valid math expression."
+        await message.channel.send(
+          "Ahh, yes, I do love solving non-existent problems. Let's try that again, shall we?"
         );
         await message.react(message.Becca.no);
         return;
@@ -41,7 +41,7 @@ const maths: CommandInt = {
         new MessageEmbed()
           .setColor(Becca.color)
           .setTitle("Calculating...")
-          .setDescription("I hope I did this right.")
+          .setDescription("Here is your answer.")
           .addField("Input", problem)
           .addField("Result", answer)
       );

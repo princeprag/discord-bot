@@ -50,9 +50,7 @@ const pigLatin: CommandInt = {
       const { commandArguments, channel } = message;
 
       if (!commandArguments.length) {
-        await message.reply(
-          "Would you please try the command again, and provide the sentence you would like me to translate?"
-        );
+        await message.channel.send("But what do you want me to translate?");
         await message.react(message.Becca.no);
         return;
       }
@@ -63,7 +61,7 @@ const pigLatin: CommandInt = {
       // Construct embed
       const pigEmbed = new MessageEmbed()
         .setTitle("Igpay Atinlay")
-        .setDescription("I have translated your sentence for you!")
+        .setDescription("Here is your translation:")
         .addFields(
           { name: "Original Sentence", value: commandArguments.join(" ") },
           { name: "Translated Sentence", value: translation }

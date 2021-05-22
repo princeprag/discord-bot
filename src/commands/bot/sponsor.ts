@@ -14,7 +14,7 @@ const sponsor: CommandInt = {
       const sponsorEmbed = new MessageEmbed()
         .setTitle("Sponsor my development!")
         .setDescription(
-          "Are you interested in sponsoring my development and helping fund my improvement? Thank you very much! Words cannot express my appreciation!"
+          "Did you know I accept donations? These funds help me learn new spells, improve my current abilities, and serve you better."
         )
         .setColor(Becca.color)
         .addFields(

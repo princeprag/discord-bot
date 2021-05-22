@@ -30,11 +30,11 @@ async function onMessage(
   // Separate the message content by whitespaces.
   message.commandArguments = content.split(" ");
 
-  // Check if the message is sended to a private channel (Direct Message)
+  // Check if the message is sent to a private channel (Direct Message)
   // and send a warning to the current channel.
   if (channel.type === "dm" && author.id !== Becca.user?.id) {
     message.showTypingAndSendMessage(
-      "I am so sorry, but would you please talk to me in a server instead of a private message?\nIf you need a server to join, you are welcome to join our server: http://chat.nhcarrigan.com",
+      "Hold, stranger. I prefer my privacy and will not help you here.\nIf you need a server to join, you are welcome to join our server: http://chat.nhcarrigan.com",
       3000
     );
 

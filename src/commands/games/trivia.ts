@@ -61,7 +61,7 @@ const trivia: CommandInt = {
           .addField("D", answers[3], true)
           .addField("\u200b", "\u200b", true)
           .setFooter(
-            "Please tell me what you think is the correct answer! You have 30 seconds..."
+            "Can you answer this correctly in 30 seconds? Good luck..."
           )
       );
 
@@ -96,7 +96,7 @@ const trivia: CommandInt = {
         await channel.send(
           correct.length
             ? `Congratulations to ${correct.join(", ")}!`
-            : "No one got this question correct :("
+            : "It seems none of you knew this one."
         );
       });
       await message.react(message.Becca.yes);

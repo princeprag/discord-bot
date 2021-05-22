@@ -20,8 +20,8 @@ const unrestrict: CommandInt = {
 
       // Check if the member has the kick members permission.
       if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
-        await message.reply(
-          "I am so sorry, but I can only do this for moderators with permission to kick members."
+        await message.channel.send(
+          "You are not high enough level to use this spell."
         );
         await message.react(message.Becca.no);
         return;
@@ -34,8 +34,8 @@ const unrestrict: CommandInt = {
 
       // Check if the restricted role does not exist.
       if (!restrictedRole) {
-        await message.reply(
-          "I am so sorry, but I do not have a record for your restricted role."
+        await message.channel.send(
+          "I do not know which title to remove from the silenced member."
         );
         await message.react(message.Becca.no);
         return;
@@ -53,8 +53,8 @@ const unrestrict: CommandInt = {
         !userToUnrestrictMentioned ||
         !mentions.members
       ) {
-        await message.reply(
-          "Would you please try the command again, and provide the user you want me to unrestrict?"
+        await message.channel.send(
+          "Who do you wish to remove this spell from?"
         );
         await message.react(message.Becca.no);
         return;
@@ -65,7 +65,7 @@ const unrestrict: CommandInt = {
 
       // Check if the user mention string and the first user mention id are equals.
       if (userToUnrestrictMention !== userToUnrestrictMentioned.id) {
-        await message.reply(
+        await message.channel.send(
           `I am so sorry, but ${userToUnrestrictMentioned.toString()} is not a valid user.`
         );
         await message.react(message.Becca.no);
@@ -74,7 +74,9 @@ const unrestrict: CommandInt = {
 
       // Check if trying to restrict itself.
       if (userToUnrestrictMentioned.id === author.id) {
-        await message.reply("Wait, what? You cannot unrestrict yourself.");
+        await message.channel.send(
+          "You cannot lift this curse from yourself. The fact that you are asking means you do not have this curse, anyway."
+        );
         await message.react(message.Becca.no);
         return;
       }
@@ -84,8 +86,8 @@ const unrestrict: CommandInt = {
 
       // Check if the member mention exists.
       if (!memberToUnrestrictMentioned) {
-        await message.reply(
-          "Would you please try the command again, and provide the user you want me to unrestrict?"
+        await message.channel.send(
+          "I need to know who you want me to remove the spell from."
         );
         await message.react(message.Becca.no);
         return;
@@ -93,8 +95,8 @@ const unrestrict: CommandInt = {
 
       // Check if the user is not restricted.
       if (!memberToUnrestrictMentioned.roles.cache.has(restrictedRole.id)) {
-        await message.reply(
-          `I am so sorry, but ${userToUnrestrictMentioned.toString()} is not restricted.`
+        await message.channel.send(
+          `${userToUnrestrictMentioned.toString()} is not silenced. What exactly did you want me to do here?`
         );
         await message.react(message.Becca.no);
         return;
@@ -120,12 +122,12 @@ const unrestrict: CommandInt = {
           .addField("Moderator", author.toString(), true)
           .addField("User", userToUnrestrictMentioned.toString(), true)
           .addField("Reason", reason)
-          .setFooter("Please remember to follow our rules!")
+          .setFooter("I recommend reviewing the rules here. Just to be safe.")
           .setTimestamp()
       );
 
       //respond
-      await message.reply("Okay! I have taken care of that for you.");
+      await message.channel.send("It has been done.");
       await message.react(message.Becca.yes);
     } catch (error) {
       await beccaErrorHandler(

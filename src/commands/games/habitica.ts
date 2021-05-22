@@ -22,8 +22,8 @@ const habitica: CommandInt = {
 
       // Check if the user id is not valid.
       if (!id) {
-        await message.reply(
-          "Would you please try the command again, and provide the user id you want me to search for?"
+        await message.channel.send(
+          "It would be nice if you told me the Habitica ID you want me to search for *before* you send me off on the hunt."
         );
         await message.react(message.Becca.no);
         return;
@@ -54,7 +54,9 @@ const habitica: CommandInt = {
 
       // Check if the user data result is not success.
       if (!user || !user.data || !user.data.success) {
-        await message.reply("I am so sorry, but I could not find that user...");
+        await message.channel.send(
+          "I am afraid I come back empty handed. That user does not appear to exist."
+        );
         await message.react(message.Becca.no);
         return;
       }
@@ -124,8 +126,8 @@ const habitica: CommandInt = {
 
       // Check if the user achievements data result is not success.
       if (!achievements.data.success) {
-        await message.reply(
-          "I am so sorry, but I could not find that user's achievements..."
+        await message.channel.send(
+          "That user has not had any notable achievements."
         );
         await message.react(message.Becca.no);
         return;
@@ -219,8 +221,8 @@ const habitica: CommandInt = {
 
       // Send the quests embed to the current channel.
       await channel.send(questsEmbed).catch(async () => {
-        await message.reply(
-          "I am so sorry, but the user has completed too many quests. I cannot carry this much information!"
+        await message.channel.send(
+          "That user has completed too many quests. I cannot possibly keep track of all of them."
         );
         await message.react(message.Becca.no);
         return;

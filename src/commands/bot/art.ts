@@ -19,7 +19,7 @@ const art: CommandInt = {
       const artEmbed = new MessageEmbed();
       artEmbed.setTitle(artName);
       artEmbed.setDescription(
-        `Art generously provided by [${artist}](${artistUrl})!`
+        `This portrait of me was done by [${artist}](${artistUrl}).`
       );
 
       //add local file
@@ -30,8 +30,10 @@ const art: CommandInt = {
         )}`
       );
 
+      artEmbed.setFooter("Would you like to paint my portrait too?");
+
       //send it!
-      await message.reply(artEmbed);
+      await message.channel.send(artEmbed);
       await message.react(message.Becca.yes);
     } catch (error) {
       await beccaErrorHandler(

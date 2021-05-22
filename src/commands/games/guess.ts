@@ -19,7 +19,7 @@ const guess: CommandInt = {
 
       // Send a message to the current channel.
       await channel.send(
-        "Can we play a game? I have chosen a number between 1 and 1000. You have 10 seconds to guess the number. The closest guess will win!"
+        "I have a challenge for you. I have chosen a number between 1 and 1000. You have 10 seconds to guess the number. The closest guess will win!"
       );
 
       // Create a new message collector for the current channel.

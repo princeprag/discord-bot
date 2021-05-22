@@ -15,8 +15,8 @@ const colour: CommandInt = {
 
       if (!/^[A-F0-9]{6}$/.test(colour)) {
         await message.react(Becca.no);
-        await message.reply(
-          "Sorry, but please provide a 6-character hex code to render (without the `#`)."
+        await message.channel.send(
+          "This spell requires a six-character hex code (without the `#`)."
         );
         return;
       }

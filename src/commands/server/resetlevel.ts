@@ -16,9 +16,7 @@ const resetlevel: CommandInt = {
       }
 
       if (!member.hasPermission("MANAGE_GUILD")) {
-        await channel.send(
-          "Sorry, but I can only do that for members with permission to manage server."
-        );
+        await channel.send("You are not high enough level to cast this spell.");
         await message.react(Becca.no);
         return;
       }
@@ -27,12 +25,14 @@ const resetlevel: CommandInt = {
 
       if (!currentLevels) {
         await message.react(Becca.no);
-        await channel.send("It appears you have no level data...");
+        await channel.send("I cannot toss a record that does not exist.");
         return;
       }
 
       await currentLevels.delete();
-      await channel.send("Okay, I have removed your server's level data.");
+      await channel.send(
+        "I have burned all records of your guild's activities."
+      );
       await message.react(Becca.yes);
       return;
     } catch (error) {

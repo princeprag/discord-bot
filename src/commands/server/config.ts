@@ -32,8 +32,8 @@ const config: CommandInt = {
         !member.hasPermission("MANAGE_GUILD") &&
         member.id !== process.env.OWNER_ID
       ) {
-        await message.reply(
-          `I am so sorry, but I can only perform this for moderators with the permission to manage the server.`
+        await message.channel.send(
+          `You are not high enough level to use this spell.`
         );
         await message.react(message.Becca.no);
         return;
@@ -69,17 +69,15 @@ const config: CommandInt = {
       if (configType === "reset") {
         // If no setting provided, end.
         if (!key) {
-          await message.reply(
-            "Would you please try the command again, and provide the setting you would like me to reset?"
+          await message.channel.send(
+            "Which setting did you want me to restore?"
           );
           await message.react(message.Becca.no);
           return;
         }
 
         if (!keyList.includes(key)) {
-          await message.reply(
-            `I am so sorry, but ${key} is not a valid setting option.`
-          );
+          await message.channel.send(`${key} is not a valid setting.`);
           await message.react(message.Becca.no);
           return;
         }
@@ -87,9 +85,7 @@ const config: CommandInt = {
         if (key === "prefix") {
           prefix[guild.id] = defaultConfigValues.prefix;
         }
-        await channel.send(
-          `Okay, I have reset the ${key} setting to my default value.`
-        );
+        await channel.send(`${key} has been restored to its original form.`);
         await message.react(Becca.yes);
         return;
       }
@@ -98,17 +94,13 @@ const config: CommandInt = {
       if (configType === "set") {
         // If no setting provided, end.
         if (!key) {
-          await message.reply(
-            "Would you please try the command again, and provide th setting you would like me to change?"
-          );
+          await message.channel.send("Which setting should I transform?");
           await message.react(message.Becca.no);
           return;
         }
 
         if (!keyList.includes(key)) {
-          await message.reply(
-            `I am so sorry, but ${key} is not a valid setting for me to update.`
-          );
+          await message.channel.send(`${key} is not a valid setting.`);
           await message.react(message.Becca.no);
           return;
         }
@@ -117,9 +109,7 @@ const config: CommandInt = {
 
         // If no value provided, end.
         if (!value) {
-          await message.reply(
-            "Would you please try the command again, and tell me the value you would like me to set?"
-          );
+          await message.channel.send("What new form should this setting take?");
           await message.react(message.Becca.no);
           return;
         }
@@ -134,8 +124,8 @@ const config: CommandInt = {
             (chan) => chan.id === value.replace(/\D/g, "")
           );
           if (!success) {
-            await message.reply(
-              `I am so sorry, but ${value} does not appear to be a valid channel.`
+            await message.channel.send(
+              `${value} is not a channel, so I would not be able to send messages there.`
             );
             await message.react(message.Becca.no);
             return;
@@ -152,8 +142,8 @@ const config: CommandInt = {
             (role) => role.id === value.replace(/\D/g, "")
           );
           if (!success && !config[key].includes(value.replace(/\D/g, ""))) {
-            await message.reply(
-              `I am so sorry, but ${value} does not appear to be a valid role.`
+            await message.channel.send(
+              `${value} does not appear to be a title granted to your members.`
             );
             await message.react(message.Becca.no);
             return;
@@ -164,14 +154,14 @@ const config: CommandInt = {
         if (key === "hearts" || key === "blocked") {
           const mem = await guild.members.fetch(value.replace(/\D/g, ""));
           if (!mem && !config[key].includes(value.replace(/\D/g, ""))) {
-            await message.reply(
-              `I am so sorry, but ${value} does not appear to be a valid user.`
+            await message.channel.send(
+              `${value} does not seem to be a person. Imaginary friends don't count.`
             );
             await message.react(message.Becca.no);
             return;
           }
           if (value.replace(/\D/g, "") === process.env.OWNER_ID) {
-            await message.reply(
+            await message.channel.send(
               key === "blocked"
                 ? "Wait a moment! I will not refuse to help my beloved."
                 : "My love for my darling can never be stopped."
@@ -184,8 +174,8 @@ const config: CommandInt = {
         // If setting toggle, check for off/on.
         if (key === "thanks" || key === "levels") {
           if (value !== "on" && value !== "off") {
-            await message.reply(
-              `I am so sorry, but ${value} is not a valid option for ${key}. Please try again and tell me if you want ${key} to be turned \`on\` or \`off\`.`
+            await message.channel.send(
+              `${value} is not a valid option for ${key}. I can switch this one on or off. That's it.`
             );
             await message.react(message.Becca.no);
             return;
@@ -201,32 +191,32 @@ const config: CommandInt = {
         const newSettings = await setSetting(guild.id, guild.name, key, value);
 
         // Set confirmation response
-        let confirmation = `Okay, I have set ${key} to ${value}`;
+        let confirmation = `I have set ${key} to ${value}`;
 
         // Handle hearts
         if (key === "hearts") {
           if (!newSettings.hearts.includes(value.replace(/\D/g, ""))) {
-            confirmation = `Okay, I will stop giving hearts to ${value}!`;
+            confirmation = `No more love for ${value}.`;
           } else {
-            confirmation = `Okay, I will give hearts to ${value}!`;
+            confirmation = `Hearts will now follow ${value} everywhere.`;
           }
         }
 
         // Handle blocked
         if (key === "blocked") {
           if (!newSettings.blocked.includes(value.replace(/\D/g, ""))) {
-            confirmation = `Okay, I will resume helping ${value}!`;
+            confirmation = `I suppose ${value} can receive my help again.`;
           } else {
-            confirmation = `Okay, I will stop helping ${value}!`;
+            confirmation = `I will stop listening to ${value}.`;
           }
         }
 
         // Handle self roles
         if (key === "self_roles") {
           if (!newSettings.self_roles.includes(value.replace(/\D/g, ""))) {
-            confirmation = `Okay, ${value} is no longer self-assignable.`;
+            confirmation = `I will no longer grant the ${value} title to people.`;
           } else {
-            confirmation = `Okay, ${value} is now self-assignable.`;
+            confirmation = `${value} can now be one of your titles, on request.`;
           }
         }
 
@@ -236,8 +226,8 @@ const config: CommandInt = {
         return;
       }
 
-      await message.reply(
-        `I am so sorry, but ${configType} is not a valid action for me to take.`
+      await message.channel.send(
+        `I cannot ${configType} anything here. I am not even sure what that means.`
       );
       await message.react(message.Becca.no);
       return;

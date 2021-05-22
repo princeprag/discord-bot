@@ -4,7 +4,7 @@ import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 
 const DND_CONSTANTS = {
   title: "Dungeons and Dragons!",
-  description: "Here are the `dnd` commands I know!",
+  description: "Here are the `dnd` skills I have.",
 };
 
 const dnd: CommandInt = {

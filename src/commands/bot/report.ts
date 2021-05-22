@@ -5,7 +5,7 @@ import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 const REPORT_CONSTANTS = {
   title: "Report a bug",
   description:
-    "Did I do something wrong? Report an issue [here](https://github.com/BeccaLyria/discord-bot/issues/choose).",
+    "Have I failed you in some way? Report an issue [here](https://github.com/BeccaLyria/discord-bot/issues/choose).",
 };
 
 const report: CommandInt = {

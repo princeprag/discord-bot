@@ -25,7 +25,7 @@ async function onGuildCreate(
 
       // Send a message to the debug channel.
       await debugChannelHook.send(
-        `${user.username} has joined the ${name} server!`
+        `${user.username} has enlisted with \`${name}\`.`
       );
     }
   }

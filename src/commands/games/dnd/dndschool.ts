@@ -15,9 +15,9 @@ const DNDSCHOOL_CONST = {
   },
   error: {
     no_query:
-      "Would you please try the command again, and provide the school of magic you want me to search for?",
-    bad_data: "I am so sorry, but I was unable to find anything...",
-    default: "I am so sorry, but I cannot do that at the moment.",
+      "I may be a sorcerer myself, but I cannot read your mind. Which school of magic did you want me to look for?",
+    bad_data:
+      "That is a particular type of magic that I am not familiar with. I will have to do some more research.",
   },
 };
 
@@ -36,7 +36,7 @@ const dndschool: CommandInt = {
 
       // Check if the query is not empty.
       if (!query || !query.length) {
-        await message.reply(DNDSCHOOL_CONST.error.no_query);
+        await message.channel.send(DNDSCHOOL_CONST.error.no_query);
         await message.react(message.Becca.no);
         return;
       }
@@ -48,7 +48,7 @@ const dndschool: CommandInt = {
 
       // Check if the dnd school is not valid.
       if (!data.data || data.data.error) {
-        await message.reply(DNDSCHOOL_CONST.error.bad_data);
+        await message.channel.send(DNDSCHOOL_CONST.error.bad_data);
         await message.react(message.Becca.no);
         return;
       }

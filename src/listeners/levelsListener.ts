@@ -96,15 +96,17 @@ const levelListener: ListenerInt = {
         user.level++;
 
         await message.channel.send(
-          `Congratulations ${author.toString()}! You have reached level ${
-            user.level
-          }`
+          `${
+            member?.nickname || author.username
+          } has grown stronger. They are now level ${user.level}.`
         );
       }
       // Save the points and last seen to the database.
       server.markModified("users");
       await server.save();
-      await message.react("🆙");
+      if (!message.deleted) {
+        await message.react("🆙");
+      }
     } catch (error) {
       await beccaErrorHandler(
         error,

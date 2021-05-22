@@ -14,9 +14,7 @@ const list: CommandInt = {
       const { guilds } = Becca;
 
       if (author.id !== process.env.OWNER_ID) {
-        await message.reply(
-          "Sorry, but this command is restricted to my beloved."
-        );
+        await message.channel.send("Only nhcarrigan may cast this spell.");
         await message.react(Becca.no);
         return;
       }
@@ -80,7 +78,7 @@ const list: CommandInt = {
 
       // Check if the current page is valid.
       if (isNaN(currentPage) || currentPage <= 0 || currentPage > totalPages) {
-        await message.reply("I am so sorry, but I cannot look at that page.");
+        await message.channel.send("That page does not exist.");
         await message.react(message.Becca.no);
         return;
       }
@@ -113,7 +111,7 @@ const list: CommandInt = {
 
       await channel.send(
         `I am in ${serverList.length} servers, with ${ownerCount} unique owner${
-          ownerCount === 1 ? "s" : ""
+          ownerCount === 1 ? "" : "s"
         }.`
       );
       await message.react(message.Becca.yes);

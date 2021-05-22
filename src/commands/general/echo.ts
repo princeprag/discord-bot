@@ -17,8 +17,8 @@ const echo: CommandInt = {
 
       // Restrict to owner
       if (author.id !== process.env.OWNER_ID) {
-        await message.reply(
-          "I am so sorry, but I can only do this for my beloved."
+        await message.channel.send(
+          "You are not nhcarrigan, so I will not use this ability for you."
         );
         await message.react(message.Becca.no);
         return;
@@ -28,8 +28,8 @@ const echo: CommandInt = {
       const guildArg = commandArguments.shift();
 
       if (!guildArg) {
-        await message.reply(
-          "Would you please try the command again, and tell me the id of the guild you want to message?"
+        await message.channel.send(
+          "What guild ID do you want me to send this to?"
         );
         await message.react(message.Becca.no);
         return;
@@ -39,9 +39,8 @@ const echo: CommandInt = {
       const targetGuild = Becca.guilds.cache.find((g) => g.id === guildArg);
 
       if (!targetGuild) {
-        await message.reply(
-          "I am so sorry, but I could not find a guild with the ID of " +
-            guildArg
+        await message.channel.send(
+          "Hmm... it seems I do not have access to guild " + guildArg
         );
         await message.react(message.Becca.no);
         return;
@@ -51,8 +50,8 @@ const echo: CommandInt = {
       const channelArg = commandArguments.shift();
 
       if (!channelArg) {
-        await message.reply(
-          "Would you please try the command again, and tell me the id of the channel you want me to message?"
+        await message.channel.send(
+          "What channel ID do you want me to send this to?"
         );
         await message.react(message.Becca.no);
         return;
@@ -64,17 +63,16 @@ const echo: CommandInt = {
       );
 
       if (!targetChannel) {
-        await message.reply(
-          "I am so sorry, but I could not find a channel with the ID of " +
-            channelArg
+        await message.channel.send(
+          "Hmm... it seems I do not have access to channel " + channelArg
         );
         await message.react(message.Becca.no);
         return;
       }
 
       if (!targetChannel.isText()) {
-        await message.reply(
-          `I am so sorry, but I can only send messages to text channels, not ${targetChannel.type} channels.`
+        await message.channel.send(
+          `${targetChannel.type} channels do not accept letters. How am I supposed to send your message there?`
         );
         await message.react(message.Becca.no);
         return;
@@ -85,7 +83,7 @@ const echo: CommandInt = {
 
       await targetChannel.send(sendMessage);
       await channel.send(
-        `Okay, I have sent your message to the ${targetChannel.name} channel in ${targetGuild.name}.`
+        `I have sent your message to the ${targetChannel.name} channel in ${targetGuild.name}.`
       );
       await message.react(message.Becca.yes);
     } catch (error) {

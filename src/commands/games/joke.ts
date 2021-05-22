@@ -24,8 +24,8 @@ const joke: CommandInt = {
 
       // Check if the status is not 200.
       if (status !== 200) {
-        await message.reply(
-          "I am so sorry, but I seem to have lost my book of jokes!"
+        await message.channel.send(
+          "I am not in the mood for humour right now."
         );
         await message.react(message.Becca.no);
         return;
@@ -35,7 +35,7 @@ const joke: CommandInt = {
       await channel.send(
         new MessageEmbed()
           .setColor(Becca.color)
-          .setTitle("I giggled at this:")
+          .setTitle("Perhaps this will entertain you...")
           .setDescription(joke)
       );
       await message.react(message.Becca.yes);

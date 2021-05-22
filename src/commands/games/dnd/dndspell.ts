@@ -15,9 +15,9 @@ const DNDSPELL_CONST = {
   },
   error: {
     no_query:
-      "Would you please try the command again, and provide the spell you want me to search for?",
-    bad_data: "I am so sorry, but I was unable to find anything...",
-    default: "I am so sorry, but I cannot do that at the moment.",
+      "I have many spells in my repertoire, but telepathy is not one of them. What spell do you want to learn?",
+    bad_data:
+      "That spell is not listed in any of my books. Are you sure you did not make it up?",
   },
 };
 
@@ -36,7 +36,7 @@ const dndspell: CommandInt = {
 
       // Check if the query is not empty.
       if (!query || !query.length) {
-        await message.reply(DNDSPELL_CONST.error.no_query);
+        await message.channel.send(DNDSPELL_CONST.error.no_query);
         await message.react(message.Becca.no);
         return;
       }
@@ -48,7 +48,7 @@ const dndspell: CommandInt = {
 
       // Check if the dnd spell is not valid.
       if (!data.data || data.data.error) {
-        await message.reply(DNDSPELL_CONST.error.bad_data);
+        await message.channel.send(DNDSPELL_CONST.error.bad_data);
         await message.react(message.Becca.no);
         return;
       }

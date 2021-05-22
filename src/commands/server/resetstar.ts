@@ -12,13 +12,17 @@ const resetStar: CommandInt = {
 
       if (!guild) {
         await message.react(Becca.no);
-        await message.reply("Sorry, but I cannot find your guild record.");
+        await message.channel.send(
+          "Hmm, that is strange. Your guild does not seem to officially exist."
+        );
         return;
       }
 
       if (!member?.hasPermission("MANAGE_GUILD")) {
         await message.react(Becca.no);
-        await message.reply("Sorry, but I can only do this for server admins.");
+        await message.channel.send(
+          "You are not high enough level to cast this spell."
+        );
         return;
       }
 
@@ -26,8 +30,8 @@ const resetStar: CommandInt = {
 
       if (!starData) {
         await message.react(Becca.no);
-        await message.reply(
-          "Your server does not appear to have any stars yet!"
+        await message.channel.send(
+          "No one is carrying any stars right now. This spell would have no effect."
         );
         return;
       }
@@ -37,7 +41,7 @@ const resetStar: CommandInt = {
       await starData.save();
 
       await message.react(Becca.yes);
-      await channel.send("I have cleared your server star data.");
+      await channel.send("I have returned the stars to the heavens.");
     } catch (error) {
       await beccaErrorHandler(
         error,

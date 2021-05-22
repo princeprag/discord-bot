@@ -14,7 +14,7 @@ export const viewConfigEmbed = (
   const configEmbed = new MessageEmbed();
 
   // Add the title.
-  configEmbed.setTitle("Here is my record for your server.");
+  configEmbed.setTitle("Here are the wards I've cast on your guild.");
 
   // Add the logs channel to an embed field.
   configEmbed.addField(

@@ -64,7 +64,9 @@ const xkcd: CommandInt = {
           "Xkcd Command:" + error?.response?.data?.message ?? "Unknown error."
         );
 
-        await message.reply("I am so sorry, but I could not find anything...");
+        await message.channel.send(
+          "It seems that realm is unavailable right now. Let's try again tomorrow, perhaps."
+        );
       }
     } catch (error) {
       await beccaErrorHandler(

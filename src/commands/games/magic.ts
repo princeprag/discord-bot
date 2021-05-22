@@ -18,8 +18,8 @@ const magic: CommandInt = {
 
       // Check if the query is empty.
       if (!query) {
-        await message.reply(
-          "Would you please try the command again, and tell me the card name you want me to search for?"
+        await message.channel.send(
+          "Wait, which card did you want me to search for?"
         );
         await message.react(message.Becca.no);
         return;
@@ -35,7 +35,7 @@ const magic: CommandInt = {
 
       // Check if the data is not valid.
       if (!data.data || !data.data.cards.length || !card) {
-        await message.reply("I am so sorry, but I could not find anything.");
+        await message.channel.send("That card does not appear to exist.");
         await message.react(message.Becca.no);
         return;
       }

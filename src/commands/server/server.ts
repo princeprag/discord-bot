@@ -28,7 +28,7 @@ const server: CommandInt = {
       serverEmbed.setTitle(guild.name);
 
       // Add the description.
-      serverEmbed.setDescription("Here is the information for this server!");
+      serverEmbed.setDescription("Official Guild Record");
 
       // Add the server image to the embed thumbnail.
       serverEmbed.setThumbnail(guild.iconURL({ dynamic: true }) || "");
@@ -47,7 +47,7 @@ const server: CommandInt = {
       serverEmbed.addField("Owner", guildOwner, true);
 
       // Add the server commands prefix to an embed field.
-      serverEmbed.addField("Command prefix", prefix[guild.id], true);
+      serverEmbed.addField("Spell prefix", prefix[guild.id], true);
 
       // Add the server members count to an embed field.
       serverEmbed.addField("Recently seen members", guild.memberCount, true);
@@ -57,26 +57,26 @@ const server: CommandInt = {
 
       // Add the server human members count to an embed field.
       serverEmbed.addField(
-        "Human members",
+        "Living members",
         guildMembers.filter((member) => !member.user.bot).length,
         true
       );
 
       // Add the server bots count to an embed field.
       serverEmbed.addField(
-        "Bot members",
+        "Artificial Construct members",
         guildMembers.filter((member) => member.user.bot).length,
         true
       );
 
       // Add the server users banned count to an embed field.
-      serverEmbed.addField("Banned users", guild.fetchBans.length, true);
+      serverEmbed.addField("Banished members", guild.fetchBans.length, true);
 
       // Add an empty field.
       serverEmbed.addField("\u200b", "\u200b", true);
 
       // Add the server roles count to an embed field.
-      serverEmbed.addField("Roles count", guild.roles.cache.size, true);
+      serverEmbed.addField("Titles", guild.roles.cache.size, true);
 
       // Add the server roles names to an embed field.
       serverEmbed.addField(

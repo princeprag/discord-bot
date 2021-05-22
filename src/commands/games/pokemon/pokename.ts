@@ -19,8 +19,8 @@ const pokename: CommandInt = {
 
       // Check if the pokemon name is empty.
       if (!name) {
-        await message.reply(
-          "Would you please try the command again, and provide the Pokemon name you want me to search for?"
+        await message.channel.send(
+          "Wait, what is the name of the pokemon you want me to search for?"
         );
         await message.react(message.Becca.no);
         return;
@@ -45,25 +45,27 @@ const pokename: CommandInt = {
             name: "Abilities",
             value:
               pokemon.abilities.map((el) => el.ability.name).join(", ") ||
-              "no abilities found",
+              "I do not know this Pokemon's abilities.",
           },
           {
             name: "Forms",
             value:
-              pokemon.forms.map((el) => el.name).join(", ") || "no forms found",
+              pokemon.forms.map((el) => el.name).join(", ") ||
+              "This Pokemon does not seem to have any special forms.",
           },
           {
             name: "Held Items",
             value:
               pokemon.held_items.map((el) => el.item.name).join(", ") ||
-              "no items found",
+              "Hmm, there were no items in this Pokemon's hand.",
           },
           {
             name: "Stats",
             value:
               pokemon.stats
                 .map((el) => `${el.stat.name}: ${el.base_stat}`)
-                .join(", ") || "no stats found",
+                .join(", ") ||
+              "I am not sure where this Pokemon's talents lie.",
           }
         );
         pokeEmbed.setColor(Becca.color);
@@ -82,7 +84,9 @@ const pokename: CommandInt = {
             "Unknown error."
         );
 
-        await message.reply("I am so sorry, but I could not find anything...");
+        await message.channel.send(
+          "My Pokedex has come up empty. Is that a new pokemon you have discovered?"
+        );
       }
       await message.react(message.Becca.yes);
     } catch (error) {

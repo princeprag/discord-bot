@@ -9,12 +9,12 @@ export const viewBlockedEmbed = (
   const end = page * 10;
   const blockedEmbed = new MessageEmbed()
     .setTitle("Blocked")
-    .setFooter("These users will not receive my assistance.")
+    .setFooter("I will not cast spells for these people.")
     .setDescription(
       config.blocked
         .map((el, i) => `#${++i}. <@!${el}> - ID: ${el}`)
         .slice(start, end)
-        .join("\n") || "No one :)"
+        .join("\n") || "It seems no one here is blocked, yet."
     )
     .setFooter(`Page ${page} of ${Math.ceil(config.blocked.length / 10)}`);
   return blockedEmbed;

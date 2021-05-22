@@ -17,8 +17,8 @@ const roll: CommandInt = {
 
       // Check if the num is valid.
       if (!num) {
-        await message.reply(
-          "Would you please try the command again, and tell me what `num` die you want me to roll?"
+        await message.channel.send(
+          "How many sides should I conjure up for this die?"
         );
         await message.react(message.Becca.no);
         return;
@@ -26,8 +26,8 @@ const roll: CommandInt = {
 
       // Check if the num starts with `d`.
       if (!num.startsWith("d")) {
-        await message.reply(
-          "Would you please try the command again, and be sure that your die value starts with `d`? For example, `d20` is a 20-sided die."
+        await message.channel.send(
+          "This spell is a bit tricky. Be sure that your die value starts with `d`. For example, `d20` is a 20-sided die."
         );
         await message.react(message.Becca.no);
         return;
@@ -38,7 +38,9 @@ const roll: CommandInt = {
 
       // Check if the number is NaN.
       if (isNaN(numValue)) {
-        await message.reply(`I am so sorry, but ${num} is not a valid number.`);
+        await message.channel.send(
+          `The spell seems to have failed. ${num} is not a valid number.`
+        );
         await message.react(message.Becca.no);
         return;
       }

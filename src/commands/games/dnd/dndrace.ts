@@ -34,9 +34,8 @@ const DNDRACE_CONST = {
     },
   },
   error: {
-    no_query:
-      "Would you please try the command again, and provide the race you want me to search for?",
-    bad_data: "I am so sorry, but I was unable to find anything...",
+    no_query: "Hold up. Which race did you want me to search for?",
+    bad_data: "That particular race is not listed in my records.",
   },
 };
 
@@ -54,7 +53,7 @@ const dndrace: CommandInt = {
 
       // Check if the query is not empty.
       if (!query || !query.length) {
-        await message.reply(DNDRACE_CONST.error.no_query);
+        await message.channel.send(DNDRACE_CONST.error.no_query);
         await message.react(Becca.no);
         return;
       }
@@ -66,7 +65,7 @@ const dndrace: CommandInt = {
 
       // Check if the dnd race is not valid.
       if (!data.data || data.data.error) {
-        await message.reply(DNDRACE_CONST.error.bad_data);
+        await message.channel.send(DNDRACE_CONST.error.bad_data);
         await message.react(Becca.no);
         return;
       }

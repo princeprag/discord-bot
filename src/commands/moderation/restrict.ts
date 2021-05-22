@@ -20,8 +20,8 @@ const restrict: CommandInt = {
 
       // Check if the member has the kick members permission.
       if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
-        await message.reply(
-          "I am so sorry, but I can only do this for moderators with permission to kick members."
+        await message.channel.send(
+          "You are not high enough level to use this spell."
         );
         await message.react(message.Becca.no);
         return;
@@ -34,8 +34,8 @@ const restrict: CommandInt = {
 
       // Check if the moderator role does not exist.
       if (!moderatorRole) {
-        await message.reply(
-          "I am so sorry, but I do not have a record for your moderator role."
+        await message.channel.send(
+          "I cannot cast this spell without knowing who your moderators are."
         );
         await message.react(message.Becca.no);
         return;
@@ -48,8 +48,8 @@ const restrict: CommandInt = {
 
       // Check if the restricted role does not exist.
       if (!restrictedRole) {
-        await message.reply(
-          "I am so sorry, but I do not have a record for your restricted role."
+        await message.channel.send(
+          "I cannot cast this spell without knowing the magic words of the muted."
         );
         await message.react(message.Becca.no);
         return;
@@ -103,8 +103,8 @@ const restrict: CommandInt = {
         !userToRestrictMentioned ||
         !mentions.members
       ) {
-        await message.reply(
-          "Would you please try the command again, and provide the user you want me to restrict?"
+        await message.channel.send(
+          "I need to know who you want me to silence."
         );
         await message.react(message.Becca.no);
         return;
@@ -115,7 +115,7 @@ const restrict: CommandInt = {
 
       // Check if the user mention string and the first user mention id are equals.
       if (userToRestrictMention !== userToRestrictMentioned.id) {
-        await message.reply(
+        await message.channel.send(
           `I am so sorry, but ${userToRestrictMentioned.toString()} is not a valid user.`
         );
         await message.react(message.Becca.no);
@@ -124,7 +124,9 @@ const restrict: CommandInt = {
 
       // Check if trying to restrict itself.
       if (userToRestrictMentioned.id === author.id) {
-        await message.reply("Wait, what? You cannot restrict yourself!");
+        await message.channel.send(
+          "You want me... to silence you? You could just... not say things."
+        );
         await message.react(message.Becca.no);
         return;
       }
@@ -134,8 +136,8 @@ const restrict: CommandInt = {
 
       // Check if the member mention exists.
       if (!memberToRestrictMentioned) {
-        await message.reply(
-          "Would you please try the command again, and provide the user you want me to restrict?"
+        await message.channel.send(
+          "I need to know who you want me to silence."
         );
         await message.react(message.Becca.no);
         return;
@@ -146,16 +148,14 @@ const restrict: CommandInt = {
         userToRestrictMentioned.id === user.id ||
         memberToRestrictMentioned.id === user.id
       ) {
-        await message.reply(
-          "You want to restrict me? Oh no! Did I do something wrong?"
-        );
+        await message.channel.send("You cannot silence me.");
         await message.react(message.Becca.no);
         return;
       }
 
       // Check if the user is already restricted.
       if (memberToRestrictMentioned.roles.cache.has(restrictedRole.id)) {
-        await message.reply(
+        await message.channel.send(
           `I am so sorry, but ${userToRestrictMentioned.toString()} is already restricted.`
         );
         await message.react(message.Becca.no);
@@ -167,7 +167,7 @@ const restrict: CommandInt = {
 
       // Add a default reason if it not provided.
       if (!reason || !reason.length) {
-        reason = "I am sorry, but the moderator did not provide a reason.";
+        reason = "They did not tell me why.";
       }
 
       const removedRoles: string[] = [];
@@ -225,17 +225,23 @@ const restrict: CommandInt = {
             "The following roles were removed:",
             removedRoles.join("\n") || "none"
           )
-          .setFooter("Please remember to follow our rules!")
+          .setFooter("Perhaps you should review the rules.")
           .setTimestamp()
       );
 
       // Send an advertisement to the user.
-      await memberToRestrictMentioned.send(
-        `Hello! I am sorry to bother you. It appears you have been suspended from **${guild.name}** for the following reason: ${reason} \n I have created a channel there for you to appeal this decision.`
-      );
+      await memberToRestrictMentioned
+        .send(
+          `Hello! I am sorry to bother you. It appears you have been suspended from **${guild.name}** for the following reason: ${reason} \n I have created a channel there for you to appeal this decision.`
+        )
+        .catch(async () => {
+          await message.channel.send(
+            "I was unable to tell them why they were silenced."
+          );
+        });
 
       //respond
-      await message.reply("Okay! I have taken care of that for you.");
+      await message.channel.send("They have been silenced.");
       await message.react(message.Becca.yes);
     } catch (error) {
       await beccaErrorHandler(

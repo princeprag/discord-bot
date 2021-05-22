@@ -5,10 +5,10 @@ import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 const HELP_CONSTANTS = {
   title: "Becca's commands",
   description: (prefix: string) =>
-    `My available commands are below. The command name must be prefixed with \`${prefix}\`, just like the \`${prefix}help\` command used to get this message. For information on a specific command, please use \`${prefix}help <command>\`.`,
-  footer: "I hope I could help!",
+    `My available spells are below. The spell name must be prefixed with \`${prefix}\`, just like the \`${prefix}help\` spell used to get this message. For information on a specific spell, use \`${prefix}help <spell>\`.`,
+  footer: "Which one shall I cast next?",
   notFound: (prefix: string, commandName: string) =>
-    `I am so sorry, but I could not find the \`${prefix}${commandName}\` command. Please try \`${prefix}help\` for a list of available commands.`,
+    `\`${prefix}${commandName}\` is not in my spellbook. Try \`${prefix}help\` for a list of available spells.`,
 };
 
 const help: CommandInt = {
@@ -40,7 +40,7 @@ const help: CommandInt = {
 
         // Check if the command does not exist.
         if (!command) {
-          await message.reply(
+          await message.channel.send(
             HELP_CONSTANTS.notFound(prefix[guild.id], commandName)
           );
           await message.react(Becca.no);
@@ -101,7 +101,6 @@ const help: CommandInt = {
 
       // Get commands by category
       const botCommandNames: string[] = [];
-      const emoteCommandNames: string[] = [];
       const gameCommandNames: string[] = [];
       const generalCommandNames: string[] = [];
       const moderationCommandNames: string[] = [];
@@ -112,9 +111,6 @@ const help: CommandInt = {
         switch (command.category) {
           case "bot":
             botCommandNames.push(`\`${command.name}\``);
-            break;
-          case "emote":
-            emoteCommandNames.push(`\`${command.name}\``);
             break;
           case "game":
             gameCommandNames.push(`\`${command.name}\``);
@@ -133,27 +129,23 @@ const help: CommandInt = {
 
       // Add the available commands.
       helpEmbed.addField(
-        "Bot-related Commands",
+        "Bot-related Spells",
         botCommandNames.sort().join(" | ")
       );
       helpEmbed.addField(
-        "Emote Commands",
-        emoteCommandNames.sort().join(" | ")
-      );
-      helpEmbed.addField(
-        "Game-related Commands",
+        "Game-related Spells",
         gameCommandNames.sort().join(" | ")
       );
       helpEmbed.addField(
-        "General Commands",
+        "General Spells",
         generalCommandNames.sort().join(" | ")
       );
       helpEmbed.addField(
-        "Moderation Commands",
+        "Moderation Spells",
         moderationCommandNames.sort().join(" | ")
       );
       helpEmbed.addField(
-        "Server Commands",
+        "Server Spells",
         serverCommandNames.sort().join(" | ")
       );
       // Add the footer.

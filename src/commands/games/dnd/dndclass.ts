@@ -7,8 +7,9 @@ import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 const DNDCLASS_CONSTANT = {
   error: {
     no_query:
-      "Would you please try the command again, and provide the class you want me to search for?",
-    bad_data: "I am so sorry, but I was unable to find anything...",
+      "I cannot look for a class if you do not tell me which class to look for.",
+    bad_data:
+      "Hmm, I am not familiar with that profession. Are you sure you have given me the correct information?",
   },
   dndApi: "https://www.dnd5eapi.co/api/classes/",
   join_separator: ", ",
@@ -29,7 +30,7 @@ const dndclass: CommandInt = {
 
       // Check if the query is not empty.
       if (!query || !query.length) {
-        await message.reply(DNDCLASS_CONSTANT.error.no_query);
+        await message.channel.send(DNDCLASS_CONSTANT.error.no_query);
         await message.react(message.Becca.no);
         return;
       }
@@ -41,7 +42,7 @@ const dndclass: CommandInt = {
 
       // Check if the dnd class is not valid.
       if (!data.data || data.data.error) {
-        await message.reply(DNDCLASS_CONSTANT.error.bad_data);
+        await message.channel.send(DNDCLASS_CONSTANT.error.bad_data);
         await message.react(message.Becca.no);
         return;
       }

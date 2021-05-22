@@ -18,18 +18,14 @@ const http: CommandInt = {
 
       // Check if the status is not valid.
       if (!status) {
-        await message.reply(
-          "Would you please try the command again, and provide the status code you want me to look for?"
-        );
+        await message.channel.send("What status ails you?");
         await message.react(message.Becca.no);
         return;
       }
 
       // Check if the status exists.
       if (!httpStatusList.includes(status)) {
-        await message.reply(
-          `I am so sorry, but ${status} appears to be an invalid status code.`
-        );
+        await message.channel.send(`${status} is not a known status code.`);
         await message.react(message.Becca.no);
         return;
       }

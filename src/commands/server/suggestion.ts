@@ -20,8 +20,8 @@ const suggestion: CommandInt = {
       }
 
       if (!member || !member.hasPermission("MANAGE_GUILD")) {
-        await message.reply(
-          "Sorry, but this command is restricted to moderators with the Manage Server permission."
+        await message.channel.send(
+          "You are not high enough level to use this spell."
         );
         await message.react(Becca.no);
         return;
@@ -29,8 +29,8 @@ const suggestion: CommandInt = {
       const action = commandArguments.shift();
 
       if (action !== "approve" && action !== "deny") {
-        await message.reply(
-          `Sorry, but ${action} is not valid. Would you like to approve or deny this suggestion?`
+        await message.channel.send(
+          `I cannot do ${action} to a suggestion. Would you like to approve or deny this suggestion?`
         );
         await message.react(Becca.no);
         return;
@@ -39,8 +39,8 @@ const suggestion: CommandInt = {
       const id = commandArguments.shift();
 
       if (!id) {
-        await message.reply(
-          "Sorry, but what is the message ID for the suggestion you would like me to update?"
+        await message.channel.send(
+          "Can you tell me what suggestion ID to find? I'm not going to sit here and guess."
         );
         return;
       }
@@ -50,8 +50,8 @@ const suggestion: CommandInt = {
       );
 
       if (!suggestionChannel) {
-        await message.reply(
-          "Sorry, but I cannot find your suggestion channel."
+        await message.channel.send(
+          "So... where exactly *are* your suggestions?"
         );
         await message.react(Becca.no);
         return;
@@ -62,24 +62,26 @@ const suggestion: CommandInt = {
       );
 
       if (!target) {
-        await message.reply("Sorry, but I could not find that suggestion.");
+        await message.channel.send(
+          "It seems that suggestion fell off the notice board."
+        );
         await message.react(Becca.no);
         return;
       }
 
       const suggestion = target.embeds[0];
 
-      if (!suggestion || suggestion.title !== "New Suggestion!") {
-        await message.reply(
-          "Sorry, but this does not appear to be a suggestion message."
+      if (!suggestion || suggestion.title !== "Someone had an idea:") {
+        await message.channel.send(
+          "That is not a suggestion. I'm not messing with that."
         );
         await message.react(Becca.no);
         return;
       }
 
       if (suggestion.fields.length) {
-        await message.reply(
-          "Sorry, but it looks like someone has already taken action on this suggestion."
+        await message.channel.send(
+          "I already put a decision on this one. We cannot do it again."
         );
         await message.react(Becca.no);
         return;
@@ -99,7 +101,7 @@ const suggestion: CommandInt = {
 
       target.edit(suggestion);
 
-      await channel.send("Okay, I have updated that suggestion.");
+      await channel.send("Signed, sealed, and delivered.");
       await message.react(Becca.yes);
     } catch (error) {
       await beccaErrorHandler(

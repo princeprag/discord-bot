@@ -20,9 +20,7 @@ const pokenum: CommandInt = {
 
       // Check if the pokemon number is not valid.
       if (!numberArg || (isNaN(Number(numberArg)) && numberArg !== "random")) {
-        await message.reply(
-          "Would you please try the command again, and provide the Pokemon number you want me to search for?"
-        );
+        await message.channel.send("Which Pokedex entry number do you want?");
         await message.react(message.Becca.no);
         return;
       }
@@ -37,8 +35,8 @@ const pokenum: CommandInt = {
 
       // Check if the number is not between 0 and 802.
       if (number < 0 || number > 802) {
-        await message.reply(
-          "I am sorry, but that number is not right. Please choose a number between 0 and 802 (inclusive)"
+        await message.channel.send(
+          "My Pokedex goes from 0 to 802. Try again, with a valid number this time."
         );
 
         return;
@@ -78,25 +76,27 @@ const pokenum: CommandInt = {
             name: "Abilities",
             value:
               pokemon.abilities.map((el) => el.ability.name).join(", ") ||
-              "no abilities found",
+              "I do not know this Pokemon's abilities.",
           },
           {
             name: "Forms",
             value:
-              pokemon.forms.map((el) => el.name).join(", ") || "no forms found",
+              pokemon.forms.map((el) => el.name).join(", ") ||
+              "This Pokemon does not seem to have any special forms.",
           },
           {
             name: "Held Items",
             value:
               pokemon.held_items.map((el) => el.item.name).join(", ") ||
-              "no items found",
+              "Hmm, there were no items in this Pokemon's hand.",
           },
           {
             name: "Stats",
             value:
               pokemon.stats
                 .map((el) => `${el.stat.name}: ${el.base_stat}`)
-                .join(", ") || "no stats found",
+                .join(", ") ||
+              "I am not sure where this Pokemon's talents lie.",
           }
         );
         pokeEmbed.setColor(Becca.color);

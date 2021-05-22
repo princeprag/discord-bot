@@ -31,8 +31,8 @@ const ping: CommandInt = {
       //Add speed comment
       const speed =
         pingTime < 90
-          ? "I had my coffee today!"
-          : "I am sorry for being so slow...";
+          ? "I was bored anyway."
+          : "Kind of in the middle of something here...";
 
       // Edit the ping message with the ping time.
       await pingMessage.edit(

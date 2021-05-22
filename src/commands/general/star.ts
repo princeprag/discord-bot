@@ -32,8 +32,8 @@ const star: CommandInt = {
 
       // Check if the user mention is valid.
       if (!userToStarMention || !userToStarMentioned || !mentions.members) {
-        await message.reply(
-          "Would you please try the command again, and provide the user mention that you want me to send a star to?"
+        await message.channel.send(
+          "If I am going to carry this star around, you could at least tell me who to deliver it to..."
         );
         await message.react(message.Becca.no);
         return;
@@ -44,8 +44,8 @@ const star: CommandInt = {
 
       // Check if the user mention string and the first user mention id are equals.
       if (userToStarMention !== userToStarMentioned.id) {
-        await message.reply(
-          `I am so sorry, but ${userToStarMentioned.toString()} is not a valid user.`
+        await message.channel.send(
+          `${userToStarMentioned.toString()} does not seem to be a real person. I cannot deliver stars to your imaginary friends.`
         );
         await message.react(message.Becca.no);
         return;
@@ -53,8 +53,8 @@ const star: CommandInt = {
 
       // Check if trying to star itself.
       if (userToStarMentioned.id === author.id) {
-        await message.reply(
-          "I am so sorry, but you cannot give yourself a star! I still love you though."
+        await message.channel.send(
+          "It is good to have pride, but giving yourself a star is a bit much."
         );
         await message.react(message.Becca.no);
         return;
@@ -65,7 +65,8 @@ const star: CommandInt = {
 
       // Add a default reason if it not provided.
       if (!reason || !reason.length) {
-        reason = "I am sorry, but the user did not provide a reason.";
+        reason =
+          "They did not say why. Let's assume you did something really impressive, though.";
       }
 
       let starData = await StarCountModel.findOne({ serverID: guild.id });
@@ -106,15 +107,15 @@ const star: CommandInt = {
       await channel.send(
         new MessageEmbed()
           .setTitle(
-            `Congratulations, ${userToStarMentioned.username}, you got a gold star!`
+            `${userToStarMentioned.username}, this gold star is for you.`
           )
           .setDescription(
-            `${author.toString()} has given this shiny gold star to you!`
+            `${author.toString()} wants you to carry this around. Forever.`
           )
           .addField("Reason", reason)
           .attachFiles(attachment)
           .setImage("attachment://star.png")
-          .setFooter(`You now have ${starTotal} stars!`)
+          .setFooter(`You're now carrying ${starTotal} of these. Enjoy.`)
       );
 
       await message.react(message.Becca.yes);

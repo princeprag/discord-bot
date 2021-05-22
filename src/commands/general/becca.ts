@@ -14,7 +14,7 @@ const beccaCommand: CommandInt = {
       beccaEmbed.setTitle("Becca Lyria");
       beccaEmbed.setThumbnail(Becca.user?.avatarURL({ dynamic: true }) || "");
       beccaEmbed.setDescription(
-        "You want to know more about me? That is sweet - you can check out my [profile site](https://www.beccalyria.com)!"
+        "If you want to read about my adventures, check my [profile site](https://www.beccalyria.com). I would rather not have to recount them all here."
       );
       await channel.send(beccaEmbed);
       await message.react(message.Becca.yes);

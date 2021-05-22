@@ -42,8 +42,7 @@ async function onMessageUpdate(
         {
           name: "Old content",
           value: customSubstring(
-            oldMessage.content ||
-              "I am so sorry, but I could not find that message.",
+            oldMessage.content || "*Hmm, that message was blank...*",
             1024
           ),
         },
@@ -51,21 +50,17 @@ async function onMessageUpdate(
           name: "New content",
           value: customSubstring(
             newMessage.content ||
-              "I am so sorry, but I could not find that message.",
+              "*Why did they make their new message blank?*",
             1024
           ),
         },
         {
           name: "Author",
-          value:
-            author.toString() ||
-            "I am so sorry, but I could not find that user.",
+          value: author.toString() || "This user has hidden from me very well.",
         },
         {
           name: "Message URL",
-          value:
-            newMessage.url ||
-            "I am so sorry, but I could not find that message's url.",
+          value: newMessage.url || "I seem to have misplaced the link.",
         }
       )
     );

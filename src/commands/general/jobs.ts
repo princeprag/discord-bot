@@ -27,7 +27,7 @@ const jobs: CommandInt = {
       await channel.send(
         new MessageEmbed()
           .setColor("#0E76A8")
-          .setTitle("Job search!")
+          .setTitle("Looking for work?")
           .setDescription(`[Here are some potential jobs for you.](${url})`)
       );
       await message.react(message.Becca.yes);
