@@ -49,7 +49,7 @@ async function onGuildMemberAdd(
 
     // Set a default welcome message.
     let welcomeMessage =
-      "Hello `{@username}`! Welcome to {@servername}! My name is Becca, and I am here to help!";
+      "Hello `{@username}`! Welcome to {@servername}! My name is Becca. Feel free to let me know if you need anything.";
 
     // Get the custom welcome message from the database.
     const welcomeMessageSetting = serverSettings.custom_welcome;
@@ -73,7 +73,7 @@ async function onGuildMemberAdd(
     await (welcomesChannel as TextChannel).send(
       new MessageEmbed()
         .setColor("#AB47E6")
-        .setTitle("A new user has joined! 🙃")
+        .setTitle("I see we have a new member")
         .setDescription(welcomeMessage)
     );
   } catch (error) {

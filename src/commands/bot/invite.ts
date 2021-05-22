@@ -5,8 +5,8 @@ import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 const INVITE_CONSTANTS = {
   title: "Invite Becca!",
   description:
-    "Thank you for your desire to allow me in your server. Here is an [invite link](http://invite.beccalyria.com) - please click to add me!.",
-  footer: "I feel so happy! 💜",
+    "I suppose I could provide my services to your guild. Click this [invite link](http://invite.beccalyria.com) and I will come serve you.",
+  footer: "I look forward to working with you.",
 };
 
 const invite: CommandInt = {

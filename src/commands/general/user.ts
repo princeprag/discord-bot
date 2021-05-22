@@ -30,9 +30,7 @@ const user: CommandInt = {
       userEmbed.setThumbnail(target.user.displayAvatarURL({ dynamic: true }));
 
       // Add the description.
-      userEmbed.setDescription(
-        `This is the information I could find on ${target.toString()}`
-      );
+      userEmbed.setDescription(`Here are my records for ${target.toString()}`);
 
       // Add the creation date to an embed field.
       userEmbed.addField(

@@ -5,7 +5,7 @@ import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 const SUPPORT_CONSTANTS = {
   title: "Do you need some help?",
   description:
-    "I am sorry if I couldn't explain things well enough. You can join my [support server](http://chat.nhcarrigan.com) or check my [documentation page](https://beccalyria.nhcarrigan.com/) for some additional assistance.",
+    "I understand my talents can be a bit overwhelming. Do you need help understanding them? You can join my [support server](http://chat.nhcarrigan.com) or check my [documentation page](https://beccalyria.nhcarrigan.com/) for some additional assistance.",
 };
 
 const support: CommandInt = {

@@ -20,9 +20,7 @@ const kick: CommandInt = {
 
       // Check if the member has the kick members permission.
       if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
-        await message.reply(
-          "I am so sorry, but I can only do this for moderators with permission to kick members."
-        );
+        await message.reply("You are not high enough level to use this spell.");
         await message.react(message.Becca.no);
         return;
       }
@@ -36,7 +34,7 @@ const kick: CommandInt = {
       // Check if the user mention is valid.
       if (!userToKickMention || !userToKickMentioned || !mentions.members) {
         await message.reply(
-          "Would you please try the command again, and provide the user you want me to kick?"
+          "I do not swing my staff around like a madwoman. You need to tell me who I should hit."
         );
         await message.react(message.Becca.no);
         return;
@@ -56,7 +54,9 @@ const kick: CommandInt = {
 
       // Check if trying to kick itself.
       if (userToKickMentioned.id === author.id) {
-        await message.reply("Wait, what? You cannot kick yourself!");
+        await message.reply(
+          "Umm... what? Why bother me for that? You are more than capable of walking out yourself."
+        );
         await message.react(message.Becca.no);
         return;
       }
@@ -67,7 +67,7 @@ const kick: CommandInt = {
       // Check if the member mention exists.
       if (!memberToKickMentioned) {
         await message.reply(
-          "Would you please try the command again, and provide the user you want me to kick?"
+          "I do not swing my staff around like a madwoman. You need to tell me who I should hit."
         );
         await message.react(message.Becca.no);
         return;
@@ -79,7 +79,7 @@ const kick: CommandInt = {
         memberToKickMentioned.id === user.id
       ) {
         await message.reply(
-          "You want to kick me? Oh no! Did I do something wrong?"
+          "I have no intention of walking away from here yet."
         );
         await message.react(message.Becca.no);
         return;
@@ -90,7 +90,7 @@ const kick: CommandInt = {
 
       // Add a default reason if it not provided.
       if (!reason || !reason.length) {
-        reason = "I am sorry, but the moderator did not give a reason.";
+        reason = "They did not tell me why.";
       }
 
       // Check if the user is kickable.
@@ -129,13 +129,13 @@ const kick: CommandInt = {
         )
         .catch(async () => {
           await message.reply(
-            "Sorry, but I could not send that user the kick message. It appears their DMs are locked."
+            "I was not able to notify the user that this is happening."
           );
         });
 
       // Kick the user with the reason.
       await memberToKickMentioned.kick(reason);
-      await message.reply("Okay, I have kicked them.");
+      await message.reply("They have been evicted.");
 
       await message.react(message.Becca.yes);
     } catch (error) {

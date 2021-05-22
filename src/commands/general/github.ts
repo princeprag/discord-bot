@@ -20,7 +20,7 @@ const github: CommandInt = {
       // Check if the user exists.
       if (!user) {
         await message.reply(
-          "Would you please try the command again, and provide the username you want me to search for?"
+          "If I am going to go all that way, you'll need to tell me who I am looking for."
         );
         await message.react(message.Becca.no);
         return;
@@ -37,7 +37,7 @@ const github: CommandInt = {
       // Check if the user exists on GitHub.
       if (ghUser.message === "Not Found") {
         await channel.send(
-          "I am so sorry, but I was not able to find anything..."
+          "I hate coming back empty handed, but there weren't any records on that user."
         );
         await message.react(message.Becca.no);
         return;

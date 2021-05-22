@@ -35,7 +35,7 @@ const level: CommandInt = {
 
         if (userToStr !== userTo.id) {
           await message.reply(
-            `I am so sorry, but ${userToStr} is not a valid user.`
+            `${userToStr} does not seem to be on our roster.`
           );
           await message.react(message.Becca.no);
           return;
@@ -52,7 +52,7 @@ const level: CommandInt = {
       // Check if the server info does not exist.
       if (!server) {
         await message.reply(
-          "I am so sorry, but I have no record of that server."
+          "Strange. I seem to have misplaced my records for this guild."
         );
         await message.react(message.Becca.no);
         return;
@@ -64,7 +64,7 @@ const level: CommandInt = {
       // Check if no user
       if (!user) {
         await message.reply(
-          `I am so sorry, but I have no record of <@!${user_id}>. Please encourage them to interact more!`
+          `<@!${user_id}> is not participating in our activities, it seems.`
         );
         await message.react(message.Becca.no);
         return;
@@ -81,7 +81,7 @@ const level: CommandInt = {
 
       // Add the description.
       levelEmbed.setDescription(
-        `Here is the record I have for you in \`${guild.name}!\``
+        `Here is the record I have in \`${guild.name}!\``
       );
 
       // Add the user experience.
@@ -93,7 +93,7 @@ const level: CommandInt = {
       // Add the time they were last seen
       levelEmbed.addField(
         "Last Seen",
-        `I last saw them on ${new Date(user.lastSeen).toLocaleDateString()}`
+        `${new Date(user.lastSeen).toLocaleDateString()}`
       );
 
       // Send the embed to the current channel.

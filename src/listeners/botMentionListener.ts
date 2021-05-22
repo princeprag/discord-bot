@@ -25,9 +25,9 @@ const botMentionListener: ListenerInt = {
         await message.sleep(3000);
         channel.stopTyping();
         await message.channel.send(
-          `Hello! Was there something I could help you with? Try \`${
+          `What can I do for you? Cast \`${
             Becca.prefix[guild.id]
-          }help\` to see what I can do for you! 💜`
+          }help\` to see my spells. 💜`
         );
       }
     } catch (error) {

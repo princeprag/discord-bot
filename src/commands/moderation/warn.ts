@@ -20,9 +20,7 @@ const warn: CommandInt = {
 
       // Check if the member has the kick members permission.
       if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
-        await message.reply(
-          "I am so sorry, but I can only do this for moderators with permission to kick members."
-        );
+        await message.reply("You are not high enough level to use this spell.");
         await message.react(message.Becca.no);
         return;
       }
@@ -35,9 +33,7 @@ const warn: CommandInt = {
 
       // Check if the user mention is valid.
       if (!userToWarnMention || !userToWarnMentioned || !mentions.members) {
-        await message.reply(
-          "Would you please try the command again, and provide the user you want me to warn?"
-        );
+        await message.reply("Who did you want me to scare today?");
         await message.react(message.Becca.no);
         return;
       }
@@ -56,7 +52,9 @@ const warn: CommandInt = {
 
       // Check if trying to warn itself.
       if (userToWarnMentioned.id === author.id) {
-        await message.reply("Wait, what? You cannot warn yourself!");
+        await message.reply(
+          "Consider yourself warned that you cannot warn yourself."
+        );
         await message.react(message.Becca.no);
         return;
       }
@@ -66,9 +64,7 @@ const warn: CommandInt = {
 
       // Check if the member mention exists.
       if (!memberToWarnMentioned) {
-        await message.reply(
-          "Would you please try the command again, and provide the user you want me to warn?"
-        );
+        await message.reply("Who did you want me to scare today?");
         await message.react(message.Becca.no);
         return;
       }
@@ -78,9 +74,7 @@ const warn: CommandInt = {
         userToWarnMentioned.id === user.id ||
         memberToWarnMentioned.id === user.id
       ) {
-        await message.reply(
-          "You want to warn me? Oh no! Did I do something wrong?"
-        );
+        await message.reply("Message heard. Loud and clear.");
         await message.react(message.Becca.no);
         return;
       }
@@ -90,7 +84,7 @@ const warn: CommandInt = {
 
       // Add a default reason if it not provided.
       if (!reason || !reason.length) {
-        reason = "I am sorry, but the moderator did not provide a reason.";
+        reason = "They did not tell me why.";
       }
 
       // Create a new empty embed.
@@ -124,7 +118,7 @@ const warn: CommandInt = {
         )
         .catch(async () => {
           await message.reply(
-            "Sorry, but I could not send that user a warning. It appears their DMs are locked."
+            "I was not able to give them this warning. It seems they are refusing messages."
           );
         });
       await message.react(message.Becca.yes);

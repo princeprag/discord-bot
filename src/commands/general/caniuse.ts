@@ -15,7 +15,7 @@ const caniuse: CommandInt = {
 
       if (!feature) {
         await message.reply(
-          "Would you please try the command again, and provide the browser feature you want me to look for?"
+          "Which feature are you trying to use? I need to know what to search for here."
         );
         await message.react(message.Becca.no);
         return;

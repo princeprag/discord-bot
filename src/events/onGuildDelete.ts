@@ -27,7 +27,7 @@ async function onGuildDelete(
 
       // Send a message to the debug channel.
       await debugChannelHook.send(
-        `${user.username} has left the ${name} server!`
+        `${user.username}'s services are no longer needed in \`${name}\`.`
       );
 
       // Delete the server settings.

@@ -30,7 +30,7 @@ const cat: CommandInt = {
       await sleep(1000);
 
       // Send a message to the current channel.
-      await channel.send("Oops! A cat walked across my keyboard!");
+      await channel.send("My familiar wanted to send you a message, it seems.");
       await message.react(message.Becca.yes);
     } catch (error) {
       await beccaErrorHandler(

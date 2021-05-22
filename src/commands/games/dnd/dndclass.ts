@@ -7,8 +7,9 @@ import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 const DNDCLASS_CONSTANT = {
   error: {
     no_query:
-      "Would you please try the command again, and provide the class you want me to search for?",
-    bad_data: "I am so sorry, but I was unable to find anything...",
+      "I cannot look for a class if you do not tell me which class to look for.",
+    bad_data:
+      "Hmm, I am not familiar with that profession. Are you sure you have given me the correct information?",
   },
   dndApi: "https://www.dnd5eapi.co/api/classes/",
   join_separator: ", ",

@@ -24,9 +24,9 @@ const role: CommandInt = {
       if (!targetRole) {
         const roleList = new MessageEmbed();
         roleList.setColor(message.Becca.color);
-        roleList.setTitle("Self-Assignable Roles");
+        roleList.setTitle("Available Titles");
         roleList.setDescription(
-          "These are the roles you can assign yourself: \n" +
+          "These are the titles you may claim: \n" +
             config.self_roles.map((el) => `<@&${el}>`).join("\n")
         );
 
@@ -42,7 +42,7 @@ const role: CommandInt = {
       // If not a valid role, exit.
       if (!guildRole) {
         await message.reply(
-          "I am so sorry, but that does not appear to be a valid role."
+          "That is not a valid title. You cannot make things up here."
         );
         return;
       }
@@ -50,7 +50,7 @@ const role: CommandInt = {
       // Check for self assignable
       if (!config.self_roles.includes(guildRole.id)) {
         await message.reply(
-          "I am so sorry, but I am not permitted to assign that role."
+          "I cannot grant you that title. You'll need to speak to someone higher up for that."
         );
         return;
       }
@@ -60,23 +60,21 @@ const role: CommandInt = {
 
       // exit if no member
       if (!member) {
-        await message.reply(
-          "I am so sorry, but I cannot find your member record."
-        );
+        await message.reply("Hmm, it seems your membership record is missing.");
         return;
       }
 
       // If has role, remove it
       if (member.roles.cache.has(guildRole.id)) {
         await member.roles.remove(guildRole);
-        await channel.send(`Okay, I have removed your \`${targetRole}\` role.`);
+        await channel.send(`You are no longer a \`${targetRole}\`.`);
         await message.react(message.Becca.yes);
         return;
       }
 
       // Add role
       await member.roles.add(guildRole);
-      await channel.send(`Okay, I have given you the \`${targetRole}\` role.`);
+      await channel.send(`I have made you a \`${targetRole}\` now.`);
       await message.react(message.Becca.yes);
     } catch (error) {
       await beccaErrorHandler(

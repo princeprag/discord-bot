@@ -3,12 +3,13 @@ import { MessageEmbed } from "discord.js";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const ABOUT_CONSTANT = {
-  title: "Greetings! My name is Becca Lyria!",
+  title: "Hey there. I'm Becca Lyria.",
   description: `I am a discord bot created by [nhcarrigan](https://www.nhcarrigan.com), with help from a few contributors.  You can view my [source code and contributor list](https://github.com/BeccaLyria/discord-bot) online.\r\n\r\nJoin the [official chat server](http://chat.nhcarrigan.com). I am named after nhcarrigan's old [DnD/RP character.](https://www.beccalyria.com)`,
   creationDate: `Sun May 31 2020`,
-  commandSuffix: " 🙃",
-  favouriteColor: "PURPLE! 💜",
-  footerMessage: "It is nice to meet you!",
+  commandSuffix: " spells",
+  favouriteColor: "It's purple, of course. Couldn't you tell?",
+  footerMessage:
+    "Now that we have introduced ourselves, it's time for an adventure.",
 };
 
 /**
@@ -50,7 +51,7 @@ const about: CommandInt = {
 
       // Add the available commands length.
       aboutEmbed.addField(
-        "Available commands",
+        "Available spells",
         `${new Set(Object.values(commands)).size}${
           ABOUT_CONSTANT.commandSuffix
         }`,

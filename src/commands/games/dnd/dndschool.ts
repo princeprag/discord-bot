@@ -15,9 +15,9 @@ const DNDSCHOOL_CONST = {
   },
   error: {
     no_query:
-      "Would you please try the command again, and provide the school of magic you want me to search for?",
-    bad_data: "I am so sorry, but I was unable to find anything...",
-    default: "I am so sorry, but I cannot do that at the moment.",
+      "I may be a sorcerer myself, but I cannot read your mind. Which school of magic did you want me to look for?",
+    bad_data:
+      "That is a particular type of magic that I am not familiar with. I will have to do some more research.",
   },
 };
 

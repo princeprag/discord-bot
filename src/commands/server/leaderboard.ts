@@ -19,7 +19,7 @@ const leaderboard: CommandInt = {
 
       if (!serverLevels) {
         await message.reply(
-          "Sorry, but I cannot find level data for your server."
+          "It would appear that rankings are not enabled here."
         );
         await message.react(Becca.no);
         return;

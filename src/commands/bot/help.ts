@@ -6,7 +6,7 @@ const HELP_CONSTANTS = {
   title: "Becca's commands",
   description: (prefix: string) =>
     `My available commands are below. The command name must be prefixed with \`${prefix}\`, just like the \`${prefix}help\` command used to get this message. For information on a specific command, please use \`${prefix}help <command>\`.`,
-  footer: "I hope I could help!",
+  footer: "Let me know if you need my services.",
   notFound: (prefix: string, commandName: string) =>
     `I am so sorry, but I could not find the \`${prefix}${commandName}\` command. Please try \`${prefix}help\` for a list of available commands.`,
 };
@@ -133,27 +133,24 @@ const help: CommandInt = {
 
       // Add the available commands.
       helpEmbed.addField(
-        "Bot-related Commands",
+        "Bot-related Spells",
         botCommandNames.sort().join(" | ")
       );
+      helpEmbed.addField("Emote Spells", emoteCommandNames.sort().join(" | "));
       helpEmbed.addField(
-        "Emote Commands",
-        emoteCommandNames.sort().join(" | ")
-      );
-      helpEmbed.addField(
-        "Game-related Commands",
+        "Game-related Spells",
         gameCommandNames.sort().join(" | ")
       );
       helpEmbed.addField(
-        "General Commands",
+        "General Spells",
         generalCommandNames.sort().join(" | ")
       );
       helpEmbed.addField(
-        "Moderation Commands",
+        "Moderation Spells",
         moderationCommandNames.sort().join(" | ")
       );
       helpEmbed.addField(
-        "Server Commands",
+        "Server Spells",
         serverCommandNames.sort().join(" | ")
       );
       // Add the footer.

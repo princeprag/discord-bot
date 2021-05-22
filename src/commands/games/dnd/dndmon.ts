@@ -7,8 +7,9 @@ import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 const DNDCLASS_CONSTANT = {
   error: {
     no_query:
-      "Would you please try the command again, and provide the monster you want me to search for?",
-    bad_data: "I am so sorry, but I was unable to find anything...",
+      "I cannot search for a monster if you do not tell me what monster to search for.",
+    bad_data:
+      "It seems you have discovered a new beast, as I have no records of that creature.",
   },
   dndApi: "https://www.dnd5eapi.co/api/monsters/",
   join_separator: ", ",

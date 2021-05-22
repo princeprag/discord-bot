@@ -15,7 +15,9 @@ const orbit: CommandInt = {
       const key = process.env.ORBIT_KEY;
 
       if (!key) {
-        await message.reply("Sorry, but I am missing access to this feature.");
+        await message.reply(
+          "I seem to have lost my keys to the Orrery. We will have to do this another day."
+        );
         await message.react(Becca.no);
         return;
       }
@@ -43,7 +45,7 @@ const orbit: CommandInt = {
 
       aggregateEmbed.setTitle("Community Engagement Leaderboard");
       aggregateEmbed.setDescription(
-        "This leaderboard represents our top members across all of nhcarrigan's community platforms."
+        "This leaderboard represents the global contributions for all of nhcarrigan's party members."
       );
       aggregateEmbed.setColor(Becca.color);
 

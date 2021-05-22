@@ -5,7 +5,7 @@ import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 const LISTENERS_CONSTANT = {
   title: "I am always listening...",
   description:
-    "For my commands to work, I have to listen to every message in the server. I check each message to see if you have called for my assistance. But did you know I also listen for other events? Here's what they are!",
+    "For my spells to work, I have sentinels that listen to every message in the server. I check each message to see if you have called for my assistance. But did you know my sentinels observe other events? Here's what they are:",
 };
 
 const listeners: CommandInt = {

@@ -15,9 +15,7 @@ const leave: CommandInt = {
 
       // Check if the author id is not the owner id.
       if (author.id !== process.env.OWNER_ID) {
-        await message.reply(
-          "I am so sorry, but I can only do this for nhcarrigan."
-        );
+        await message.reply("Only nhcarrigan may cast this spell.");
         await message.react(message.Becca.no);
         return;
       }
@@ -27,9 +25,7 @@ const leave: CommandInt = {
 
       // Check if the server id is empty - return list of servers.
       if (!serverID || !serverID.length) {
-        await message.reply(
-          "Would you please try the command again, and provide the server ID you wish for me to leave?"
-        );
+        await message.reply("Which guild should I resign from?");
         await message.react(message.Becca.no);
         return;
       }
@@ -39,9 +35,7 @@ const leave: CommandInt = {
 
       // Check if the target guild is not valid.
       if (!targetGuild) {
-        await message.reply(
-          `I am so sorry, but \`${serverID}\` is not a valid server ID.`
-        );
+        await message.reply(`\`${serverID}\` is not a guild I recognise.`);
         await message.react(message.Becca.no);
         return;
       }

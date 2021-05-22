@@ -19,7 +19,7 @@ const starcount: CommandInt = {
 
       if (!starCounts || !starCounts.users.length) {
         await message.reply(
-          "Sorry, but I cannot find anyone with stars in your server."
+          "It seems no one here is carrying around stars yet. You should probably fix that."
         );
         await message.react(Becca.no);
         return;

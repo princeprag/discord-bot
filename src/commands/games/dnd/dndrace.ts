@@ -34,9 +34,8 @@ const DNDRACE_CONST = {
     },
   },
   error: {
-    no_query:
-      "Would you please try the command again, and provide the race you want me to search for?",
-    bad_data: "I am so sorry, but I was unable to find anything...",
+    no_query: "Hold up. Which race did you want me to search for?",
+    bad_data: "That particular race is not listed in my records.",
   },
 };
 

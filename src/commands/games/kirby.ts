@@ -9,7 +9,7 @@ const kirby: CommandInt = {
     try {
       const { channel, sleep } = message;
 
-      await channel.send("Dance with me!");
+      await channel.send("Okay, fine. I'll dance for you.");
       await sleep(1000);
       await channel.send("<('.')>");
       await sleep(1000);

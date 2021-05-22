@@ -44,11 +44,11 @@ async function onGuildMemberRemove(
     await (goodbyeChannel as TextChannel).send(
       new MessageEmbed()
         .setColor("#AB47E7")
-        .setTitle("A user has left us!")
+        .setTitle("Well, goodbye then...")
         .setDescription(
           `${nickname || user.username} has left us. You will be missed!`
         )
-        .addField("The user had these roles:", roleList)
+        .addField("They had these titles:", roleList)
     );
   } catch (error) {
     await beccaErrorHandler(

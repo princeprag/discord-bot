@@ -18,9 +18,9 @@ const compliment: CommandInt = {
       // Send the embed message to the current channel.
       await channel.send(
         new MessageEmbed()
-          .setTitle("Hello! I hope you are having a good day!")
+          .setTitle("Okay, I will say something nice today.")
           .setDescription(compliments[random])
-          .setFooter("I love you. 💜")
+          .setFooter("How was that?")
       );
       await message.react(message.Becca.yes);
     } catch (error) {
