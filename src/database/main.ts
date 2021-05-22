@@ -30,7 +30,7 @@ async function connectDatabase(
       await debugChannelHook.send(
         `Becca ${
           node_env === "development" ? "Test " : ""
-        }has connected to the database.`
+        }has found her record room.`
       );
     }
   } catch (error) {

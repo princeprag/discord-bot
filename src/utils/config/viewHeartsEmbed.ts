@@ -9,12 +9,12 @@ export const viewHeartsEmbed = (
   const end = page * 10;
   const heartsEmbed = new MessageEmbed()
     .setTitle("Hearts")
-    .setFooter("These users will receive my love!")
+    .setFooter("I will throw endless hearts at these members:")
     .setDescription(
       config.hearts
         .map((el, i) => `#${++i}. <@!${el}> - ID: ${el}`)
         .slice(start, end)
-        .join("\n") || "No one :("
+        .join("\n") || "Oh, it seems you haven't selected anyone actually."
     )
     .setFooter(`Page ${page} of ${Math.ceil(config.hearts.length / 10)}`);
 
