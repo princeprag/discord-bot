@@ -155,11 +155,17 @@ const ban: CommandInt = {
         await Becca.sendMessageToLogsChannel(guild, banEmbed);
 
         // Send a message to the user.
-        await userToBanMentioned.send(
-          `**[Ban]** ${author.toString()} has banned you for the following reason: ${reason}`
-        );
-        // Ban the user.
+        await userToBanMentioned
+          .send(
+            `**[Ban]** ${author.toString()} has banned you for the following reason: ${reason}`
+          )
+          .catch(async () => {
+            await message.reply(
+              "Sorry, but I could not inform that user they were banned. It appears their DMs are locked."
+            );
+          });
         await memberToBanMentioned.ban({ reason });
+        // Ban the user.
         await message.react(message.Becca.yes);
       }
     } catch (error) {

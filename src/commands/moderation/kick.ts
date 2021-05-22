@@ -98,14 +98,6 @@ const kick: CommandInt = {
         throw new Error(`Not kickable user: ${userToKickMentioned.username}`);
       }
 
-      // Kick the user with the reason.
-      await memberToKickMentioned.kick(reason);
-
-      // Send a message to the user.
-      await userToKickMentioned.send(
-        `**[Kick]** ${author.toString()} has kicked you for the following reason: ${reason}`
-      );
-
       // Create a new empty embed.
       const kickLogEmbed = new MessageEmbed();
 
@@ -129,6 +121,22 @@ const kick: CommandInt = {
 
       // Send the embed to the logs channel.
       await Becca.sendMessageToLogsChannel(guild, kickLogEmbed);
+
+      // Send a message to the user.
+      await userToKickMentioned
+        .send(
+          `**[Kick]** ${author.toString()} has kicked you for the following reason: ${reason}`
+        )
+        .catch(async () => {
+          await message.reply(
+            "Sorry, but I could not send that user the kick message. It appears their DMs are locked."
+          );
+        });
+
+      // Kick the user with the reason.
+      await memberToKickMentioned.kick(reason);
+      await message.reply("Okay, I have kicked them.");
+
       await message.react(message.Becca.yes);
     } catch (error) {
       await beccaErrorHandler(

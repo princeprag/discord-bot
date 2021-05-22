@@ -118,9 +118,15 @@ const warn: CommandInt = {
       await Becca.sendMessageToLogsChannel(guild, warnLogEmbed);
 
       // Send a message to the user.
-      await userToWarnMentioned.send(
-        `**[Warning]** ${author.toString()} has warned you for the following reason: ${reason}`
-      );
+      await userToWarnMentioned
+        .send(
+          `**[Warning]** ${author.toString()} has warned you for the following reason: ${reason}`
+        )
+        .catch(async () => {
+          await message.reply(
+            "Sorry, but I could not send that user a warning. It appears their DMs are locked."
+          );
+        });
       await message.react(message.Becca.yes);
     } catch (error) {
       await beccaErrorHandler(
