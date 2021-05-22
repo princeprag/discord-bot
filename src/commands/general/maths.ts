@@ -29,7 +29,7 @@ const maths: CommandInt = {
 
       // Check if the problem is empty.
       if (!answer || !problem) {
-        await message.reply(
+        await message.channel.send(
           "Ahh, yes, I do love solving non-existent problems. Let's try that again, shall we?"
         );
         await message.react(message.Becca.no);

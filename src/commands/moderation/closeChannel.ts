@@ -20,7 +20,9 @@ const closeChannel: CommandInt = {
         !member ||
         !member.hasPermission("MANAGE_CHANNELS")
       ) {
-        await message.reply("You are not high enough level to use this skill.");
+        await message.channel.send(
+          "You are not high enough level to use this skill."
+        );
         await message.react(message.Becca.no);
         return;
       }
@@ -30,7 +32,7 @@ const closeChannel: CommandInt = {
 
       // Check if the channel name does not includes `suspended`.
       if (!channelToDelete.name.includes("suspended")) {
-        await message.reply("This room is not mine to close.");
+        await message.channel.send("This room is not mine to close.");
         await message.react(message.Becca.no);
         return;
       }

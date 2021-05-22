@@ -36,7 +36,7 @@ const dndschool: CommandInt = {
 
       // Check if the query is not empty.
       if (!query || !query.length) {
-        await message.reply(DNDSCHOOL_CONST.error.no_query);
+        await message.channel.send(DNDSCHOOL_CONST.error.no_query);
         await message.react(message.Becca.no);
         return;
       }
@@ -48,7 +48,7 @@ const dndschool: CommandInt = {
 
       // Check if the dnd school is not valid.
       if (!data.data || data.data.error) {
-        await message.reply(DNDSCHOOL_CONST.error.bad_data);
+        await message.channel.send(DNDSCHOOL_CONST.error.bad_data);
         await message.react(message.Becca.no);
         return;
       }

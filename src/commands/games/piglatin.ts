@@ -50,7 +50,7 @@ const pigLatin: CommandInt = {
       const { commandArguments, channel } = message;
 
       if (!commandArguments.length) {
-        await message.reply("But what do you want me to translate?");
+        await message.channel.send("But what do you want me to translate?");
         await message.react(message.Becca.no);
         return;
       }

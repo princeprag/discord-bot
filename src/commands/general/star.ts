@@ -32,7 +32,7 @@ const star: CommandInt = {
 
       // Check if the user mention is valid.
       if (!userToStarMention || !userToStarMentioned || !mentions.members) {
-        await message.reply(
+        await message.channel.send(
           "If I am going to carry this star around, you could at least tell me who to deliver it to..."
         );
         await message.react(message.Becca.no);
@@ -44,7 +44,7 @@ const star: CommandInt = {
 
       // Check if the user mention string and the first user mention id are equals.
       if (userToStarMention !== userToStarMentioned.id) {
-        await message.reply(
+        await message.channel.send(
           `${userToStarMentioned.toString()} does not seem to be a real person. I cannot deliver stars to your imaginary friends.`
         );
         await message.react(message.Becca.no);
@@ -53,7 +53,7 @@ const star: CommandInt = {
 
       // Check if trying to star itself.
       if (userToStarMentioned.id === author.id) {
-        await message.reply(
+        await message.channel.send(
           "It is good to have pride, but giving yourself a star is a bit much."
         );
         await message.react(message.Becca.no);

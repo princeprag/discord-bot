@@ -40,7 +40,7 @@ const help: CommandInt = {
 
         // Check if the command does not exist.
         if (!command) {
-          await message.reply(
+          await message.channel.send(
             HELP_CONSTANTS.notFound(prefix[guild.id], commandName)
           );
           await message.react(Becca.no);

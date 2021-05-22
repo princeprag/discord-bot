@@ -24,7 +24,7 @@ const space: CommandInt = {
       if (userDate) {
         // Check if the date has the `YYYY-MM-DD` format.
         if (!/[0-9]{4}-[0-9]{2}-[0-9]{2}/.test(userDate)) {
-          await message.reply(
+          await message.channel.send(
             `I am so sorry, but ${userDate} is not a valid date. Would you please try the command again, and use the format \`YYYY-MM-DD\`?`
           );
           await message.react(message.Becca.no);

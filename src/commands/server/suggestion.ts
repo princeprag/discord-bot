@@ -20,14 +20,16 @@ const suggestion: CommandInt = {
       }
 
       if (!member || !member.hasPermission("MANAGE_GUILD")) {
-        await message.reply("You are not high enough level to use this spell.");
+        await message.channel.send(
+          "You are not high enough level to use this spell."
+        );
         await message.react(Becca.no);
         return;
       }
       const action = commandArguments.shift();
 
       if (action !== "approve" && action !== "deny") {
-        await message.reply(
+        await message.channel.send(
           `I cannot do ${action} to a suggestion. Would you like to approve or deny this suggestion?`
         );
         await message.react(Becca.no);
@@ -37,7 +39,7 @@ const suggestion: CommandInt = {
       const id = commandArguments.shift();
 
       if (!id) {
-        await message.reply(
+        await message.channel.send(
           "Can you tell me what suggestion ID to find? I'm not going to sit here and guess."
         );
         return;
@@ -48,7 +50,9 @@ const suggestion: CommandInt = {
       );
 
       if (!suggestionChannel) {
-        await message.reply("So... where exactly *are* your suggestions?");
+        await message.channel.send(
+          "So... where exactly *are* your suggestions?"
+        );
         await message.react(Becca.no);
         return;
       }
@@ -58,7 +62,7 @@ const suggestion: CommandInt = {
       );
 
       if (!target) {
-        await message.reply(
+        await message.channel.send(
           "It seems that suggestion fell off the notice board."
         );
         await message.react(Becca.no);
@@ -68,7 +72,7 @@ const suggestion: CommandInt = {
       const suggestion = target.embeds[0];
 
       if (!suggestion || suggestion.title !== "Someone had an idea:") {
-        await message.reply(
+        await message.channel.send(
           "That is not a suggestion. I'm not messing with that."
         );
         await message.react(Becca.no);
@@ -76,7 +80,7 @@ const suggestion: CommandInt = {
       }
 
       if (suggestion.fields.length) {
-        await message.reply(
+        await message.channel.send(
           "I already put a decision on this one. We cannot do it again."
         );
         await message.react(Becca.no);

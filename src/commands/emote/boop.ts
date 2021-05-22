@@ -23,13 +23,13 @@ const boop: CommandInt = {
       const target = mentions.users.first();
 
       if (!target) {
-        await message.reply("Sorry, but who did you want me to boop?");
+        await message.channel.send("Sorry, but who did you want me to boop?");
         await message.react(Becca.no);
         return;
       }
 
       if (target === author) {
-        await message.reply("Booping yourself? Cute!");
+        await message.channel.send("Booping yourself? Cute!");
         await message.react(Becca.yes);
         return;
       }

@@ -12,7 +12,7 @@ const resetStar: CommandInt = {
 
       if (!guild) {
         await message.react(Becca.no);
-        await message.reply(
+        await message.channel.send(
           "Hmm, that is strange. Your guild does not seem to officially exist."
         );
         return;
@@ -20,7 +20,7 @@ const resetStar: CommandInt = {
 
       if (!member?.hasPermission("MANAGE_GUILD")) {
         await message.react(Becca.no);
-        await message.reply(
+        await message.channel.send(
           "You are not high enough level to cast this spell."
         );
         return;
@@ -30,7 +30,7 @@ const resetStar: CommandInt = {
 
       if (!starData) {
         await message.react(Becca.no);
-        await message.reply(
+        await message.channel.send(
           "No one is carrying any stars right now. This spell would have no effect."
         );
         return;

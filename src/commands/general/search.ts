@@ -17,7 +17,9 @@ const search: CommandInt = {
 
       // Check if the query is empty.
       if (!query || !query.length) {
-        await message.reply("Searching for nothing? Why disturb me, then?");
+        await message.channel.send(
+          "Searching for nothing? Why disturb me, then?"
+        );
         await message.react(message.Becca.no);
         return;
       }

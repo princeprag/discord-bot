@@ -24,7 +24,9 @@ const joke: CommandInt = {
 
       // Check if the status is not 200.
       if (status !== 200) {
-        await message.reply("I am not in the mood for humour right now.");
+        await message.channel.send(
+          "I am not in the mood for humour right now."
+        );
         await message.react(message.Becca.no);
         return;
       }

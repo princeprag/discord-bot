@@ -34,7 +34,7 @@ const level: CommandInt = {
         userToStr = userToStr.replace(/[<@!>]/gi, "");
 
         if (userToStr !== userTo.id) {
-          await message.reply(
+          await message.channel.send(
             `${userToStr} does not seem to be on our roster.`
           );
           await message.react(message.Becca.no);
@@ -51,7 +51,7 @@ const level: CommandInt = {
 
       // Check if the server info does not exist.
       if (!server) {
-        await message.reply(
+        await message.channel.send(
           "Strange. I seem to have misplaced my records for this guild."
         );
         await message.react(message.Becca.no);
@@ -63,7 +63,7 @@ const level: CommandInt = {
 
       // Check if no user
       if (!user) {
-        await message.reply(
+        await message.channel.send(
           `<@!${user_id}> is not participating in our activities, it seems.`
         );
         await message.react(message.Becca.no);

@@ -32,7 +32,9 @@ export const beccaErrorHandler = async (
 
   if (message) {
     await message.react(message.Becca.no);
-    await message.reply("That spell seems to have failed. Not sure why.");
+    await message.channel.send(
+      "That spell seems to have failed. Not sure why."
+    );
   }
 
   beccaLogger.log(

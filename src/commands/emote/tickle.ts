@@ -23,13 +23,15 @@ const tickle: CommandInt = {
       const target = mentions.users.first();
 
       if (!target) {
-        await message.reply("Sorry, but who did you want me to tickle?");
+        await message.channel.send("Sorry, but who did you want me to tickle?");
         await message.react(Becca.no);
         return;
       }
 
       if (target === author) {
-        await message.reply("I don't believe you can tickle yourself...");
+        await message.channel.send(
+          "I don't believe you can tickle yourself..."
+        );
         await message.react(Becca.no);
         return;
       }

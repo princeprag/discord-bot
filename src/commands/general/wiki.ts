@@ -15,7 +15,7 @@ const wiki: CommandInt = {
 
       // Check if the query is empty.
       if (!query || !query.length) {
-        await message.reply(
+        await message.channel.send(
           "There are an almost infinite number of records here. You're going to have to tell me what to look for."
         );
         await message.react(message.Becca.no);

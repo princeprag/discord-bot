@@ -33,7 +33,7 @@ const art: CommandInt = {
       artEmbed.setFooter("Would you like to paint my portrait too?");
 
       //send it!
-      await message.reply(artEmbed);
+      await message.channel.send(artEmbed);
       await message.react(message.Becca.yes);
     } catch (error) {
       await beccaErrorHandler(

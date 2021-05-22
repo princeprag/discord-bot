@@ -20,7 +20,9 @@ const warn: CommandInt = {
 
       // Check if the member has the kick members permission.
       if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
-        await message.reply("You are not high enough level to use this spell.");
+        await message.channel.send(
+          "You are not high enough level to use this spell."
+        );
         await message.react(message.Becca.no);
         return;
       }
@@ -33,7 +35,7 @@ const warn: CommandInt = {
 
       // Check if the user mention is valid.
       if (!userToWarnMention || !userToWarnMentioned || !mentions.members) {
-        await message.reply("Who did you want me to scare today?");
+        await message.channel.send("Who did you want me to scare today?");
         await message.react(message.Becca.no);
         return;
       }
@@ -43,7 +45,7 @@ const warn: CommandInt = {
 
       // Check if the user mention string and the first user mention id are equals.
       if (userToWarnMention !== userToWarnMentioned.id) {
-        await message.reply(
+        await message.channel.send(
           `I am so sorry, but ${userToWarnMentioned.toString()} is not a valid user.`
         );
         await message.react(message.Becca.no);
@@ -52,7 +54,7 @@ const warn: CommandInt = {
 
       // Check if trying to warn itself.
       if (userToWarnMentioned.id === author.id) {
-        await message.reply(
+        await message.channel.send(
           "Consider yourself warned that you cannot warn yourself."
         );
         await message.react(message.Becca.no);
@@ -64,7 +66,7 @@ const warn: CommandInt = {
 
       // Check if the member mention exists.
       if (!memberToWarnMentioned) {
-        await message.reply("Who did you want me to scare today?");
+        await message.channel.send("Who did you want me to scare today?");
         await message.react(message.Becca.no);
         return;
       }
@@ -74,7 +76,7 @@ const warn: CommandInt = {
         userToWarnMentioned.id === user.id ||
         memberToWarnMentioned.id === user.id
       ) {
-        await message.reply("Message heard. Loud and clear.");
+        await message.channel.send("Message heard. Loud and clear.");
         await message.react(message.Becca.no);
         return;
       }
@@ -117,7 +119,7 @@ const warn: CommandInt = {
           `**[Warning]** ${author.toString()} has warned you for the following reason: ${reason}`
         )
         .catch(async () => {
-          await message.reply(
+          await message.channel.send(
             "I was not able to give them this warning. It seems they are refusing messages."
           );
         });

@@ -14,7 +14,7 @@ const list: CommandInt = {
       const { guilds } = Becca;
 
       if (author.id !== process.env.OWNER_ID) {
-        await message.reply("Only nhcarrigan may cast this spell.");
+        await message.channel.send("Only nhcarrigan may cast this spell.");
         await message.react(Becca.no);
         return;
       }
@@ -78,7 +78,7 @@ const list: CommandInt = {
 
       // Check if the current page is valid.
       if (isNaN(currentPage) || currentPage <= 0 || currentPage > totalPages) {
-        await message.reply("That page does not exist.");
+        await message.channel.send("That page does not exist.");
         await message.react(message.Becca.no);
         return;
       }

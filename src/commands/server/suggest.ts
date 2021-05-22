@@ -22,7 +22,7 @@ const suggest: CommandInt = {
 
       if (!config.suggestion_channel) {
         await message.react(Becca.no);
-        await message.reply(
+        await message.channel.send(
           "The guild is not open to feedback at this time. Save your ideas for later."
         );
         return;
@@ -36,7 +36,7 @@ const suggest: CommandInt = {
 
       if (!suggestionChannel) {
         await message.react(Becca.no);
-        await message.reply(
+        await message.channel.send(
           "I am not sure where to put this. You should hold on to it for now."
         );
         return;

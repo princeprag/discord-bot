@@ -20,7 +20,7 @@ const pokenum: CommandInt = {
 
       // Check if the pokemon number is not valid.
       if (!numberArg || (isNaN(Number(numberArg)) && numberArg !== "random")) {
-        await message.reply("Which Pokedex entry number do you want?");
+        await message.channel.send("Which Pokedex entry number do you want?");
         await message.react(message.Becca.no);
         return;
       }
@@ -35,7 +35,7 @@ const pokenum: CommandInt = {
 
       // Check if the number is not between 0 and 802.
       if (number < 0 || number > 802) {
-        await message.reply(
+        await message.channel.send(
           "My Pokedex goes from 0 to 802. Try again, with a valid number this time."
         );
 

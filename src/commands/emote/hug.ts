@@ -23,13 +23,13 @@ const hug: CommandInt = {
       const target = mentions.users.first();
 
       if (!target) {
-        await message.reply("Sorry, but who did you want me to hug?");
+        await message.channel.send("Sorry, but who did you want me to hug?");
         await message.react(Becca.no);
         return;
       }
 
       if (target === author) {
-        await message.reply("Aww, are you lonely? Do you need a hug?");
+        await message.channel.send("Aww, are you lonely? Do you need a hug?");
         emoteEmbed.setTitle("HUG!");
         emoteEmbed.setDescription(`<@!${user?.id}> hugs <@!${author.id}>`);
         await message.channel.send(emoteEmbed);

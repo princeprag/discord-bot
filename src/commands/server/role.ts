@@ -41,7 +41,7 @@ const role: CommandInt = {
 
       // If not a valid role, exit.
       if (!guildRole) {
-        await message.reply(
+        await message.channel.send(
           "That is not a valid title. You cannot make things up here."
         );
         return;
@@ -49,7 +49,7 @@ const role: CommandInt = {
 
       // Check for self assignable
       if (!config.self_roles.includes(guildRole.id)) {
-        await message.reply(
+        await message.channel.send(
           "I cannot grant you that title. You'll need to speak to someone higher up for that."
         );
         return;
@@ -60,7 +60,9 @@ const role: CommandInt = {
 
       // exit if no member
       if (!member) {
-        await message.reply("Hmm, it seems your membership record is missing.");
+        await message.channel.send(
+          "Hmm, it seems your membership record is missing."
+        );
         return;
       }
 

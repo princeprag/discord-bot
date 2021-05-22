@@ -32,7 +32,9 @@ const config: CommandInt = {
         !member.hasPermission("MANAGE_GUILD") &&
         member.id !== process.env.OWNER_ID
       ) {
-        await message.reply(`You are not high enough level to use this spell.`);
+        await message.channel.send(
+          `You are not high enough level to use this spell.`
+        );
         await message.react(message.Becca.no);
         return;
       }
@@ -67,13 +69,15 @@ const config: CommandInt = {
       if (configType === "reset") {
         // If no setting provided, end.
         if (!key) {
-          await message.reply("Which setting did you want me to restore?");
+          await message.channel.send(
+            "Which setting did you want me to restore?"
+          );
           await message.react(message.Becca.no);
           return;
         }
 
         if (!keyList.includes(key)) {
-          await message.reply(`${key} is not a valid setting.`);
+          await message.channel.send(`${key} is not a valid setting.`);
           await message.react(message.Becca.no);
           return;
         }
@@ -90,13 +94,13 @@ const config: CommandInt = {
       if (configType === "set") {
         // If no setting provided, end.
         if (!key) {
-          await message.reply("Which setting should I transform?");
+          await message.channel.send("Which setting should I transform?");
           await message.react(message.Becca.no);
           return;
         }
 
         if (!keyList.includes(key)) {
-          await message.reply(`${key} is not a valid setting.`);
+          await message.channel.send(`${key} is not a valid setting.`);
           await message.react(message.Becca.no);
           return;
         }
@@ -105,7 +109,7 @@ const config: CommandInt = {
 
         // If no value provided, end.
         if (!value) {
-          await message.reply("What new form should this setting take?");
+          await message.channel.send("What new form should this setting take?");
           await message.react(message.Becca.no);
           return;
         }
@@ -120,7 +124,7 @@ const config: CommandInt = {
             (chan) => chan.id === value.replace(/\D/g, "")
           );
           if (!success) {
-            await message.reply(
+            await message.channel.send(
               `${value} is not a channel, so I would not be able to send messages there.`
             );
             await message.react(message.Becca.no);
@@ -138,7 +142,7 @@ const config: CommandInt = {
             (role) => role.id === value.replace(/\D/g, "")
           );
           if (!success && !config[key].includes(value.replace(/\D/g, ""))) {
-            await message.reply(
+            await message.channel.send(
               `${value} does not appear to be a title granted to your members.`
             );
             await message.react(message.Becca.no);
@@ -150,14 +154,14 @@ const config: CommandInt = {
         if (key === "hearts" || key === "blocked") {
           const mem = await guild.members.fetch(value.replace(/\D/g, ""));
           if (!mem && !config[key].includes(value.replace(/\D/g, ""))) {
-            await message.reply(
+            await message.channel.send(
               `${value} does not seem to be a person. Imaginary friends don't count.`
             );
             await message.react(message.Becca.no);
             return;
           }
           if (value.replace(/\D/g, "") === process.env.OWNER_ID) {
-            await message.reply(
+            await message.channel.send(
               key === "blocked"
                 ? "Wait a moment! I will not refuse to help my beloved."
                 : "My love for my darling can never be stopped."
@@ -170,7 +174,7 @@ const config: CommandInt = {
         // If setting toggle, check for off/on.
         if (key === "thanks" || key === "levels") {
           if (value !== "on" && value !== "off") {
-            await message.reply(
+            await message.channel.send(
               `${value} is not a valid option for ${key}. I can switch this one on or off. That's it.`
             );
             await message.react(message.Becca.no);
@@ -222,7 +226,7 @@ const config: CommandInt = {
         return;
       }
 
-      await message.reply(
+      await message.channel.send(
         `I cannot ${configType} anything here. I am not even sure what that means.`
       );
       await message.react(message.Becca.no);

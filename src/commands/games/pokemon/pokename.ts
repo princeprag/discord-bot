@@ -19,7 +19,7 @@ const pokename: CommandInt = {
 
       // Check if the pokemon name is empty.
       if (!name) {
-        await message.reply(
+        await message.channel.send(
           "Wait, what is the name of the pokemon you want me to search for?"
         );
         await message.react(message.Becca.no);
@@ -84,7 +84,7 @@ const pokename: CommandInt = {
             "Unknown error."
         );
 
-        await message.reply(
+        await message.channel.send(
           "My Pokedex has come up empty. Is that a new pokemon you have discovered?"
         );
       }

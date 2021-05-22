@@ -19,7 +19,7 @@ const github: CommandInt = {
 
       // Check if the user exists.
       if (!user) {
-        await message.reply(
+        await message.channel.send(
           "If I am going to go all that way, you'll need to tell me who I am looking for."
         );
         await message.react(message.Becca.no);

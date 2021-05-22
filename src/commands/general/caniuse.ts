@@ -14,7 +14,7 @@ const caniuse: CommandInt = {
       const feature = commandArguments.join("-");
 
       if (!feature) {
-        await message.reply(
+        await message.channel.send(
           "Which feature are you trying to use? I need to know what to search for here."
         );
         await message.react(message.Becca.no);

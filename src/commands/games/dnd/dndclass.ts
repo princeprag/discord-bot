@@ -30,7 +30,7 @@ const dndclass: CommandInt = {
 
       // Check if the query is not empty.
       if (!query || !query.length) {
-        await message.reply(DNDCLASS_CONSTANT.error.no_query);
+        await message.channel.send(DNDCLASS_CONSTANT.error.no_query);
         await message.react(message.Becca.no);
         return;
       }
@@ -42,7 +42,7 @@ const dndclass: CommandInt = {
 
       // Check if the dnd class is not valid.
       if (!data.data || data.data.error) {
-        await message.reply(DNDCLASS_CONSTANT.error.bad_data);
+        await message.channel.send(DNDCLASS_CONSTANT.error.bad_data);
         await message.react(message.Becca.no);
         return;
       }

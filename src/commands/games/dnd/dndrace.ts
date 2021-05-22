@@ -53,7 +53,7 @@ const dndrace: CommandInt = {
 
       // Check if the query is not empty.
       if (!query || !query.length) {
-        await message.reply(DNDRACE_CONST.error.no_query);
+        await message.channel.send(DNDRACE_CONST.error.no_query);
         await message.react(Becca.no);
         return;
       }
@@ -65,7 +65,7 @@ const dndrace: CommandInt = {
 
       // Check if the dnd race is not valid.
       if (!data.data || data.data.error) {
-        await message.reply(DNDRACE_CONST.error.bad_data);
+        await message.channel.send(DNDRACE_CONST.error.bad_data);
         await message.react(Becca.no);
         return;
       }

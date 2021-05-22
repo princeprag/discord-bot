@@ -15,7 +15,7 @@ const orbit: CommandInt = {
       const key = process.env.ORBIT_KEY;
 
       if (!key) {
-        await message.reply(
+        await message.channel.send(
           "I seem to have lost my keys to the Orrery. We will have to do this another day."
         );
         await message.react(Becca.no);
