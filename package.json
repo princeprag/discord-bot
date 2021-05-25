@@ -40,7 +40,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "@types/express": "4.17.11",
+    "@types/express": "4.17.12",
     "@types/mathjs": "9.3.2",
     "@types/mongoose": "5.10.5",
     "@types/node": "15.3.1",
