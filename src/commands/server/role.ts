@@ -24,9 +24,9 @@ const role: CommandInt = {
       if (!targetRole) {
         const roleList = new MessageEmbed();
         roleList.setColor(message.Becca.color);
-        roleList.setTitle("Available Titles");
+        roleList.setTitle("Available Charms");
         roleList.setDescription(
-          "These are the titles you may claim: \n" +
+          "These are the charms I can enchant you with: \n" +
             config.self_roles.map((el) => `<@&${el}>`).join("\n")
         );
 
@@ -42,7 +42,7 @@ const role: CommandInt = {
       // If not a valid role, exit.
       if (!guildRole) {
         await message.channel.send(
-          "That is not a valid title. You cannot make things up here."
+          "That is not a valid enchantment. You cannot make things up here."
         );
         return;
       }
@@ -50,7 +50,7 @@ const role: CommandInt = {
       // Check for self assignable
       if (!config.self_roles.includes(guildRole.id)) {
         await message.channel.send(
-          "I cannot grant you that title. You'll need to speak to someone higher up for that."
+          "I cannot cast that enchantment. You'll need to speak to someone higher up for that."
         );
         return;
       }
@@ -69,14 +69,16 @@ const role: CommandInt = {
       // If has role, remove it
       if (member.roles.cache.has(guildRole.id)) {
         await member.roles.remove(guildRole);
-        await channel.send(`You are no longer a \`${targetRole}\`.`);
+        await channel.send(
+          `You are no longer enchanted with \`${targetRole}\`.`
+        );
         await message.react(message.Becca.yes);
         return;
       }
 
       // Add role
       await member.roles.add(guildRole);
-      await channel.send(`I have made you a \`${targetRole}\` now.`);
+      await channel.send(`I have cast the \`${targetRole}\` charm on you.`);
       await message.react(message.Becca.yes);
     } catch (error) {
       await beccaErrorHandler(

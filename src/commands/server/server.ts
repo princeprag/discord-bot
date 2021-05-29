@@ -78,13 +78,6 @@ const server: CommandInt = {
       // Add the server roles count to an embed field.
       serverEmbed.addField("Titles", guild.roles.cache.size, true);
 
-      // Add the server roles names to an embed field.
-      serverEmbed.addField(
-        "Roles",
-        guild.roles.cache.map((role) => role.toString()).join(" "),
-        false
-      );
-
       // Add the server channels count to an embed field.
       serverEmbed.addField("Channel count", guild.channels.cache.size, true);
 
