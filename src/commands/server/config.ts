@@ -214,9 +214,9 @@ const config: CommandInt = {
         // Handle self roles
         if (key === "self_roles") {
           if (!newSettings.self_roles.includes(value.replace(/\D/g, ""))) {
-            confirmation = `I will no longer grant the ${value} title to people.`;
+            confirmation = `I will no longer cast the ${value} enchantment people.`;
           } else {
-            confirmation = `${value} can now be one of your titles, on request.`;
+            confirmation = `${value} can now be one of your charms, on request.`;
           }
         }
 
