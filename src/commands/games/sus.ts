@@ -21,6 +21,9 @@ const sus: CommandInt = {
         "brown",
         "cyan",
         "lime",
+        "tan",
+        "grey",
+        "rose",
       ];
       const colours = [
         "#f50101",
@@ -35,6 +38,9 @@ const sus: CommandInt = {
         "#70491e",
         "#28feee",
         "#4def3b",
+        "#928776",
+        "#738491",
+        "#efc3cf",
       ];
       const i = Math.floor(Math.random() * names.length);
       const embed = new MessageEmbed();
