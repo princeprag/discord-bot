@@ -1,7 +1,10 @@
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 import CommandInt from "../../interfaces/CommandInt";
-import { OrbitInt } from "../../interfaces/commands/OrbitInt";
+import {
+  IndividualOrbitInt,
+  OrbitInt,
+} from "../../interfaces/commands/OrbitInt";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 const orbit: CommandInt = {
@@ -10,7 +13,7 @@ const orbit: CommandInt = {
   category: "general",
   run: async (message) => {
     try {
-      const { Becca, channel } = message;
+      const { author, Becca, channel } = message;
 
       const key = process.env.ORBIT_KEY;
 
@@ -25,7 +28,7 @@ const orbit: CommandInt = {
       const aggregate: { name: string; love: number }[] = [];
 
       const data = await axios.get<OrbitInt>(
-        `https://app.orbit.love/api/v1/nhcarrigan/members?items=25&sort=love`,
+        `https://app.orbit.love/api/v1/nhcarrigan/members?items=10&sort=love`,
         {
           headers: {
             Accept: "application/json",
@@ -52,6 +55,23 @@ const orbit: CommandInt = {
       aggregate.forEach((user) => {
         aggregateEmbed.addField(user.name, `${user.love} Love points`, true);
       });
+
+      const authorData = await axios.get<IndividualOrbitInt>(
+        `https://app.orbit.love/api/v1/nhcarrigan/members/find?source=discord&username=${author.username}%23${author.discriminator}`,
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${key}`,
+          },
+          validateStatus: null,
+        }
+      );
+
+      const authorString = authorData.data.data
+        ? `${author.username} has ${authorData.data.data.attributes.love} love points.`
+        : `${author.username} has no Orbit record.`;
+
+      aggregateEmbed.addField("Your rank:", authorString);
 
       await channel.send(aggregateEmbed);
       await message.react(Becca.yes);
