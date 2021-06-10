@@ -2,6 +2,10 @@ export interface OrbitInt {
   data: OrbitMemberInt[];
 }
 
+export interface IndividualOrbitInt {
+  data: OrbitMemberInt;
+}
+
 export interface OrbitMemberInt {
   id: string;
   type: string;
