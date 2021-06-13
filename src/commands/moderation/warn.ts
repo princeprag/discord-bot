@@ -97,31 +97,19 @@ const warn: CommandInt = {
         reason = "They did not tell me why.";
       }
 
-      // Create a new empty embed.
       const warnLogEmbed = new MessageEmbed();
-
-      // Add the embed color.
       warnLogEmbed.setColor("#FFFF00");
-
-      // Add the embed title.
       warnLogEmbed.setTitle("Warning!");
-
-      // Add the moderator to an embed field.
-      warnLogEmbed.addField("Moderator", author.toString(), true);
-
-      // Add the user warned to an embed field.
-      warnLogEmbed.addField("User", userToWarnMentioned.toString(), true);
-
-      // Add the reason to an embed field.
+      warnLogEmbed.setDescription(`Warning issued by ${author.username}.`);
       warnLogEmbed.addField("Reason", reason);
-
-      // Add the current timestamp to the embed.
       warnLogEmbed.setTimestamp();
+      warnLogEmbed.setAuthor(
+        userToWarnMentioned.username + "#" + userToWarnMentioned.discriminator,
+        userToWarnMentioned.displayAvatarURL()
+      );
 
-      // Send the embed to the logs channel.
       await Becca.sendMessageToLogsChannel(guild, warnLogEmbed);
 
-      // Send a message to the user.
       await userToWarnMentioned
         .send(
           `**[Warning]:** ${author.username} has warned you in ${guild.name} for the following reason: ${reason}`

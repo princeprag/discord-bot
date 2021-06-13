@@ -30,16 +30,17 @@ async function onMessageDelete(
       .setTitle("A message was deleted")
       .setColor("#FF0000")
       .setDescription("Here is the record of that message:")
-      .addFields(
-        {
-          name: "Message author",
-          value: author || "This user is a ghost...",
-        },
-        {
-          name: "Channel",
-          value: channel.toString(),
-        }
+      .addFields({
+        name: "Channel",
+        value: channel.toString(),
+      });
+
+    if (author) {
+      deleteEmbed.setAuthor(
+        author.username + "#" + author.discriminator,
+        author.displayAvatarURL()
       );
+    }
 
     if (content) {
       deleteEmbed.addField("Message Content", customSubstring(content, 1024));

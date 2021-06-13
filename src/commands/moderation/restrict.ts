@@ -218,8 +218,7 @@ const restrict: CommandInt = {
         new MessageEmbed()
           .setColor("#FF0000")
           .setTitle("Access Restricted!")
-          .addField("Moderator", author.toString(), true)
-          .addField("User", userToRestrictMentioned.toString(), true)
+          .setDescription(`Member restricted by ${author.username}.`)
           .addField("Reason", reason)
           .addField(
             "The following roles were removed:",
@@ -227,6 +226,12 @@ const restrict: CommandInt = {
           )
           .setFooter("Perhaps you should review the rules.")
           .setTimestamp()
+          .setAuthor(
+            memberToRestrictMentioned.user.username +
+              "#" +
+              memberToRestrictMentioned.user.discriminator,
+            memberToRestrictMentioned.user.displayAvatarURL()
+          )
       );
 
       // Send an advertisement to the user.
