@@ -1,6 +1,7 @@
 import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import WarningModel from "../../database/models/WarningModel";
 
 const warn: CommandInt = {
   name: "warn",
@@ -130,6 +131,39 @@ const warn: CommandInt = {
             "I was not able to give them this warning. It seems they are refusing messages."
           );
         });
+
+      let serverWarns = await WarningModel.findOne({ serverID: guild.id });
+
+      if (!serverWarns) {
+        serverWarns = await WarningModel.create({
+          serverID: guild.id,
+          serverName: guild.name,
+          users: [],
+        });
+      }
+
+      const userWarns = await serverWarns.users.find(
+        (el) => (el.userID = userToWarnMentioned.id)
+      );
+
+      if (!userWarns) {
+        const newUser = {
+          userID: userToWarnMentioned.id,
+          userName: userToWarnMentioned.username,
+          lastWarnDate: Date.now(),
+          lastWarnText: reason,
+          warnCount: 1,
+        };
+        serverWarns.users.push(newUser);
+      } else {
+        userWarns.warnCount++;
+        userWarns.userName = userToWarnMentioned.username;
+        userWarns.lastWarnDate = Date.now();
+        userWarns.lastWarnText = reason;
+      }
+
+      serverWarns.markModified("users");
+      await serverWarns.save();
       await message.react(message.Becca.yes);
       await channel.send(
         "I have chastised them. I doubt they will be doing this again."
