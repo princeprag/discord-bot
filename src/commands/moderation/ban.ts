@@ -157,7 +157,7 @@ const ban: CommandInt = {
         // Send a message to the user.
         await userToBanMentioned
           .send(
-            `**[Ban]** ${author.toString()} has banned you for the following reason: ${reason}`
+            `**[Ban]** ${author.username} has banned you from ${guild.name} for the following reason: ${reason}`
           )
           .catch(async () => {
             await message.channel.send(

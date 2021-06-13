@@ -232,7 +232,7 @@ const restrict: CommandInt = {
       // Send an advertisement to the user.
       await memberToRestrictMentioned
         .send(
-          `Hello! I am sorry to bother you. It appears you have been suspended from **${guild.name}** for the following reason: ${reason} \n I have created a channel there for you to appeal this decision.`
+          `You have been suspended from **${guild.name}** by ${author.username} for the following reason: ${reason} \n I have created a channel there for you to appeal this decision.`
         )
         .catch(async () => {
           await message.channel.send(

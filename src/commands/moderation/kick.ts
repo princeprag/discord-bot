@@ -127,7 +127,7 @@ const kick: CommandInt = {
       // Send a message to the user.
       await userToKickMentioned
         .send(
-          `**[Kick]** ${author.toString()} has kicked you for the following reason: ${reason}`
+          `**[Kick]** ${author.username} has kicked you from ${guild.name} for the following reason: ${reason}`
         )
         .catch(async () => {
           await message.channel.send(

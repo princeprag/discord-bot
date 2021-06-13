@@ -13,8 +13,15 @@ const warn: CommandInt = {
   category: "moderation",
   run: async (message) => {
     try {
-      const { author, Becca, commandArguments, guild, member, mentions } =
-        message;
+      const {
+        author,
+        Becca,
+        channel,
+        commandArguments,
+        guild,
+        member,
+        mentions,
+      } = message;
 
       const { user } = Becca;
 
@@ -116,7 +123,7 @@ const warn: CommandInt = {
       // Send a message to the user.
       await userToWarnMentioned
         .send(
-          `**[Warning]** ${author.toString()} has warned you for the following reason: ${reason}`
+          `**[Warning]:** ${author.username} has warned you in ${guild.name} for the following reason: ${reason}`
         )
         .catch(async () => {
           await message.channel.send(
@@ -124,6 +131,9 @@ const warn: CommandInt = {
           );
         });
       await message.react(message.Becca.yes);
+      await channel.send(
+        "I have chastised them. I doubt they will be doing this again."
+      );
     } catch (error) {
       await beccaErrorHandler(
         error,
