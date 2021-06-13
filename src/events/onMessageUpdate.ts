@@ -30,7 +30,7 @@ async function onMessageUpdate(
     ) {
       return;
     }
-    // Check if the message is sended in a Discord server or the author is a bot.
+    // Check if the message is sent in a Discord server or the author is a bot.
     if (!guild || !author || author.bot) {
       return;
     }
@@ -38,31 +38,33 @@ async function onMessageUpdate(
     // Send an embed message to the logs channel.
     await Becca.sendMessageToLogsChannel(
       guild,
-      new MessageEmbed().setTitle("A message was updated!").addFields(
-        {
-          name: "Old content",
-          value: customSubstring(
-            oldMessage.content || "*Hmm, that message was blank...*",
-            1024
-          ),
-        },
-        {
-          name: "New content",
-          value: customSubstring(
-            newMessage.content ||
-              "*Why did they make their new message blank?*",
-            1024
-          ),
-        },
-        {
-          name: "Author",
-          value: author.toString() || "This user has hidden from me very well.",
-        },
-        {
-          name: "Message URL",
-          value: newMessage.url || "I seem to have misplaced the link.",
-        }
-      )
+      new MessageEmbed()
+        .setTitle("A message was updated!")
+        .addFields(
+          {
+            name: "Old content",
+            value: customSubstring(
+              oldMessage.content || "*Hmm, that message was blank...*",
+              1024
+            ),
+          },
+          {
+            name: "New content",
+            value: customSubstring(
+              newMessage.content ||
+                "*Why did they make their new message blank?*",
+              1024
+            ),
+          },
+          {
+            name: "Message URL",
+            value: newMessage.url || "I seem to have misplaced the link.",
+          }
+        )
+        .setAuthor(
+          author.username + "#" + author.discriminator,
+          author.displayAvatarURL()
+        )
     );
   } catch (error) {
     await beccaErrorHandler(

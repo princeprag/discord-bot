@@ -102,76 +102,36 @@ const ban: CommandInt = {
         reason = "They did not tell me why.";
       }
 
-      // Send the an advertisement about the action.
-      const botMessage = await message.channel.send(
-        "Wait! This action is irreversible. To proceed, react with '✅'."
+      const banEmbed = new MessageEmbed();
+      banEmbed.setColor("#FF0000");
+      banEmbed.setTitle("Banned!");
+      banEmbed.setDescription(`Member banned by ${author.username}.`);
+      banEmbed.addField("Reason", reason);
+      banEmbed.setFooter("Best of luck in your future adventures.");
+      banEmbed.setTimestamp();
+      banEmbed.setAuthor(
+        userToBanMentioned.username + "#" + userToBanMentioned.discriminator,
+        userToBanMentioned.displayAvatarURL()
       );
 
-      if (!botMessage.deleted) {
-        // Add the reactions.
-        await botMessage.react("❌");
-        await botMessage.react("✅");
+      await Becca.sendMessageToLogsChannel(guild, banEmbed);
 
-        // Get the first reaction with `✅` or `❌` of the moderator.
-        const collector = await botMessage.awaitReactions(
-          (reaction, user) =>
-            ["✅", "❌"].includes(reaction.emoji.name) && user.id === author.id,
-          { max: 1, time: 10000, errors: ["time"] }
-        );
+      await userToBanMentioned
+        .send(
+          `**[Ban]** ${author.username} has banned you from ${guild.name} for the following reason: ${reason}`
+        )
+        .catch(async () => {
+          await message.channel.send(
+            "That user has rejected my attempt to contact them, so I could not tell them why they were banned."
+          );
+        });
+      await memberToBanMentioned.ban({ reason });
 
-        // Get the first reaction from the reactions collector.
-        const reaction = collector.first();
-
-        // Check if the reaction is valid and is `✅`.
-        if (!reaction || reaction.emoji.name !== "✅") {
-          await message.channel.send("Changing your mind? Fair enough.");
-        }
-
-        // Create a new empty embed.
-        const banEmbed = new MessageEmbed();
-
-        // Add a red color.
-        banEmbed.setColor("#FF0000");
-
-        // Add the title.
-        banEmbed.setTitle("Banned!");
-
-        // Add the moderator mention.
-        banEmbed.addField("Moderator", author.toString(), true);
-
-        // Add the user banned mention.
-        banEmbed.addField("User banned", userToBanMentioned.toString(), true);
-
-        // Add the ban reason.
-        banEmbed.addField("Reason", reason);
-
-        // Add a footer.
-        banEmbed.setFooter("Best of luck in your future adventures.");
-
-        // Add the current timestamp.
-        banEmbed.setTimestamp();
-
-        // Send the embed to the logs channel.
-        await Becca.sendMessageToLogsChannel(guild, banEmbed);
-
-        // Send a message to the user.
-        await userToBanMentioned
-          .send(
-            `**[Ban]** ${author.toString()} has banned you for the following reason: ${reason}`
-          )
-          .catch(async () => {
-            await message.channel.send(
-              "That user has rejected my attempt to contact them, so I could not tell them why they were banned."
-            );
-          });
-        await memberToBanMentioned.ban({ reason });
-
-        await message.channel.send(
-          "Retribution is swift. That member is no more, and shall not return."
-        );
-        // Ban the user.
-        await message.react(message.Becca.yes);
-      }
+      await message.channel.send(
+        "Retribution is swift. That member is no more, and shall not return."
+      );
+      // Ban the user.
+      await message.react(message.Becca.yes);
     } catch (error) {
       await beccaErrorHandler(
         error,

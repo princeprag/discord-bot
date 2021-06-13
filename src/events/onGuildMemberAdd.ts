@@ -75,6 +75,10 @@ async function onGuildMemberAdd(
         .setColor("#AB47E6")
         .setTitle("I see we have a new member")
         .setDescription(welcomeMessage)
+        .setAuthor(
+          user.username + "#" + user.discriminator,
+          user.displayAvatarURL()
+        )
     );
   } catch (error) {
     await beccaErrorHandler(

@@ -49,6 +49,10 @@ async function onGuildMemberRemove(
           `${nickname || user.username} has left us. You will be missed!`
         )
         .addField("They had these titles:", roleList)
+        .setAuthor(
+          user.username + "#" + user.discriminator,
+          user.displayAvatarURL()
+        )
     );
   } catch (error) {
     await beccaErrorHandler(

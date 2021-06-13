@@ -100,34 +100,22 @@ const kick: CommandInt = {
         throw new Error(`Not kickable user: ${userToKickMentioned.username}`);
       }
 
-      // Create a new empty embed.
       const kickLogEmbed = new MessageEmbed();
-
-      // Add the color.
       kickLogEmbed.setColor("#ff8400");
-
-      // Add the embed title.
       kickLogEmbed.setTitle("Kicked!");
-
-      // Add the moderator to an embed field.
-      kickLogEmbed.addField("Moderator", author.toString(), true);
-
-      // Add the user kicked to an embed field.
-      kickLogEmbed.addField("User", userToKickMentioned.toString(), true);
-
-      // Add the kick reason to an embed field.
+      kickLogEmbed.setDescription(`Member kicked by ${author.username}`);
       kickLogEmbed.addField("Reason", reason);
-
-      // Add the current timestamp to the embed.
       kickLogEmbed.setTimestamp();
+      kickLogEmbed.setAuthor(
+        userToKickMentioned.username + "#" + userToKickMentioned.discriminator,
+        userToKickMentioned.displayAvatarURL()
+      );
 
-      // Send the embed to the logs channel.
       await Becca.sendMessageToLogsChannel(guild, kickLogEmbed);
 
-      // Send a message to the user.
       await userToKickMentioned
         .send(
-          `**[Kick]** ${author.toString()} has kicked you for the following reason: ${reason}`
+          `**[Kick]** ${author.username} has kicked you from ${guild.name} for the following reason: ${reason}`
         )
         .catch(async () => {
           await message.channel.send(

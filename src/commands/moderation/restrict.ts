@@ -218,8 +218,7 @@ const restrict: CommandInt = {
         new MessageEmbed()
           .setColor("#FF0000")
           .setTitle("Access Restricted!")
-          .addField("Moderator", author.toString(), true)
-          .addField("User", userToRestrictMentioned.toString(), true)
+          .setDescription(`Member restricted by ${author.username}.`)
           .addField("Reason", reason)
           .addField(
             "The following roles were removed:",
@@ -227,12 +226,18 @@ const restrict: CommandInt = {
           )
           .setFooter("Perhaps you should review the rules.")
           .setTimestamp()
+          .setAuthor(
+            memberToRestrictMentioned.user.username +
+              "#" +
+              memberToRestrictMentioned.user.discriminator,
+            memberToRestrictMentioned.user.displayAvatarURL()
+          )
       );
 
       // Send an advertisement to the user.
       await memberToRestrictMentioned
         .send(
-          `Hello! I am sorry to bother you. It appears you have been suspended from **${guild.name}** for the following reason: ${reason} \n I have created a channel there for you to appeal this decision.`
+          `You have been suspended from **${guild.name}** by ${author.username} for the following reason: ${reason} \n I have created a channel there for you to appeal this decision.`
         )
         .catch(async () => {
           await message.channel.send(
