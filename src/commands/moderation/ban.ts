@@ -107,12 +107,12 @@ const ban: CommandInt = {
       banEmbed.setTitle("Banned!");
       banEmbed.setDescription(`Member banned by ${author.username}.`);
       banEmbed.addField("Reason", reason);
-      banEmbed.setFooter("Best of luck in your future adventures.");
       banEmbed.setTimestamp();
       banEmbed.setAuthor(
         userToBanMentioned.username + "#" + userToBanMentioned.discriminator,
         userToBanMentioned.displayAvatarURL()
       );
+      banEmbed.setFooter(`\`ID: ${userToBanMentioned.id}\``);
 
       await Becca.sendMessageToLogsChannel(guild, banEmbed);
 

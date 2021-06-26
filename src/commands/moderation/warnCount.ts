@@ -75,6 +75,8 @@ const warnCount: CommandInt = {
         customSubstring(userWarns.lastWarnText, 1000)
       );
       warnEmbed.setColor(Becca.color);
+      warnEmbed.setTimestamp();
+      warnEmbed.setFooter(`\`ID: ${targetUser.id}\``);
 
       await channel.send(warnEmbed);
       await message.react(Becca.yes);

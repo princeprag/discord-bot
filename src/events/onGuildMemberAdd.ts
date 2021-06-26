@@ -79,6 +79,8 @@ async function onGuildMemberAdd(
           user.username + "#" + user.discriminator,
           user.displayAvatarURL()
         )
+        .setFooter(`\`ID: ${user.id}\``)
+        .setTimestamp()
     );
   } catch (error) {
     await beccaErrorHandler(

@@ -122,7 +122,7 @@ const unrestrict: CommandInt = {
           .addField("Moderator", author.toString(), true)
           .addField("User", userToUnrestrictMentioned.toString(), true)
           .addField("Reason", reason)
-          .setFooter("I recommend reviewing the rules here. Just to be safe.")
+          .setFooter(`\`ID: ${memberToUnrestrictMentioned.id}\``)
           .setTimestamp()
       );
 

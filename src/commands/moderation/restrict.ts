@@ -224,7 +224,7 @@ const restrict: CommandInt = {
             "The following roles were removed:",
             removedRoles.join("\n") || "none"
           )
-          .setFooter("Perhaps you should review the rules.")
+          .setFooter(`\`ID: ${userToRestrictMentioned.id}\``)
           .setTimestamp()
           .setAuthor(
             memberToRestrictMentioned.user.username +

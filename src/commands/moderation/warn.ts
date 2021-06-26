@@ -107,6 +107,7 @@ const warn: CommandInt = {
         userToWarnMentioned.username + "#" + userToWarnMentioned.discriminator,
         userToWarnMentioned.displayAvatarURL()
       );
+      warnLogEmbed.setFooter(`\`ID: ${userToWarnMentioned.id}\``);
 
       await Becca.sendMessageToLogsChannel(guild, warnLogEmbed);
 

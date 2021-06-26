@@ -33,13 +33,16 @@ async function onMessageDelete(
       .addFields({
         name: "Channel",
         value: channel.toString(),
-      });
+      })
+      .setTimestamp();
 
     if (author) {
-      deleteEmbed.setAuthor(
-        author.username + "#" + author.discriminator,
-        author.displayAvatarURL()
-      );
+      deleteEmbed
+        .setAuthor(
+          author.username + "#" + author.discriminator,
+          author.displayAvatarURL()
+        )
+        .setFooter(`\`Author: ${author.id} | Message: ${message.id}\``);
     }
 
     if (content) {

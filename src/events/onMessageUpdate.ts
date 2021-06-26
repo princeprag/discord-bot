@@ -65,6 +65,8 @@ async function onMessageUpdate(
           author.username + "#" + author.discriminator,
           author.displayAvatarURL()
         )
+        .setFooter(`\`Author: ${author.id} | Message: ${oldMessage.id}\``)
+        .setTimestamp()
     );
   } catch (error) {
     await beccaErrorHandler(
