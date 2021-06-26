@@ -110,6 +110,7 @@ const kick: CommandInt = {
         userToKickMentioned.username + "#" + userToKickMentioned.discriminator,
         userToKickMentioned.displayAvatarURL()
       );
+      kickLogEmbed.setFooter(`\`ID: ${userToKickMentioned.id}\``);
 
       await Becca.sendMessageToLogsChannel(guild, kickLogEmbed);
 
