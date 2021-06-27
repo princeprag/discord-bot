@@ -24,7 +24,7 @@
     "prebuild": "rm -rf ./prod",
     "build": "tsc",
     "lint": "eslint src",
-    "start": "node -r dotenv/config ./prod/serve.js",
+    "start": "node -r dotenv/config ./prod/index.js",
     "test": "echo 'No tests yet. Would you like to contribute some?'"
   },
   "dependencies": {
@@ -37,6 +37,7 @@
     "mathjs": "^9.4.0",
     "mongoose": "^5.12.10",
     "mongoose-encryption": "^2.1.0",
+    "spinnies": "^0.5.1",
     "winston": "^3.3.3"
   },
   "devDependencies": {
