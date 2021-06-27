@@ -14,5 +14,6 @@ export const disconnect = async (Becca: BeccaInt): Promise<void> => {
     } is no longer connected to Discord.`
   );
   disconnectEmbed.setTimestamp();
+  disconnectEmbed.setColor(Becca.colours.error);
   await Becca.debugHook.send(disconnectEmbed);
 };

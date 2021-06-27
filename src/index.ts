@@ -110,12 +110,12 @@ const initialiseBecca = async () => {
    * Fallthrough error handlers. These fire in rare cases where something throws
    * in a way that our standard catch block cannot see it.
    */
-  process.on("unhandledRejection", (error: Error) => {
-    beccaErrorHandler(Becca, "Unhandled Rejection Error", error);
+  process.on("unhandledRejection", async (error: Error) => {
+    await beccaErrorHandler(Becca, "Unhandled Rejection Error", error);
   });
 
-  process.on("uncaughtException", (error) => {
-    beccaErrorHandler(Becca, "Uncaught Exception Error", error);
+  process.on("uncaughtException", async (error) => {
+    await beccaErrorHandler(Becca, "Uncaught Exception Error", error);
   });
 };
 

@@ -34,6 +34,8 @@ export const guildDelete = async (
     guild.owner?.id || "No owner data available",
     true
   );
+  guildDeleteEmbed.setColor(Becca.colours.warning);
+  guildDeleteEmbed.setTimestamp();
 
   await Becca.debugHook.send(guildDeleteEmbed);
 

@@ -1,3 +1,4 @@
+import { MessageEmbed } from "discord.js";
 import { BeccaInt } from "../../interfaces/BeccaInt";
 
 /**
@@ -6,6 +7,16 @@ import { BeccaInt } from "../../interfaces/BeccaInt";
  * @param Becca Becca's Client instance.
  * @param shard The number of the shard that has come online.
  */
-export const shardReady = (Becca: BeccaInt, shard: number): void => {
-  Becca.debugHook.send(`Shard ${shard} is ready!`);
+export const shardReady = async (
+  Becca: BeccaInt,
+  shard: number
+): Promise<void> => {
+  const shardEmbed = new MessageEmbed();
+  shardEmbed.setTitle("Shard Online!");
+  shardEmbed.setDescription("Becca has brought a new shard online!");
+  shardEmbed.addField("Shard", shard);
+  shardEmbed.setTimestamp();
+  shardEmbed.setColor(Becca.colours.success);
+
+  await Becca.debugHook.send(shardEmbed);
 };

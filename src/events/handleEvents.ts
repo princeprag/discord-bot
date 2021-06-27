@@ -14,8 +14,11 @@ export const handleEvents = async (Becca: BeccaInt): Promise<void> => {
   /**
    * Handle shard events.
    */
-  Becca.on("shardReady", (shard) => shardReady(Becca, shard));
-  Becca.on("shardError", (error, shard) => shardError(Becca, error, shard));
+  Becca.on("shardReady", async (shard) => await shardReady(Becca, shard));
+  Becca.on(
+    "shardError",
+    async (error, shard) => await shardError(Becca, error, shard)
+  );
 
   /**
    * Handle Message events.

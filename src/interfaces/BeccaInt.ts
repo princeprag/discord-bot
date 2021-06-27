@@ -6,6 +6,7 @@ import { Client, WebhookClient } from "discord.js";
  * @property prefixData The data for server-specific prefixes.
  * @property debugHook The Discord Webhook Client for the error handler.
  * @property configs A map of the environment variables, assigned after validation.
+ * @property colours Colour mappings to use in embeds.
  */
 export interface BeccaInt extends Client {
   prefixData: {
@@ -27,5 +28,11 @@ export interface BeccaInt extends Client {
     no: string;
     think: string;
     version: string;
+  };
+  colours: {
+    default: string;
+    success: string;
+    warning: string;
+    error: string;
   };
 }

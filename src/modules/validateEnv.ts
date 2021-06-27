@@ -1,7 +1,8 @@
 import { BeccaInt } from "../interfaces/BeccaInt";
 
 /**
- * Function to validate that all environment variables are present.
+ * Function to validate that all environment variables are present. Loads those
+ * environment variables into Becca's Client instance. Also loads the colours.
  * @param Becca Becca's Client object
  * @returns Object containing a valid property as boolean, and a message as string.
  */
@@ -58,6 +59,15 @@ export const validateEnv = (
     };
 
     Becca.configs = configs;
+
+    const colours = {
+      default: "#8b4283",
+      success: "#1F8B4C",
+      warning: "#C27C0E",
+      error: "#992D22",
+    };
+
+    Becca.colours = colours;
 
     return { valid: true, message: "Environment variables validated!" };
   } catch (err) {

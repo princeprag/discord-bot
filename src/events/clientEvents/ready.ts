@@ -13,6 +13,7 @@ export const ready = async (Becca: BeccaInt): Promise<void> => {
     `${Becca.user?.username || "Becca Lyria"} has come online.`
   );
   readyEmbed.setTimestamp();
+  readyEmbed.setColor(Becca.colours.success);
   readyEmbed.setFooter(`Version ${Becca.configs.version}`);
 
   await Becca.debugHook.send(readyEmbed);

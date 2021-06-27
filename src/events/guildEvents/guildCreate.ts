@@ -29,6 +29,8 @@ export const guildCreate = async (
     guild.owner?.id || "No owner data available",
     true
   );
+  guildCreateEmbed.setColor(Becca.colours.success);
+  guildCreateEmbed.setTimestamp();
 
   await Becca.debugHook.send(guildCreateEmbed);
 };

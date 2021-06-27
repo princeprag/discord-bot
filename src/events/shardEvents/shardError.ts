@@ -7,10 +7,10 @@ import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
  * @param error Standard error object
  * @param shard The number of the shard that had an error
  */
-export const shardError = (
+export const shardError = async (
   Becca: BeccaInt,
   error: Error,
   shard: number
-): void => {
-  beccaErrorHandler(Becca, `shard ${shard}`, error);
+): Promise<void> => {
+  await beccaErrorHandler(Becca, `shard ${shard}`, error);
 };
