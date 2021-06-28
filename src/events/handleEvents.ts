@@ -3,6 +3,11 @@ import { disconnect } from "./clientEvents/disconnect";
 import { ready } from "./clientEvents/ready";
 import { guildCreate } from "./guildEvents/guildCreate";
 import { guildDelete } from "./guildEvents/guildDelete";
+import { memberAdd } from "./memberEvents/memberAdd";
+import { memberRemove } from "./memberEvents/memberRemove";
+import { messageDelete } from "./messageEvents/messageDelete";
+import { messageSend } from "./messageEvents/messageSend";
+import { messageUpdate } from "./messageEvents/messageUpdate";
 import { shardError } from "./shardEvents/shardError";
 import { shardReady } from "./shardEvents/shardReady";
 
@@ -23,9 +28,16 @@ export const handleEvents = async (Becca: BeccaInt): Promise<void> => {
   /**
    * Handle Message events.
    */
-  Becca.on("message", async (message) => null);
-  Becca.on("messageDelete", async (message) => null);
-  Becca.on("messageUpdate", async (message) => null);
+  Becca.on("message", async (message) => await messageSend(Becca, message));
+  Becca.on(
+    "messageDelete",
+    async (message) => await messageDelete(Becca, message)
+  );
+  Becca.on(
+    "messageUpdate",
+    async (oldMessage, newMessage) =>
+      await messageUpdate(Becca, oldMessage, newMessage)
+  );
 
   /**
    * Handle Guild events
@@ -36,8 +48,11 @@ export const handleEvents = async (Becca: BeccaInt): Promise<void> => {
   /**
    * Handle Member events.
    */
-  Becca.on("guildMemberAdd", async (member) => null);
-  Becca.on("guildMemberRemove", async (member) => null);
+  Becca.on("guildMemberAdd", async (member) => await memberAdd(Becca, member));
+  Becca.on(
+    "guildMemberRemove",
+    async (member) => await memberRemove(Becca, member)
+  );
 
   /**
    * Handle Client events.

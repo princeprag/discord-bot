@@ -24,6 +24,10 @@ Sentry.init({
 
 /**
  * Initialise spinner for logging
+ * @property add(name, {color, text}) Add a new spinner
+ * @property update(name, {color, text}) Update an existing spinner
+ * @property fail(name, {text}) Set a spinner to fail state
+ * @property succeed(name, {text}) Set a spinner to success state
  */
 const spinnies = new Spinnies();
 
@@ -39,16 +43,13 @@ const initialiseBecca = async () => {
     color: "magenta",
     text: "Validating Environment Variables",
   });
-
   const validatedEnvironment = validateEnv(Becca);
-
   if (!validatedEnvironment.valid) {
     spinnies.fail("validate-env", {
       text: validatedEnvironment.message,
     });
     return;
   }
-
   spinnies.succeed("validate-env", {
     text: validatedEnvironment.message,
   });
@@ -62,16 +63,13 @@ const initialiseBecca = async () => {
     color: "magenta",
     text: "Loading Database",
   });
-
   const databaseConnection = await connectDatabase(Becca);
-
   if (!databaseConnection) {
     spinnies.fail("connect-db", {
       text: "The database connection has failed.",
     });
     return;
   }
-
   spinnies.succeed("connect-db", {
     text: "Database loaded!",
   });
@@ -80,9 +78,7 @@ const initialiseBecca = async () => {
     color: "magenta",
     text: "Attaching event listeners",
   });
-
   await handleEvents(Becca);
-
   spinnies.succeed("events", {
     text: "Event listeners loaded!",
   });
@@ -91,17 +87,13 @@ const initialiseBecca = async () => {
     color: "magenta",
     text: "Connecting to Discord",
   });
-
   await Becca.login(Becca.configs.token);
-
   spinnies.update("discord", {
     text: "Setting activity",
   });
-
   await Becca.user?.setActivity("for people who need my help~!", {
     type: "WATCHING",
   });
-
   spinnies.succeed("discord", {
     text: "Discord ready!",
   });
