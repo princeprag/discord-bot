@@ -9,10 +9,7 @@ import { Client, WebhookClient } from "discord.js";
  * @property colours Colour mappings to use in embeds.
  */
 export interface BeccaInt extends Client {
-  prefixData: {
-    guildId: string;
-    prefix: string;
-  }[];
+  prefixData: Record<string, string>;
   debugHook: WebhookClient;
   configs: {
     token: string;
