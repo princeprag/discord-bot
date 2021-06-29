@@ -1,5 +1,6 @@
-import { Message, MessageEmbed } from "discord.js";
+import { Message } from "discord.js";
 import { BeccaInt } from "../BeccaInt";
+import { CommandResponseInt } from "./CommandResponseInt";
 
 /**
  * Defines the structure for Becca's commands.
@@ -14,5 +15,5 @@ export interface CommandInt {
   description: string;
   parameters: string[];
   category: string;
-  run: (Becca: BeccaInt, message: Message) => Promise<string | MessageEmbed>;
+  run: (Becca: BeccaInt, message: Message) => Promise<CommandResponseInt>;
 }

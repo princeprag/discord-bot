@@ -51,10 +51,10 @@ export const validateEnv = (
       habiticaKey: process.env.HABITICA_KEY,
       orbitKey: process.env.ORBIT_KEY,
       ownerId: process.env.OWNER_ID,
-      love: "",
-      yes: "",
-      no: "",
-      think: "",
+      love: process.env.BECCA_LOVE || "💜",
+      yes: process.env.BECCA_YES || "✅",
+      no: process.env.BECCA_NO || "❌",
+      think: process.env.BECCA_THINK || "🤔",
       version: process.env.npm_package_version || "null",
     };
 

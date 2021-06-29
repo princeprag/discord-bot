@@ -9,6 +9,7 @@ import { connectDatabase } from "./database/connectDatabase";
 import { beccaErrorHandler } from "./utils/beccaErrorHandler";
 import { handleEvents } from "./events/handleEvents";
 import { loadCommands } from "./commands/loadCommands";
+import { cachePrefixes } from "./modules/settings/cachePrefixes";
 
 /**
  * This block initialises the Sentry plugin.
@@ -88,6 +89,20 @@ const initialiseBecca = async () => {
   spinnies.succeed("connect-db", {
     text: "Database loaded!",
   });
+
+  spinnies.add("fetch-prefix", {
+    color: "magenta",
+    text: "Fetching prefix data",
+  });
+  const prefixes = await cachePrefixes(Becca);
+  if (!prefixes.length) {
+    spinnies.fail("fetch-prefix", { text: "No prefix data found." });
+  } else {
+    spinnies.succeed("fetch-prefix", {
+      text: `Loaded prefix data for ${prefixes.length} servers.`,
+    });
+  }
+  Becca.prefixData = prefixes;
 
   spinnies.add("events", {
     color: "magenta",

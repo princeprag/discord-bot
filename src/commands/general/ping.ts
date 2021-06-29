@@ -1,4 +1,5 @@
 import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const ping: CommandInt = {
@@ -8,7 +9,7 @@ export const ping: CommandInt = {
   category: "general",
   run: async (Becca, message) => {
     try {
-      return "pong";
+      return { success: true, content: "pong" };
     } catch (err) {
       beccaErrorHandler(
         Becca,
@@ -17,7 +18,7 @@ export const ping: CommandInt = {
         message.guild?.name,
         message
       );
-      return "no";
+      return { success: false, content: errorEmbedGenerator(Becca, "ping") };
     }
   },
 };
