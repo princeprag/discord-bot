@@ -1,4 +1,5 @@
 import { Client, WebhookClient } from "discord.js";
+import { CommandInt } from "./commands/CommandInt";
 
 /**
  * Model used to pass around Becca's client instance with additional
@@ -32,4 +33,5 @@ export interface BeccaInt extends Client {
     warning: string;
     error: string;
   };
+  commands: CommandInt[];
 }

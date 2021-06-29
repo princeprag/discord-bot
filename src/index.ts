@@ -8,6 +8,7 @@ import { validateEnv } from "./modules/validateEnv";
 import { connectDatabase } from "./database/connectDatabase";
 import { beccaErrorHandler } from "./utils/beccaErrorHandler";
 import { handleEvents } from "./events/handleEvents";
+import { loadCommands } from "./commands/loadCommands";
 
 /**
  * This block initialises the Sentry plugin.
@@ -58,6 +59,20 @@ const initialiseBecca = async () => {
     Becca.configs.hookId,
     Becca.configs.hookToken
   );
+
+  spinnies.add("load-commands", {
+    color: "magenta",
+    text: "Importing Commands",
+  });
+  const commands = await loadCommands(Becca);
+  Becca.commands = commands;
+  if (!commands.length) {
+    spinnies.fail("load-commands", { text: "Error loading commands." });
+    return;
+  }
+  spinnies.succeed("load-commands", {
+    text: `${Becca.commands.length} commands loaded!`,
+  });
 
   spinnies.add("connect-db", {
     color: "magenta",
