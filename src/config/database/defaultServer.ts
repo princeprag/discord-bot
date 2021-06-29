@@ -9,7 +9,7 @@ export const defaultServer = {
   moderator_role: "",
   custom_welcome:
     "Hello `{@username}`! Welcome to {@servername}! My name is Becca. Feel free to let me know if you need anything.",
-  hearts: [],
-  blocked: [],
-  self_roles: [],
+  hearts: [] as string[],
+  blocked: [] as string[],
+  self_roles: [] as string[],
 };
