@@ -10,6 +10,7 @@ import { beccaErrorHandler } from "./utils/beccaErrorHandler";
 import { handleEvents } from "./events/handleEvents";
 import { loadCommands } from "./commands/loadCommands";
 import { cachePrefixes } from "./modules/settings/cachePrefixes";
+import { createServer } from "./server/serve";
 
 /**
  * This block initialises the Sentry plugin.
@@ -60,6 +61,14 @@ const initialiseBecca = async () => {
     Becca.configs.hookId,
     Becca.configs.hookToken
   );
+
+  spinnies.add("server", { color: "magenta", text: "Initialising server" });
+  const server = await createServer(Becca);
+  if (!server) {
+    spinnies.fail("server", { text: "Failed to boot the server." });
+    return;
+  }
+  spinnies.succeed("server", { text: "Server initialised." });
 
   spinnies.add("load-commands", {
     color: "magenta",
