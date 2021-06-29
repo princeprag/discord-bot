@@ -104,11 +104,11 @@ const initialiseBecca = async () => {
     text: "Fetching prefix data",
   });
   const prefixes = await cachePrefixes(Becca);
-  if (!prefixes.length) {
+  if (!Object.keys(prefixes).length) {
     spinnies.fail("fetch-prefix", { text: "No prefix data found." });
   } else {
     spinnies.succeed("fetch-prefix", {
-      text: `Loaded prefix data for ${prefixes.length} servers.`,
+      text: `Loaded prefix data for ${Object.keys(prefixes).length} servers.`,
     });
   }
   Becca.prefixData = prefixes;

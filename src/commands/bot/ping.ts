@@ -6,7 +6,7 @@ export const ping: CommandInt = {
   name: "ping",
   description: "Returns Becca's response time.",
   parameters: [],
-  category: "general",
+  category: "bot",
   run: async (Becca, message) => {
     try {
       return { success: true, content: "pong" };

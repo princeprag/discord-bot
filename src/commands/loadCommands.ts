@@ -10,9 +10,19 @@ import { readCommandDirectory } from "../utils/readCommandDirectory";
  */
 export const loadCommands = async (Becca: BeccaInt): Promise<CommandInt[]> => {
   try {
+    const botCommands = await readCommandDirectory(Becca, "bot");
+    const gameCommands = await readCommandDirectory(Becca, "games");
     const generalCommands = await readCommandDirectory(Becca, "general");
+    const modCommands = await readCommandDirectory(Becca, "moderation");
+    const serverCommands = await readCommandDirectory(Becca, "server");
 
-    return [...generalCommands];
+    return [
+      ...botCommands,
+      ...gameCommands,
+      ...generalCommands,
+      ...modCommands,
+      ...serverCommands,
+    ];
   } catch (err) {
     beccaErrorHandler(Becca, "command loader", err);
     return [];
