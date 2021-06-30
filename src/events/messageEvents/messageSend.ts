@@ -1,6 +1,7 @@
 import { Message } from "discord.js";
 import { BeccaInt } from "../../interfaces/BeccaInt";
 import { levelListener } from "../../listeners/levelListener";
+import { getSettings } from "../../modules/settings/getSettings";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 /**
@@ -29,6 +30,12 @@ export const messageSend = async (
       return;
     }
 
+    const serverConfig = await getSettings(Becca, guild.id, guild.name);
+
+    if (!serverConfig) {
+      throw new Error("Could not get server configuration.");
+    }
+
     /**
      * Hearts, thanks, and mentions listener should go here
      * These can run before determining that the message does not
@@ -38,17 +45,13 @@ export const messageSend = async (
     const prefix = Becca.prefixData[guild.id] || "becca!";
 
     if (!content.startsWith(prefix)) {
-      /**
-       * Levels listener runs here as that should only fire on
-       * non-command messages.
-       */
-      await levelListener.run(Becca, message);
+      await levelListener.run(Becca, message, serverConfig);
       return;
     }
 
     for (const command of commands) {
       if (content.startsWith(`${prefix}${command.name}`)) {
-        const response = await command.run(Becca, message);
+        const response = await command.run(Becca, message, serverConfig);
         await channel.send(response.content);
         if (response.success) {
           await message.react(Becca.configs.yes);

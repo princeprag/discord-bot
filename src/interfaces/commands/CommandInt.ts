@@ -1,4 +1,5 @@
 import { Message } from "discord.js";
+import { ServerModelInt } from "../../database/models/ServerModel";
 import { BeccaInt } from "../BeccaInt";
 import { CommandResponseInt } from "./CommandResponseInt";
 
@@ -8,12 +9,16 @@ import { CommandResponseInt } from "./CommandResponseInt";
  * @property description - String used to describe what the command does.
  * @property parameters - Array of strings indicating: "`parameter`: purpose"
  * @property category - String indicating which category the command falls under.
- * @function run - Executes the command logic. Should take Becca and message, and return string or embed.
+ * @function run - Executes the command logic. Should take Becca and message, with optional server config, and return string or embed.
  */
 export interface CommandInt {
   name: string;
   description: string;
   parameters: string[];
   category: string;
-  run: (Becca: BeccaInt, message: Message) => Promise<CommandResponseInt>;
+  run: (
+    Becca: BeccaInt,
+    message: Message,
+    config: ServerModelInt
+  ) => Promise<CommandResponseInt>;
 }

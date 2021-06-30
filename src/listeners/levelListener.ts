@@ -1,21 +1,18 @@
 import levelScale from "../config/listeners/levelScale";
 import LevelModel from "../database/models/LevelModel";
 import { ListenerInt } from "../interfaces/listeners/ListenerInt";
-import { getSettings } from "../modules/settings/getSettings";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 export const levelListener: ListenerInt = {
   name: "Level Up!",
   description: "Grants experience based on message activity in the server.",
-  run: async (Becca, message) => {
+  run: async (Becca, message, serverSettings) => {
     try {
       const { author, content, guild, member } = message;
 
       if (!guild) {
         return;
       }
-
-      const serverSettings = await getSettings(Becca, guild.id, guild.name);
 
       if (serverSettings?.levels !== "on") {
         return;

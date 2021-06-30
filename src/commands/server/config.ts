@@ -8,6 +8,7 @@ import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator"
 import { resetSetting } from "../../modules/settings/resetSetting";
 import { setSetting } from "../../modules/settings/setSetting";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { customSubstring } from "../../utils/customSubstring";
 
 export const config: CommandInt = {
   name: "config",
@@ -18,7 +19,7 @@ export const config: CommandInt = {
     "`value`: The value of that setting (only applicable for `set` action).",
   ],
   category: "server",
-  run: async (Becca, message) => {
+  run: async (Becca, message, config) => {
     try {
       const { content, guild, member } = message;
 
@@ -55,7 +56,7 @@ export const config: CommandInt = {
             break;
           default:
             content =
-              (await viewSettings(Becca, message)) ||
+              (await viewSettings(Becca, message, config)) ||
               "I am unable to locate your guild settings.";
         }
         return { success: true, content };
@@ -73,7 +74,8 @@ export const config: CommandInt = {
           Becca,
           guild.id,
           guild.name,
-          setting as SettingsTypes
+          setting as SettingsTypes,
+          config
         );
         if (!resetConfirmation) {
           return {
@@ -94,7 +96,8 @@ export const config: CommandInt = {
           Becca,
           setting as SettingsTypes,
           value,
-          guild
+          guild,
+          config
         );
         if (!isValid) {
           return {
@@ -107,7 +110,8 @@ export const config: CommandInt = {
           guild.id,
           guild.name,
           setting as SettingsTypes,
-          value
+          value,
+          config
         );
         if (!setConfirmation) {
           return {
@@ -115,11 +119,18 @@ export const config: CommandInt = {
             content: `I am having trouble updating your settings. Please try again later.`,
           };
         }
+        const newContent = setConfirmation[setting as SettingsTypes];
+        const parsedContent = Array.isArray(newContent)
+          ? newContent.toString()
+          : newContent;
+        const successEmbed = new MessageEmbed();
+        successEmbed.setTitle(`${setting} Updated`);
+        successEmbed.setDescription(
+          "```\n" + customSubstring(parsedContent, 990) + "\n```"
+        );
         return {
           success: true,
-          content: `I have set your ${setting} to ${
-            setConfirmation[setting as SettingsTypes]
-          }`,
+          content: successEmbed,
         };
       }
 

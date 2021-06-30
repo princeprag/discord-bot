@@ -1,5 +1,4 @@
-import { defaultServer } from "../../config/database/defaultServer";
-import ServerModel, { ServerModelInt } from "../../database/models/ServerModel";
+import { ServerModelInt } from "../../database/models/ServerModel";
 import { BeccaInt } from "../../interfaces/BeccaInt";
 import { SettingsTypes } from "../../interfaces/settings/SettingsTypes";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
@@ -11,6 +10,7 @@ import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
  * @param serverName The current name of the server
  * @param key The name of the setting to modify
  * @param value The value to change the setting to
+ * @param server The server config entry in the database
  * @returns ServerModel on success and null on error
  */
 export const setSetting = async (
@@ -18,17 +18,10 @@ export const setSetting = async (
   serverID: string,
   serverName: string,
   key: SettingsTypes,
-  value: string
+  value: string,
+  server: ServerModelInt
 ): Promise<ServerModelInt | null> => {
   try {
-    const server =
-      (await ServerModel.findOne({ serverID })) ||
-      (await ServerModel.create({
-        serverID,
-        serverName,
-        ...defaultServer,
-      }));
-
     const parsedValue = value.replace(/\D/g, "");
 
     switch (key) {
