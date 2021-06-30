@@ -1,5 +1,6 @@
 import { Message } from "discord.js";
 import { BeccaInt } from "../../interfaces/BeccaInt";
+import { levelListener } from "../../listeners/levelListener";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 /**
@@ -41,6 +42,7 @@ export const messageSend = async (
        * Levels listener runs here as that should only fire on
        * non-command messages.
        */
+      await levelListener.run(Becca, message);
       return;
     }
 
