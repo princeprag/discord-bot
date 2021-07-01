@@ -1,6 +1,9 @@
 import { Message } from "discord.js";
 import { BeccaInt } from "../../interfaces/BeccaInt";
+import { beccaMentionListener } from "../../listeners/beccaMentionListener";
+import { heartsListener } from "../../listeners/heartsListener";
 import { levelListener } from "../../listeners/levelListener";
+import { thanksListener } from "../../listeners/thanksListener";
 import { getSettings } from "../../modules/settings/getSettings";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
@@ -41,11 +44,14 @@ export const messageSend = async (
      * These can run before determining that the message does not
      * start with the prefix.
      */
+    await heartsListener.run(Becca, message, serverConfig);
+    await thanksListener.run(Becca, message, serverConfig);
 
     const prefix = Becca.prefixData[guild.id] || "becca!";
 
     if (!content.startsWith(prefix)) {
       await levelListener.run(Becca, message, serverConfig);
+      await beccaMentionListener.run(Becca, message, serverConfig);
       return;
     }
 
