@@ -15,7 +15,7 @@ export interface CommandInt {
   name: string;
   description: string;
   parameters: string[];
-  category: string;
+  category: "bot" | "game" | "general" | "mod" | "server";
   run: (
     Becca: BeccaInt,
     message: Message,

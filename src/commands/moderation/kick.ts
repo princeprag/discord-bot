@@ -12,7 +12,7 @@ export const kick: CommandInt = {
     "`user`: name of the user to kick",
     "`?reason`: reason for kicking the user.",
   ],
-  category: "moderation",
+  category: "mod",
   run: async (Becca, message) => {
     try {
       const { author, content, guild, member } = message;

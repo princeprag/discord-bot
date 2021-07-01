@@ -6,6 +6,7 @@ import { levelListener } from "../../listeners/levelListener";
 import { thanksListener } from "../../listeners/thanksListener";
 import { getSettings } from "../../modules/settings/getSettings";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { sleep } from "../../utils/sleep";
 
 /**
  * Handles the onMessage event. Validates that the message did not come from
@@ -57,6 +58,9 @@ export const messageSend = async (
 
     for (const command of commands) {
       if (content.startsWith(`${prefix}${command.name}`)) {
+        message.channel.startTyping();
+        await sleep(3000);
+        message.channel.stopTyping();
         const response = await command.run(Becca, message, serverConfig);
         await channel.send(response.content);
         if (response.success) {
