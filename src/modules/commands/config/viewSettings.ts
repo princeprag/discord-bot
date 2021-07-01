@@ -25,6 +25,7 @@ export const viewSettings = async (
 
     const settingsEmbed = new MessageEmbed();
     settingsEmbed.setTitle(`${guild.name} Settings`);
+    settingsEmbed.setColor(Becca.colours.default);
     settingsEmbed.setDescription("Here are your current configurations.");
     settingsEmbed.addField("Prefix", config.prefix, true);
     settingsEmbed.addField("Thanks Listener", config.thanks);

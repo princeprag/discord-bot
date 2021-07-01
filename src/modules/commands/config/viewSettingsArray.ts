@@ -15,6 +15,7 @@ export const viewSettingsArray = async (
     const settingEmbed = new MessageEmbed();
     settingEmbed.setTitle(`Config Data for ${setting}`);
     settingEmbed.setTimestamp();
+    settingEmbed.setColor(Becca.colours.default);
 
     if (!data || !data.length) {
       settingEmbed.setDescription("No data found.");
