@@ -1,3 +1,7 @@
+/**
+ * This config is an automatically-generated scale for mapping experience
+ * point values to level values.
+ */
 const levelScale: number[] = [];
 
 let j = 0;

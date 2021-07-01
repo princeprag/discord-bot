@@ -4,6 +4,7 @@ import { CommandInt } from "../../interfaces/commands/CommandInt";
 import { SettingsTypes } from "../../interfaces/settings/SettingsTypes";
 import { validateSetting } from "../../modules/commands/config/validateSetting";
 import { viewSettings } from "../../modules/commands/config/viewSettings";
+import { viewSettingsArray } from "../../modules/commands/config/viewSettingsArray";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { resetSetting } from "../../modules/settings/resetSetting";
 import { setSetting } from "../../modules/settings/setSetting";
@@ -46,14 +47,18 @@ export const config: CommandInt = {
         let content: string | MessageEmbed = "";
         switch (setting) {
           case "hearts":
-            // do hearts
-            break;
           case "self_roles":
-            // do roles
-            break;
           case "blocked":
-            // do blocked
-            break;
+            return {
+              success: true,
+              content:
+                (await viewSettingsArray(
+                  Becca,
+                  config,
+                  setting,
+                  parseInt(value) || 1
+                )) || "I am unable to locate those settings.",
+            };
           default:
             content =
               (await viewSettings(Becca, message, config)) ||
