@@ -57,7 +57,7 @@ export const messageSend = async (
     }
 
     for (const command of commands) {
-      if (content.startsWith(`${prefix}${command.name}`)) {
+      if (content.startsWith(`${prefix}${command.name} `)) {
         message.channel.startTyping();
         await sleep(3000);
         message.channel.stopTyping();

@@ -23,7 +23,7 @@ export const viewSettingsArray = async (
     }
 
     const pages = Math.ceil(data.length / 10);
-    const paginatedData = data.slice(page * 10 - 10, page * 10 - 1);
+    const paginatedData = data.slice(page * 10 - 10, page * 10);
 
     settingEmbed.setDescription(paginatedData.join("\n"));
     settingEmbed.setFooter(`Page ${page} of ${pages}`);

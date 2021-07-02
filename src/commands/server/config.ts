@@ -133,6 +133,8 @@ export const config: CommandInt = {
         successEmbed.setDescription(
           "```\n" + customSubstring(parsedContent, 990) + "\n```"
         );
+        successEmbed.setTimestamp();
+        successEmbed.setColor(Becca.colours.default);
         return {
           success: true,
           content: successEmbed,

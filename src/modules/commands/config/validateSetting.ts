@@ -23,27 +23,30 @@ export const validateSetting = async (
 ): Promise<boolean> => {
   try {
     const parsedValue = value.replace(/\D/g, "");
-    const validUser = await guild.members.fetch(parsedValue);
-    const validRole = await guild.roles.fetch(parsedValue);
-    const validChannel = guild.channels.cache.find(
-      (el) => el.type === "text" && el.id === parsedValue
-    );
     switch (setting) {
       case "thanks":
       case "levels":
         return value === "on" || value === "off";
       case "hearts":
       case "blocked":
-        return !!validUser || config[setting].includes(parsedValue);
+        return (
+          !!(await guild.members.fetch(parsedValue)) ||
+          config[setting].includes(parsedValue)
+        );
       case "moderator_role":
       case "restricted_role":
-        return !!validRole;
+        return !!(await guild.roles.fetch(parsedValue));
       case "self_roles":
-        return !!validRole || config[setting].includes(parsedValue);
+        return (
+          !!(await guild.roles.fetch(parsedValue)) ||
+          config[setting].includes(parsedValue)
+        );
       case "log_channel":
       case "welcome_channel":
       case "suggestion_channel":
-        return !!validChannel;
+        return !!guild.channels.cache.find(
+          (el) => el.type === "text" && el.id === parsedValue
+        );
       case "prefix":
       case "custom_welcome":
         return true;
