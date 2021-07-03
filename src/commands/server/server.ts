@@ -1,113 +1,81 @@
-import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const server: CommandInt = {
+export const server: CommandInt = {
   name: "server",
-  description: "Gives the current status of this server.",
+  description: "Gives the status of the current server.",
+  parameters: [],
   category: "server",
-  run: async (message) => {
+  run: async (Becca, message) => {
     try {
-      const { Becca, channel, guild } = message;
+      const { guild } = message;
 
-      const { color, prefix } = Becca;
-
-      // Check if the guild is not valid.
       if (!guild) {
-        await message.react(message.Becca.no);
-        return;
+        return {
+          success: false,
+          content: "I cannot seem to find your guild record.",
+        };
       }
 
-      // Create a new empty embed.
+      const guildOwner = await guild.members.fetch(guild.ownerID);
+      const guildMembers = (await guild.members.fetch()).map((u) => u);
+      const guildBans = await guild.fetchBans();
+      const guildChannels = guild.channels.cache;
+
       const serverEmbed = new MessageEmbed();
-
-      // Add the light purple color.
-      serverEmbed.setColor(color);
-
-      // Add the server name to the embed title.
+      serverEmbed.setColor(Becca.colours.default);
       serverEmbed.setTitle(guild.name);
-
-      // Add the description.
       serverEmbed.setDescription("Official Guild Record");
-
-      // Add the server image to the embed thumbnail.
       serverEmbed.setThumbnail(guild.iconURL({ dynamic: true }) || "");
-
-      // Add the server creation date to an embed field.
       serverEmbed.addField(
-        "Creation date",
+        "Creation Date",
         new Date(guild.createdTimestamp).toLocaleDateString(),
         true
       );
-
-      // Fetch guild owner
-      const guildOwner = await guild.members.fetch(guild.ownerID);
-
-      // Add the server owner to an embed field.
-      serverEmbed.addField("Owner", guildOwner, true);
-
-      // Add the server commands prefix to an embed field.
-      serverEmbed.addField("Spell prefix", prefix[guild.id], true);
-
-      // Add the server members count to an embed field.
-      serverEmbed.addField("Recently seen members", guild.memberCount, true);
-
-      // Fetch all members, map to array
-      const guildMembers = (await guild.members.fetch()).map((u) => u);
-
-      // Add the server human members count to an embed field.
+      serverEmbed.addField("Owner", guildOwner.toString(), true);
       serverEmbed.addField(
-        "Living members",
+        "Spell Prefix",
+        Becca.prefixData[guild.id] || "becca!",
+        true
+      );
+      serverEmbed.addField("Members", guild.memberCount, true);
+      serverEmbed.addField(
+        "Living Members",
         guildMembers.filter((member) => !member.user.bot).length,
         true
       );
-
-      // Add the server bots count to an embed field.
       serverEmbed.addField(
-        "Artificial Construct members",
+        "Robot Members",
         guildMembers.filter((member) => member.user.bot).length,
         true
       );
-
-      // Add the server users banned count to an embed field.
-      serverEmbed.addField("Banished members", guild.fetchBans.length, true);
-
-      // Add an empty field.
+      serverEmbed.addField("Banished Members", guildBans.size, true);
       serverEmbed.addField("\u200b", "\u200b", true);
-
-      // Add the server roles count to an embed field.
       serverEmbed.addField("Titles", guild.roles.cache.size, true);
-
-      // Add the server channels count to an embed field.
-      serverEmbed.addField("Channel count", guild.channels.cache.size, true);
-
-      // Add the server text channels count to an embed field.
+      serverEmbed.addField("Channels", guildChannels.size, true);
       serverEmbed.addField(
-        "Text channel count",
-        guild.channels.cache.filter((channel) => channel.type === "text").size,
+        "Text Channels",
+        guildChannels.filter((chan) => chan.type === "text").size,
+        true
+      );
+      serverEmbed.addField(
+        "Voice Channels",
+        guildChannels.filter((chan) => chan.type === "voice"),
         true
       );
 
-      // Add the server voice channels count to an embed field.
-      serverEmbed.addField(
-        "Voice channel count",
-        guild.channels.cache.filter((channel) => channel.type === "voice").size,
-        true
-      );
-
-      // Send the server embed to the current channel.
-      await channel.send(serverEmbed);
-      await message.react(message.Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      return { success: true, content: serverEmbed };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "server command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "server") };
     }
   },
 };
-
-export default server;

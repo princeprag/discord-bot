@@ -1,28 +1,22 @@
-import CommandInt from "../../interfaces/CommandInt";
-import TriviaInt from "../../interfaces/commands/TriviaInt";
 import axios from "axios";
-import { Message, MessageEmbed } from "discord.js";
+import { MessageEmbed } from "discord.js";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { TriviaInt } from "../../interfaces/commands/games/TriviaInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { customSubstring } from "../../utils/customSubstring";
+import { replaceHtml } from "../../utils/replaceHtml";
+import { sleep } from "../../utils/sleep";
 
-function replaceHTML(text: string): string {
-  return text
-    .replace(/&quot;/g, `"`)
-    .replace(/&#039;/g, `'`)
-    .replace(/ &amp;/g, `&`);
-}
-
-const trivia: CommandInt = {
+export const trivia: CommandInt = {
   name: "trivia",
-  description:
-    "Provides a trivia question. 30 seconds later, will provide the answer.",
+  description: "Start a trivia session",
   category: "game",
-  run: async (message) => {
+  parameters: [],
+  run: async (Becca, message) => {
     try {
-      const { Becca, channel } = message;
-
       const letters = ["A", "B", "C", "D"];
 
-      // Get the question from the API.
       const data = await axios.get<TriviaInt>(
         "https://opentdb.com/api.php?amount=1&type=multiple"
       );
@@ -30,86 +24,78 @@ const trivia: CommandInt = {
       const { category, correct_answer, incorrect_answers, question } =
         data.data.results[0];
 
-      // Add the incorrect answers to a list.
-      const answers = incorrect_answers.map((el) => replaceHTML(el));
-
-      // Get the correct answer.
-      const correctAnswer = replaceHTML(correct_answer);
-
-      // Add the correct answer to the answers list.
-      answers.push(correctAnswer);
-
-      // Sort the answers.
+      const answers = incorrect_answers.map((el) => replaceHtml(el));
+      answers.push(replaceHtml(correct_answer));
       answers.sort();
 
-      // Get the correct answer letter.
-      const correctAnswerLetter = letters[answers.indexOf(correctAnswer)];
+      const correctAnswerLetter =
+        letters[answers.indexOf(replaceHtml(correct_answer))];
 
       const answered: string[] = [];
       const correct: string[] = [];
 
-      // Send an embed message to the current channel.
-      await channel.send(
-        new MessageEmbed()
-          .setColor(Becca.color)
-          .setTitle(category)
-          .setDescription(replaceHTML(question))
-          .addField("A", answers[0], true)
-          .addField("B", answers[1], true)
-          .addField("\u200b", "\u200b", true)
-          .addField("C", answers[2], true)
-          .addField("D", answers[3], true)
-          .addField("\u200b", "\u200b", true)
-          .setFooter(
-            "Can you answer this correctly in 30 seconds? Good luck..."
-          )
+      const triviaEmbed = new MessageEmbed();
+      triviaEmbed.setColor(Becca.colours.default);
+      triviaEmbed.setTitle(category);
+      triviaEmbed.setDescription(replaceHtml(question));
+      triviaEmbed.addField("A", answers[0], true);
+      triviaEmbed.addField("B", answers[1], true);
+      triviaEmbed.addField("\u200b", "\u200b", true);
+      triviaEmbed.addField("C", answers[2], true);
+      triviaEmbed.addField("D", answers[3], true);
+      triviaEmbed.addField("\u200b", "\u200b", true);
+      triviaEmbed.setFooter(
+        "Can you answer this correctly in 30 seconds? Good luck..."
       );
 
-      // Create a new message collector.
-      const collector = channel.createMessageCollector(
-        (msg: Message) => !msg.author.bot && msg.content.length === 1,
+      const resultEmbed = new MessageEmbed();
+
+      await message.channel.send(triviaEmbed);
+
+      const answerCollector = message.channel.createMessageCollector(
+        (msg) => !msg.author.bot && letters.includes(msg.content.toUpperCase()),
         { time: 30000 }
       );
 
-      // On message collector.
-      collector.on("collect", (reply: Message) => {
-        // Check if the reply author answered before.
-        if (answered.includes(reply.author.toString())) {
+      answerCollector.on("collect", (msg) => {
+        if (answered.includes(msg.author.id)) {
           return;
         }
 
-        // Check if the reply content is the correct answer
-        if (reply.content === correctAnswerLetter) {
-          correct.push(reply.author.toString());
+        if (msg.content.toUpperCase() === correctAnswerLetter) {
+          correct.push(msg.author.id);
         }
-
-        // Add the reply author to the answered list.
-        answered.push(reply.author.toString());
+        answered.push(msg.author.id);
       });
 
-      // On collector end.
-      collector.on("end", async () => {
-        await channel.send(
-          `The correct answer is... **${correctAnswerLetter}** ${correctAnswer}`
+      answerCollector.on("end", async () => {
+        await message.channel.send(
+          "Time is up! I will now determine the winners..."
         );
 
-        await channel.send(
-          correct.length
-            ? `Congratulations to ${correct.join(", ")}!`
-            : "It seems none of you knew this one."
+        resultEmbed.setTimestamp();
+        resultEmbed.setColor(Becca.colours.default);
+        resultEmbed.setTitle(`${correct.length} of you got this right!`);
+        resultEmbed.setDescription(
+          customSubstring(correct.map((el) => `<@!${el}>`).join(", "), 4000)
+        );
+        resultEmbed.addField(
+          "Correct Answer:",
+          `${correctAnswerLetter}: ${replaceHtml(correct_answer)}`
         );
       });
-      await message.react(message.Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+
+      await sleep(35000);
+      return { success: true, content: resultEmbed };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "trivia command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "trivia") };
     }
   },
 };
-
-export default trivia;

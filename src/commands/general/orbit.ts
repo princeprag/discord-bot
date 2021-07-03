@@ -1,59 +1,46 @@
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
-import CommandInt from "../../interfaces/CommandInt";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
 import {
   IndividualOrbitInt,
   OrbitInt,
-} from "../../interfaces/commands/OrbitInt";
+} from "../../interfaces/commands/general/OrbitInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const orbit: CommandInt = {
+export const orbit: CommandInt = {
   name: "orbit",
-  description: "Returns the Orbit community leaderboard.",
+  description: "Returns the Orbit community leaderboard",
   category: "general",
-  run: async (message) => {
+  parameters: [],
+  run: async (Becca, message) => {
     try {
-      const { author, Becca, channel } = message;
-
-      const key = process.env.ORBIT_KEY;
-
-      if (!key) {
-        await message.channel.send(
-          "I seem to have lost my keys to the Orrery. We will have to do this another day."
-        );
-        await message.react(Becca.no);
-        return;
-      }
-
-      const aggregate: { name: string; love: number }[] = [];
+      const { author } = message;
 
       const data = await axios.get<OrbitInt>(
-        `https://app.orbit.love/api/v1/nhcarrigan/members?items=10&sort=love`,
+        "https://app.orbit.love/api/v1/nhcarrigan/members?items=10&sort=love",
         {
           headers: {
             Accept: "application/json",
-            Authorization: `Bearer ${key}`,
+            Authorization: `Bearer ${Becca.configs.orbitKey}`,
           },
         }
       );
 
-      data.data.data.forEach((user) => {
-        aggregate.push({
-          name: user.attributes.name,
-          love: user.attributes.love,
-        });
-      });
-
-      const aggregateEmbed = new MessageEmbed();
-
-      aggregateEmbed.setTitle("Community Engagement Leaderboard");
-      aggregateEmbed.setDescription(
-        "This leaderboard represents the global contributions for all of nhcarrigan's party members."
+      const orbitEmbed = new MessageEmbed();
+      orbitEmbed.setTitle("nhcommunity Engagement Leaderboard");
+      orbitEmbed.setDescription(
+        "This leaderboard represents the global contributions for all of nhcarrigan's party members"
       );
-      aggregateEmbed.setColor(Becca.color);
+      orbitEmbed.setColor(Becca.colours.default);
+      orbitEmbed.setTimestamp();
 
-      aggregate.forEach((user) => {
-        aggregateEmbed.addField(user.name, `${user.love} Love points`, true);
+      data.data.data.forEach((user) => {
+        orbitEmbed.addField(
+          user.attributes.name,
+          user.attributes.love + " love points",
+          true
+        );
       });
 
       const authorData = await axios.get<IndividualOrbitInt>(
@@ -61,7 +48,7 @@ const orbit: CommandInt = {
         {
           headers: {
             Accept: "application/json",
-            Authorization: `Bearer ${key}`,
+            Authorization: `Bearer ${Becca.configs.orbitKey}`,
           },
           validateStatus: null,
         }
@@ -71,20 +58,18 @@ const orbit: CommandInt = {
         ? `${author.username} has ${authorData.data.data.attributes.love} love points.`
         : `${author.username} has no Orbit record.`;
 
-      aggregateEmbed.addField("Your rank:", authorString);
+      orbitEmbed.addField("Your rank:", authorString);
 
-      await channel.send(aggregateEmbed);
-      await message.react(Becca.yes);
+      return { success: true, content: orbitEmbed };
     } catch (err) {
       beccaErrorHandler(
-        err,
-        message.guild?.name || "undefined",
+        Becca,
         "orbit command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "orbit") };
     }
   },
 };
-
-export default orbit;

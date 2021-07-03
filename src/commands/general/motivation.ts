@@ -1,41 +1,38 @@
-import CommandInt from "../../interfaces/CommandInt";
-import { motivationalQuotes } from "../../utils/commands/motivational-quotes.json";
 import { MessageEmbed } from "discord.js";
+import { motivationalQuotes } from "../../config/commands/motivationalQuotes";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const motivation: CommandInt = {
+export const motivation: CommandInt = {
   name: "motivation",
-  description:
-    "Provides a little bit of motivation, courtesy of [freeCodeCamp](https://freecodecamp.org).",
+  description: "Show a random motivation quote",
+  parameters: [],
   category: "general",
-  run: async (message) => {
+  run: async (Becca, message) => {
     try {
-      const { channel } = message;
+      const random = Math.floor(Math.random() * motivationalQuotes.length);
+      const quote = motivationalQuotes[random];
+      const quoteEmbed = new MessageEmbed();
+      quoteEmbed.setTitle("We are counting on you!");
+      quoteEmbed.setDescription(quote.quote);
+      quoteEmbed.setFooter(quote.author);
+      quoteEmbed.setTimestamp();
+      quoteEmbed.setColor(Becca.colours.default);
 
-      // Get a random motivational quotes index.
-      const random = ~~(Math.random() * motivationalQuotes.length - 1);
-
-      // Get the author and the quote of the motivational quote.
-      const { author, quote } = motivationalQuotes[random];
-
-      // Send the embed to the current channel.
-      await channel.send(
-        new MessageEmbed()
-          .setTitle("We are counting on you")
-          .setDescription(quote)
-          .setFooter(author)
-      );
-      await message.react(message.Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      return { success: true, content: quoteEmbed };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "motivation command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "motivation"),
+      };
     }
   },
 };
-
-export default motivation;

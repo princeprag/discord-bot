@@ -1,58 +1,48 @@
-import CommandInt from "../../interfaces/CommandInt";
-import { generate } from "../../utils/commands/usernameGenerator";
 import { MessageEmbed } from "discord.js";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
+import { generateUsername } from "../../modules/commands/general/generateUsername";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const username: CommandInt = {
+export const username: CommandInt = {
   name: "username",
   description:
-    "Generates a username based on the Digital Ocean username generator of optional [length]",
-  parameters: [
-    "`<length?>`: The maximum length of the username to generate. Defaults to 30.",
-  ],
+    "Returns a username based on the Digital Ocean username generator. Optionally set a length (default is 30).",
+  parameters: ["`length?`: The maximum length of the username to generate."],
   category: "general",
-  run: async (message) => {
+  run: async (Becca, message) => {
     try {
-      const { author, channel, Becca, commandArguments } = message;
+      const { author, content } = message;
+      const [, lengthString] = content.split(" ");
+      const length = parseInt(lengthString, 10) || 30;
 
-      // get length
-      const lengthString = commandArguments.shift();
+      const username = generateUsername(length);
 
-      // calculate length with fallback
-      const length = parseInt(lengthString || "") || 30;
-
-      // Generate username
-      const username = generate(length);
-
-      // Build embed
       const usernameEmbed = new MessageEmbed();
-      usernameEmbed.setColor(Becca.color);
+      usernameEmbed.setColor(Becca.colours.default);
       usernameEmbed.setAuthor(
-        `${author.username}'s new DigitalOcean Username`,
-        author.avatarURL() || undefined
+        `${author.username}#${author.discriminator}`,
+        author.displayAvatarURL()
       );
       usernameEmbed.setDescription(
-        `This feature brought to you by [MattIPv4](https://github.com/mattipv4)`
+        "This feature brought to you by [MattIPv4](https://github.com/mattipv4)."
       );
       usernameEmbed.addField("Your username is...", username);
-      usernameEmbed.addField(
-        "Generated Length / Max Length",
-        `${username.length} / ${length}`
-      );
-
-      // send it
-      await channel.send(usernameEmbed);
-      await message.react(message.Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      usernameEmbed.addField("Generated Length", username.length, true);
+      usernameEmbed.addField("Maximum length", length, true);
+      return { success: true, content: usernameEmbed };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "username command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "username"),
+      };
     }
   },
 };
-
-export default username;

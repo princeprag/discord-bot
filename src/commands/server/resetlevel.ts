@@ -1,50 +1,60 @@
-import CommandInt from "../../interfaces/CommandInt";
 import LevelModel from "../../database/models/LevelModel";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const resetlevel: CommandInt = {
+export const resetlevel: CommandInt = {
   name: "resetlevel",
-  description: "Clears the level records for the server.",
+  description: "Reset the level data for the server",
+  parameters: [],
   category: "server",
-  run: async (message) => {
+  run: async (Becca, message) => {
     try {
-      const { Becca, channel, guild, member } = message;
+      const { guild, member } = message;
 
       if (!guild || !member) {
-        await message.react(Becca.no);
-        return;
+        return {
+          success: false,
+          content: "I cannot seem to find your guild record.",
+        };
       }
 
-      if (!member.hasPermission("MANAGE_GUILD")) {
-        await channel.send("You are not high enough level to cast this spell.");
-        await message.react(Becca.no);
-        return;
+      if (
+        !member.hasPermission("MANAGE_GUILD") &&
+        member.user.id !== Becca.configs.ownerId
+      ) {
+        return {
+          success: false,
+          content: "You do not have the correct skills to use this spell.",
+        };
       }
 
       const currentLevels = await LevelModel.findOne({ serverID: guild.id });
 
       if (!currentLevels) {
-        await message.react(Becca.no);
-        await channel.send("I cannot toss a record that does not exist.");
-        return;
+        return {
+          success: false,
+          content: "I cannot find any level data for this server.",
+        };
       }
 
       await currentLevels.delete();
-      await channel.send(
-        "I have burned all records of your guild's activities."
-      );
-      await message.react(Becca.yes);
-      return;
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      return {
+        success: true,
+        content: "I have burned all records of your guild's activities.",
+      };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "resetlevel command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "resetlevel"),
+      };
     }
   },
 };
-
-export default resetlevel;

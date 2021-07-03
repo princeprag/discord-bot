@@ -1,65 +1,33 @@
-import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
+import { SusColours, SusNames } from "../../config/commands/SusList";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const sus: CommandInt = {
+export const sus: CommandInt = {
   name: "sus",
-  description: "Returns a color is sus",
+  description: "Returns which Among Us player is sus.",
   category: "game",
-  run: async (message) => {
+  parameters: [],
+  run: async (Becca, message) => {
     try {
-      const names = [
-        "red",
-        "blue",
-        "green",
-        "pink",
-        "orange",
-        "yellow",
-        "black",
-        "white",
-        "purple",
-        "brown",
-        "cyan",
-        "lime",
-        "tan",
-        "grey",
-        "rose",
-      ];
-      const colours = [
-        "#f50101",
-        "#021edb",
-        "#147d2a",
-        "#ee52b9",
-        "#f07d07",
-        "#f2f254",
-        "#3d464c",
-        "#d9e2ef",
-        "#6a1bcb",
-        "#70491e",
-        "#28feee",
-        "#4def3b",
-        "#928776",
-        "#738491",
-        "#efc3cf",
-      ];
-      const i = Math.floor(Math.random() * names.length);
-      const embed = new MessageEmbed();
-      embed.setTitle(`Emergency Meeting!`);
-      embed.setDescription(`${names[i]} is sus`);
-      embed.setColor(colours[i]);
+      const random = Math.floor(Math.random() * SusNames.length);
+      const susEmbed = new MessageEmbed();
+      susEmbed.setTitle("Emergency Meeting!");
+      susEmbed.setDescription(SusNames[random] + " is the new SUS!");
+      susEmbed.setColor(SusColours[random]);
+      susEmbed.setTimestamp();
 
-      message.channel.send(embed);
-      await message.react(message.Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      return { success: true, content: susEmbed };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "sus command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "sus") };
     }
   },
 };
-
-export default sus;

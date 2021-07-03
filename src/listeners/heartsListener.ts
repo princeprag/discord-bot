@@ -1,52 +1,25 @@
-import ListenerInt from "../interfaces/ListenerInt";
-import { love as defaultLovesIDs } from "../default_config.json";
+import { defaultHearts } from "../config/listeners/defaultHearts";
+import { ListenerInt } from "../interfaces/listeners/ListenerInt";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
-/**
- * React with a heart to specific users messages.
- * @constant
- */
-const heartsListener: ListenerInt = {
-  name: "Love",
-  description: "Gives love to specific users.",
-  run: async (message, config) => {
+export const heartsListener: ListenerInt = {
+  name: "Hearts Listener",
+  description: "Adds heart reactions to specified users.",
+  run: async (Becca, message, config) => {
     try {
-      // Get the current guild from the message.
-      const { author, guild } = message;
-
-      // Check if is a valid guild.
-      if (!guild) {
-        return;
+      const { author } = message;
+      const usersToHeart = defaultHearts.concat(config.hearts);
+      if (usersToHeart.includes(author.id) && !message.deleted) {
+        await message.react(Becca.configs.love);
       }
-
-      // Set the default loves user ids.
-      let authors = defaultLovesIDs;
-
-      // Get the custom loves from the database.
-      const lovesSetting = config.hearts;
-
-      // Check if the custom loves are valid.
-      if (lovesSetting) {
-        authors = authors.concat(lovesSetting);
-      }
-
-      // Check if the message author id is in the loves user ids.
-      if (authors.includes(author.id)) {
-        // Check if the message is not deleted.
-        if (!message.deleted) {
-          // React to the user message.
-          await message.react(message.Becca.love);
-        }
-      }
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "hearts listener",
-        message.Becca.debugHook
+        err,
+        message.guild?.name,
+        message
       );
     }
   },
 };
-
-export default heartsListener;

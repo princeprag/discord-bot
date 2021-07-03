@@ -1,43 +1,46 @@
 import { MessageEmbed } from "discord.js";
-import CommandInt from "../../interfaces/CommandInt";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const colour: CommandInt = {
+export const colour: CommandInt = {
   name: "colour",
-  description: "Returns an embed containing a sample of that colour.",
-  parameters: ["`<hex>`: The hex code *without `#` of the colour to show."],
+  description: "Return an embed containing a sample of the colour",
+  parameters: [
+    "`hex`: The hex code, with or without `#`, of the colour to show",
+  ],
   category: "general",
-  run: async (message) => {
+  run: async (Becca, message) => {
     try {
-      const { Becca, channel, commandArguments } = message;
+      const { content } = message;
+      const [, targetColour] = content.split(" ");
 
-      const colour = commandArguments[0].toUpperCase();
+      const parsedColour = targetColour.startsWith("#")
+        ? targetColour.slice(1)
+        : targetColour;
 
-      if (!/^[A-F0-9]{6}$/.test(colour)) {
-        await message.react(Becca.no);
-        await message.channel.send(
-          "This spell requires a six-character hex code (without the `#`)."
-        );
-        return;
+      if (!/^[0-9a-fA-F]{6}$/.test(parsedColour)) {
+        return {
+          success: false,
+          content: "This spell requires a six-character hex code.",
+        };
       }
 
       const colourEmbed = new MessageEmbed();
-      colourEmbed.setTitle(`#${colour}`);
-      colourEmbed.setDescription("Here is the colour you requested:");
-      colourEmbed.setImage(`https://www.colorhexa.com/${colour}.png`);
-      colourEmbed.setColor(`#${colour}`);
-
-      await channel.send(colourEmbed);
+      colourEmbed.setTitle(`Colour: ${parsedColour}`);
+      colourEmbed.setColor("#" + parsedColour);
+      colourEmbed.setImage(`https://www.colorhexa.com/${parsedColour}.png`);
+      colourEmbed.setTimestamp();
+      return { success: true, content: colourEmbed };
     } catch (err) {
       beccaErrorHandler(
-        err,
-        message.guild?.name || "undefined",
+        Becca,
         "colour command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "colour") };
     }
   },
 };
-
-export default colour;

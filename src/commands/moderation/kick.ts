@@ -1,144 +1,94 @@
-import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
+import { sendLogEmbed } from "../../modules/guild/sendLogEmbed";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const kick: CommandInt = {
+export const kick: CommandInt = {
   name: "kick",
   description:
-    "Kick **user** from the channel. Optionally provide a **reason**. Only available to server moderators. Becca will log this action if the log channel is available.",
+    "Kicks a `@user` from the channel. Optionally provide a `reason`. Only available to server moderators. Becca will log this action if configured to do so.",
   parameters: [
-    "`<user>`: @name of the user to kick",
-    "`<?reason>`: reason for kicking the user",
+    "`user`: name of the user to kick",
+    "`?reason`: reason for kicking the user.",
   ],
-  category: "moderation",
-  run: async (message) => {
+  category: "mod",
+  run: async (Becca, message) => {
     try {
-      const { author, Becca, commandArguments, guild, member, mentions } =
-        message;
-
-      const { user } = Becca;
-
-      // Check if the member has the kick members permission.
-      if (!guild || !user || !member || !member.hasPermission("KICK_MEMBERS")) {
-        await message.channel.send(
-          "You are not high enough level to use this spell."
-        );
-        await message.react(message.Becca.no);
-        return;
+      const { author, content, guild, member } = message;
+      if (!guild || !member || !member?.hasPermission("KICK_MEMBERS")) {
+        return {
+          success: false,
+          content: "You do not have the correct skills to use this spell.",
+        };
       }
 
-      // Get the next argument as the user to kick mention.
-      let userToKickMention = commandArguments.shift();
+      const [, target, ...rawReason] = content.split(" ");
+      const reason =
+        rawReason.join(" ") ||
+        "No reason was provided, and I did not ask for one.";
 
-      // Get the first user mention.
-      const userToKickMentioned = mentions.users.first();
+      const targetMember = target
+        ? await guild.members.fetch(target.replace(/\D/g, ""))
+        : null;
 
-      // Check if the user mention is valid.
-      if (!userToKickMention || !userToKickMentioned || !mentions.members) {
-        await message.channel.send(
-          "I do not swing my staff around like a madwoman. You need to tell me who I should hit."
-        );
-        await message.react(message.Becca.no);
-        return;
+      if (!targetMember) {
+        return {
+          success: false,
+          content: `${target} does not appear to be a valid member.`,
+        };
       }
 
-      // Remove the `<@!` and `>` from the mention to get the id.
-      userToKickMention = userToKickMention.replace(/[<@!>]/gi, "");
-
-      // Check if the user mention string and the first user mention id are equals.
-      if (userToKickMention !== userToKickMentioned.id) {
-        await message.channel.send(
-          `I am so sorry, but ${userToKickMentioned.toString()} is not a valid user.`
-        );
-        await message.react(message.Becca.no);
-        return;
+      if (targetMember.id === Becca.user?.id) {
+        return {
+          success: false,
+          content: "How dare you try to kick me? I am going nowhere.",
+        };
+      }
+      if (targetMember.id === author.id) {
+        return {
+          success: false,
+          content:
+            "I will not remove you with force. You are welcome to remove yourself, if you wish.",
+        };
+      }
+      if (!targetMember.kickable) {
+        return {
+          success: false,
+          content: "I am afraid they are too important for me to remove.",
+        };
       }
 
-      // Check if trying to kick itself.
-      if (userToKickMentioned.id === author.id) {
-        await message.channel.send(
-          "Umm... what? Why bother me for that? You are more than capable of walking out yourself."
-        );
-        await message.react(message.Becca.no);
-        return;
-      }
-
-      // Get the first member mention.
-      const memberToKickMentioned = mentions.members.first();
-
-      // Check if the member mention exists.
-      if (!memberToKickMentioned) {
-        await message.channel.send(
-          "I do not swing my staff around like a madwoman. You need to tell me who I should hit."
-        );
-        await message.react(message.Becca.no);
-        return;
-      }
-
-      // Check if the user id or member id are Becca's id.
-      if (
-        userToKickMentioned.id === user.id ||
-        memberToKickMentioned.id === user.id
-      ) {
-        await message.channel.send(
-          "I have no intention of walking away from here yet."
-        );
-        await message.react(message.Becca.no);
-        return;
-      }
-
-      // Get the reason of the warn.
-      let reason = commandArguments.join(" ");
-
-      // Add a default reason if it not provided.
-      if (!reason || !reason.length) {
-        reason = "They did not tell me why.";
-      }
-
-      // Check if the user is kickable.
-      if (!memberToKickMentioned.kickable) {
-        throw new Error(`Not kickable user: ${userToKickMentioned.username}`);
-      }
+      await targetMember.kick(reason);
 
       const kickLogEmbed = new MessageEmbed();
-      kickLogEmbed.setColor("#ff8400");
-      kickLogEmbed.setTitle("Kicked!");
-      kickLogEmbed.setDescription(`Member kicked by ${author.username}`);
+      kickLogEmbed.setColor(Becca.colours.error);
+      kickLogEmbed.setTitle("I have removed a member.");
+      kickLogEmbed.setDescription(
+        `Member removal was requested by ${author.username}`
+      );
       kickLogEmbed.addField("Reason", reason);
       kickLogEmbed.setTimestamp();
       kickLogEmbed.setAuthor(
-        userToKickMentioned.username + "#" + userToKickMentioned.discriminator,
-        userToKickMentioned.displayAvatarURL()
+        `${targetMember.user.username}#${targetMember.user.discriminator}`,
+        targetMember.user.displayAvatarURL()
       );
-      kickLogEmbed.setFooter(`\`ID: ${userToKickMentioned.id}\``);
+      kickLogEmbed.setFooter(`ID: ${targetMember.id}`);
 
-      await Becca.sendMessageToLogsChannel(guild, kickLogEmbed);
-
-      await userToKickMentioned
-        .send(
-          `**[Kick]** ${author.username} has kicked you from ${guild.name} for the following reason: ${reason}`
-        )
-        .catch(async () => {
-          await message.channel.send(
-            "I was not able to notify the user that this is happening."
-          );
-        });
-
-      // Kick the user with the reason.
-      await memberToKickMentioned.kick(reason);
-      await message.channel.send("They have been evicted.");
-
-      await message.react(message.Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      await sendLogEmbed(Becca, guild, kickLogEmbed);
+      return {
+        success: true,
+        content: "They have been evicted",
+      };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "kick command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "kick") };
     }
   },
 };
-
-export default kick;

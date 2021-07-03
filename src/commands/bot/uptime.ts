@@ -1,62 +1,48 @@
-import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-export function getUptime(bot_uptime_timestamp: number): number[] {
-  // Get the time difference.
-  let uptime_now = Date.now() - bot_uptime_timestamp;
-
-  // Change from milliseconds to seconds.
-  uptime_now = ~~(uptime_now / 1000);
-
-  // Get the uptime hours.
-  const hours = uptime_now >= 3600 ? uptime_now / 3600 : 0;
-
-  // Get the uptime minutes.
-  const minutes = uptime_now >= 60 ? (uptime_now % 3600) / 60 : 0;
-
-  // Get the uptime seconds.
-  const seconds = (uptime_now - hours - minutes) % 60;
-
-  return [~~hours, ~~minutes, ~~seconds];
-}
-
-const uptime: CommandInt = {
+export const uptime: CommandInt = {
   name: "uptime",
-  description: "Generates the time Becca has been awake.",
+  description: "Returns the amount of time Becca has been online.",
+  parameters: [],
   category: "bot",
-  run: async (message) => {
+  run: async (Becca, message) => {
     try {
-      // Get the channel and the client of the message.
-      const { channel, Becca } = message;
+      const seconds = Math.round(process.uptime());
+      const days = seconds >= 86400 ? Math.floor(seconds / 86400) : 0;
+      const hours =
+        seconds >= 3600 ? Math.floor((seconds - days * 86400) / 3600) : 0;
+      const minutes =
+        seconds >= 60
+          ? Math.floor((seconds - days * 86400 - hours * 3600) / 60)
+          : 0;
+      const secondsRemain =
+        seconds - days * 86400 - hours * 3600 - minutes * 60;
 
-      const [hours, minutes, seconds] = getUptime(Becca.uptime_timestamp);
-
-      // Send an embed message to the current channel.
-      await channel.send(
-        new MessageEmbed()
-          .setColor(Becca.color)
-          .setTitle("Becca's uptime")
-          .setDescription(
-            `This adventure has gone on for... ${hours} hour${
-              hours === 1 ? "" : "s"
-            }, ${minutes} minute${
-              minutes === 1 ? "" : "s"
-            } and ${seconds} second${seconds === 1 ? "" : "s"}.`
-          )
-          .setTimestamp()
+      const uptimeEmbed = new MessageEmbed();
+      uptimeEmbed.setTitle("Adventure Duration");
+      uptimeEmbed.setColor(Becca.colours.default);
+      uptimeEmbed.setDescription(
+        "This is how long I have been on my adventure."
       );
-      await message.react(Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      uptimeEmbed.addField("Days", days);
+      uptimeEmbed.addField("Hours", hours, true);
+      uptimeEmbed.addField("Minutes", minutes, true);
+      uptimeEmbed.addField("Seconds", secondsRemain, true);
+      uptimeEmbed.setTimestamp();
+
+      return { success: true, content: uptimeEmbed };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "uptime command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "uptime") };
     }
   },
 };
-
-export default uptime;

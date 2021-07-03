@@ -1,41 +1,42 @@
-import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const caniuse: CommandInt = {
+export const caniuse: CommandInt = {
   name: "caniuse",
-  description: "Returns an up-to-date browser support table for a feature",
+  description: "Get the Can I Use browser data for a given feature.",
+  parameters: ["`feature`: the feature to search for"],
   category: "general",
-  parameters: ["`<feature>`: the browser feature to define"],
-  run: async (message) => {
+  run: async (Becca, message) => {
     try {
-      const { channel, commandArguments } = message;
-
-      const feature = commandArguments.join("-");
-
+      const { content } = message;
+      const [, ...featureText] = content.split(" ");
+      const feature = featureText.join("-");
       if (!feature) {
-        await message.channel.send(
-          "Which feature are you trying to use? I need to know what to search for here."
-        );
-        await message.react(message.Becca.no);
-        return;
+        return {
+          success: false,
+          content: "Which feature did you want me to search for?",
+        };
       }
-      await channel.send(
-        new MessageEmbed()
-          .setTitle(`Caniuse: ${feature}`)
-          .setImage(`https://caniuse.bitsofco.de/image/${feature}.webp`)
+      const caniuseEmbed = new MessageEmbed();
+      caniuseEmbed.setTitle(`Can I Use ${feature}`);
+      caniuseEmbed.setImage(
+        `https://caniuse.bitsofco.de/image/${feature}.webp`
       );
-      await message.react(message.Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      caniuseEmbed.setTimestamp();
+      caniuseEmbed.setColor(Becca.colours.default);
+
+      return { success: true, content: caniuseEmbed };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "caniuse command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "caniuse") };
     }
   },
 };
-
-export default caniuse;

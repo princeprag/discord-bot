@@ -1,105 +1,37 @@
-import { ServerModelInt } from "../database/models/ServerModel";
-import { Client, Guild, MessageEmbed, WebhookClient } from "discord.js";
-import CommandInt from "./CommandInt";
-import ListenerInt from "./ListenerInt";
+import { Client, WebhookClient } from "discord.js";
+import { CommandInt } from "./commands/CommandInt";
 
 /**
- * Client interface extended by Client of discord.js.
- * @interface
+ * Model used to pass around Becca's client instance with additional
+ * configurations attached.
+ * @property prefixData The data for server-specific prefixes.
+ * @property debugHook The Discord Webhook Client for the error handler.
+ * @property configs A map of the environment variables, assigned after validation.
+ * @property colours Colour mappings to use in embeds.
  */
-interface BeccaInt extends Client {
-  /**
-   * Light purple color.
-   * @property
-   */
-  color: string;
-
-  /**
-   * Emotes
-   */
-  yes: string;
-  no: string;
-  love: string;
-  think: string;
-
-  /**
-   * Prefix of the messages.
-   * @property
-   */
-  prefix: { [serverID: string]: string };
-
-  /**
-   * Version of the.
-   * @property
-   */
-  version: string;
-
-  /**
-   * Get the last uptime timestamp of Becca.
-   * @property
-   */
-  uptime_timestamp: number;
-
-  /**
-   * Available commands.
-   * @property
-   */
-  commands: { [key: string]: CommandInt };
-
-  /**
-   * Available listeners.
-   * @property
-   */
-  customListeners: { [key: string]: ListenerInt };
-
-  /**
-   * Debug webhook
-   *  @property
-   */
-  debugHook?: WebhookClient;
-
-  /**
-   * Update a setting from the database or create one if not exists.
-   *
-   * @async
-   * @function
-   * @param { string } serverID
-   * @param {string} serverName
-   * @param { string } key
-   * @param { string } value
-   * @returns { Promise<ServerModelInt> }
-   */
-  setSetting(
-    serverID: string,
-    serverName: string,
-    key: string,
-    value: string
-  ): Promise<ServerModelInt>;
-
-  /**
-   * Get a server's settings from the database.
-   *
-   * @async
-   * @function
-   * @param {string} serverID
-   * @param {string} serverName
-   * @returns {Promise<ServerModelInt>}
-   */
-  getSettings(serverID: string, serverName: string): Promise<ServerModelInt>;
-
-  /**
-   * Send a message to the logs channel.
-   *
-   * @async
-   * @function
-   * @param { Guild } guild
-   * @param { string | MessageEmbed } message
-   * @returns { Promise<void> }
-   */
-  sendMessageToLogsChannel(
-    guild: Guild,
-    message: string | MessageEmbed
-  ): Promise<void>;
+export interface BeccaInt extends Client {
+  prefixData: Record<string, string>;
+  debugHook: WebhookClient;
+  configs: {
+    token: string;
+    dbToken: string;
+    hookId: string;
+    hookToken: string;
+    nasaKey: string;
+    habiticaKey: string;
+    orbitKey: string;
+    ownerId: string;
+    love: string;
+    yes: string;
+    no: string;
+    think: string;
+    version: string;
+  };
+  colours: {
+    default: string;
+    success: string;
+    warning: string;
+    error: string;
+  };
+  commands: CommandInt[];
 }
-
-export default BeccaInt;

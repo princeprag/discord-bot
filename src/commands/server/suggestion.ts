@@ -1,118 +1,124 @@
 import { TextChannel } from "discord.js";
-import CommandInt from "../../interfaces/CommandInt";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { customSubstring } from "../../utils/customSubstring";
 
-const suggestion: CommandInt = {
+export const suggestion: CommandInt = {
   name: "suggestion",
-  description: "Use this command to approve or deny a suggestion.",
+  description: "Use this command to approve or deny a suggestion",
   parameters: [
-    "`<approve/deny>`: Whether to approve or deny the suggestion",
-    "<ID>: The Discord ID of the message containing the suggestion.",
+    "`approve/deny`: Whether to approve or deny the suggestion",
+    "`ID`: the Discord ID of the suggestion message",
   ],
   category: "server",
-  run: async (message, config) => {
+  run: async (Becca, message, config) => {
     try {
-      const { author, Becca, channel, commandArguments, guild, member } =
-        message;
-
-      if (!guild) {
-        return;
+      const { author, guild, member } = message;
+      if (!guild || !member) {
+        return {
+          success: false,
+          content: "I cannot find your guild record.",
+        };
+      }
+      if (!member.hasPermission("MANAGE_GUILD")) {
+        return {
+          success: false,
+          content: "You do not have the correct skills to use this spell",
+        };
       }
 
-      if (!member || !member.hasPermission("MANAGE_GUILD")) {
-        await message.channel.send(
-          "You are not high enough level to use this spell."
-        );
-        await message.react(Becca.no);
-        return;
-      }
-      const action = commandArguments.shift();
+      const [, action, suggestionId, ...reason] = message.content.split(" ");
 
-      if (action !== "approve" && action !== "deny") {
-        await message.channel.send(
-          `I cannot do ${action} to a suggestion. Would you like to approve or deny this suggestion?`
-        );
-        await message.react(Becca.no);
-        return;
+      if (!action || (action !== "approve" && action !== "deny")) {
+        return {
+          success: false,
+          content: "Please specify whether to approve or deny the suggestion.",
+        };
       }
 
-      const id = commandArguments.shift();
-
-      if (!id) {
-        await message.channel.send(
-          "Can you tell me what suggestion ID to find? I'm not going to sit here and guess."
-        );
-        return;
+      if (!suggestionId) {
+        return {
+          success: false,
+          content:
+            "Can you tell me what suggestion ID to find? I am not going to sit here and guess.",
+        };
       }
 
       const suggestionChannel = guild.channels.cache.find(
-        (chan) => chan.id === config.suggestion_channel
+        (el) => el.id === config.suggestion_channel
       );
 
       if (!suggestionChannel) {
-        await message.channel.send(
-          "So... where exactly *are* your suggestions?"
-        );
-        await message.react(Becca.no);
-        return;
+        return {
+          success: false,
+          content: "So... where exactly *are* your suggestions?",
+        };
       }
 
-      const target = await (suggestionChannel as TextChannel).messages.fetch(
-        id
-      );
+      const targetSuggestion = await (
+        suggestionChannel as TextChannel
+      ).messages.fetch(suggestionId);
 
-      if (!target) {
-        await message.channel.send(
-          "It seems that suggestion fell off the notice board."
-        );
-        await message.react(Becca.no);
-        return;
+      if (!targetSuggestion) {
+        return {
+          success: false,
+          content: "It seems that suggestion fell off the notice board.",
+        };
       }
 
-      const suggestion = target.embeds[0];
+      const embeddedSuggestion = targetSuggestion.embeds[0];
 
-      if (!suggestion || suggestion.title !== "Someone had an idea:") {
-        await message.channel.send(
-          "That is not a suggestion. I'm not messing with that."
-        );
-        await message.react(Becca.no);
-        return;
+      if (
+        !embeddedSuggestion ||
+        embeddedSuggestion.title !== "Someone had an idea:"
+      ) {
+        return {
+          success: false,
+          content: "That is not a suggestion. I am not messing with that.",
+        };
       }
 
-      if (suggestion.fields.length) {
-        await message.channel.send(
-          "I already put a decision on this one. We cannot do it again."
-        );
-        await message.react(Becca.no);
-        return;
+      if (embeddedSuggestion.fields.length) {
+        return {
+          success: false,
+          content:
+            "I already put a decision on this one. We cannot do it again.",
+        };
       }
 
-      suggestion.addField(
+      embeddedSuggestion.addField(
         action === "approve"
           ? "Suggestion approved by"
           : "Suggestion denied by",
         `<@!${author.id}>`
       );
-
-      suggestion.addField(
+      embeddedSuggestion.addField(
         "Reason",
-        commandArguments.join(" ") || "No reason given"
+        customSubstring(reason.join(" "), 1000)
+      );
+      embeddedSuggestion.setColor(
+        action === "approve" ? Becca.colours.success : Becca.colours.error
       );
 
-      target.edit(suggestion);
+      targetSuggestion.edit(embeddedSuggestion);
 
-      await channel.send("Signed, sealed, and delivered.");
-      await message.react(Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      return {
+        success: true,
+        content: "Signed, sealed, and delivered",
+      };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "suggestion command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "suggestion"),
+      };
     }
   },
 };
-
-export default suggestion;

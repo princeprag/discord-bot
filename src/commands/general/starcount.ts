@@ -1,65 +1,72 @@
-import CommandInt from "../../interfaces/CommandInt";
-import StarCountModel from "../../database/models/StarModel";
 import { MessageEmbed } from "discord.js";
+import StarModel from "../../database/models/StarModel";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const starcount: CommandInt = {
+export const starcount: CommandInt = {
   name: "starcount",
-  description: "Returns the top users by star count, and the caller's rank",
+  description: "Returns the top users by star count, and the author's rank",
+  parameters: [],
   category: "general",
-  run: async (message) => {
+  run: async (Becca, message) => {
     try {
-      const { member, guild, channel, Becca, author } = message;
-      if (!member || !guild || !channel) {
-        await message.react(Becca.no);
-        return;
+      const { author, guild } = message;
+
+      if (!guild) {
+        return {
+          success: false,
+          content: "I cannot seem to find your guild record.",
+        };
       }
 
-      const starCounts = await StarCountModel.findOne({ serverID: guild.id });
+      const starCounts = await StarModel.findOne({ serverID: guild.id });
 
       if (!starCounts || !starCounts.users.length) {
-        await message.channel.send(
-          "It seems no one here is carrying around stars yet. You should probably fix that."
-        );
-        await message.react(Becca.no);
-        return;
+        return {
+          success: false,
+          content:
+            "It seems no one here is carrying around stars yet. You should probably fix that.",
+        };
       }
 
-      const userStars = starCounts.users.find(
-        (user) => user.userID === author.id
+      const userStars = starCounts.users.find((u) => u.userID === author.id);
+      const userRank = starCounts.users.findIndex(
+        (u) => u.userID === author.id
       );
 
-      const topTen = starCounts.users.sort((a, b) => b.stars - a.stars);
+      const topTen = starCounts.users
+        .sort((a, b) => b.stars - a.stars)
+        .slice(0, 10);
 
-      const userRank = userStars
-        ? `${member.user.username} is rank ${
-            topTen.findIndex((user) => user.userID === member.id) + 1
-          } with ${userStars.stars} stars.`
-        : `${member.user.username} does not have any stars yet...`;
-
-      const topTenString = topTen.map(
-        (user, index) =>
-          `#${index + 1}: ${user.userName} with ${user.stars} stars.`
-      );
+      const userRankString = userStars
+        ? `${author.username} is rank ${userRank + 1} with ${
+            userStars.stars
+          } stars.`
+        : `${author.username} does not have any stars yet...`;
 
       const starEmbed = new MessageEmbed();
       starEmbed.setTitle(`Helpful people in ${guild.name}`);
-      starEmbed.setColor(Becca.color);
-      starEmbed.addField("Top Ten Members", topTenString);
-      starEmbed.addField("Your rank", userRank);
+      starEmbed.setColor(Becca.colours.default);
+      starEmbed.setDescription(userRankString);
+      topTen.forEach((u, i) => {
+        starEmbed.addField(`#${i + 1}. ${u.userName}`, `${u.stars} stars.`);
+      });
+      starEmbed.setTimestamp();
 
-      await message.react(Becca.yes);
-      await channel.send(starEmbed);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      return { success: true, content: starEmbed };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "starcount command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "starcount"),
+      };
     }
   },
 };
-
-export default starcount;

@@ -1,41 +1,33 @@
-import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const INVITE_CONSTANTS = {
-  title: "Invite Becca!",
-  description:
-    "I suppose I could provide my services to your guild. Click this [invite link](http://invite.beccalyria.com) and I will come serve you.",
-  footer: "I look forward to working with you.",
-};
-
-const invite: CommandInt = {
+export const invite: CommandInt = {
   name: "invite",
-  description: "Get a link to invite Becca to your server.",
+  description: "Provides a link to invite Becca to your guild.",
+  parameters: [],
   category: "bot",
-  run: async (message) => {
+  run: async (Becca, message) => {
     try {
-      const { Becca, channel } = message;
-
-      // Send an embed message to the current channel.
-      await channel.send(
-        new MessageEmbed()
-          .setColor(Becca.color)
-          .setTitle(INVITE_CONSTANTS.title)
-          .setDescription(INVITE_CONSTANTS.description)
-          .setFooter(INVITE_CONSTANTS.footer)
+      const inviteEmbed = new MessageEmbed();
+      inviteEmbed.setTitle("Do you require my assistance?");
+      inviteEmbed.setDescription(
+        "I suppose I could provide my services to your guild. Click this [invite link](http://invite.beccalyria.com) and I will come serve you."
       );
-      await message.react(Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      inviteEmbed.setColor(Becca.colours.default);
+      inviteEmbed.setFooter("I look forward to working with you.");
+      inviteEmbed.setTimestamp();
+      return { success: true, content: inviteEmbed };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "invite command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "invite") };
     }
   },
 };
-
-export default invite;

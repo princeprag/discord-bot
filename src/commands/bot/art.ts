@@ -1,50 +1,42 @@
-import CommandInt from "../../interfaces/CommandInt";
-import { artList } from "../../utils/commands/artList";
 import { MessageEmbed } from "discord.js";
+import { artList } from "../../config/commands/artList";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const art: CommandInt = {
+export const art: CommandInt = {
   name: "art",
-  description: "Returns art!",
+  description: "Returns a work of art depicting Becca.",
   category: "bot",
-  run: async (message) => {
+  parameters: [],
+  run: async (Becca, message) => {
     try {
-      //random number
       const random = Math.floor(Math.random() * artList.length);
-
-      //get values for random art object
       const { fileName, artName, artist, artistUrl } = artList[random];
 
-      //create embed
       const artEmbed = new MessageEmbed();
       artEmbed.setTitle(artName);
+      artEmbed.setColor(Becca.colours.default);
       artEmbed.setDescription(
-        `This portrait of me was done by [${artist}](${artistUrl}).`
+        `This portrait of me was done by [${artist}](${artistUrl})`
       );
-
-      //add local file
       artEmbed.setImage(
         `https://www.beccalyria.com/assets/art/${fileName.replace(
           /\s/g,
           "%20"
         )}`
       );
-
       artEmbed.setFooter("Would you like to paint my portrait too?");
-
-      //send it!
-      await message.channel.send(artEmbed);
-      await message.react(message.Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      return { success: true, content: artEmbed };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "art command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "art") };
     }
   },
 };
-
-export default art;

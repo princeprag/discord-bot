@@ -1,130 +1,58 @@
-import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const list: CommandInt = {
+export const list: CommandInt = {
   name: "list",
-  description: "Returns a list of servers Becca is in.",
-  parameters: ["<?page> - Page of the servers list."],
+  description: "List all servers.",
+  parameters: ["`page?`: The page of data to view."],
   category: "server",
-  run: async (message) => {
+  run: async (Becca, message) => {
     try {
-      //extract values
-      const { author, Becca, channel, commandArguments } = message;
-      const { guilds } = Becca;
-
-      if (author.id !== process.env.OWNER_ID) {
-        await message.channel.send("Only nhcarrigan may cast this spell.");
-        await message.react(Becca.no);
-        return;
+      const { author, content } = message;
+      if (author.id !== Becca.configs.ownerId) {
+        return { success: false, content: "Only my owner may cast this spell" };
       }
 
-      // Get the first argument as the page.
-      const pageStr = commandArguments.shift();
+      const [, rawPage] = content.split(" ");
 
-      // Set the current page to 1.
-      let currentPage = 1;
+      const targetPage = parseInt(rawPage, 10) || 1;
 
-      // Check if the first argument has a value.
-      if (pageStr) {
-        // Set the new current page.
-        currentPage = Number(pageStr);
-      }
+      const serverList = Becca.guilds.cache.map((el) => el);
+      const ownerIds = [];
+      const serverTexts = [];
 
-      // counting variables
-      const serverList: string[] = [],
-        ownerList: string[] = [];
-      const ownerIds: string[] = [];
-
-      //map Collection into Array
-      const servers = guilds.cache.map((el) => el);
-
-      //set length to variable to avoid recounting
-      const length = servers.length;
-
-      // loop through guilds Becca is in;
-      for (let i = 0; i < length; i++) {
-        // Assign for less typing
-        const guild = servers[i];
-
-        // Push server + owner information
-        serverList.push(`${guild.name} (${guild.id})`);
-
-        // Check if the server owner exists.
-        if (guild.owner) {
-          // Check if the server owner has partial information.
-          if (guild.owner.partial) {
-            // Fetch the server owner data.
-            await guild.owner.fetch();
-          }
-
-          ownerList.push(`${guild.owner.user.username} (${guild.ownerID})`);
-        } else {
-          const targetUser = await Becca.users.fetch(guild.ownerID);
-          ownerList.push(`${targetUser.username} (${guild.ownerID})`);
+      for (const server of serverList) {
+        if (!server.owner || server.owner.partial) {
+          await server.owner?.fetch();
         }
-
-        //push owner ID to array
-        ownerIds.push(guild.ownerID);
-      }
-
-      if (serverList.length !== ownerList.length) {
-        await message.react(message.Becca.no);
-        return;
-      }
-
-      const serversPerPage = 10;
-      const totalPages = ~~(serverList.length / serversPerPage) + 1;
-
-      // Check if the current page is valid.
-      if (isNaN(currentPage) || currentPage <= 0 || currentPage > totalPages) {
-        await message.channel.send("That page does not exist.");
-        await message.react(message.Becca.no);
-        return;
-      }
-
-      const serverEmbed = new MessageEmbed()
-        .setTitle(`Server List part ${currentPage}`)
-        .setColor(Becca.color);
-
-      const pageCount = ~~(currentPage * serversPerPage);
-
-      const serverPage = serverList.slice(
-        pageCount - serversPerPage,
-        pageCount
-      );
-      const ownerPage = ownerList.slice(pageCount - serversPerPage, pageCount);
-
-      serverPage.forEach((server, i) => {
-        serverEmbed.addField(
-          `${pageCount - serversPerPage + i + 1}. ${server}`,
-          ownerPage[i]
+        serverTexts.push(
+          `${server.name} (${server.id}) owned by ${server.owner?.user.username} (${server.owner?.id})`
         );
-      });
+        ownerIds.push(server.owner?.id);
+      }
 
-      serverEmbed.setFooter(`Page ${currentPage} of ${totalPages}`);
+      const totalPages = Math.ceil(serverTexts.length / 10);
+      const pageData = serverTexts.slice(targetPage * 10 - 10, targetPage * 10);
 
-      //use Set to get list of unique owners
-      const ownerCount = new Set(ownerIds).size;
-
-      await channel.send(serverEmbed);
-
-      await channel.send(
-        `I am in ${serverList.length} servers, with ${ownerCount} unique owner${
-          ownerCount === 1 ? "" : "s"
-        }.`
-      );
-      await message.react(message.Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      const serverEmbed = new MessageEmbed();
+      serverEmbed.setTitle(`Becca's Guild List`);
+      serverEmbed.setFooter(`Page ${targetPage} of ${totalPages}`);
+      serverEmbed.setColor(Becca.colours.default);
+      serverEmbed.setDescription(pageData.join("\n"));
+      serverEmbed.addField("Total servers", serverTexts.length, true);
+      serverEmbed.addField("Unique Owners", new Set(ownerIds).size, true);
+      return { success: true, content: serverEmbed };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "list command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "list") };
     }
   },
 };
-
-export default list;

@@ -1,169 +1,86 @@
-import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const HELP_CONSTANTS = {
-  title: "Becca's commands",
-  description: (prefix: string) =>
-    `My available spells are below. The spell name must be prefixed with \`${prefix}\`, just like the \`${prefix}help\` spell used to get this message. For information on a specific spell, use \`${prefix}help <spell>\`.`,
-  footer: "Which one shall I cast next?",
-  notFound: (prefix: string, commandName: string) =>
-    `\`${prefix}${commandName}\` is not in my spellbook. Try \`${prefix}help\` for a list of available spells.`,
-};
-
-const help: CommandInt = {
+export const help: CommandInt = {
   name: "help",
   description:
-    "Provides a list of current commands to the user. Optionally provides information on the specific **command**.",
-  parameters: [
-    "`<?command>`: name of the command to get more information about",
-  ],
+    "Returns a list of available commands. Optionally provides information on a specific command.",
+  parameters: ["`command`: name of the command to get help with"],
   category: "bot",
-  run: async (message) => {
+  run: async (Becca, message) => {
     try {
-      const { Becca, channel, commandArguments, guild } = message;
-
-      const { color, commands, prefix } = Becca;
+      const { content, guild } = message;
+      const [, targetCommand] = content.split(" ");
 
       if (!guild) {
-        await message.react(Becca.no);
-        return;
+        return { success: false, content: "Unknown guild error." };
       }
 
-      // Get the next argument as the command name.
-      const commandName = commandArguments.shift();
-
-      // Check if the command name exists.
-      if (commandName) {
-        // Get the command interface for the command name.
-        const command = commands[commandName];
-
-        // Check if the command does not exist.
-        if (!command) {
-          await message.channel.send(
-            HELP_CONSTANTS.notFound(prefix[guild.id], commandName)
-          );
-          await message.react(Becca.no);
-          return;
-        }
-
-        // Create a new empty embed.
-        const commandEmbed = new MessageEmbed();
-
-        // Add a light purple color.
-        commandEmbed.setColor(color);
-
-        // Add the command name as the title.
-        commandEmbed.setTitle(commandName);
-
-        // Add the command description.
-        commandEmbed.setDescription(command.description);
-
-        // Check if the command has parameters.
-        if (command.parameters) {
-          commandEmbed.addField(
-            "Parameters",
-            command.parameters
-              .join("\r\n")
-              .replace(/{@prefix}/gi, prefix[guild.id])
-          );
-        }
-
-        // Add the command usage.
-        commandEmbed.addField(
-          "Usage",
-          `${prefix[guild.id]}${commandName}${
-            command.parameters
-              ? ` ${command.parameters
-                  .map((el) => el.split(":")[0].replace(/`/g, ""))
-                  .join(" ")}`
-              : ""
-          }`
+      if (targetCommand) {
+        const validCommand = Becca.commands.find(
+          (cmd) => cmd.name === targetCommand
         );
-
-        // Send the embed to the current channel.
-        await channel.send(commandEmbed);
-        await message.react(Becca.yes);
-        return;
-      }
-
-      // Create a new empty embed.
-      const helpEmbed = new MessageEmbed();
-
-      // Add a light purple color.
-      helpEmbed.setColor(color);
-
-      // Add the title.
-      helpEmbed.setTitle(HELP_CONSTANTS.title);
-
-      // Add the description.
-      helpEmbed.setDescription(HELP_CONSTANTS.description(prefix[guild.id]));
-
-      // Get commands by category
-      const botCommandNames: string[] = [];
-      const gameCommandNames: string[] = [];
-      const generalCommandNames: string[] = [];
-      const moderationCommandNames: string[] = [];
-      const serverCommandNames: string[] = [];
-
-      // Get the unique commands.
-      for (const command of new Set(Object.values(commands)).values()) {
-        switch (command.category) {
-          case "bot":
-            botCommandNames.push(`\`${command.name}\``);
-            break;
-          case "game":
-            gameCommandNames.push(`\`${command.name}\``);
-            break;
-          case "general":
-            generalCommandNames.push(`\`${command.name}\``);
-            break;
-          case "moderation":
-            moderationCommandNames.push(`\`${command.name}\``);
-            break;
-          case "server":
-            serverCommandNames.push(`\`${command.name}\``);
-            break;
+        if (!validCommand) {
+          return {
+            success: false,
+            content: `${targetCommand} is not one of my available spells.`,
+          };
         }
+        const commandHelpEmbed = new MessageEmbed();
+        commandHelpEmbed.setTitle(`${targetCommand} spell`);
+        commandHelpEmbed.setColor(Becca.colours.default);
+        commandHelpEmbed.setDescription(validCommand.description);
+        commandHelpEmbed.addField(
+          "Parameters",
+          validCommand.parameters.join("\n") || "This spell has no options."
+        );
+        commandHelpEmbed.setTimestamp();
+        return { success: true, content: commandHelpEmbed };
       }
 
-      // Add the available commands.
-      helpEmbed.addField(
-        "Bot-related Spells",
-        botCommandNames.sort().join(" | ")
-      );
-      helpEmbed.addField(
-        "Game-related Spells",
-        gameCommandNames.sort().join(" | ")
-      );
-      helpEmbed.addField(
-        "General Spells",
-        generalCommandNames.sort().join(" | ")
-      );
-      helpEmbed.addField(
-        "Moderation Spells",
-        moderationCommandNames.sort().join(" | ")
-      );
-      helpEmbed.addField(
-        "Server Spells",
-        serverCommandNames.sort().join(" | ")
-      );
-      // Add the footer.
-      helpEmbed.setFooter(HELP_CONSTANTS.footer);
+      const botCommands = Becca.commands
+        .filter((cmd) => cmd.category === "bot")
+        .map((cmd) => "`" + cmd.name + "`");
+      const gameCommands = Becca.commands
+        .filter((cmd) => cmd.category === "game")
+        .map((cmd) => "`" + cmd.name + "`");
+      const generalCommands = Becca.commands
+        .filter((cmd) => cmd.category === "general")
+        .map((cmd) => "`" + cmd.name + "`");
+      const modCommands = Becca.commands
+        .filter((cmd) => cmd.category === "mod")
+        .map((cmd) => "`" + cmd.name + "`");
+      const serverCommands = Becca.commands
+        .filter((cmd) => cmd.category === "server")
+        .map((cmd) => "`" + cmd.name + "`");
 
-      // Send the embed to the current channel.
-      await channel.send(helpEmbed);
-      await message.react(Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      const helpEmbed = new MessageEmbed();
+      helpEmbed.setTitle("Available Spells");
+      helpEmbed.setDescription(
+        `These are my available spells. You can cast them with the ${
+          Becca.prefixData[guild.id]
+        } prefix, like you did with this spell. If you need further assistance, join the [support server](http://chat.nhcarrigan.com) or view [the documentation](https://www.beccalyria.com/discord-documentation).`
+      );
+      helpEmbed.setColor(Becca.colours.default);
+      helpEmbed.addField("Bot Spells", botCommands.join(", "));
+      helpEmbed.addField("Game Spells", gameCommands.join(", "));
+      helpEmbed.addField("General Spells", generalCommands.join(", "));
+      helpEmbed.addField("Moderation Spells", modCommands.join(", "));
+      helpEmbed.addField("Server Spells", serverCommands.join(", "));
+      helpEmbed.setTimestamp();
+
+      return { success: true, content: helpEmbed };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "help command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "help") };
     }
   },
 };
-
-export default help;

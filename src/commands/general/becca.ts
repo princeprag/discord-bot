@@ -1,33 +1,32 @@
-import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const beccaCommand: CommandInt = {
+export const becca: CommandInt = {
   name: "becca",
   description: "Returns information about Becca's character.",
   category: "general",
-  run: async (message) => {
+  parameters: [],
+  run: async (Becca, message) => {
     try {
-      const { Becca, channel } = message;
       const beccaEmbed = new MessageEmbed();
-      beccaEmbed.setColor(Becca.color);
+      beccaEmbed.setColor(Becca.colours.default);
       beccaEmbed.setTitle("Becca Lyria");
-      beccaEmbed.setThumbnail(Becca.user?.avatarURL({ dynamic: true }) || "");
       beccaEmbed.setDescription(
         "If you want to read about my adventures, check my [profile site](https://www.beccalyria.com). I would rather not have to recount them all here."
       );
-      await channel.send(beccaEmbed);
-      await message.react(message.Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      beccaEmbed.setThumbnail(Becca.user?.avatarURL({ dynamic: true }) || "");
+      return { success: true, content: beccaEmbed };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "becca command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "becca") };
     }
   },
 };
-
-export default beccaCommand;

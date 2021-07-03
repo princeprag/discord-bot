@@ -1,57 +1,59 @@
 import StarModel from "../../database/models/StarModel";
-import CommandInt from "../../interfaces/CommandInt";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const resetStar: CommandInt = {
+export const resetstar: CommandInt = {
   name: "resetstar",
-  description: "Resets the star count for the server.",
+  description: "Resets the star count for the server",
   category: "server",
-  run: async (message) => {
+  parameters: [],
+  run: async (Becca, message) => {
     try {
-      const { member, Becca, channel, guild } = message;
+      const { member, guild } = message;
 
-      if (!guild) {
-        await message.react(Becca.no);
-        await message.channel.send(
-          "Hmm, that is strange. Your guild does not seem to officially exist."
-        );
-        return;
+      if (!guild || !member) {
+        return {
+          success: false,
+          content: "I cannot locate your guild record.",
+        };
       }
 
-      if (!member?.hasPermission("MANAGE_GUILD")) {
-        await message.react(Becca.no);
-        await message.channel.send(
-          "You are not high enough level to cast this spell."
-        );
-        return;
+      if (!member.hasPermission("MANAGE_GUILD")) {
+        return {
+          success: false,
+          content: "You do not have the correct skills to use this spell.",
+        };
       }
 
-      const starData = await StarModel.findOne({ serverID: guild?.id });
+      const starData = await StarModel.findOne({ serverID: guild.id });
 
       if (!starData) {
-        await message.react(Becca.no);
-        await message.channel.send(
-          "No one is carrying any stars right now. This spell would have no effect."
-        );
-        return;
+        return {
+          success: false,
+          content: "I cannot locate the star data for this server.",
+        };
       }
 
       starData.users = [];
       starData.markModified("users");
       await starData.save();
-
-      await message.react(Becca.yes);
-      await channel.send("I have returned the stars to the heavens.");
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      return {
+        success: true,
+        content: "I have returned the stars to the heavens.",
+      };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "resetstar command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "resetstar"),
+      };
     }
   },
 };
-
-export default resetStar;

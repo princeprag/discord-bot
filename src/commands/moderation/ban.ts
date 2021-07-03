@@ -1,147 +1,94 @@
-import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
+import { sendLogEmbed } from "../../modules/guild/sendLogEmbed";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { customSubstring } from "../../utils/customSubstring";
 
-const ban: CommandInt = {
+export const ban: CommandInt = {
   name: "ban",
-  description:
-    "Ban an user of the server. Optionally provide a **reason**. Only available to server moderators. Becca will log this action if log channel is available.",
+  description: "Ban a user from the server. Optionally provide a reason.",
   parameters: [
-    "`<user>`: @name of the user to ban",
-    "`<?reason>`: reason for banning the user",
+    "`user`: mention or ID of the user to ban",
+    "`reason?`: reason for the ban",
   ],
-  category: "moderation",
-  run: async (message) => {
+  category: "mod",
+  run: async (Becca, message) => {
     try {
-      const { author, Becca, commandArguments, guild, member, mentions } =
-        message;
+      const { guild, content, member } = message;
 
-      const { user } = Becca;
-
-      // Check if the member has the ban members permission.
-      if (!guild || !user || !member || !member.hasPermission("BAN_MEMBERS")) {
-        await message.channel.send(
-          "You are not high enough level to use this skill."
-        );
-        await message.react(message.Becca.no);
-        return;
+      if (!guild || !member) {
+        return { success: false, content: "I cannot find your guild record" };
       }
 
-      // Get the next argument as the user to ban mention.
-      let userToBanMention = commandArguments.shift();
+      const [, user, ...reason] = content.split(" ");
 
-      // Get the first user mention.
-      const userToBanMentioned = mentions.users.first();
-
-      // Check if the user mention is valid.
-      if (!userToBanMention || !userToBanMentioned || !mentions.members) {
-        await message.channel.send(
-          "I cannot just throw lightning around randomly. Who do you want me to target?"
-        );
-        await message.react(message.Becca.no);
-        return;
+      if (!member.hasPermission("BAN_MEMBERS")) {
+        return {
+          success: false,
+          content: "You do not have the correct skills to use this spell.",
+        };
       }
 
-      // Remove the `<@!` and `>` from the mention to get the id.
-      userToBanMention = userToBanMention.replace(/[<@!>]/gi, "");
+      const targetUser = user
+        ? await guild.members.fetch(user.replace(/\D/g, ""))
+        : null;
 
-      // Check if the user mention string and the first user mention id are equals.
-      if (userToBanMention !== userToBanMentioned.id) {
-        await message.channel.send(
-          `I am so sorry, but ${userToBanMentioned.toString()} is not a valid user.`
-        );
-        await message.react(message.Becca.no);
-        return;
+      if (!targetUser) {
+        return {
+          success: false,
+          content:
+            "I will not throw my lightning around randomly. Who do you want me to target?",
+        };
       }
 
-      // Check if trying to ban itself.
-      if (userToBanMentioned.id === author.id) {
-        await message.channel.send("You, uh, could just leave...");
-        await message.react(message.Becca.no);
-        return;
+      if (targetUser.id === member.id) {
+        return {
+          success: false,
+          content: "If you hate the guild that much, you could just leave...",
+        };
       }
 
-      // Get the first member mention.
-      const memberToBanMentioned = mentions.members.first();
-
-      // Check if the member mention exists.
-      if (!memberToBanMentioned) {
-        await message.channel.send(
-          "I cannot just throw lightning around randomly. Who do you want me to target?"
-        );
-        await message.react(message.Becca.no);
-        return;
-      }
-
-      // Check if the user id or member id are Becca's id.
-      if (
-        userToBanMentioned.id === user.id ||
-        memberToBanMentioned.id === user.id
-      ) {
-        await message.channel.send(
-          "A good attempt, but I am not planning on leaving just yet."
-        );
-        await message.react(message.Becca.no);
-        return;
-      }
-
-      // Check if the user is bannable.
-      if (!memberToBanMentioned.bannable) {
-        await message.channel.send(
-          `I am so sorry, but I cannot ban ${memberToBanMentioned.toString()}.`
-        );
-        await message.react(message.Becca.no);
-        return;
-      }
-
-      // Get the reason of the ban.
-      let reason = commandArguments.join(" ");
-
-      // Add a default reason if it not provided.
-      if (!reason || !reason.length) {
-        reason = "They did not tell me why.";
+      if (targetUser.id === Becca.user?.id) {
+        return { success: false, content: "I am not going away just yet." };
       }
 
       const banEmbed = new MessageEmbed();
-      banEmbed.setColor("#FF0000");
-      banEmbed.setTitle("Banned!");
-      banEmbed.setDescription(`Member banned by ${author.username}.`);
-      banEmbed.addField("Reason", reason);
-      banEmbed.setTimestamp();
+      banEmbed.setColor(Becca.colours.error);
+      banEmbed.setTitle(`User Permanently Removed`);
+      banEmbed.setDescription(`Member banned by ${member.user.username}`);
+      banEmbed.addField(
+        "Reason",
+        customSubstring(reason.join(" ") || "They did not tell me why.", 1000),
+        true
+      );
       banEmbed.setAuthor(
-        userToBanMentioned.username + "#" + userToBanMentioned.discriminator,
-        userToBanMentioned.displayAvatarURL()
+        `${targetUser.user.username}#${targetUser.user.discriminator}`,
+        targetUser.user.displayAvatarURL()
       );
-      banEmbed.setFooter(`\`ID: ${userToBanMentioned.id}\``);
+      banEmbed.setTimestamp();
+      banEmbed.setFooter(`ID: ${targetUser.id}`);
 
-      await Becca.sendMessageToLogsChannel(guild, banEmbed);
+      await sendLogEmbed(Becca, guild, banEmbed);
 
-      await userToBanMentioned
-        .send(
-          `**[Ban]** ${author.username} has banned you from ${guild.name} for the following reason: ${reason}`
-        )
-        .catch(async () => {
-          await message.channel.send(
-            "That user has rejected my attempt to contact them, so I could not tell them why they were banned."
-          );
-        });
-      await memberToBanMentioned.ban({ reason });
+      await targetUser.ban({
+        reason: reason.join(" ") || "They did not tell me why.",
+      });
 
-      await message.channel.send(
-        "Retribution is swift. That member is no more, and shall not return."
-      );
-      // Ban the user.
-      await message.react(message.Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      return {
+        success: true,
+        content:
+          "Retribution is swift. That member is no more, and shall not return.",
+      };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "ban command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "ban") };
     }
   },
 };
-
-export default ban;

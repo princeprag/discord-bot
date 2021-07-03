@@ -1,47 +1,34 @@
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
-import CommandInt from "../../interfaces/CommandInt";
 
-const cat: CommandInt = {
+export const cat: CommandInt = {
   name: "cat",
-  description: "A cat walked across the keyboard!",
+  description: "A cat walked across the keyboard",
   category: "game",
-  run: async (message) => {
+  parameters: [],
+  run: async (Becca, message) => {
     try {
-      const { channel, sleep } = message;
-
-      // Get a random length for the new string.
-      const len = ~~(Math.random() * 100);
-
-      // Create an empty string.
+      const length = Math.floor(Math.random() * 100);
       let str = "";
 
-      for (let i = 0; i < len; i++) {
-        // Get a random character.
-        const char = ~~(Math.random() * 26 + 64);
-
-        // Append the character to the string.
-        str += String.fromCharCode(char);
+      for (let i = 0; i < length; i++) {
+        const character = Math.floor(Math.random() * 26 + 64);
+        str += String.fromCharCode(character);
       }
-
-      // Send the new string to the current channel.
-      await channel.send(str);
-
-      // Sleep by 1 second.
-      await sleep(1000);
-
-      // Send a message to the current channel.
-      await channel.send("My familiar wanted to send you a message, it seems.");
-      await message.react(message.Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      return {
+        success: true,
+        content: `${str}\nMy familiar wanted to send you a message.`,
+      };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "cat command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "cat") };
     }
   },
 };
-
-export default cat;

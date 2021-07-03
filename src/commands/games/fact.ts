@@ -1,43 +1,33 @@
-import CommandInt from "../../interfaces/CommandInt";
-import FactInt from "../../interfaces/commands/FactInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { FactInt } from "../../interfaces/commands/games/FactInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { customSubstring } from "../../utils/customSubstring";
 
-const fact: CommandInt = {
+export const fact: CommandInt = {
   name: "fact",
   description: "Returns a fun fact!",
+  parameters: [],
   category: "game",
-  run: async (message) => {
+  run: async (Becca, message) => {
     try {
-      const { Becca, channel } = message;
-
-      // Get the data information from the random API.
-      const data = await axios.get<FactInt>(
+      const fact = await axios.get<FactInt>(
         "https://uselessfacts.jsph.pl/random.json?language=en"
       );
 
-      const { source_url, text } = data.data;
+      const factEmbed = new MessageEmbed();
+      factEmbed.setTitle("Did you know?");
+      factEmbed.setColor(Becca.colours.default);
+      factEmbed.setDescription(customSubstring(fact.data.text, 4000));
+      factEmbed.setURL(fact.data.source_url);
+      factEmbed.setTimestamp();
 
-      // Send the embed to the current channel.
-      await channel.send(
-        new MessageEmbed()
-          .setColor(Becca.color)
-          .setTitle("Did you know?")
-          .setURL(source_url)
-          .setDescription(text)
-      );
-      await message.react(message.Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
-        "fact command",
-        message.Becca.debugHook,
-        message
-      );
+      return { success: true, content: factEmbed };
+    } catch (err) {
+      beccaErrorHandler(Becca, "fact command", err, message.guild?.id, message);
+      return { success: false, content: errorEmbedGenerator(Becca, "fact") };
     }
   },
 };
-
-export default fact;

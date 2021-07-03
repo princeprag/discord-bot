@@ -1,70 +1,76 @@
-import CommandInt from "../../interfaces/CommandInt";
-import LevelModel from "../../database/models/LevelModel";
 import { MessageEmbed } from "discord.js";
+import LevelModel from "../../database/models/LevelModel";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const leaderboard: CommandInt = {
+export const leaderboard: CommandInt = {
   name: "leaderboard",
-  description: "Returns the level information for the server.",
+  description: "Shows the leaderboard",
+  parameters: [],
   category: "server",
-  run: async (message) => {
+  run: async (Becca, message) => {
     try {
-      const { member, guild, channel, Becca, author } = message;
-      if (!member || !guild || !channel) {
-        await message.react(Becca.no);
-        return;
+      const { member, guild } = message;
+
+      if (!member || !guild || !member.user) {
+        return {
+          success: false,
+          content: "I cannot seem to find your guild record.",
+        };
       }
+      const authorName = member.nickname || member.user.username;
 
       const serverLevels = await LevelModel.findOne({ serverID: guild.id });
-
       if (!serverLevels) {
-        await message.channel.send(
-          "It would appear that rankings are not enabled here."
-        );
-        await message.react(Becca.no);
-        return;
+        return {
+          success: false,
+          content: "It would appear that rankings are not enabled here.",
+        };
       }
 
-      const userLevel = serverLevels.users.find(
-        (user) => user.userID === author.id
+      const authorLevel = serverLevels.users.find(
+        (user) => user.userID === member.user.id
       );
 
-      const topTen = serverLevels.users.sort((a, b) => b.points - a.points);
+      const sortedLevels = serverLevels.users.sort(
+        (a, b) => b.points - a.points
+      );
 
-      const userRank = userLevel
-        ? `${member.nickname || member.user.username} is rank ${
-            topTen.findIndex((user) => user.userID === member.id) + 1
-          } at level ${userLevel.level}`
-        : `${member.nickname || member.user.username} is not ranked yet...`;
+      const authorRank = authorLevel
+        ? `${authorName} is rank ${
+            sortedLevels.findIndex((user) => user.userID === member.id) + 1
+          }`
+        : `${authorName} is not ranked yet...`;
 
-      const topTenString = topTen
+      const topTen = sortedLevels
+        .slice(0, 10)
         .map(
           (user, index) =>
-            `#${index + 1}: ${user.userName} at level ${user.level} (${
+            `#${index + 1}: ${user.userName} at level ${user.level} with ${
               user.points
-            } XP)`
-        )
-        .slice(0, 10)
-        .join("\n");
+            } experience points.`
+        );
 
       const levelEmbed = new MessageEmbed();
       levelEmbed.setTitle(`${guild.name} leaderboard`);
-      levelEmbed.setColor(Becca.color);
-      levelEmbed.addField("Top Ten Members", topTenString);
-      levelEmbed.addField("Your rank", userRank);
-
-      await message.react(Becca.yes);
-      await channel.send(levelEmbed);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      levelEmbed.setColor(Becca.colours.default);
+      levelEmbed.addField("Top ten members", topTen.join("\n"));
+      levelEmbed.addField("Your rank", authorRank);
+      levelEmbed.setTimestamp();
+      return { success: true, content: levelEmbed };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "leaderboard command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "leaderboard"),
+      };
     }
   },
 };
-
-export default leaderboard;

@@ -1,52 +1,41 @@
-import CommandInt from "../../interfaces/CommandInt";
-import httpStatusList from "../../utils/commands/httpStatusList";
 import { MessageEmbed } from "discord.js";
+import { httpStatus } from "../../config/commands/httpStatus";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const http: CommandInt = {
+export const http: CommandInt = {
   name: "http",
   description:
-    "Returns a definition for the status parameter. Includes a cute cat photo.",
-  parameters: ["`<status>`: the HTTP status to define"],
+    "Returns a brief description of the status code, including a cat photo.",
+  parameters: ["`status`: the HTTP status to define."],
   category: "general",
-  run: async (message) => {
+  run: async (Becca, message) => {
     try {
-      const { channel, commandArguments } = message;
+      const [, status] = message.content.split(" ");
 
-      // Get the next argument as the status.
-      const status = commandArguments.shift();
-
-      // Check if the status is not valid.
-      if (!status) {
-        await message.channel.send("What status ails you?");
-        await message.react(message.Becca.no);
-        return;
+      if (!status || !httpStatus.includes(status)) {
+        return {
+          success: false,
+          content: "You need to give me a valid status code here.",
+        };
       }
+      const httpEmbed = new MessageEmbed();
+      httpEmbed.setTitle(`HTTP code ${status}`);
+      httpEmbed.setImage(`https://http.cat/${status}.jpg`);
+      httpEmbed.setColor(Becca.colours.default);
+      httpEmbed.setTimestamp();
 
-      // Check if the status exists.
-      if (!httpStatusList.includes(status)) {
-        await message.channel.send(`${status} is not a known status code.`);
-        await message.react(message.Becca.no);
-        return;
-      }
-
-      // Send an embed to the current channel.
-      await channel.send(
-        new MessageEmbed()
-          .setTitle(`HTTP status: ${status}`)
-          .setImage(`https://http.cat/${status}.jpg`)
-      );
-      await message.react(message.Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      return { success: true, content: httpEmbed };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "http command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "http") };
     }
   },
 };
-
-export default http;

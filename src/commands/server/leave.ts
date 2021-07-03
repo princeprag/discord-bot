@@ -1,60 +1,57 @@
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
-import CommandInt from "../../interfaces/CommandInt";
 
-const leave: CommandInt = {
+export const leave: CommandInt = {
   name: "leave",
   description:
-    "Can tell Becca to leave a specific server. Pass the ID of the target server as the parameter to leave that server. This command is specific to nhcarrigan.",
-  parameters: ["<?serverID>: the ID of the server to leave"],
+    "Tells Becca to leave a specific server. Restricted to the bot owner ID.",
+  parameters: ["`serverID`: The Discord ID of the server to leave."],
   category: "server",
-  run: async (message) => {
+  run: async (Becca, message) => {
     try {
-      const { author, Becca, commandArguments } = message;
-
-      const { guilds } = Becca;
-
-      // Check if the author id is not the owner id.
-      if (author.id !== process.env.OWNER_ID) {
-        await message.channel.send("Only nhcarrigan may cast this spell.");
-        await message.react(message.Becca.no);
-        return;
+      const { author, content } = message;
+      if (author.id !== Becca.configs.ownerId) {
+        return {
+          success: false,
+          content: "Only my owner may cast this spell.",
+        };
       }
+      const [, serverID] = content.split(" ");
 
-      // Get the next argument as the server id.
-      const serverID = commandArguments.shift();
-
-      // Check if the server id is empty - return list of servers.
       if (!serverID || !serverID.length) {
-        await message.channel.send("Which guild should I resign from?");
-        await message.react(message.Becca.no);
-        return;
+        return {
+          success: false,
+          content: "I need a server ID to leave.",
+        };
       }
 
-      // Get the target guild.
-      const targetGuild = guilds.cache.get(serverID);
+      const targetServer = Becca.guilds.cache.get(serverID);
 
-      // Check if the target guild is not valid.
-      if (!targetGuild) {
-        await message.channel.send(
-          `\`${serverID}\` is not a guild I recognise.`
-        );
-        await message.react(message.Becca.no);
-        return;
+      if (!targetServer) {
+        return {
+          success: false,
+          content: `${serverID} is not a guild I recognise.`,
+        };
       }
 
-      // Leave the target guild.
-      await targetGuild.leave();
-      await message.react(message.Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      await targetServer.leave();
+      return {
+        success: true,
+        content: `Leaving ${serverID}`,
+      };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "leave command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "leave command"),
+      };
     }
   },
 };
-
-export default leave;

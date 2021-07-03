@@ -1,73 +1,74 @@
-import CommandInt from "../../interfaces/CommandInt";
-import { customSubstring } from "../../utils/substringHelper";
 import { MessageEmbed, TextChannel } from "discord.js";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { customSubstring } from "../../utils/customSubstring";
 
-const suggest: CommandInt = {
+export const suggest: CommandInt = {
   name: "suggest",
   description:
     "Sends a suggestion to the configured suggestion channel. Allows members to vote on the suggestion.",
-  category: "server",
   parameters: [
-    "`<suggestion>`: full sentence (space-separated) of your suggestion.",
+    "`suggestion`: A full sentence (space-separated) text explaining your suggestion.",
   ],
-  run: async (message, config) => {
+  category: "server",
+  run: async (Becca, message, config) => {
     try {
-      const { channel, content, guild, Becca, author } = message;
-
+      const { author, content, guild } = message;
       if (!guild) {
-        await message.react(Becca.no);
-        return;
+        return {
+          success: false,
+          content: "I cannot locate your guild record",
+        };
       }
-
       if (!config.suggestion_channel) {
-        await message.react(Becca.no);
-        await message.channel.send(
-          "The guild is not open to feedback at this time. Save your ideas for later."
-        );
-        return;
+        return {
+          success: false,
+          content:
+            "The guild is not open to feedback at this time. Save your ideas for later.",
+        };
       }
 
       const suggestion = content.split(" ").slice(1).join(" ");
 
-      const suggestionChannel = await guild.channels.cache.find(
-        (channel) => channel.id === config.suggestion_channel
-      );
+      const suggestionChannel = (await guild.channels.cache.find(
+        (el) => el.id === config.suggestion_channel
+      )) as TextChannel;
 
       if (!suggestionChannel) {
-        await message.react(Becca.no);
-        await message.channel.send(
-          "I am not sure where to put this. You should hold on to it for now."
-        );
-        return;
+        return {
+          success: false,
+          content:
+            "I am not sure where to put this. You should hold on to it for now.",
+        };
       }
 
       const suggestionEmbed = new MessageEmbed();
-
       suggestionEmbed.setTitle("Someone had an idea:");
       suggestionEmbed.setTimestamp();
-      suggestionEmbed.setColor(Becca.color);
-      suggestionEmbed.setAuthor(author.username, author.displayAvatarURL());
-      suggestionEmbed.setDescription(customSubstring(suggestion, 2048));
-      suggestionEmbed.setFooter("Vote yes or no below");
-
-      const sentMessage = await (suggestionChannel as TextChannel).send(
-        suggestionEmbed
+      suggestionEmbed.setColor(Becca.colours.default);
+      suggestionEmbed.setAuthor(
+        `${author.username}#${author.discriminator}`,
+        author.displayAvatarURL()
       );
-      await sentMessage.react(Becca.yes);
-      await sentMessage.react(Becca.no);
-      await channel.send("Alright, it is posted. Good luck.");
-      await message.delete();
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      suggestionEmbed.setDescription(customSubstring(suggestion, 2000));
+
+      const sentMessage = await suggestionChannel.send(suggestionEmbed);
+      await sentMessage.react(Becca.configs.yes);
+      await sentMessage.react(Becca.configs.no);
+      return {
+        success: true,
+        content: "Alright, I have posted that. Good luck!",
+      };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "suggest command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "suggest") };
     }
   },
 };
-
-export default suggest;

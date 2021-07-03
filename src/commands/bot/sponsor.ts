@@ -1,46 +1,39 @@
-import CommandInt from "../../interfaces/CommandInt";
 import { MessageEmbed } from "discord.js";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
-const sponsor: CommandInt = {
+export const sponsor: CommandInt = {
   name: "sponsor",
   description: "Returns an embed containing the sponsor links.",
+  parameters: [],
   category: "bot",
-  run: async (message) => {
+  run: async (Becca, message) => {
     try {
-      const { channel, Becca } = message;
+      const sponsorEmbed = new MessageEmbed();
+      sponsorEmbed.setTitle("Sponsor my development!");
+      sponsorEmbed.setColor(Becca.colours.default);
+      sponsorEmbed.setDescription(
+        "Did you know I accept donations? These funds help me learn new spells, improve my current abilities, and allow me to serve you better."
+      );
+      sponsorEmbed.addField(
+        "GitHub Sponsors",
+        "https://github.com/sponsors/nhcarrigan"
+      );
+      sponsorEmbed.addField("Patreon", "https://patreon.com/nhcarrigan");
+      sponsorEmbed.addField("PayPal", "https://paypal.me/nhcarrigan");
+      sponsorEmbed.setFooter("Join our Discord to get perks when you sponsor!");
 
-      //create embed
-      const sponsorEmbed = new MessageEmbed()
-        .setTitle("Sponsor my development!")
-        .setDescription(
-          "Did you know I accept donations? These funds help me learn new spells, improve my current abilities, and serve you better."
-        )
-        .setColor(Becca.color)
-        .addFields(
-          {
-            name: "Monthly Donation",
-            value:
-              "You can sign up for a monthly donation through [GitHub Sponsors](https://github.com/sponsors/nhcarrigan). There are plenty of rewards available!",
-          },
-          {
-            name: "One-time Donation",
-            value:
-              "You can make a one-time donation through [Ko-Fi](https://ko-fi.com/nhcarrigan), though there are no rewards here aside from my love and apprecaition.",
-          }
-        );
-      await channel.send(sponsorEmbed);
-      await message.react(Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      return { success: true, content: sponsorEmbed };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "sponsor command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "sponsor") };
     }
   },
 };
-
-export default sponsor;

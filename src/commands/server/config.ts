@@ -1,246 +1,159 @@
-import CommandInt from "../../interfaces/CommandInt";
+import { MessageEmbed } from "discord.js";
+import { defaultServer } from "../../config/database/defaultServer";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { SettingsTypes } from "../../interfaces/settings/SettingsTypes";
+import { validateSetting } from "../../modules/commands/config/validateSetting";
+import { viewSettings } from "../../modules/commands/config/viewSettings";
+import { viewSettingsArray } from "../../modules/commands/config/viewSettingsArray";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
+import { resetSetting } from "../../modules/settings/resetSetting";
+import { setSetting } from "../../modules/settings/setSetting";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
-import { viewConfigEmbed } from "../../utils/config/viewConfigEmbed";
-import { viewHeartsEmbed } from "../../utils/config/viewHeartsEmbed";
-import { viewBlockedEmbed } from "../../utils/config/viewBlockedEmbed";
-import { viewRolesEmbed } from "../../utils/config/viewRolesEmbed";
-import { keyList } from "../../utils/config/keyList";
-import { defaultConfigValues } from "../../utils/config/defaultValues";
+import { customSubstring } from "../../utils/customSubstring";
 
-const config: CommandInt = {
+export const config: CommandInt = {
   name: "config",
-  description:
-    "Returns Becca's configuration for this server. (The parameters are only for server administrators)",
+  description: "Manages the server configuration.",
   parameters: [
-    "`<action>`: The action you would like to take. `set`, `reset`, or `view`.",
-    "`<setting>`: The setting you would like to take action on. See the docs for available options.",
-    "`<value>`: The value of that setting (if using `set`). See the docs for available options.",
+    "`action`: The config action to take. One of `set`, `reset`, or `view`.",
+    "`setting`: The setting to take action on.",
+    "`value`: The value of that setting (only applicable for `set` action).",
   ],
   category: "server",
-  run: async (message, config) => {
+  run: async (Becca, message, config) => {
     try {
-      // Get the client, current channel, command arguments and current guild, mentions and member of the message.
-      const { Becca, channel, commandArguments, guild, member } = message;
+      const { content, guild, member } = message;
 
-      // Check if the guild and member are valid.
       if (!guild || !member) {
-        await message.react(message.Becca.no);
-        return;
+        return {
+          success: false,
+          content: "I cannot find your guild or membership record.",
+        };
       }
 
       if (
         !member.hasPermission("MANAGE_GUILD") &&
-        member.id !== process.env.OWNER_ID
+        member.id !== Becca.configs.ownerId
       ) {
-        await message.channel.send(
-          `You are not high enough level to use this spell.`
-        );
-        await message.react(message.Becca.no);
-        return;
+        return {
+          success: false,
+          content: "You do not have the correct skills to use this spell.",
+        };
       }
 
-      // Get `getTextChannelFromSettings`, the prefix and `setSetting` from the client.
-      const { prefix, setSetting } = Becca;
+      const [, action, setting, value] = content.split(" ");
 
-      // Get the next argument as the config type.
-      const configType = commandArguments.shift();
-
-      if (configType === "view" || !configType) {
-        const target = commandArguments.shift();
-        const page = parseInt(commandArguments.shift() || "1");
-        switch (target) {
+      if (!action || action === "view") {
+        let content: string | MessageEmbed = "";
+        switch (setting) {
           case "hearts":
-            await channel.send(viewHeartsEmbed(config, page));
-            break;
-          case "blocked":
-            await channel.send(viewBlockedEmbed(config, page));
-            break;
           case "self_roles":
-            await channel.send(viewRolesEmbed(config, page));
-            break;
+          case "blocked":
+            return {
+              success: true,
+              content:
+                (await viewSettingsArray(
+                  Becca,
+                  config,
+                  setting,
+                  parseInt(value) || 1
+                )) || "I am unable to locate those settings.",
+            };
           default:
-            await channel.send(viewConfigEmbed(message, config));
+            content =
+              (await viewSettings(Becca, message, config)) ||
+              "I am unable to locate your guild settings.";
         }
-        await message.react(message.Becca.yes);
-        return;
-      }
-      const key = commandArguments.shift();
-
-      if (configType === "reset") {
-        // If no setting provided, end.
-        if (!key) {
-          await message.channel.send(
-            "Which setting did you want me to restore?"
-          );
-          await message.react(message.Becca.no);
-          return;
-        }
-
-        if (!keyList.includes(key)) {
-          await message.channel.send(`${key} is not a valid setting.`);
-          await message.react(message.Becca.no);
-          return;
-        }
-        await setSetting(guild.id, guild.name, key, defaultConfigValues[key]);
-        if (key === "prefix") {
-          prefix[guild.id] = defaultConfigValues.prefix;
-        }
-        await channel.send(`${key} has been restored to its original form.`);
-        await message.react(Becca.yes);
-        return;
+        return { success: true, content };
       }
 
-      // Check for valid type
-      if (configType === "set") {
-        // If no setting provided, end.
-        if (!key) {
-          await message.channel.send("Which setting should I transform?");
-          await message.react(message.Becca.no);
-          return;
-        }
-
-        if (!keyList.includes(key)) {
-          await message.channel.send(`${key} is not a valid setting.`);
-          await message.react(message.Becca.no);
-          return;
-        }
-        // Get value for setting.
-        const value = commandArguments.join(" ");
-
-        // If no value provided, end.
-        if (!value) {
-          await message.channel.send("What new form should this setting take?");
-          await message.react(message.Becca.no);
-          return;
-        }
-
-        // If setting channel, check for valid channel.
-        if (
-          key === "welcome_channel" ||
-          key === "log_channel" ||
-          key === "suggestion_channel"
-        ) {
-          const success = guild.channels.cache.find(
-            (chan) => chan.id === value.replace(/\D/g, "")
-          );
-          if (!success) {
-            await message.channel.send(
-              `${value} is not a channel, so I would not be able to send messages there.`
-            );
-            await message.react(message.Becca.no);
-            return;
-          }
-        }
-
-        // If setting role, check for valid role.
-        if (
-          key === "restricted_role" ||
-          key === "moderator_role" ||
-          key === "self_roles"
-        ) {
-          const success = guild.roles.cache.find(
-            (role) => role.id === value.replace(/\D/g, "")
-          );
-          if (!success && !config[key].includes(value.replace(/\D/g, ""))) {
-            await message.channel.send(
-              `${value} does not appear to be a title granted to your members.`
-            );
-            await message.react(message.Becca.no);
-            return;
-          }
-        }
-
-        // If setting hearts, check for valid user.
-        if (key === "hearts" || key === "blocked") {
-          const mem = await guild.members.fetch(value.replace(/\D/g, ""));
-          if (!mem && !config[key].includes(value.replace(/\D/g, ""))) {
-            await message.channel.send(
-              `${value} does not seem to be a person. Imaginary friends don't count.`
-            );
-            await message.react(message.Becca.no);
-            return;
-          }
-          if (value.replace(/\D/g, "") === process.env.OWNER_ID) {
-            await message.channel.send(
-              key === "blocked"
-                ? "Wait a moment! I will not refuse to help my beloved."
-                : "My love for my darling can never be stopped."
-            );
-            await message.react(message.Becca.no);
-            return;
-          }
-        }
-
-        // If setting toggle, check for off/on.
-        if (key === "thanks" || key === "levels") {
-          if (value !== "on" && value !== "off") {
-            await message.channel.send(
-              `${value} is not a valid option for ${key}. I can switch this one on or off. That's it.`
-            );
-            await message.react(message.Becca.no);
-            return;
-          }
-        }
-
-        // Set client prefix.
-        if (key === "prefix") {
-          prefix[guild.id] = value.toLowerCase();
-        }
-
-        // Save settings.
-        const newSettings = await setSetting(guild.id, guild.name, key, value);
-
-        // Set confirmation response
-        let confirmation = `I have set ${key} to ${value}`;
-
-        // Handle hearts
-        if (key === "hearts") {
-          if (!newSettings.hearts.includes(value.replace(/\D/g, ""))) {
-            confirmation = `No more love for ${value}.`;
-          } else {
-            confirmation = `Hearts will now follow ${value} everywhere.`;
-          }
-        }
-
-        // Handle blocked
-        if (key === "blocked") {
-          if (!newSettings.blocked.includes(value.replace(/\D/g, ""))) {
-            confirmation = `I suppose ${value} can receive my help again.`;
-          } else {
-            confirmation = `I will stop listening to ${value}.`;
-          }
-        }
-
-        // Handle self roles
-        if (key === "self_roles") {
-          if (!newSettings.self_roles.includes(value.replace(/\D/g, ""))) {
-            confirmation = `I will no longer cast the ${value} enchantment people.`;
-          } else {
-            confirmation = `${value} can now be one of your charms, on request.`;
-          }
-        }
-
-        // Send confirmation.
-        await channel.send(confirmation);
-        await message.react(message.Becca.yes);
-        return;
+      if (!Object.keys(defaultServer).includes(setting)) {
+        return {
+          success: false,
+          content: `${setting} is not a valid configuration to change.`,
+        };
       }
 
-      await message.channel.send(
-        `I cannot ${configType} anything here. I am not even sure what that means.`
-      );
-      await message.react(message.Becca.no);
-      return;
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      if (action === "reset") {
+        const resetConfirmation = await resetSetting(
+          Becca,
+          guild.id,
+          guild.name,
+          setting as SettingsTypes,
+          config
+        );
+        if (!resetConfirmation) {
+          return {
+            success: false,
+            content: `I am having trouble updating your settings. Please try again later.`,
+          };
+        }
+        return {
+          success: true,
+          content: `I have set your ${setting} to ${
+            resetConfirmation[setting as SettingsTypes]
+          }`,
+        };
+      }
+
+      if (action === "set") {
+        const isValid = await validateSetting(
+          Becca,
+          setting as SettingsTypes,
+          value,
+          guild,
+          config
+        );
+        if (!isValid) {
+          return {
+            success: false,
+            content: `${value} is not a valid option for ${setting}.`,
+          };
+        }
+        const setConfirmation = await setSetting(
+          Becca,
+          guild.id,
+          guild.name,
+          setting as SettingsTypes,
+          value,
+          config
+        );
+        if (!setConfirmation) {
+          return {
+            success: false,
+            content: `I am having trouble updating your settings. Please try again later.`,
+          };
+        }
+        const newContent = setConfirmation[setting as SettingsTypes];
+        const parsedContent = Array.isArray(newContent)
+          ? newContent.toString()
+          : newContent;
+        const successEmbed = new MessageEmbed();
+        successEmbed.setTitle(`${setting} Updated`);
+        successEmbed.setDescription(
+          "```\n" + customSubstring(parsedContent, 990) + "\n```"
+        );
+        successEmbed.setTimestamp();
+        successEmbed.setColor(Becca.colours.default);
+        return {
+          success: true,
+          content: successEmbed,
+        };
+      }
+
+      return {
+        success: false,
+        content: `${action} is not a valid configuration action to take.`,
+      };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "config command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "config") };
     }
   },
 };
-
-export default config;

@@ -1,89 +1,69 @@
-import CommandInt from "../../interfaces/CommandInt";
-import SpaceInt from "../../interfaces/commands/SpaceInt";
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
+import { CommandInt } from "../../interfaces/commands/CommandInt";
+import { SpaceInt } from "../../interfaces/commands/general/SpaceInt";
+import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { customSubstring } from "../../utils/customSubstring";
 
-const space: CommandInt = {
+export const space: CommandInt = {
   name: "space",
   description:
-    "Gets the astronomy picture of the day! Optionally retrieve an APoD from an earlier date.",
-  parameters: ["`<?date>`: date of picture to retrieve, format YYYY-MM-DD"],
+    "Gets the astronomy picture of the day! Optional;y provide an earlier date to retrieve.",
+  parameters: [
+    "`date?`: Date of the picture to retrieve, formatted as YYYY-MM-DD",
+  ],
   category: "general",
-  run: async (message) => {
+  run: async (Becca, message) => {
     try {
-      const { channel, commandArguments } = message;
+      const { content } = message;
+      const [, date] = content.split(" ");
 
-      // Get the next argument as the date.
-      const userDate = commandArguments.shift();
+      let url = `https://api.nasa.gov/planetary/apod?api_key=${Becca.configs.nasaKey}`;
 
-      // Set the default url.
-      let url = `https://api.nasa.gov/planetary/apod?api_key=${process.env.NASA_API}`;
-
-      // Check if the date exists.
-      if (userDate) {
-        // Check if the date has the `YYYY-MM-DD` format.
-        if (!/[0-9]{4}-[0-9]{2}-[0-9]{2}/.test(userDate)) {
-          await message.channel.send(
-            `I am so sorry, but ${userDate} is not a valid date. Would you please try the command again, and use the format \`YYYY-MM-DD\`?`
-          );
-          await message.react(message.Becca.no);
-          return;
+      if (date) {
+        if (!/[0-9]{4}-[0-9]{2}-[0-9]{2}/.test(date)) {
+          return {
+            success: false,
+            content: `${date} is not a vaild date format.`,
+          };
         }
-
-        // Add the date to the url.
-        url += `&date=${userDate}`;
+        url += `&date=${date}`;
       }
 
       const spaceEmbed = new MessageEmbed();
-      // Get the data from the NASA API.
-      const space = await axios.get<SpaceInt>(url);
+      spaceEmbed.setTimestamp();
 
-      const { code, copyright, date, explanation, hdurl, title } = space.data;
-
-      // Check if the code is 404.
-      if (code === 404 || !space.data) {
-        // Add the error title to the embed title.
-        spaceEmbed.setTitle("SPAAAAACE");
-
-        // Add the error description to the embed description.
+      const space = await axios.get<SpaceInt>(url, { validateStatus: null });
+      if (!space.data || space.status !== 200) {
+        spaceEmbed.setTitle("SPAAAAAAACE");
         spaceEmbed.setDescription(
-          "I got lost in space. Please try again later."
+          "I got lost in space. Please try agian later."
         );
-
-        // Send the space embed to the current channel.
-        await channel.send(spaceEmbed);
-        await message.react(message.Becca.no);
-        return;
+        spaceEmbed.setColor(Becca.colours.error);
+        return { success: false, content: spaceEmbed };
       }
 
-      // Add the space image title to the embed title.
-      spaceEmbed.setTitle(`${userDate || date} Space image: ${title}`);
-
-      // Add the NASA url to the embed title url.
+      spaceEmbed.setTitle(
+        `${date || space.data.date} Space Image: ${space.data.title}`
+      );
       spaceEmbed.setURL("https://apod.nasa.gov/apod/astropix.html");
+      spaceEmbed.setDescription(customSubstring(space.data.explanation, 2000));
+      spaceEmbed.setImage(space.data.hdurl);
+      spaceEmbed.setFooter(
+        `© ${space.data.copyright || "No copyright provided"}`
+      );
 
-      // Add the space image explanation to the embed description.
-      spaceEmbed.setDescription(explanation.slice(0, 2047));
-
-      // Add the space image in HD to the embed.
-      spaceEmbed.setImage(hdurl);
-
-      // Add the space image copyright to the embed footer.
-      spaceEmbed.setFooter(`© ${copyright || "No copyright provided"}`);
-
-      await channel.send(spaceEmbed);
-      await message.react(message.Becca.yes);
-    } catch (error) {
-      await beccaErrorHandler(
-        error,
-        message.guild?.name || "undefined",
+      return { success: true, content: spaceEmbed };
+    } catch (err) {
+      beccaErrorHandler(
+        Becca,
         "space command",
-        message.Becca.debugHook,
+        err,
+        message.guild?.name,
         message
       );
+      return { success: false, content: errorEmbedGenerator(Becca, "space") };
     }
   },
 };
-
-export default space;
