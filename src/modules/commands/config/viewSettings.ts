@@ -45,13 +45,8 @@ export const viewSettings = async (
       true
     );
     settingsEmbed.addField(
-      "Restricted Role",
-      `<@&${config.restricted_role || "no role set"}>`,
-      true
-    );
-    settingsEmbed.addField(
-      "Moderator Role",
-      `<@&${config.moderator_role || "no role set"}>`,
+      "Muted Role",
+      `<@&${config.muted_role || "no role set"}>`,
       true
     );
     settingsEmbed.addField(

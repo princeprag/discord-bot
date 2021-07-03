@@ -58,16 +58,6 @@ export const kick: CommandInt = {
         };
       }
 
-      let dm = true;
-
-      await targetMember
-        .send(
-          `You have been kicked from the **${guild.name}** guild by **${
-            member.nickname || author.username
-          }**.\nReason: ${reason}`
-        )
-        .catch(async () => (dm = false));
-
       await targetMember.kick(reason);
 
       const kickLogEmbed = new MessageEmbed();
@@ -87,9 +77,7 @@ export const kick: CommandInt = {
       await sendLogEmbed(Becca, guild, kickLogEmbed);
       return {
         success: true,
-        content: dm
-          ? "I have removed them and sent them a notice."
-          : "I have removed them, but could not send them a notice.",
+        content: "They have been evicted",
       };
     } catch (err) {
       beccaErrorHandler(

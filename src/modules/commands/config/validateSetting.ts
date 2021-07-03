@@ -33,8 +33,7 @@ export const validateSetting = async (
           !!(await guild.members.fetch(parsedValue)) ||
           config[setting].includes(parsedValue)
         );
-      case "moderator_role":
-      case "restricted_role":
+      case "muted_role":
         return !!(await guild.roles.fetch(parsedValue));
       case "self_roles":
         return (
