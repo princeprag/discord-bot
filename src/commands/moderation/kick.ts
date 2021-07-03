@@ -23,18 +23,19 @@ export const kick: CommandInt = {
         };
       }
 
-      const [, rawTarget, ...rawReason] = content.split(" ");
+      const [, target, ...rawReason] = content.split(" ");
       const reason =
         rawReason.join(" ") ||
         "No reason was provided, and I did not ask for one.";
-      const target = rawTarget.replace(/\D/g, "");
 
-      const targetMember = await guild.members.fetch(target);
+      const targetMember = target
+        ? await guild.members.fetch(target.replace(/\D/g, ""))
+        : null;
 
       if (!targetMember) {
         return {
           success: false,
-          content: `${rawTarget} does not appear to be a valid member.`,
+          content: `${target} does not appear to be a valid member.`,
         };
       }
 

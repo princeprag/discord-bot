@@ -29,7 +29,9 @@ export const warncount: CommandInt = {
         };
       }
 
-      const targetUser = await guild.members.fetch(user.replace(/\D/g, ""));
+      const targetUser = user
+        ? await guild.members.fetch(user.replace(/\D/g, ""))
+        : null;
 
       if (!targetUser) {
         return {

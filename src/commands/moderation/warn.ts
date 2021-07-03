@@ -33,7 +33,9 @@ export const warn: CommandInt = {
 
       const [, user, ...reason] = content.split(" ");
 
-      const targetUser = await guild.members.fetch(user.replace(/\D/g, ""));
+      const targetUser = user
+        ? await guild.members.fetch(user.replace(/\D/g, ""))
+        : null;
 
       if (!targetUser) {
         return {
