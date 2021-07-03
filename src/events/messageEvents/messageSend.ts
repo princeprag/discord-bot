@@ -4,6 +4,7 @@ import { beccaMentionListener } from "../../listeners/beccaMentionListener";
 import { heartsListener } from "../../listeners/heartsListener";
 import { levelListener } from "../../listeners/levelListener";
 import { thanksListener } from "../../listeners/thanksListener";
+import { handleDms } from "../../modules/handleDms";
 import { getSettings } from "../../modules/settings/getSettings";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 import { sleep } from "../../utils/sleep";
@@ -26,11 +27,8 @@ export const messageSend = async (
       return;
     }
 
-    if (!guild) {
-      /**
-       * Guild is only missing when in DM, so write module to respond with
-       * appropriate embed.
-       */
+    if (!guild || channel.type === "dm") {
+      await handleDms(Becca, message);
       return;
     }
 
@@ -40,11 +38,6 @@ export const messageSend = async (
       throw new Error("Could not get server configuration.");
     }
 
-    /**
-     * Hearts, thanks, and mentions listener should go here
-     * These can run before determining that the message does not
-     * start with the prefix.
-     */
     await heartsListener.run(Becca, message, serverConfig);
     await thanksListener.run(Becca, message, serverConfig);
 
