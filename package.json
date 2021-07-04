@@ -34,7 +34,6 @@
     "axios": "^0.21.1",
     "discord.js": "^12.5.3",
     "express": "^4.17.1",
-    "mathjs": "^9.4.3",
     "mongoose": "^5.13.2",
     "mongoose-encryption": "^2.1.0",
     "spinnies": "^0.5.1",
