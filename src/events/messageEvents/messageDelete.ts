@@ -38,7 +38,7 @@ export const messageDelete = async (
     if (author) {
       deleteEmbed.setFooter(`Author: ${author.id} | Message: ${message.id}`);
       deleteEmbed.setAuthor(
-        `${author.id}#${author.discriminator}`,
+        `${author.username}#${author.discriminator}`,
         author.displayAvatarURL()
       );
     }
