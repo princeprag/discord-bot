@@ -41,7 +41,9 @@ export const config: CommandInt = {
         };
       }
 
-      const [, action, setting, value] = content.split(" ");
+      const [, action, setting, ...rawValue] = content.split(" ");
+
+      const value = rawValue?.join(" ") || "";
 
       if (!action || action === "view") {
         let content: string | MessageEmbed = "";

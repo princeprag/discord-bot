@@ -18,7 +18,9 @@ export const role: CommandInt = {
         return { success: false, content: "I cannot locate your guild record" };
       }
 
-      const [, targetRole] = content.split(" ");
+      const [, ...rawRole] = content.split(" ");
+
+      const targetRole = rawRole?.join(" ") || "";
 
       if (!targetRole) {
         const roleList = new MessageEmbed();
