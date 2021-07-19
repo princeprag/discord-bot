@@ -1,18 +1,18 @@
 # Pull Request
 
-<!--Before contributing, please read our contributing guidelines-->
+<!-- Before contributing, please read our contributing guidelines https://github.com/BeccaLyria/discord-bot/blob/main/CONTRIBUTING.md -->
 
-## Description:
+## Description
 
-<!--A brief description of what your pull request does.-->
+<!-- A brief description of what your pull request does. -->
 
-## Related Issue:
+## Related Issue
 
-<!--Is this related to an issue? Does it close one? If so, replace the XXXXX below with the issue number.-->
+<!-- Is this related to an issue? Does it close one? If so, replace the XXXXX below with the issue number. -->
 
 Closes #XXXXX
 
-## Scope:
+## Scope
 
 Did you remember to update the `package.json` version number?
 
@@ -21,7 +21,7 @@ Did you remember to update the `package.json` version number?
 - [ ] Patch Version Update: \_.\_.X (for bug fixes _in the code_.)
 - [ ] No Version Update: \_.\_.\_ (no version update for additions to tests, documentation, or anything that isn't end-user facing.)
 
-## Documentation:
+## Documentation
 
 For _any_ version updates, please verify if the [documentation page](https://www.beccalyria.com/discord-documentation) needs an update. If it does, please [create an issue there](https://github.com/BeccaLyria/discord-documentation/issues/new?assignees=nhcarrigan&labels=%F0%9F%9A%A6+status%3A+awaiting+triage&template=update.md&title=%5BUPDATE%5D) to ensure it is not forgotten.
 
