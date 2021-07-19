@@ -6,10 +6,7 @@ assignees: nhcarrigan
 body:
   - type: markdown
     attributes:
-      value: |
-      # Bug report
-
-      ## Describe the bug
+      value: '# Bug report'
   - type: input
     id: bugdescription
     attributes:
