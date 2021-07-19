@@ -1,0 +1,29 @@
+name: Feature request
+description: Suggest an idea for this project
+title: "[FEAT]"
+labels: [🚦 status: awaiting triage]
+assignees: "nhcarrigan"
+body:
+  - type: markdown
+    attributes:
+      value: "# Feature request"
+  - type: input
+    id: featuredescription
+    attributes:
+      label: Is your feature request related to a problem? Please describe.
+      placeholder: A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+    validations:
+      required: true
+  - type: input
+    id: solutionproposal
+    attributes:
+      label: Describe the solution you'd like
+      placeholder: A clear and concise description of what you want to happen
+    validations:
+      required: true
+  - type: input
+    id: extrainfo
+    attributes:
+      label: Additional information (extra context of the problem)
+    validations:
+      required: false
