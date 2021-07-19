@@ -10,6 +10,7 @@ export const guildCreate = async (
   Becca: BeccaInt,
   guild: Guild
 ): Promise<void> => {
+  const owner = await guild.members.fetch(guild.ownerID);
   const guildCreateEmbed = new MessageEmbed();
   guildCreateEmbed.setTitle(
     `${Becca.user?.username || "Becca Lyria"} has been enlisted in a new guild!`
@@ -20,13 +21,13 @@ export const guildCreate = async (
   guildCreateEmbed.addField("Guild Name", guild.name, true);
   guildCreateEmbed.addField(
     "Guild Owner",
-    guild.owner?.user.username || "No owner data available.",
+    owner.user.username || "No owner data available.",
     true
   );
   guildCreateEmbed.addField("Guild ID", guild.id, true);
   guildCreateEmbed.addField(
     "Guild Owner ID",
-    guild.owner?.id || "No owner data available",
+    owner.id || "No owner data available",
     true
   );
   guildCreateEmbed.setColor(Becca.colours.success);
