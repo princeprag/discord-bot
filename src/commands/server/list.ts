@@ -24,13 +24,11 @@ export const list: CommandInt = {
       const serverTexts = [];
 
       for (const server of serverList) {
-        if (!server.owner || server.owner.partial) {
-          await server.owner?.fetch();
-        }
+        const owner = await server.members.fetch(server.ownerID);
         serverTexts.push(
-          `${server.name} (${server.id}) owned by ${server.owner?.user.username} (${server.owner?.id})`
+          `${server.name} (${server.id}) owned by ${owner.user.username} (${owner.id})`
         );
-        ownerIds.push(server.owner?.id);
+        ownerIds.push(owner.id);
       }
 
       const totalPages = Math.ceil(serverTexts.length / 10);
