@@ -1,0 +1,21 @@
+name: Chore
+description: For requesting chores, such as cleaning up code.
+title: "[CHORE]"
+labels: [🚦 status: awaiting triage]
+assignees: nhcarrigan
+body:
+  - type: markdown
+    attributes:
+      value: "# Chore request"
+  - type: input
+    id: description
+    attributes:
+      label: Describe the work (a clear and concise description)
+    validations:
+      required: true
+  - type: input
+    id: extrainfo
+    attributes:
+      label: Additional information (extra context of the problem)
+    validations:
+      required: false

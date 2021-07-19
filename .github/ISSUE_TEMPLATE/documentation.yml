@@ -1,0 +1,27 @@
+name: Documentation
+description: Request an update to invalid/outdated documentation
+title: "[DOC]"
+labels: [🚦 status: awaiting triage]
+assignees: nhcarrigan
+body:
+  - type: markdown
+    attributes:
+      value: "# Incorrect Documentation"
+  - type: input
+    id: docerrordescription
+    attributes:
+      label: Describe the error (a clear and concise description of the incorrect documentation information)
+    validations:
+      required: true
+  - type: input
+    id: expectedinformation
+    attributes:
+      label: Expected information (A clear and concise description of what the documentation should say)
+    validations:
+      required: true
+  - type: input
+    id: extrainfo
+    attributes:
+      label: Additional information (extra context of the problem)
+    validations:
+      required: false

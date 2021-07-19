@@ -1,0 +1,36 @@
+name: Bug report
+description: Create a report to help us address an error.
+title: "[BUG] <bug description>"
+labels: [🚦 status: awaiting triage]
+assignees: nhcarrigan
+body:
+  - type: markdown
+    attributes:
+      value: |
+      # Bug report
+
+      ## Describe the bug
+  - type: input
+    id: bugdescription
+    attributes:
+      label: Describe the bug (a clear and concise description)
+    validations:
+      required: true
+  - type: input
+    id: behavior
+    attributes:
+      label: Expected behavior (a clear and concise description)
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots (if applicable)
+    validations:
+      required: false
+  - type: input
+    id: extrainformation
+    attributes:
+      label: Additional information (extra context of the problem)
+    validations:
+      required: false
