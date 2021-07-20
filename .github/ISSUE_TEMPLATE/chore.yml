@@ -7,15 +7,17 @@ body:
   - type: markdown
     attributes:
       value: "# Chore request"
-  - type: input
+  - type: textarea
     id: description
     attributes:
-      label: Describe the work (a clear and concise description)
+      label: Describe the work
+      description: Provide a clear and concise explanation of the work to be performed.
     validations:
       required: true
   - type: input
     id: extrainfo
     attributes:
-      label: Additional information (extra context of the problem)
+      label: Additional information
+      description: Is there anything else we should know about this chore?
     validations:
       required: false

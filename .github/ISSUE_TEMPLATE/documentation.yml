@@ -7,21 +7,24 @@ body:
   - type: markdown
     attributes:
       value: "# Incorrect Documentation"
-  - type: input
+  - type: textarea
     id: docerrordescription
     attributes:
-      label: Describe the error (a clear and concise description of the incorrect documentation information)
+      label: Describe the error
+      description: Please explain the information that is incorrect in the documentation, and why you think it needs to be updated.
     validations:
       required: true
-  - type: input
+  - type: textarea
     id: expectedinformation
     attributes:
-      label: Expected information (A clear and concise description of what the documentation should say)
+      label: Expected information
+      description: What should the documentation actually say here?
     validations:
       required: true
-  - type: input
+  - type: textarea
     id: extrainfo
     attributes:
-      label: Additional information (extra context of the problem)
+      label: Additional information
+      description: Is there anything else we should know about this inaccuracy?
     validations:
       required: false

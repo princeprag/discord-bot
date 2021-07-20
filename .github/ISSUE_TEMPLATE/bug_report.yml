@@ -7,27 +7,34 @@ body:
   - type: markdown
     attributes:
       value: '# Bug report'
-  - type: input
+  - type: textarea
     id: bugdescription
     attributes:
-      label: Describe the bug (a clear and concise description)
+      label: Describe the bug
+      description: |
+        Please provide a clear description of the bug.
+        
+        Include the steps you took to cause the bug, and an explanation of what occurred.
     validations:
       required: true
-  - type: input
-    id: behavior
+  - type: textarea
+    id: behaviour
     attributes:
-      label: Expected behavior (a clear and concise description)
+      label: Expected behaviour
+      description: What did you expect to happen instead of the current behaviour?
     validations:
       required: true
   - type: textarea
     id: screenshots
     attributes:
-      label: Screenshots (if applicable)
+      label: Screenshots
+      description: Attach any relevant screenshots here.
     validations:
       required: false
-  - type: input
+  - type: textarea
     id: extrainformation
     attributes:
-      label: Additional information (extra context of the problem)
+      label: Additional information
+      description: Is there anything else relevant to this bug that we should know?
     validations:
       required: false

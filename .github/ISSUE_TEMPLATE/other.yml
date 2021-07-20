@@ -7,15 +7,17 @@ body:
   - type: markdown
     attributes:
       value: "# Other issue"
-  - type: input
+  - type: textarea
     id: issuedescription
     attributes:
-      label: Describe the issue (a clear and concise description)
+      label: Describe the issue
+      description: Provide a clear and concise explanation of your issue.
     validations:
       required: true
-  - type: input
+  - type: textarea
     id: extrainfo
     attributes:
-      label: Additional information (extra context of the problem)
+      label: Additional information
+      description: Is there anything else we should know about this issue?
     validations:
       required: false
