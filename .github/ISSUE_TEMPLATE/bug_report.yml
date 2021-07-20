@@ -1,6 +1,6 @@
 name: Bug report
 description: Create a report to help us address an error.
-title: "[BUG - "
+title: "[BUG] - "
 labels: ["🚦 status: awaiting triage"]
 assignees: nhcarrigan
 body:
