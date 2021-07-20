@@ -14,7 +14,7 @@ body:
       description: Provide a clear and concise explanation of the work to be performed.
     validations:
       required: true
-  - type: input
+  - type: textarea
     id: extrainfo
     attributes:
       label: Additional information
