@@ -17,10 +17,10 @@ export const guildDelete = async (
 ): Promise<void> => {
   const guildDeleteEmbed = new MessageEmbed();
   guildDeleteEmbed.setTitle(
-    `${Becca.user?.username || "Becca Lyria"} has been enlisted in a new guild!`
+    `${Becca.user?.username || "Becca Lyria"} has been dismissed from a guild!`
   );
   guildDeleteEmbed.setDescription(
-    "It would seem they have need of my services."
+    "It would seem they no longer need my assistance."
   );
   guildDeleteEmbed.addField("Guild Name", guild.name, true);
   guildDeleteEmbed.addField(
