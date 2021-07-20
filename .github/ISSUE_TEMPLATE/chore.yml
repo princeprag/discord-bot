@@ -10,7 +10,7 @@ body:
   - type: textarea
     id: description
     attributes:
-      label: Describe the work
+      label: What work needs to be performed?
       description: Provide a clear and concise explanation of the work to be performed.
     validations:
       required: true
