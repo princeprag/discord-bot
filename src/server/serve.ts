@@ -14,7 +14,7 @@ export const createServer = async (Becca: BeccaInt): Promise<boolean> => {
       res.status(200).send("Ping!");
     });
 
-    const httpPort = process.env.NODE_ENV === "production" ? 80 : 8080;
+    const httpPort = 1080;
 
     const httpServer = http.createServer(HTTPEndpoint);
 
@@ -43,7 +43,7 @@ export const createServer = async (Becca: BeccaInt): Promise<boolean> => {
       };
 
       const httpsServer = https.createServer(credentials, HTTPEndpoint);
-      httpsServer.listen(443, () => {
+      httpsServer.listen(1443, () => {
         beccaLogHandler.log("http", "https server is live on port 443");
       });
     }
