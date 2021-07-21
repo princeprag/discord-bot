@@ -92,9 +92,7 @@ export const config: CommandInt = {
         }
         return {
           success: true,
-          content: `I have set your ${setting} to ${
-            resetConfirmation[setting as SettingsTypes]
-          }`,
+          content: `I have reset your \`${setting}\` setting.`,
         };
       }
 

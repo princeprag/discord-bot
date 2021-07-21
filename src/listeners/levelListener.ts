@@ -1,3 +1,4 @@
+import { TextChannel } from "discord.js";
 import levelScale from "../config/listeners/levelScale";
 import LevelModel from "../database/models/LevelModel";
 import { ListenerInt } from "../interfaces/listeners/ListenerInt";
@@ -16,6 +17,17 @@ export const levelListener: ListenerInt = {
 
       if (serverSettings?.levels !== "on") {
         return;
+      }
+
+      let targetChannel = message.channel as TextChannel;
+
+      if (serverSettings.level_channel) {
+        const realChannel = guild.channels.cache.find(
+          (c) => c.id === serverSettings.level_channel && c.type === "text"
+        );
+        if (realChannel) {
+          targetChannel = realChannel as TextChannel;
+        }
       }
 
       const bonus = Math.floor(content.length / 10);
@@ -68,7 +80,7 @@ export const levelListener: ListenerInt = {
 
       if (user.points > levelScale[user.level + 1]) {
         user.level++;
-        await message.channel.send(
+        await targetChannel.send(
           `${userName} has grown stronger. They are now level ${user.level}`
         );
       }

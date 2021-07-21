@@ -43,6 +43,7 @@ export const validateSetting = async (
       case "log_channel":
       case "welcome_channel":
       case "suggestion_channel":
+      case "level_channel":
         return !!guild.channels.cache.find(
           (el) => el.type === "text" && el.id === parsedValue
         );

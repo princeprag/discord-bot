@@ -8,6 +8,7 @@ export const defaultServer = {
   levels: "off",
   welcome_channel: "",
   log_channel: "",
+  level_channel: "",
   suggestion_channel: "",
   muted_role: "",
   custom_welcome:

@@ -44,6 +44,7 @@ export const setSetting = async (
         break;
       case "welcome_channel":
       case "log_channel":
+      case "level_channel":
       case "suggestion_channel":
       case "muted_role":
         server[key] = value.replace(/\D/g, "");

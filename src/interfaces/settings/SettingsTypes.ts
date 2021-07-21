@@ -8,6 +8,7 @@ export type SettingsTypes =
   | "levels"
   | "welcome_channel"
   | "log_channel"
+  | "level_channel"
   | "suggestion_channel"
   | "muted_role"
   | "custom_welcome"
