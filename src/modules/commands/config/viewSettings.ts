@@ -40,6 +40,11 @@ export const viewSettings = async (
       `<#${config.log_channel || "no channel set"}>`
     );
     settingsEmbed.addField(
+      "Level Logging Channel",
+      `<#${config.level_channel || "no channel set"}>`,
+      true
+    );
+    settingsEmbed.addField(
       "Suggestion Channel",
       `<#${config.suggestion_channel || "no channel set"}>`,
       true
