@@ -74,7 +74,7 @@ export const viewSettings = async (
       Becca,
       "view settings module",
       err,
-      message.guild?.id,
+      message.guild?.name,
       message
     );
     return "";

@@ -26,7 +26,13 @@ export const fact: CommandInt = {
 
       return { success: true, content: factEmbed };
     } catch (err) {
-      beccaErrorHandler(Becca, "fact command", err, message.guild?.id, message);
+      beccaErrorHandler(
+        Becca,
+        "fact command",
+        err,
+        message.guild?.name,
+        message
+      );
       return { success: false, content: errorEmbedGenerator(Becca, "fact") };
     }
   },

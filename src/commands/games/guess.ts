@@ -65,7 +65,7 @@ export const guess: CommandInt = {
         Becca,
         "guess command",
         err,
-        message.guild?.id,
+        message.guild?.name,
         message
       );
       return { success: false, content: errorEmbedGenerator(Becca, "guess") };
