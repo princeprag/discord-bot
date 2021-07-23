@@ -88,7 +88,10 @@ export const ban: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "ban", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "ban", errorId),
+      };
     }
   },
 };

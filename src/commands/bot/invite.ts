@@ -27,7 +27,10 @@ export const invite: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "invite", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "invite", errorId),
+      };
     }
   },
 };

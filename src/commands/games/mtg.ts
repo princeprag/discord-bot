@@ -56,7 +56,10 @@ export const mtg: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "mtg", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "mtg", errorId),
+      };
     }
   },
 };

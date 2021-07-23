@@ -153,7 +153,10 @@ export const config: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "config", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "config", errorId),
+      };
     }
   },
 };

@@ -102,7 +102,10 @@ export const star: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "star", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "star", errorId),
+      };
     }
   },
 };

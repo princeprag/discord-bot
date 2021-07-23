@@ -28,7 +28,10 @@ export const privacy: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "privacy", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "privacy", errorId),
+      };
     }
   },
 };

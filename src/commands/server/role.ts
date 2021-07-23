@@ -73,7 +73,10 @@ export const role: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "role", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "role", errorId),
+      };
     }
   },
 };

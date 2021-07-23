@@ -88,7 +88,10 @@ export const kick: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "kick", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "kick", errorId),
+      };
     }
   },
 };

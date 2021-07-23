@@ -42,7 +42,10 @@ export const xkcd: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "xkcd", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "xkcd", errorId),
+      };
     }
   },
 };

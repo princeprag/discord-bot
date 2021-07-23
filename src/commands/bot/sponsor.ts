@@ -33,7 +33,10 @@ export const sponsor: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "sponsor", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "sponsor", errorId),
+      };
     }
   },
 };

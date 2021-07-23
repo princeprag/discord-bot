@@ -27,7 +27,10 @@ export const sus: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "sus", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "sus", errorId),
+      };
     }
   },
 };

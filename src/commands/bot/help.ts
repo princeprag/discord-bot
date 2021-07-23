@@ -80,7 +80,10 @@ export const help: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "help", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "help", errorId),
+      };
     }
   },
 };

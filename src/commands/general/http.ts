@@ -35,7 +35,10 @@ export const http: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "http", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "http", errorId),
+      };
     }
   },
 };

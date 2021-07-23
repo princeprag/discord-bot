@@ -68,7 +68,10 @@ export const guess: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "guess", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "guess", errorId),
+      };
     }
   },
 };

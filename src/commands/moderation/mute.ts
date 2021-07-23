@@ -96,7 +96,10 @@ export const mute: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "mute", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "mute", errorId),
+      };
     }
   },
 };

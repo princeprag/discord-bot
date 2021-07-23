@@ -28,7 +28,10 @@ export const cat: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "cat", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "cat", errorId),
+      };
     }
   },
 };

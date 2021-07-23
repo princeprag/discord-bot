@@ -69,7 +69,10 @@ export const orbit: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "orbit", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "orbit", errorId),
+      };
     }
   },
 };

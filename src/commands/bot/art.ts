@@ -36,7 +36,10 @@ export const art: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "art", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "art", errorId),
+      };
     }
   },
 };

@@ -34,7 +34,10 @@ export const ping: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "ping", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "ping", errorId),
+      };
     }
   },
 };

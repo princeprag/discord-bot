@@ -68,7 +68,10 @@ export const suggest: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "suggest", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "suggest", errorId),
+      };
     }
   },
 };

@@ -63,7 +63,10 @@ export const space: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "space", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "space", errorId),
+      };
     }
   },
 };

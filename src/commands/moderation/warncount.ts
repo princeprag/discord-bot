@@ -92,7 +92,10 @@ export const warncount: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "warn", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "warn", errorId),
+      };
     }
   },
 };

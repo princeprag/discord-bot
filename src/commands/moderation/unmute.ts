@@ -108,7 +108,10 @@ export const unmute: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "unmute", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "unmute", errorId),
+      };
     }
   },
 };

@@ -42,7 +42,10 @@ export const uptime: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "uptime", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "uptime", errorId),
+      };
     }
   },
 };

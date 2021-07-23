@@ -95,7 +95,10 @@ export const trivia: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "trivia", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "trivia", errorId),
+      };
     }
   },
 };

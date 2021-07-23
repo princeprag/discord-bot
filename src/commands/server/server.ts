@@ -128,7 +128,10 @@ export const server: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "server", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "server", errorId),
+      };
     }
   },
 };

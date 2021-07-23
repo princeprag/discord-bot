@@ -50,7 +50,10 @@ export const list: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "list", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "list", errorId),
+      };
     }
   },
 };

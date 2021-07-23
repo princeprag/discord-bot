@@ -36,7 +36,10 @@ export const caniuse: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "caniuse", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "caniuse", errorId),
+      };
     }
   },
 };

@@ -62,7 +62,10 @@ export const level: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "level", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "level", errorId),
+      };
     }
   },
 };

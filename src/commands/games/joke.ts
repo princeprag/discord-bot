@@ -41,7 +41,10 @@ export const joke: CommandInt = {
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "joke", errorId) };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "joke", errorId),
+      };
     }
   },
 };
