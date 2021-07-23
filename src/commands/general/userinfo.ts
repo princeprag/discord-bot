@@ -31,6 +31,9 @@ export const userinfo: CommandInt = {
         };
       }
 
+      const flagBits = await target.user.fetchFlags();
+      const flags = flagBits.toArray();
+
       const userEmbed = new MessageEmbed();
       userEmbed.setColor(Becca.colours.default);
       userEmbed.setTitle(target.displayName);
@@ -54,6 +57,17 @@ export const userinfo: CommandInt = {
           1000
         )
       );
+      userEmbed.addField("Colour", target.displayHexColor, true);
+      userEmbed.addField(
+        "Nitro",
+        target.premiumSinceTimestamp
+          ? `Since ${new Date(
+              target.premiumSinceTimestamp
+            ).toLocaleDateString()}`
+          : "No.",
+        true
+      );
+      userEmbed.addField("Flags", flags.join(", "));
 
       return { success: true, content: userEmbed };
     } catch (err) {
