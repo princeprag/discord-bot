@@ -40,7 +40,7 @@ const spinnies = new Spinnies();
 const initialiseBecca = async () => {
   beccaLogHandler.log("debug", "Starting process...");
 
-  const Becca = new Client() as BeccaInt;
+  const Becca = new Client({ shards: "auto" }) as BeccaInt;
 
   spinnies.add("validate-env", {
     color: "magenta",
