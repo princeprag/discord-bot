@@ -1,3 +1,4 @@
+import { defaultServer } from "../config/database/defaultServer";
 import { ListenerInt } from "../interfaces/listeners/ListenerInt";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
@@ -10,6 +11,10 @@ export const linksListener: ListenerInt = {
         !config.anti_links.includes(message.channel.id) &&
         !config.anti_links.includes("all")
       ) {
+        return;
+      }
+
+      if (config.permit_links.includes(message.channel.id)) {
         return;
       }
 
@@ -33,7 +38,7 @@ export const linksListener: ListenerInt = {
       if (hasLink) {
         message.deletable && (await message.delete());
         await message.channel.send(
-          "It seems you are not supposed to be sending links in this channel."
+          config.link_message || defaultServer.link_message
         );
       }
     } catch (err) {

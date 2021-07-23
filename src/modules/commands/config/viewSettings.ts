@@ -28,8 +28,8 @@ export const viewSettings = async (
     settingsEmbed.setColor(Becca.colours.default);
     settingsEmbed.setDescription("Here are your current configurations.");
     settingsEmbed.addField("Prefix", config.prefix, true);
-    settingsEmbed.addField("Thanks Listener", config.thanks);
-    settingsEmbed.addField("Levels Listener", config.levels);
+    settingsEmbed.addField("Thanks Listener", config.thanks, true);
+    settingsEmbed.addField("Levels Listener", config.levels, true);
     settingsEmbed.addField(
       "Welcome Channel",
       `<#${config.welcome_channel || "no channel set"}>`,
@@ -37,7 +37,8 @@ export const viewSettings = async (
     );
     settingsEmbed.addField(
       "Log Channel",
-      `<#${config.log_channel || "no channel set"}>`
+      `<#${config.log_channel || "no channel set"}>`,
+      true
     );
     settingsEmbed.addField(
       "Level Logging Channel",
@@ -70,9 +71,18 @@ export const viewSettings = async (
     );
     settingsEmbed.addField("No links channels", config.anti_links.length, true);
     settingsEmbed.addField(
+      "Allowed link channels",
+      config.permit_links.length,
+      true
+    );
+    settingsEmbed.addField(
       "Anti-link Bypass Roles",
       config.link_roles.length,
       true
+    );
+    settingsEmbed.addField(
+      "Link removal message",
+      customSubstring(config.link_message || defaultServer.link_message, 1000)
     );
     return settingsEmbed;
   } catch (err) {

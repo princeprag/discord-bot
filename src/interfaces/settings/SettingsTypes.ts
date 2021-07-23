@@ -16,4 +16,6 @@ export type SettingsTypes =
   | "blocked"
   | "self_roles"
   | "anti_links"
-  | "link_roles";
+  | "permit_links"
+  | "link_roles"
+  | "link_message";

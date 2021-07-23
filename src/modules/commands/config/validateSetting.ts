@@ -51,6 +51,7 @@ export const validateSetting = async (
           (el) => el.type === "text" && el.id === parsedValue
         );
       case "anti_links":
+      case "permit_links":
         return (
           !!guild.channels.cache.find(
             (el) => el.type === "text" && el.id === parsedValue
@@ -60,6 +61,7 @@ export const validateSetting = async (
         );
       case "prefix":
       case "custom_welcome":
+      case "link_message":
         return true;
       default:
         return false;

@@ -17,7 +17,9 @@ export interface ServerModelInt extends Document {
   blocked: string[];
   self_roles: string[];
   anti_links: string[];
+  permit_links: string[];
   link_roles: string[];
+  link_message: string;
 }
 
 export const Server = new Schema({
@@ -39,7 +41,9 @@ export const Server = new Schema({
   blocked: [String],
   self_roles: [String],
   anti_links: [String],
+  permit_links: [String],
   link_roles: [String],
+  link_message: String,
 });
 
 const encryptionKey = process.env.ENCRYPTION_KEY;

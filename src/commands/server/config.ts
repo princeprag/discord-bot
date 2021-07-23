@@ -52,6 +52,7 @@ export const config: CommandInt = {
           case "self_roles":
           case "blocked":
           case "anti_links":
+          case "permit_links":
           case "link_roles":
             return {
               success: true,
