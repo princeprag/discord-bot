@@ -2,6 +2,7 @@ import { ServerModelInt } from "../../database/models/ServerModel";
 import { BeccaInt } from "../../interfaces/BeccaInt";
 import { SettingsTypes } from "../../interfaces/settings/SettingsTypes";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { beccaLogHandler } from "../../utils/beccaLogHandler";
 
 /**
  * Function to update a server's custom settings.
@@ -25,9 +26,24 @@ export const setSetting = async (
     const parsedValue = value.replace(/\D/g, "");
 
     switch (key) {
+      case "anti_links":
+      case "permit_links":
+        if (value === "all") {
+          server[key] = ["all"];
+          break;
+        }
+        if (server[key].includes(parsedValue)) {
+          const index = server[key].indexOf(parsedValue);
+          server[key].splice(index, 1);
+        } else {
+          server[key].push(parsedValue);
+        }
+        server.markModified(key);
+        break;
       case "hearts":
       case "blocked":
       case "self_roles":
+      case "link_roles":
         if (server[key].includes(parsedValue)) {
           const index = server[key].indexOf(parsedValue);
           server[key].splice(index, 1);
@@ -40,6 +56,7 @@ export const setSetting = async (
       case "prefix":
       case "levels":
       case "thanks":
+      case "link_message":
         server[key] = value;
         break;
       case "welcome_channel":
@@ -49,6 +66,8 @@ export const setSetting = async (
       case "muted_role":
         server[key] = value.replace(/\D/g, "");
         break;
+      default:
+        beccaLogHandler.log("error", "the setSettings logic broke horribly.");
     }
 
     await server.save();

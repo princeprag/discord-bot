@@ -3,6 +3,7 @@ import { BeccaInt } from "../../interfaces/BeccaInt";
 import { beccaMentionListener } from "../../listeners/beccaMentionListener";
 import { heartsListener } from "../../listeners/heartsListener";
 import { levelListener } from "../../listeners/levelListener";
+import { linksListener } from "../../listeners/linksListener";
 import { thanksListener } from "../../listeners/thanksListener";
 import { handleDms } from "../../modules/handleDms";
 import { getSettings } from "../../modules/settings/getSettings";
@@ -40,6 +41,7 @@ export const messageSend = async (
 
     await heartsListener.run(Becca, message, serverConfig);
     await thanksListener.run(Becca, message, serverConfig);
+    await linksListener.run(Becca, message, serverConfig);
 
     const prefix = Becca.prefixData[guild.id] || "becca!";
 

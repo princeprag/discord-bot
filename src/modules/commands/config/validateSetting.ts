@@ -30,15 +30,18 @@ export const validateSetting = async (
       case "hearts":
       case "blocked":
         return (
-          !!(await guild.members.fetch(parsedValue)) ||
-          config[setting].includes(parsedValue)
+          !!parsedValue &&
+          (!!(await guild.members.fetch(parsedValue)) ||
+            config[setting].includes(parsedValue))
         );
       case "muted_role":
-        return !!(await guild.roles.fetch(parsedValue));
+        return !!parsedValue && !!(await guild.roles.fetch(parsedValue));
       case "self_roles":
+      case "link_roles":
         return (
-          !!(await guild.roles.fetch(parsedValue)) ||
-          config[setting].includes(parsedValue)
+          !!parsedValue &&
+          (!!(await guild.roles.fetch(parsedValue)) ||
+            config[setting].includes(parsedValue))
         );
       case "log_channel":
       case "welcome_channel":
@@ -47,8 +50,18 @@ export const validateSetting = async (
         return !!guild.channels.cache.find(
           (el) => el.type === "text" && el.id === parsedValue
         );
+      case "anti_links":
+      case "permit_links":
+        return (
+          !!guild.channels.cache.find(
+            (el) => el.type === "text" && el.id === parsedValue
+          ) ||
+          config[setting].includes(parsedValue) ||
+          value === "all"
+        );
       case "prefix":
       case "custom_welcome":
+      case "link_message":
         return true;
       default:
         return false;

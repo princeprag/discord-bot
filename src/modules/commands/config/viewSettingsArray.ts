@@ -6,7 +6,13 @@ import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 export const viewSettingsArray = async (
   Becca: BeccaInt,
   config: ServerModelInt,
-  setting: "hearts" | "blocked" | "self_roles",
+  setting:
+    | "hearts"
+    | "blocked"
+    | "self_roles"
+    | "anti_links"
+    | "permit_links"
+    | "link_roles",
   page: number
 ): Promise<MessageEmbed | null> => {
   try {
