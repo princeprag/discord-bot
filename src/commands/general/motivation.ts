@@ -22,7 +22,7 @@ export const motivation: CommandInt = {
 
       return { success: true, content: quoteEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "motivation command",
         err,
@@ -31,7 +31,7 @@ export const motivation: CommandInt = {
       );
       return {
         success: false,
-        content: errorEmbedGenerator(Becca, "motivation"),
+        content: errorEmbedGenerator(Becca, "motivation", errorId),
       };
     }
   },

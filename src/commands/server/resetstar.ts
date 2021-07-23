@@ -43,7 +43,7 @@ export const resetstar: CommandInt = {
         content: "I have returned the stars to the heavens.",
       };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "resetstar command",
         err,
@@ -52,7 +52,7 @@ export const resetstar: CommandInt = {
       );
       return {
         success: false,
-        content: errorEmbedGenerator(Becca, "resetstar"),
+        content: errorEmbedGenerator(Becca, "resetstar", errorId),
       };
     }
   },

@@ -20,7 +20,7 @@ export const bugreport: CommandInt = {
 
       return { success: true, content: bugEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "bugreport command",
         err,
@@ -29,7 +29,7 @@ export const bugreport: CommandInt = {
       );
       return {
         success: false,
-        content: errorEmbedGenerator(Becca, "bugreport"),
+        content: errorEmbedGenerator(Becca, "bugreport", errorId),
       };
     }
   },

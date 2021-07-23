@@ -108,7 +108,7 @@ export const suggestion: CommandInt = {
         content: "Signed, sealed, and delivered",
       };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "suggestion command",
         err,
@@ -117,7 +117,7 @@ export const suggestion: CommandInt = {
       );
       return {
         success: false,
-        content: errorEmbedGenerator(Becca, "suggestion"),
+        content: errorEmbedGenerator(Becca, "suggestion", errorId),
       };
     }
   },

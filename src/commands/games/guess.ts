@@ -61,14 +61,14 @@ export const guess: CommandInt = {
       await sleep(15000);
       return { success: true, content: winEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "guess command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "guess") };
+      return { success: false, content: errorEmbedGenerator(Becca, "guess", errorId) };
     }
   },
 };

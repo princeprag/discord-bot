@@ -29,14 +29,14 @@ export const caniuse: CommandInt = {
 
       return { success: true, content: caniuseEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "caniuse command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "caniuse") };
+      return { success: false, content: errorEmbedGenerator(Becca, "caniuse", errorId) };
     }
   },
 };

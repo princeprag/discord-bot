@@ -20,14 +20,14 @@ export const invite: CommandInt = {
       inviteEmbed.setTimestamp();
       return { success: true, content: inviteEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "invite command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "invite") };
+      return { success: false, content: errorEmbedGenerator(Becca, "invite", errorId) };
     }
   },
 };

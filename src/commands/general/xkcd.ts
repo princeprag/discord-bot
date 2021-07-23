@@ -35,14 +35,14 @@ export const xkcd: CommandInt = {
 
       return { success: true, content: xkcdEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "xkcd command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "xkcd") };
+      return { success: false, content: errorEmbedGenerator(Becca, "xkcd", errorId) };
     }
   },
 };

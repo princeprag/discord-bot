@@ -43,14 +43,14 @@ export const list: CommandInt = {
       serverEmbed.addField("Unique Owners", new Set(ownerIds).size, true);
       return { success: true, content: serverEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "list command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "list") };
+      return { success: false, content: errorEmbedGenerator(Becca, "list", errorId) };
     }
   },
 };

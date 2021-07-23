@@ -101,14 +101,14 @@ export const unmute: CommandInt = {
         content: "The curse has been lifted from that user.",
       };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "unmute command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "unmute") };
+      return { success: false, content: errorEmbedGenerator(Becca, "unmute", errorId) };
     }
   },
 };

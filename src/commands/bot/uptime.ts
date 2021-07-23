@@ -35,14 +35,14 @@ export const uptime: CommandInt = {
 
       return { success: true, content: uptimeEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "uptime command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "uptime") };
+      return { success: false, content: errorEmbedGenerator(Becca, "uptime", errorId) };
     }
   },
 };

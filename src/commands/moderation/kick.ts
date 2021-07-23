@@ -81,14 +81,14 @@ export const kick: CommandInt = {
         content: "They have been evicted",
       };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "kick command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "kick") };
+      return { success: false, content: errorEmbedGenerator(Becca, "kick", errorId) };
     }
   },
 };

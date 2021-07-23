@@ -21,14 +21,14 @@ export const privacy: CommandInt = {
 
       return { success: true, content: privacyEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "privacy command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "privacy") };
+      return { success: false, content: errorEmbedGenerator(Becca, "privacy", errorId) };
     }
   },
 };

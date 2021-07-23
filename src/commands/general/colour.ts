@@ -33,14 +33,17 @@ export const colour: CommandInt = {
       colourEmbed.setTimestamp();
       return { success: true, content: colourEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "colour command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "colour") };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "colour", errorId),
+      };
     }
   },
 };

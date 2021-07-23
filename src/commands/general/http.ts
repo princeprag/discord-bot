@@ -28,14 +28,14 @@ export const http: CommandInt = {
 
       return { success: true, content: httpEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "http command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "http") };
+      return { success: false, content: errorEmbedGenerator(Becca, "http", errorId) };
     }
   },
 };

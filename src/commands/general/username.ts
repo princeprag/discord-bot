@@ -32,7 +32,7 @@ export const username: CommandInt = {
       usernameEmbed.addField("Maximum length", length, true);
       return { success: true, content: usernameEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "username command",
         err,
@@ -41,7 +41,7 @@ export const username: CommandInt = {
       );
       return {
         success: false,
-        content: errorEmbedGenerator(Becca, "username"),
+        content: errorEmbedGenerator(Becca, "username", errorId),
       };
     }
   },

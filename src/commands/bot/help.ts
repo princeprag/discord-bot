@@ -73,14 +73,14 @@ export const help: CommandInt = {
 
       return { success: true, content: helpEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "help command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "help") };
+      return { success: false, content: errorEmbedGenerator(Becca, "help", errorId) };
     }
   },
 };

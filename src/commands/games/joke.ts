@@ -34,14 +34,14 @@ export const joke: CommandInt = {
 
       return { success: true, content: jokeEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "joke command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "joke") };
+      return { success: false, content: errorEmbedGenerator(Becca, "joke", errorId) };
     }
   },
 };

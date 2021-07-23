@@ -121,14 +121,14 @@ export const server: CommandInt = {
 
       return { success: true, content: serverEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "server command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "server") };
+      return { success: false, content: errorEmbedGenerator(Becca, "server", errorId) };
     }
   },
 };

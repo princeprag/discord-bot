@@ -81,14 +81,14 @@ export const ban: CommandInt = {
           "Retribution is swift. That member is no more, and shall not return.",
       };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "ban command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "ban") };
+      return { success: false, content: errorEmbedGenerator(Becca, "ban", errorId) };
     }
   },
 };

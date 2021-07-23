@@ -41,7 +41,7 @@ export const leave: CommandInt = {
         content: `Leaving ${serverID}`,
       };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "leave command",
         err,
@@ -50,7 +50,7 @@ export const leave: CommandInt = {
       );
       return {
         success: false,
-        content: errorEmbedGenerator(Becca, "leave command"),
+        content: errorEmbedGenerator(Becca, "leave command", errorId),
       };
     }
   },

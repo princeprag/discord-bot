@@ -56,14 +56,14 @@ export const space: CommandInt = {
 
       return { success: true, content: spaceEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "space command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "space") };
+      return { success: false, content: errorEmbedGenerator(Becca, "space", errorId) };
     }
   },
 };

@@ -49,14 +49,14 @@ export const mtg: CommandInt = {
 
       return { success: true, content: cardEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "mtg command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "mtg") };
+      return { success: false, content: errorEmbedGenerator(Becca, "mtg", errorId) };
     }
   },
 };

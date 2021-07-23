@@ -19,14 +19,14 @@ export const becca: CommandInt = {
       beccaEmbed.setThumbnail(Becca.user?.avatarURL({ dynamic: true }) || "");
       return { success: true, content: beccaEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "becca command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "becca") };
+      return { success: false, content: errorEmbedGenerator(Becca, "becca", errorId) };
     }
   },
 };

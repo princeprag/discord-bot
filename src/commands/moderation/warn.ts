@@ -81,14 +81,14 @@ export const warn: CommandInt = {
 
       return { success: true, content: "I have chastised them." };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "warn command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "warn") };
+      return { success: false, content: errorEmbedGenerator(Becca, "warn", errorId) };
     }
   },
 };
