@@ -1,3 +1,4 @@
+import { MessageEmbed } from "discord.js";
 import { CommandInt } from "../../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { validateChannelPerms } from "../../modules/commands/server/validateChannelPerms";
@@ -12,12 +13,22 @@ export const permissioncheck: CommandInt = {
   category: "server",
   run: async (Becca, message) => {
     try {
-      const { channel, guild } = message;
+      const { channel, guild, member } = message;
 
-      if (!guild) {
+      if (!guild || !member) {
         return {
           success: false,
           content: "I cannot seem to find your guild record.",
+        };
+      }
+
+      if (
+        !member.hasPermission("MANAGE_GUILD") &&
+        member.id !== Becca.configs.ownerId
+      ) {
+        return {
+          success: false,
+          content: "You do not have the correct skills to use this spell.",
         };
       }
 
@@ -41,12 +52,20 @@ export const permissioncheck: CommandInt = {
         channel
       );
 
-      const areValid =
-        hasChannelPerms && hasGuildPerms
-          ? "I seem to have an adequate level of access here."
-          : "I cannot seem to get to everything I need. You should fix that.";
+      const areValid = hasChannelPerms && hasGuildPerms;
 
-      return { success: true, content: areValid };
+      const descriptionString = areValid
+        ? "I seem to have an adequate level of access here."
+        : "I cannot seem to get to everything I need. You should fix that.";
+
+      const validEmbed = new MessageEmbed();
+      validEmbed.setTitle(areValid ? "All good!" : "Uh oh...");
+      validEmbed.setDescription(descriptionString);
+      validEmbed.setColor(
+        areValid ? Becca.colours.success : Becca.colours.error
+      );
+
+      return { success: true, content: validEmbed };
     } catch (err) {
       beccaErrorHandler(
         Becca,
