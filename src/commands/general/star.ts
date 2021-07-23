@@ -95,8 +95,17 @@ export const star: CommandInt = {
 
       return { success: true, content: starEmbed };
     } catch (err) {
-      beccaErrorHandler(Becca, "star command", err, message.guild?.id, message);
-      return { success: false, content: errorEmbedGenerator(Becca, "star") };
+      const errorId = await beccaErrorHandler(
+        Becca,
+        "star command",
+        err,
+        message.guild?.name,
+        message
+      );
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "star", errorId),
+      };
     }
   },
 };

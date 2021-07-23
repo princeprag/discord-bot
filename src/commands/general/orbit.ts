@@ -62,14 +62,17 @@ export const orbit: CommandInt = {
 
       return { success: true, content: orbitEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "orbit command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "orbit") };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "orbit", errorId),
+      };
     }
   },
 };

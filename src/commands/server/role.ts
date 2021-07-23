@@ -66,14 +66,17 @@ export const role: CommandInt = {
         content: `I have cast the \`${guildRole.name}\` charm on you.`,
       };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "role command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "role") };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "role", errorId),
+      };
     }
   },
 };

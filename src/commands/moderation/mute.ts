@@ -89,14 +89,17 @@ export const mute: CommandInt = {
         content: "The user has been cursed with silence.",
       };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "mute command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "mute") };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "mute", errorId),
+      };
     }
   },
 };

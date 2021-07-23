@@ -26,8 +26,17 @@ export const fact: CommandInt = {
 
       return { success: true, content: factEmbed };
     } catch (err) {
-      beccaErrorHandler(Becca, "fact command", err, message.guild?.id, message);
-      return { success: false, content: errorEmbedGenerator(Becca, "fact") };
+      const errorId = await beccaErrorHandler(
+        Becca,
+        "fact command",
+        err,
+        message.guild?.name,
+        message
+      );
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "fact", errorId),
+      };
     }
   },
 };

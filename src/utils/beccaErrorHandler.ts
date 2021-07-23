@@ -1,5 +1,6 @@
 import * as Sentry from "@sentry/node";
 import { Message, MessageEmbed } from "discord.js";
+import { Types } from "mongoose";
 import { BeccaInt } from "../interfaces/BeccaInt";
 import { beccaLogHandler } from "./beccaLogHandler";
 import { customSubstring } from "./customSubstring";
@@ -18,7 +19,7 @@ export const beccaErrorHandler = async (
   error: Error,
   guild?: string,
   message?: Message
-): Promise<void> => {
+): Promise<Types.ObjectId> => {
   /**
    * Log the error to the terminal.
    */
@@ -34,6 +35,7 @@ export const beccaErrorHandler = async (
   /**
    * Send the error to Becca's webhook.
    */
+  const errorId = Types.ObjectId();
   const errorEmbed = new MessageEmbed();
   errorEmbed.setTitle(
     `${context} error ${guild ? "in " + guild : "from an unknown source"}.`
@@ -44,6 +46,7 @@ export const beccaErrorHandler = async (
     "Stack Trace:",
     `\`\`\`\n${customSubstring(error.stack || "null", 1000)}\n\`\`\``
   );
+  errorEmbed.addField("Error ID", errorId);
   errorEmbed.setTimestamp();
   if (message) {
     errorEmbed.addField(
@@ -52,4 +55,6 @@ export const beccaErrorHandler = async (
     );
   }
   await Becca.debugHook.send(errorEmbed);
+
+  return errorId;
 };

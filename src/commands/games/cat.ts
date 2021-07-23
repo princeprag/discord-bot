@@ -21,14 +21,17 @@ export const cat: CommandInt = {
         content: `${str}\nMy familiar wanted to send you a message.`,
       };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "cat command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "cat") };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "cat", errorId),
+      };
     }
   },
 };

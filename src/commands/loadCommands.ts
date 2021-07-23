@@ -24,7 +24,7 @@ export const loadCommands = async (Becca: BeccaInt): Promise<CommandInt[]> => {
       ...serverCommands,
     ];
   } catch (err) {
-    beccaErrorHandler(Becca, "command loader", err);
+    await beccaErrorHandler(Becca, "command loader", err);
     return [];
   }
 };

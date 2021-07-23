@@ -27,14 +27,17 @@ export const about: CommandInt = {
 
       return { success: true, content: aboutEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "about command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "about") };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "about", errorId),
+      };
     }
   },
 };

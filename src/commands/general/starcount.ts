@@ -56,7 +56,7 @@ export const starcount: CommandInt = {
 
       return { success: true, content: starEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "starcount command",
         err,
@@ -65,7 +65,7 @@ export const starcount: CommandInt = {
       );
       return {
         success: false,
-        content: errorEmbedGenerator(Becca, "starcount"),
+        content: errorEmbedGenerator(Becca, "starcount", errorId),
       };
     }
   },

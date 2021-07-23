@@ -61,14 +61,17 @@ export const suggest: CommandInt = {
         content: "Alright, I have posted that. Good luck!",
       };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "suggest command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "suggest") };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "suggest", errorId),
+      };
     }
   },
 };

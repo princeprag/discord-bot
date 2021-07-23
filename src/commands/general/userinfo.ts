@@ -71,7 +71,7 @@ export const userinfo: CommandInt = {
 
       return { success: true, content: userEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "userinfo command",
         err,
@@ -80,7 +80,7 @@ export const userinfo: CommandInt = {
       );
       return {
         success: false,
-        content: errorEmbedGenerator(Becca, "userinfo"),
+        content: errorEmbedGenerator(Becca, "userinfo", errorId),
       };
     }
   },

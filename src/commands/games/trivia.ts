@@ -88,14 +88,17 @@ export const trivia: CommandInt = {
       await sleep(35000);
       return { success: true, content: resultEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "trivia command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "trivia") };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "trivia", errorId),
+      };
     }
   },
 };

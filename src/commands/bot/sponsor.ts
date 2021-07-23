@@ -26,14 +26,17 @@ export const sponsor: CommandInt = {
 
       return { success: true, content: sponsorEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "sponsor command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "sponsor") };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "sponsor", errorId),
+      };
     }
   },
 };

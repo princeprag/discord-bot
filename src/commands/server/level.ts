@@ -55,14 +55,17 @@ export const level: CommandInt = {
         content: levelEmbed,
       };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "level command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "level") };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "level", errorId),
+      };
     }
   },
 };

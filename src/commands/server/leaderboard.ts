@@ -60,7 +60,7 @@ export const leaderboard: CommandInt = {
       levelEmbed.setTimestamp();
       return { success: true, content: levelEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "leaderboard command",
         err,
@@ -69,7 +69,7 @@ export const leaderboard: CommandInt = {
       );
       return {
         success: false,
-        content: errorEmbedGenerator(Becca, "leaderboard"),
+        content: errorEmbedGenerator(Becca, "leaderboard", errorId),
       };
     }
   },

@@ -27,14 +27,17 @@ export const ping: CommandInt = {
 
       return { success: true, content: pingEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "ping command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "ping") };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "ping", errorId),
+      };
     }
   },
 };

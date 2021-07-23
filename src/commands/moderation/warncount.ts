@@ -85,14 +85,17 @@ export const warncount: CommandInt = {
 
       return { success: true, content: warnEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "warncount command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "warn") };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "warn", errorId),
+      };
     }
   },
 };

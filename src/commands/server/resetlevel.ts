@@ -44,7 +44,7 @@ export const resetlevel: CommandInt = {
         content: "I have burned all records of your guild's activities.",
       };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "resetlevel command",
         err,
@@ -53,7 +53,7 @@ export const resetlevel: CommandInt = {
       );
       return {
         success: false,
-        content: errorEmbedGenerator(Becca, "resetlevel"),
+        content: errorEmbedGenerator(Becca, "resetlevel", errorId),
       };
     }
   },

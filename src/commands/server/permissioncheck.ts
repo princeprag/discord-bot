@@ -67,7 +67,7 @@ export const permissioncheck: CommandInt = {
 
       return { success: true, content: validEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "permissioncheck command",
         err,
@@ -76,7 +76,7 @@ export const permissioncheck: CommandInt = {
       );
       return {
         success: false,
-        content: errorEmbedGenerator(Becca, "permissioncheck"),
+        content: errorEmbedGenerator(Becca, "permissioncheck", errorId),
       };
     }
   },

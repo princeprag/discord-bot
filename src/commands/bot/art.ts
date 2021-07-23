@@ -29,14 +29,17 @@ export const art: CommandInt = {
       artEmbed.setFooter("Would you like to paint my portrait too?");
       return { success: true, content: artEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "art command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "art") };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "art", errorId),
+      };
     }
   },
 };

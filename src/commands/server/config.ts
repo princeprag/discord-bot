@@ -146,14 +146,17 @@ export const config: CommandInt = {
         content: `${action} is not a valid configuration action to take.`,
       };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "config command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "config") };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "config", errorId),
+      };
     }
   },
 };

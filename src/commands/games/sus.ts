@@ -20,14 +20,17 @@ export const sus: CommandInt = {
 
       return { success: true, content: susEmbed };
     } catch (err) {
-      beccaErrorHandler(
+      const errorId = await beccaErrorHandler(
         Becca,
         "sus command",
         err,
         message.guild?.name,
         message
       );
-      return { success: false, content: errorEmbedGenerator(Becca, "sus") };
+      return {
+        success: false,
+        content: errorEmbedGenerator(Becca, "sus", errorId),
+      };
     }
   },
 };
