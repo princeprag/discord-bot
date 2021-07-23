@@ -68,6 +68,12 @@ export const viewSettings = async (
       config.self_roles.length,
       true
     );
+    settingsEmbed.addField("No links channels", config.anti_links.length, true);
+    settingsEmbed.addField(
+      "Anti-link Bypass Roles",
+      config.link_roles.length,
+      true
+    );
     return settingsEmbed;
   } catch (err) {
     beccaErrorHandler(

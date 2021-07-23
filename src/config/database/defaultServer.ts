@@ -16,4 +16,6 @@ export const defaultServer = {
   hearts: [] as string[],
   blocked: [] as string[],
   self_roles: [] as string[],
+  anti_links: [] as string[],
+  link_roles: [] as string[],
 };

@@ -28,6 +28,12 @@ export const setSetting = async (
       case "hearts":
       case "blocked":
       case "self_roles":
+      case "link_roles":
+      case "anti_links":
+        if (key === "anti_links" && value === "all") {
+          server[key] = ["all"];
+          break;
+        }
         if (server[key].includes(parsedValue)) {
           const index = server[key].indexOf(parsedValue);
           server[key].splice(index, 1);

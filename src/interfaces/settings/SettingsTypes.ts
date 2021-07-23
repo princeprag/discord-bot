@@ -14,4 +14,6 @@ export type SettingsTypes =
   | "custom_welcome"
   | "hearts"
   | "blocked"
-  | "self_roles";
+  | "self_roles"
+  | "anti_links"
+  | "link_roles";

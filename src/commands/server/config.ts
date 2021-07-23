@@ -51,6 +51,8 @@ export const config: CommandInt = {
           case "hearts":
           case "self_roles":
           case "blocked":
+          case "anti_links":
+          case "link_roles":
             return {
               success: true,
               content:
