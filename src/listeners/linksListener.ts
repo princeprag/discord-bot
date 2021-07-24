@@ -22,6 +22,15 @@ export const linksListener: ListenerInt = {
         return;
       }
 
+      if (config.allowed_links.length) {
+        for (const str of config.allowed_links) {
+          const regex = new RegExp(str, "i");
+          if (regex.test(message.content)) {
+            return;
+          }
+        }
+      }
+
       if (config.link_roles.length) {
         for (const role of config.link_roles) {
           if (message.member?.roles.cache.find((r) => r.id === role)) {
@@ -30,6 +39,7 @@ export const linksListener: ListenerInt = {
         }
       }
 
+      // Borrowed from https://gist.github.com/arbales/1654670
       const linkRegex =
         /(([a-z]+:\/\/)?(([a-z0-9-]+\.)+([a-z]{2}|aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|local|internal))(:[0-9]{1,5})?(\/[a-z0-9_\-.~]+)*(\/([a-z0-9_\-.]*)(\?[a-z0-9+_\-.%=&amp;]*)?)?(#[a-zA-Z0-9!$&'()*+.=-_~:@/?]*)?)(\s+|$)/gi;
 

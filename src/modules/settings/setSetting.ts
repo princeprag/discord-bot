@@ -52,6 +52,15 @@ export const setSetting = async (
         }
         server.markModified(key);
         break;
+      case "allowed_links":
+        if (server[key].includes(value)) {
+          const index = server[key].indexOf(value);
+          server[key].splice(index, 1);
+        } else {
+          server[key].push(value);
+        }
+        server.markModified(key);
+        break;
       case "custom_welcome":
       case "prefix":
       case "levels":

@@ -59,6 +59,7 @@ export const validateSetting = async (
           config[setting].includes(parsedValue) ||
           value === "all"
         );
+      case "allowed_links":
       case "prefix":
       case "custom_welcome":
       case "link_message":
