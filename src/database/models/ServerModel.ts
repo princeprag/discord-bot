@@ -19,6 +19,7 @@ export interface ServerModelInt extends Document {
   anti_links: string[];
   permit_links: string[];
   link_roles: string[];
+  allowed_links: string[];
   link_message: string;
 }
 
@@ -43,6 +44,7 @@ export const Server = new Schema({
   anti_links: [String],
   permit_links: [String],
   link_roles: [String],
+  allowed_links: [String],
   link_message: String,
 });
 

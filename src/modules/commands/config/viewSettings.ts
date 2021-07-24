@@ -80,6 +80,7 @@ export const viewSettings = async (
       config.link_roles.length,
       true
     );
+    settingsEmbed.addField("Allowed Links", config.allowed_links.length, true);
     settingsEmbed.addField(
       "Link removal message",
       customSubstring(config.link_message || defaultServer.link_message, 1000)

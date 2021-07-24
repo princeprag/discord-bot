@@ -18,4 +18,5 @@ export type SettingsTypes =
   | "anti_links"
   | "permit_links"
   | "link_roles"
+  | "allowed_links"
   | "link_message";
