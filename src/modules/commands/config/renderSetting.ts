@@ -1,11 +1,12 @@
 import { BeccaInt } from "../../../interfaces/BeccaInt";
+import { LevelRoleInt } from "../../../interfaces/settings/LevelRoleInt";
 import { SettingsTypes } from "../../../interfaces/settings/SettingsTypes";
 import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 
 export const renderSetting = (
   Becca: BeccaInt,
   key: SettingsTypes,
-  value: string
+  value: string | LevelRoleInt
 ): string => {
   try {
     if (!value) {
@@ -18,7 +19,7 @@ export const renderSetting = (
       case "custom_welcome":
       case "allowed_links":
       case "link_message":
-        return value;
+        return value as string;
       case "welcome_channel":
       case "log_channel":
       case "level_channel":
@@ -33,6 +34,10 @@ export const renderSetting = (
       case "anti_links":
       case "permit_links":
         return value === "all" ? value : `<#${value}>`;
+      case "level_roles":
+        return `<@&${(value as LevelRoleInt).role}> at level ${
+          (value as LevelRoleInt).level
+        }`;
       default:
         return "Something went wrong with rendering this setting.";
     }

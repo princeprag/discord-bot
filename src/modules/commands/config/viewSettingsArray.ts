@@ -14,7 +14,8 @@ export const viewSettingsArray = async (
     | "anti_links"
     | "permit_links"
     | "link_roles"
-    | "allowed_links",
+    | "allowed_links"
+    | "level_roles",
   page: number
 ): Promise<MessageEmbed | null> => {
   try {

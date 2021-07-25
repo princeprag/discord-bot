@@ -57,6 +57,11 @@ export const viewSettings = async (
       true
     );
     settingsEmbed.addField(
+      "Level Based Roles",
+      config.level_roles.length,
+      true
+    );
+    settingsEmbed.addField(
       "Custom Welcome Message",
       customSubstring(
         config.custom_welcome || defaultServer.custom_welcome,
