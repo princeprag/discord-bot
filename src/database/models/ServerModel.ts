@@ -1,5 +1,6 @@
 import { Document, model, Schema } from "mongoose";
 import encrypt from "mongoose-encryption";
+import { LevelRoleInt } from "../../interfaces/settings/LevelRoleInt";
 
 export interface ServerModelInt extends Document {
   serverID: string;
@@ -21,6 +22,7 @@ export interface ServerModelInt extends Document {
   link_roles: string[];
   allowed_links: string[];
   link_message: string;
+  level_roles: LevelRoleInt[];
 }
 
 export const Server = new Schema({
@@ -46,6 +48,7 @@ export const Server = new Schema({
   link_roles: [String],
   allowed_links: [String],
   link_message: String,
+  level_roles: [Object],
 });
 
 const encryptionKey = process.env.ENCRYPTION_KEY;

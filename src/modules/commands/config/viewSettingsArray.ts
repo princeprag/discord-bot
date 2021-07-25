@@ -2,6 +2,7 @@ import { MessageEmbed } from "discord.js";
 import { ServerModelInt } from "../../../database/models/ServerModel";
 import { BeccaInt } from "../../../interfaces/BeccaInt";
 import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
+import { renderSetting } from "./renderSetting";
 
 export const viewSettingsArray = async (
   Becca: BeccaInt,
@@ -13,7 +14,8 @@ export const viewSettingsArray = async (
     | "anti_links"
     | "permit_links"
     | "link_roles"
-    | "allowed_links",
+    | "allowed_links"
+    | "level_roles",
   page: number
 ): Promise<MessageEmbed | null> => {
   try {
@@ -30,7 +32,9 @@ export const viewSettingsArray = async (
     }
 
     const pages = Math.ceil(data.length / 10);
-    const paginatedData = data.slice(page * 10 - 10, page * 10);
+    const paginatedData = data
+      .slice(page * 10 - 10, page * 10)
+      .map((el) => renderSetting(Becca, setting, el));
 
     settingEmbed.setDescription(paginatedData.join("\n"));
     settingEmbed.setFooter(`Page ${page} of ${pages}`);

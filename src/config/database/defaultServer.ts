@@ -1,3 +1,5 @@
+import { LevelRoleInt } from "../../interfaces/settings/LevelRoleInt";
+
 /**
  * This config maps the default values for the ServerModel document. Useful
  * for the reset command as well as instantiating new server settings.
@@ -21,4 +23,5 @@ export const defaultServer = {
   link_roles: [] as string[],
   allowed_links: [] as string[],
   link_message: "It seems you are not allowed to send links in this channel.",
+  level_roles: [] as LevelRoleInt[],
 };

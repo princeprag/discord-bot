@@ -33,40 +33,26 @@ export const levelListener: ListenerInt = {
       const bonus = Math.floor(content.length / 10);
       const pointsEarned = Math.floor(Math.random() * (20 + bonus)) + 5;
       const userName = member?.nickname || author.username;
-      const server = await LevelModel.findOne({ serverID: guild.id });
-
-      if (!server) {
-        await LevelModel.create({
+      const server =
+        (await LevelModel.findOne({ serverID: guild.id })) ||
+        (await LevelModel.create({
           serverID: guild.id,
           serverName: guild.name,
-          users: [
-            {
-              userID: author.id,
-              userName: userName,
-              level: 0,
-              points: pointsEarned,
-              lastSeen: new Date(Date.now()),
-              cooldown: Date.now(),
-            },
-          ],
-        });
-        return;
-      }
+          users: [],
+        }));
 
-      const user = server.users.find((u) => u.userID === author.id);
+      let user = server.users.find((u) => u.userID === author.id);
 
       if (!user) {
-        server.users.push({
+        user = {
           userID: author.id,
           userName: userName,
           level: 0,
-          points: pointsEarned,
+          points: 0,
           lastSeen: new Date(Date.now()),
-          cooldown: Date.now(),
-        });
-        server.markModified("users");
-        await server.save();
-        return;
+          cooldown: 0,
+        };
+        server.users.push(user);
       }
 
       if (Date.now() - user.cooldown < 60000 || user.level >= 100) {
@@ -78,7 +64,7 @@ export const levelListener: ListenerInt = {
       user.userName = userName;
       user.cooldown = Date.now();
 
-      if (user.points > levelScale[user.level + 1]) {
+      while (user.points > levelScale[user.level + 1]) {
         user.level++;
         await targetChannel.send(
           `${userName} has grown stronger. They are now level ${user.level}`
@@ -86,6 +72,20 @@ export const levelListener: ListenerInt = {
       }
       server.markModified("users");
       await server.save();
+
+      if (serverSettings.level_roles.length) {
+        for (const setting of serverSettings.level_roles) {
+          if (user.level >= setting.level) {
+            const role = guild.roles.cache.find((r) => r.id === setting.role);
+            if (role && !member?.roles.cache.find((r) => r.id === role.id)) {
+              await member?.roles.add(role);
+              await targetChannel.send(
+                `${userName} has earned the ${role.name} title!`
+              );
+            }
+          }
+        }
+      }
     } catch (err) {
       beccaErrorHandler(Becca, "level listener", err, message.guild?.name);
     }

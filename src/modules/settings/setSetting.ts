@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { ServerModelInt } from "../../database/models/ServerModel";
 import { BeccaInt } from "../../interfaces/BeccaInt";
 import { SettingsTypes } from "../../interfaces/settings/SettingsTypes";
@@ -58,6 +59,23 @@ export const setSetting = async (
           server[key].splice(index, 1);
         } else {
           server[key].push(value);
+        }
+        server.markModified(key);
+        break;
+      case "level_roles":
+        const [level, role] = value.split(" ");
+        const hasSetting = server[key].findIndex(
+          (el) =>
+            el.role === role.replace(/\D/g, "") &&
+            el.level === parseInt(level, 10)
+        );
+        if (hasSetting === -1) {
+          server[key].push({
+            level: parseInt(level, 10),
+            role: role.replace(/\D/g, ""),
+          });
+        } else {
+          server[key].splice(hasSetting, 1);
         }
         server.markModified(key);
         break;

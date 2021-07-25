@@ -59,6 +59,24 @@ export const validateSetting = async (
           config[setting].includes(parsedValue) ||
           value === "all"
         );
+      case "level_roles":
+        const [level, role] = value.split(" ");
+        const parsedLevel = parseInt(level, 10);
+        if (
+          config[setting].find(
+            (el) =>
+              el.level === parsedLevel && el.role === role.replace(/\D/g, "")
+          )
+        ) {
+          return true;
+        }
+        return (
+          !isNaN(parsedLevel) &&
+          parsedLevel >= 1 &&
+          parsedLevel <= 100 &&
+          !!role.replace(/\D/g, "") &&
+          !!(await guild.roles.fetch(role.replace(/\D/g, "")))
+        );
       case "allowed_links":
       case "prefix":
       case "custom_welcome":

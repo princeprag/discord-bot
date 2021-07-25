@@ -19,4 +19,5 @@ export type SettingsTypes =
   | "permit_links"
   | "link_roles"
   | "allowed_links"
-  | "link_message";
+  | "link_message"
+  | "level_roles";
