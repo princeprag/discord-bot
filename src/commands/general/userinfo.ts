@@ -67,7 +67,7 @@ export const userinfo: CommandInt = {
           : "No.",
         true
       );
-      userEmbed.addField("Flags", flags.join(", "));
+      userEmbed.addField("Flags", flags.join(", ") || "None");
 
       return { success: true, content: userEmbed };
     } catch (err) {
