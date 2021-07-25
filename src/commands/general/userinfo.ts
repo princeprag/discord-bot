@@ -24,7 +24,7 @@ export const userinfo: CommandInt = {
         ? await guild.members.fetch(user.replace(/\D/g, ""))
         : await guild.members.fetch(author.id);
 
-      if (!target) {
+      if (!target || !target.user) {
         return {
           success: false,
           content: "Strange. That user record does not exist.",
