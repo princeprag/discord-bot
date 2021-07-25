@@ -1,4 +1,5 @@
 import { MessageEmbed } from "discord.js";
+import { UserFlagMap } from "../../config/commands/userInfo";
 import { CommandInt } from "../../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
@@ -67,7 +68,10 @@ export const userinfo: CommandInt = {
           : "No.",
         true
       );
-      userEmbed.addField("Flags", flags.join(", ") || "None");
+      userEmbed.addField(
+        "Badges",
+        flags.map((el) => UserFlagMap[el]).join(", ") || "None"
+      );
 
       return { success: true, content: userEmbed };
     } catch (err) {
