@@ -4,6 +4,7 @@ import { ServerModelInt } from "../../../database/models/ServerModel";
 import { BeccaInt } from "../../../interfaces/BeccaInt";
 import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../utils/customSubstring";
+import { renderSetting } from "./renderSetting";
 
 /**
  * Fetches a guild's configuration settings and generates an embed.
@@ -32,27 +33,27 @@ export const viewSettings = async (
     settingsEmbed.addField("Levels Listener", config.levels, true);
     settingsEmbed.addField(
       "Welcome Channel",
-      `<#${config.welcome_channel || "no channel set"}>`,
+      renderSetting(Becca, "welcome_channel", config.welcome_channel),
       true
     );
     settingsEmbed.addField(
       "Log Channel",
-      `<#${config.log_channel || "no channel set"}>`,
+      renderSetting(Becca, "log_channel", config.log_channel),
       true
     );
     settingsEmbed.addField(
       "Level Logging Channel",
-      `<#${config.level_channel || "no channel set"}>`,
+      renderSetting(Becca, "level_channel", config.level_channel),
       true
     );
     settingsEmbed.addField(
       "Suggestion Channel",
-      `<#${config.suggestion_channel || "no channel set"}>`,
+      renderSetting(Becca, "suggestion_channel", config.suggestion_channel),
       true
     );
     settingsEmbed.addField(
       "Muted Role",
-      `<@&${config.muted_role || "no role set"}>`,
+      renderSetting(Becca, "muted_role", config.muted_role),
       true
     );
     settingsEmbed.addField(

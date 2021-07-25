@@ -2,6 +2,7 @@ import { MessageEmbed } from "discord.js";
 import { defaultServer } from "../../config/database/defaultServer";
 import { CommandInt } from "../../interfaces/commands/CommandInt";
 import { SettingsTypes } from "../../interfaces/settings/SettingsTypes";
+import { renderSetting } from "../../modules/commands/config/renderSetting";
 import { validateSetting } from "../../modules/commands/config/validateSetting";
 import { viewSettings } from "../../modules/commands/config/viewSettings";
 import { viewSettingsArray } from "../../modules/commands/config/viewSettingsArray";
@@ -130,13 +131,13 @@ export const config: CommandInt = {
         }
         const newContent = setConfirmation[setting as SettingsTypes];
         const parsedContent = Array.isArray(newContent)
-          ? newContent.toString()
-          : newContent;
+          ? newContent
+              .map((el) => renderSetting(Becca, setting as SettingsTypes, el))
+              .join(", ")
+          : renderSetting(Becca, setting as SettingsTypes, newContent);
         const successEmbed = new MessageEmbed();
         successEmbed.setTitle(`${setting} Updated`);
-        successEmbed.setDescription(
-          "```\n" + customSubstring(parsedContent, 990) + "\n```"
-        );
+        successEmbed.setDescription(customSubstring(parsedContent, 2000));
         successEmbed.setTimestamp();
         successEmbed.setColor(Becca.colours.default);
         return {
