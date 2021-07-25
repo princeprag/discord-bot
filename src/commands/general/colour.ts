@@ -15,6 +15,13 @@ export const colour: CommandInt = {
       const { content } = message;
       const [, targetColour] = content.split(" ");
 
+      if (!targetColour) {
+        return {
+          success: false,
+          content: "Which colour do you want to see?",
+        };
+      }
+
       const parsedColour = targetColour.startsWith("#")
         ? targetColour.slice(1)
         : targetColour;
