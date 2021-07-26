@@ -14,6 +14,8 @@ export const SusNames = [
   "tan",
   "grey",
   "rose",
+  "coral",
+  "banana",
 ];
 
 export const SusColours = [
@@ -32,4 +34,6 @@ export const SusColours = [
   "#928776",
   "#738491",
   "#efc3cf",
+  "#d76464",
+  "#fffebe",
 ];
