@@ -37,4 +37,72 @@ export const artList: ArtInt[] = [
     artist: "Starfazers",
     artistUrl: "https://instagram.com/starfazers",
   },
+  {
+    fileName: "Ashley.jpg",
+    artName: "Untitled",
+    artist: "Ashley",
+    artistUrl: "https://www.instagram.com/tbg_art/",
+  },
+  {
+    fileName: "shiroGEM.png",
+    artName: "Untilted",
+    artist: "crys-chris",
+    artistUrl: "https://crys-chris.carrd.co/",
+  },
+  {
+    fileName: "Inspector Luke Warm.png",
+    artName: "Untitled",
+    artist: "Inspector Luke Warm",
+    artistUrl:
+      "https://www.gaiaonline.com/profiles/inspector-luke-warm/20324544/",
+  },
+  {
+    fileName: "Dyabolus.png",
+    artName: "Untitled",
+    artist: "Dyabolus",
+    artistUrl: "https://www.gaiaonline.com/profiles/dyabolus/4366582/",
+  },
+  {
+    fileName: "Euphoria-Cyrab.jpg",
+    artName: "Untitled",
+    artist: "Unknown",
+    artistUrl: "https://www.beccalyria.com",
+  },
+  {
+    fileName: "Princess Geekfayce.png",
+    artName: "Untitled",
+    artist: "Princess Geekfayce",
+    artistUrl:
+      "https://www.gaiaonline.com/profiles/princess-geekfayce/5671848/",
+  },
+  {
+    fileName: "RinHekka.png",
+    artName: "Untitled",
+    artist: "EvilKingRin",
+    artistUrl: "https://www.deviantart.com/evilkingrin",
+  },
+  {
+    fileName: "Ruvik Victoriano.png",
+    artName: "Untitled",
+    artist: "Ruvik Victoriano",
+    artistUrl: "https://www.gaiaonline.com/profiles/ruvik-victoriano/38974251/",
+  },
+  {
+    fileName: "TiffanyBlueSprinkles.png",
+    artName: "Untitled",
+    artist: "Tiffany",
+    artistUrl: "https://www.instagram.com/itiffanyblue/",
+  },
+  {
+    fileName: "wispur.png",
+    artName: "Untitled",
+    artist: "Unknown",
+    artistUrl: "https://www.beccalyria.com",
+  },
+  {
+    fileName: "Xiyara.png",
+    artName: "Untitled",
+    artist: "Unknown",
+    artistUrl: "https://www.beccalyria.com",
+  },
 ];
