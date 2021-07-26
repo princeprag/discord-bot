@@ -35,5 +35,5 @@ export const SusColours = [
   "#738491",
   "#efc3cf",
   "#d76464",
-  "#fffebe", 
+  "#fffebe",
 ];
