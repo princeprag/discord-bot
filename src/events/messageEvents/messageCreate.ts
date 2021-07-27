@@ -16,7 +16,7 @@ import { sleep } from "../../utils/sleep";
  * @param Becca Becca's Client instance
  * @param message The message object received by the gateway event
  */
-export const messageSend = async (
+export const messageCreate = async (
   Becca: BeccaInt,
   message: Message
 ): Promise<void> => {

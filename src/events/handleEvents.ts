@@ -6,7 +6,7 @@ import { guildDelete } from "./guildEvents/guildDelete";
 import { memberAdd } from "./memberEvents/memberAdd";
 import { memberRemove } from "./memberEvents/memberRemove";
 import { messageDelete } from "./messageEvents/messageDelete";
-import { messageSend } from "./messageEvents/messageSend";
+import { messageCreate } from "./messageEvents/messageCreate";
 import { messageUpdate } from "./messageEvents/messageUpdate";
 import { shardError } from "./shardEvents/shardError";
 import { shardReady } from "./shardEvents/shardReady";
@@ -28,7 +28,10 @@ export const handleEvents = async (Becca: BeccaInt): Promise<void> => {
   /**
    * Handle Message events.
    */
-  Becca.on("message", async (message) => await messageSend(Becca, message));
+  Becca.on(
+    "messageCreate",
+    async (message) => await messageCreate(Becca, message)
+  );
   Becca.on(
     "messageDelete",
     async (message) => await messageDelete(Becca, message)
