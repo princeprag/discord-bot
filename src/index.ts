@@ -11,6 +11,7 @@ import { handleEvents } from "./events/handleEvents";
 import { loadCommands } from "./commands/loadCommands";
 import { cachePrefixes } from "./modules/settings/cachePrefixes";
 import { createServer } from "./server/serve";
+import { IntentOptions } from "./config/IntentOptions";
 
 /**
  * This block initialises the Sentry plugin.
@@ -40,7 +41,10 @@ const spinnies = new Spinnies();
 const initialiseBecca = async () => {
   beccaLogHandler.log("debug", "Starting process...");
 
-  const Becca = new Client({ shards: "auto" }) as BeccaInt;
+  const Becca = new Client({
+    shards: "auto",
+    intents: IntentOptions,
+  }) as BeccaInt;
 
   spinnies.add("validate-env", {
     color: "magenta",

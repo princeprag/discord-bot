@@ -27,10 +27,10 @@ export const uptime: CommandInt = {
       uptimeEmbed.setDescription(
         "This is how long I have been on my adventure."
       );
-      uptimeEmbed.addField("Days", days);
-      uptimeEmbed.addField("Hours", hours, true);
-      uptimeEmbed.addField("Minutes", minutes, true);
-      uptimeEmbed.addField("Seconds", secondsRemain, true);
+      uptimeEmbed.addField("Days", days.toString());
+      uptimeEmbed.addField("Hours", hours.toString(), true);
+      uptimeEmbed.addField("Minutes", minutes.toString(), true);
+      uptimeEmbed.addField("Seconds", secondsRemain.toString(), true);
       uptimeEmbed.setTimestamp();
 
       return { success: true, content: uptimeEmbed };

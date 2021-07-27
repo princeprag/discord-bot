@@ -24,7 +24,7 @@ export const list: CommandInt = {
       const serverTexts = [];
 
       for (const server of serverList) {
-        const owner = await server.members.fetch(server.ownerID);
+        const owner = await server.members.fetch(server.ownerId);
         serverTexts.push(
           `${server.name} (${server.id}) owned by ${owner.user.username} (${owner.id})`
         );
@@ -39,8 +39,16 @@ export const list: CommandInt = {
       serverEmbed.setFooter(`Page ${targetPage} of ${totalPages}`);
       serverEmbed.setColor(Becca.colours.default);
       serverEmbed.setDescription(pageData.join("\n"));
-      serverEmbed.addField("Total servers", serverTexts.length, true);
-      serverEmbed.addField("Unique Owners", new Set(ownerIds).size, true);
+      serverEmbed.addField(
+        "Total servers",
+        serverTexts.length.toString(),
+        true
+      );
+      serverEmbed.addField(
+        "Unique Owners",
+        new Set(ownerIds).size.toString(),
+        true
+      );
       return { success: true, content: serverEmbed };
     } catch (err) {
       const errorId = await beccaErrorHandler(

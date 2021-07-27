@@ -45,7 +45,7 @@ export const validateEnv = (
     const configs = {
       token: process.env.DISCORD_TOKEN,
       dbToken: process.env.MONGODB,
-      hookId: process.env.WH_ID,
+      hookId: process.env.WH_ID as `${bigint}`,
       hookToken: process.env.WH_TOKEN,
       nasaKey: process.env.NASA_API,
       habiticaKey: process.env.HABITICA_KEY,
@@ -61,10 +61,10 @@ export const validateEnv = (
     Becca.configs = configs;
 
     const colours = {
-      default: "#8b4283",
-      success: "#1F8B4C",
-      warning: "#C27C0E",
-      error: "#992D22",
+      default: 0x8b4283,
+      success: 0x1f8b4c,
+      warning: 0xc27c0e,
+      error: 0x992d22,
     };
 
     Becca.colours = colours;

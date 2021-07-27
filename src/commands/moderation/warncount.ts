@@ -22,7 +22,7 @@ export const warncount: CommandInt = {
         };
       }
 
-      if (!member || !member.hasPermission("KICK_MEMBERS")) {
+      if (!member || !member.permissions.has("KICK_MEMBERS")) {
         return {
           success: false,
           content: "You do not have the correct skills to use this command.",
@@ -30,7 +30,7 @@ export const warncount: CommandInt = {
       }
 
       const targetUser = user
-        ? await guild.members.fetch(user.replace(/\D/g, ""))
+        ? await guild.members.fetch(`${BigInt(user.replace(/\D/g, ""))}`)
         : null;
 
       if (!targetUser) {
@@ -69,7 +69,11 @@ export const warncount: CommandInt = {
       warnEmbed.setDescription(
         "Here is the record of warnings for this member."
       );
-      warnEmbed.addField("Total Warnings", userWarns.warnCount, true);
+      warnEmbed.addField(
+        "Total Warnings",
+        userWarns.warnCount.toString(),
+        true
+      );
       warnEmbed.addField(
         "Last Warn Date",
         new Date(userWarns.lastWarnDate).toLocaleDateString(),

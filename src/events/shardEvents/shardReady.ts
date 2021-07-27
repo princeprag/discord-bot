@@ -14,9 +14,9 @@ export const shardReady = async (
   const shardEmbed = new MessageEmbed();
   shardEmbed.setTitle("Shard Online!");
   shardEmbed.setDescription("Becca has brought a new shard online!");
-  shardEmbed.addField("Shard", shard);
+  shardEmbed.addField("Shard", shard.toString());
   shardEmbed.setTimestamp();
   shardEmbed.setColor(Becca.colours.success);
 
-  await Becca.debugHook.send(shardEmbed);
+  await Becca.debugHook.send({ embeds: [shardEmbed] });
 };

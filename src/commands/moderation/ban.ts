@@ -23,7 +23,7 @@ export const ban: CommandInt = {
 
       const [, user, ...reason] = content.split(" ");
 
-      if (!member.hasPermission("BAN_MEMBERS")) {
+      if (!member.permissions.has("BAN_MEMBERS")) {
         return {
           success: false,
           content: "You do not have the correct skills to use this spell.",
@@ -31,7 +31,7 @@ export const ban: CommandInt = {
       }
 
       const targetUser = user
-        ? await guild.members.fetch(user.replace(/\D/g, ""))
+        ? await guild.members.fetch(`${BigInt(user.replace(/\D/g, ""))}`)
         : null;
 
       if (!targetUser) {

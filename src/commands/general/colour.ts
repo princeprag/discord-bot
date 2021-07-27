@@ -35,7 +35,7 @@ export const colour: CommandInt = {
 
       const colourEmbed = new MessageEmbed();
       colourEmbed.setTitle(`Colour: ${parsedColour}`);
-      colourEmbed.setColor("#" + parsedColour);
+      colourEmbed.setColor(parseInt(parsedColour, 16));
       colourEmbed.setImage(`https://www.colorhexa.com/${parsedColour}.png`);
       colourEmbed.setTimestamp();
       return { success: true, content: colourEmbed };

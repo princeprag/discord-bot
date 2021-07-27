@@ -22,7 +22,7 @@ export const userinfo: CommandInt = {
       const [, user] = content.split(" ");
 
       const target = user
-        ? await guild.members.fetch(user.replace(/\D/g, ""))
+        ? await guild.members.fetch(`${BigInt(user.replace(/\D/g, ""))}`)
         : await guild.members.fetch(author.id);
 
       if (!target || !target.user) {

@@ -28,8 +28,12 @@ export const username: CommandInt = {
         "This feature brought to you by [MattIPv4](https://github.com/mattipv4)."
       );
       usernameEmbed.addField("Your username is...", username);
-      usernameEmbed.addField("Generated Length", username.length, true);
-      usernameEmbed.addField("Maximum length", length, true);
+      usernameEmbed.addField(
+        "Generated Length",
+        username.length.toString(),
+        true
+      );
+      usernameEmbed.addField("Maximum length", length.toString(), true);
       return { success: true, content: usernameEmbed };
     } catch (err) {
       const errorId = await beccaErrorHandler(

@@ -31,9 +31,9 @@ export const suggest: CommandInt = {
 
       const suggestion = content.split(" ").slice(1).join(" ");
 
-      const suggestionChannel = (await guild.channels.cache.find(
+      const suggestionChannel = guild.channels.cache.find(
         (el) => el.id === config.suggestion_channel
-      )) as TextChannel;
+      ) as TextChannel;
 
       if (!suggestionChannel) {
         return {
@@ -53,7 +53,9 @@ export const suggest: CommandInt = {
       );
       suggestionEmbed.setDescription(customSubstring(suggestion, 2000));
 
-      const sentMessage = await suggestionChannel.send(suggestionEmbed);
+      const sentMessage = await suggestionChannel.send({
+        embeds: [suggestionEmbed],
+      });
       await sentMessage.react(Becca.configs.yes);
       await sentMessage.react(Becca.configs.no);
       return {

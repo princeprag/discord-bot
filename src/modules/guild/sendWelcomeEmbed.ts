@@ -25,18 +25,17 @@ export const sendWelcomeEmbed = async (
     }
 
     const welcomeChannel = guild.channels.cache.find(
-      (chan) => chan.id === guildChannelSetting && chan.type === "text"
+      (chan) => chan.id === guildChannelSetting && chan.type === "GUILD_TEXT"
     ) as TextChannel | undefined;
 
     if (!welcomeChannel) {
       return;
     }
 
-    welcomeChannel.startTyping();
+    await welcomeChannel.sendTyping();
     await sleep(3000);
-    welcomeChannel.stopTyping();
 
-    await welcomeChannel.send(content);
+    await welcomeChannel.send({ embeds: [content] });
   } catch (err) {
     beccaErrorHandler(Becca, "send log embed module", err, guild.name);
   }

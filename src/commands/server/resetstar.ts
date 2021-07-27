@@ -19,7 +19,7 @@ export const resetstar: CommandInt = {
         };
       }
 
-      if (!member.hasPermission("MANAGE_GUILD")) {
+      if (!member.permissions.has("MANAGE_GUILD")) {
         return {
           success: false,
           content: "You do not have the correct skills to use this spell.",

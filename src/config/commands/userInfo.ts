@@ -15,4 +15,5 @@ export const UserFlagMap = {
   TEAM_USER: "Unrecognised Badge",
   EARLY_VERIFIED_DEVELOPER: "Verified Bot Developer",
   VERIFIED_DEVELOPER: "Verified Bot Developer",
+  DISCORD_CERTIFIED_MODERATOR: "Discord Certified Moderator",
 };

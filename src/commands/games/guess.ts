@@ -22,10 +22,10 @@ export const guess: CommandInt = {
         "I have a challenge for you. I have chosen a number between 1 and 1000. You have 10 seconds to guess the number. The closest guess will win!"
       );
 
-      const guessCollector = message.channel.createMessageCollector(
-        (m: Message) => !isNaN(parseInt(m.content)),
-        { time: 10000 }
-      );
+      const guessCollector = message.channel.createMessageCollector({
+        time: 10000,
+        filter: (m: Message) => !isNaN(parseInt(m.content)),
+      });
 
       guessCollector.on("collect", (msg) => {
         if (guesses.find((g) => g.userID === msg.author.id)) {
@@ -41,7 +41,12 @@ export const guess: CommandInt = {
         await message.channel.send("Time is up! I am calculating the results.");
         let winValue = 10000;
         let winAuthor;
-        let winGuess;
+        let winGuess = 0;
+        if (!guesses.length) {
+          winEmbed.setTitle("There were no winners...");
+          winEmbed.setDescription("It looks like no one made a guess.");
+          return;
+        }
         for (const guess of guesses) {
           const result = Math.abs(guess.guess - random);
           if (result < winValue) {
@@ -53,9 +58,9 @@ export const guess: CommandInt = {
 
         winEmbed.setTitle("We have a winner");
         winEmbed.setDescription(`<@!${winAuthor}> wins!`);
-        winEmbed.addField("Guess", winGuess, true);
-        winEmbed.addField("Random number", random, true);
-        winEmbed.addField("Difference", winValue, true);
+        winEmbed.addField("Guess", winGuess.toString(), true);
+        winEmbed.addField("Random number", random.toString(), true);
+        winEmbed.addField("Difference", winValue.toString(), true);
       });
 
       await sleep(15000);

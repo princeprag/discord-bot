@@ -25,18 +25,17 @@ export const sendLogEmbed = async (
     }
 
     const logsChannel = guild.channels.cache.find(
-      (chan) => chan.id === guildChannelSetting && chan.type === "text"
+      (chan) => chan.id === guildChannelSetting && chan.type === "GUILD_TEXT"
     ) as TextChannel | undefined;
 
     if (!logsChannel) {
       return;
     }
 
-    logsChannel.startTyping();
+    await logsChannel.sendTyping();
     await sleep(3000);
-    logsChannel.stopTyping();
 
-    await logsChannel.send(content);
+    await logsChannel.send({ embeds: [content] });
   } catch (err) {
     beccaErrorHandler(Becca, "send log embed module", err, guild.name);
   }

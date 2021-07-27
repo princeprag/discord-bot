@@ -38,9 +38,8 @@ export const thanksListener: ListenerInt = {
           `Well done, ${user.username}. It seems you have done something right.`
         );
       }
-      channel.startTyping();
+      await channel.sendTyping();
       await sleep(3000);
-      channel.stopTyping();
       await channel.send(replies.join("\n"));
     } catch (err) {
       beccaErrorHandler(

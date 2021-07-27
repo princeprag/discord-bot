@@ -30,10 +30,9 @@ export const handleDms = async (
       "http://invite.beccalyria.com",
       true
     );
-    message.channel.startTyping();
+    await message.channel.sendTyping();
     await sleep(3000);
-    message.channel.stopTyping();
-    await message.reply(dmEmbed);
+    await message.reply({ embeds: [dmEmbed] });
   } catch (err) {
     beccaErrorHandler(Becca, "handleDMs module", err, "no guild", message);
   }

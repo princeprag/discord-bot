@@ -16,5 +16,5 @@ export const ready = async (Becca: BeccaInt): Promise<void> => {
   readyEmbed.setColor(Becca.colours.success);
   readyEmbed.setFooter(`Version ${Becca.configs.version}`);
 
-  await Becca.debugHook.send(readyEmbed);
+  await Becca.debugHook.send({ embeds: [readyEmbed] });
 };

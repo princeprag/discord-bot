@@ -13,9 +13,8 @@ export const beccaMentionListener: ListenerInt = {
       }
 
       await message.react(Becca.configs.think);
-      channel.startTyping();
+      await channel.sendTyping();
       await sleep(3000);
-      channel.stopTyping();
       await channel.send(
         `What can I do for you? Cast \`${
           Becca.prefixData[guild.id]

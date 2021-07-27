@@ -22,7 +22,7 @@ export const validateSetting = async (
   config: ServerModelInt
 ): Promise<boolean> => {
   try {
-    const parsedValue = value.replace(/\D/g, "");
+    const parsedValue = BigInt(value.replace(/\D/g, ""));
     switch (setting) {
       case "thanks":
       case "levels":
@@ -31,32 +31,34 @@ export const validateSetting = async (
       case "blocked":
         return (
           !!parsedValue &&
-          (!!(await guild.members.fetch(parsedValue)) ||
-            config[setting].includes(parsedValue))
+          !!(
+            (await guild.members.fetch(`${parsedValue}`)) ||
+            config[setting].includes(`${parsedValue}`)
+          )
         );
       case "muted_role":
-        return !!parsedValue && !!(await guild.roles.fetch(parsedValue));
+        return !!parsedValue && !!(await guild.roles.fetch(`${parsedValue}`));
       case "self_roles":
       case "link_roles":
         return (
           !!parsedValue &&
-          (!!(await guild.roles.fetch(parsedValue)) ||
-            config[setting].includes(parsedValue))
+          (!!(await guild.roles.fetch(`${parsedValue}`)) ||
+            config[setting].includes(`${parsedValue}`))
         );
       case "log_channel":
       case "welcome_channel":
       case "suggestion_channel":
       case "level_channel":
         return !!guild.channels.cache.find(
-          (el) => el.type === "text" && el.id === parsedValue
+          (el) => el.type === "GUILD_TEXT" && el.id === `${parsedValue}`
         );
       case "anti_links":
       case "permit_links":
         return (
           !!guild.channels.cache.find(
-            (el) => el.type === "text" && el.id === parsedValue
+            (el) => el.type === "GUILD_TEXT" && el.id === `${parsedValue}`
           ) ||
-          config[setting].includes(parsedValue) ||
+          config[setting].includes(`${parsedValue}`) ||
           value === "all"
         );
       case "level_roles":
@@ -75,7 +77,7 @@ export const validateSetting = async (
           parsedLevel >= 1 &&
           parsedLevel <= 100 &&
           !!role.replace(/\D/g, "") &&
-          !!(await guild.roles.fetch(role.replace(/\D/g, "")))
+          !!(await guild.roles.fetch(role.replace(/\D/g, "") as `${bigint}`))
         );
       case "allowed_links":
       case "prefix":

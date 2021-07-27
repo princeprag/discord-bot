@@ -18,7 +18,7 @@ export const linksListener: ListenerInt = {
         return;
       }
 
-      if (message.member?.hasPermission("MANAGE_MESSAGES")) {
+      if (message.member?.permissions.has("MANAGE_MESSAGES")) {
         return;
       }
 

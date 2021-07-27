@@ -1,4 +1,4 @@
-import { Client, WebhookClient } from "discord.js";
+import { Client, ColorResolvable, WebhookClient } from "discord.js";
 import { CommandInt } from "./commands/CommandInt";
 
 /**
@@ -15,7 +15,7 @@ export interface BeccaInt extends Client {
   configs: {
     token: string;
     dbToken: string;
-    hookId: string;
+    hookId: `${bigint}`;
     hookToken: string;
     nasaKey: string;
     habiticaKey: string;
@@ -28,10 +28,10 @@ export interface BeccaInt extends Client {
     version: string;
   };
   colours: {
-    default: string;
-    success: string;
-    warning: string;
-    error: string;
+    default: ColorResolvable;
+    success: ColorResolvable;
+    warning: ColorResolvable;
+    error: ColorResolvable;
   };
   commands: CommandInt[];
 }

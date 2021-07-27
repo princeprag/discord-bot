@@ -17,7 +17,7 @@ export const connectDatabase = async (Becca: BeccaInt): Promise<boolean> => {
     );
     databaseEmbed.setTimestamp();
     databaseEmbed.setColor(Becca.colours.success);
-    await Becca.debugHook.send(databaseEmbed);
+    await Becca.debugHook.send({ embeds: [databaseEmbed] });
 
     return true;
   } catch (err) {
