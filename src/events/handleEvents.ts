@@ -6,10 +6,14 @@ import { guildDelete } from "./guildEvents/guildDelete";
 import { memberAdd } from "./memberEvents/memberAdd";
 import { memberRemove } from "./memberEvents/memberRemove";
 import { messageDelete } from "./messageEvents/messageDelete";
-import { messageSend } from "./messageEvents/messageSend";
+import { messageCreate } from "./messageEvents/messageCreate";
 import { messageUpdate } from "./messageEvents/messageUpdate";
 import { shardError } from "./shardEvents/shardError";
 import { shardReady } from "./shardEvents/shardReady";
+import { voiceStateUpdate } from "./voiceEvents/voiceStateUpdate";
+import { threadCreate } from "./threadEvents/threadCreate";
+import { threadUpdate } from "./threadEvents/threadUpdate";
+import { threadDelete } from "./threadEvents/threadDelete";
 
 /**
  * Root level function for loading all of the event listeners.
@@ -28,7 +32,10 @@ export const handleEvents = async (Becca: BeccaInt): Promise<void> => {
   /**
    * Handle Message events.
    */
-  Becca.on("message", async (message) => await messageSend(Becca, message));
+  Becca.on(
+    "messageCreate",
+    async (message) => await messageCreate(Becca, message)
+  );
   Becca.on(
     "messageDelete",
     async (message) => await messageDelete(Becca, message)
@@ -59,4 +66,24 @@ export const handleEvents = async (Becca: BeccaInt): Promise<void> => {
    */
   Becca.on("ready", async () => ready(Becca));
   Becca.on("disconnect", async () => disconnect(Becca));
+
+  /**
+   * Handle Voice events
+   */
+  Becca.on("voiceStateUpdate", async (oldState, newState) => {
+    await voiceStateUpdate(Becca, oldState, newState);
+  });
+
+  /**
+   * Handle Thread events
+   */
+  Becca.on("threadCreate", async (thread) => {
+    await threadCreate(Becca, thread);
+  });
+  Becca.on("threadUpdate", async (oldThread, newThread) => {
+    await threadUpdate(Becca, oldThread, newThread);
+  });
+  Becca.on("threadDelete", async (thread) => {
+    await threadDelete(Becca, thread);
+  });
 };

@@ -23,7 +23,7 @@ export const errorEmbedGenerator = (
     "So what can I do to fix it?",
     " If you need assistance with this feature, please [join our support server](https://chat.nhcarrigan.com). Once there, give this ErrorID to the support team to investigate."
   );
-  errorEmbed.addField("Error ID:", errorId);
+  errorEmbed.addField("Error ID:", errorId.toHexString());
   errorEmbed.setTimestamp();
   return errorEmbed;
 };

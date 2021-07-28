@@ -16,11 +16,19 @@ export const about: CommandInt = {
       aboutEmbed.setDescription(
         "Becca was created by [nhcarrigan](https://www.nhcarrigan.com). You can [view her source code](https://github.com/beccalyria/discord-bot) or join the [official chat server](http://chat.nhcarrigan.com)."
       );
-      aboutEmbed.addField("Version", process.env.npm_package_version, true);
+      aboutEmbed.addField(
+        "Version",
+        process.env.npm_package_version || "unknown version",
+        true
+      );
       aboutEmbed.addField("Creation date", "Sunday, 31 May 2020", true);
-      aboutEmbed.addField("Guilds", Becca.guilds.cache.size, true);
-      aboutEmbed.addField("Available spells", Becca.commands.length, true);
-      aboutEmbed.addField("Favourite Colour", Becca.colours.default, true);
+      aboutEmbed.addField("Guilds", Becca.guilds.cache.size.toString(), true);
+      aboutEmbed.addField(
+        "Available spells",
+        Becca.commands.length.toString(),
+        true
+      );
+      aboutEmbed.addField("Favourite Colour", "Purple", true);
       aboutEmbed.setFooter(
         "Now that we have introduced ourselves, it is time for an adventure."
       );

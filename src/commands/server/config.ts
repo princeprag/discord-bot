@@ -33,7 +33,7 @@ export const config: CommandInt = {
       }
 
       if (
-        !member.hasPermission("MANAGE_GUILD") &&
+        !member.permissions.has("MANAGE_GUILD") &&
         member.id !== Becca.configs.ownerId
       ) {
         return {

@@ -15,6 +15,7 @@ export const guildDelete = async (
   Becca: BeccaInt,
   guild: Guild
 ): Promise<void> => {
+  const owner = await guild.members.fetch(guild.ownerId);
   const guildDeleteEmbed = new MessageEmbed();
   guildDeleteEmbed.setTitle(
     `${Becca.user?.username || "Becca Lyria"} has been dismissed from a guild!`
@@ -25,19 +26,19 @@ export const guildDelete = async (
   guildDeleteEmbed.addField("Guild Name", guild.name, true);
   guildDeleteEmbed.addField(
     "Guild Owner",
-    guild.owner?.user.username || "No owner data available.",
+    owner?.user.username || "No owner data available.",
     true
   );
   guildDeleteEmbed.addField("Guild ID", guild.id, true);
   guildDeleteEmbed.addField(
     "Guild Owner ID",
-    guild.owner?.id || "No owner data available",
+    owner?.id || "No owner data available",
     true
   );
   guildDeleteEmbed.setColor(Becca.colours.warning);
   guildDeleteEmbed.setTimestamp();
 
-  await Becca.debugHook.send(guildDeleteEmbed);
+  await Becca.debugHook.send({ embeds: [guildDeleteEmbed] });
 
   /**
    * Clean up the server data.

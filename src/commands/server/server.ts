@@ -23,9 +23,9 @@ export const server: CommandInt = {
         };
       }
 
-      const guildOwner = await guild.members.fetch(guild.ownerID);
+      const guildOwner = await guild.members.fetch(guild.ownerId);
       const guildMembers = (await guild.members.fetch()).map((u) => u);
-      const guildBans = await guild.fetchBans();
+      const guildBans = await guild.bans.fetch();
       const guildChannels = guild.channels.cache;
       const guildEmojis = guild.emojis.cache;
       const guildMfa = guild.mfaLevel
@@ -50,29 +50,33 @@ export const server: CommandInt = {
         Becca.prefixData[guild.id] || "becca!",
         true
       );
-      serverEmbed.addField("Members", guild.memberCount, true);
+      serverEmbed.addField("Members", guild.memberCount.toString(), true);
       serverEmbed.addField(
         "Living Members",
-        guildMembers.filter((member) => !member.user.bot).length,
+        guildMembers.filter((member) => !member.user.bot).length.toString(),
         true
       );
       serverEmbed.addField(
         "Robot Members",
-        guildMembers.filter((member) => member.user.bot).length,
+        guildMembers.filter((member) => member.user.bot).length.toString(),
         true
       );
-      serverEmbed.addField("Banished Members", guildBans.size, true);
+      serverEmbed.addField("Banished Members", guildBans.size.toString(), true);
       serverEmbed.addField("\u200b", "\u200b", true);
-      serverEmbed.addField("Titles", guild.roles.cache.size, true);
-      serverEmbed.addField("Channels", guildChannels.size, true);
+      serverEmbed.addField("Titles", guild.roles.cache.size.toString(), true);
+      serverEmbed.addField("Channels", guildChannels.size.toString(), true);
       serverEmbed.addField(
         "Text Channels",
-        guildChannels.filter((chan) => chan.type === "text").size,
+        guildChannels
+          .filter((chan) => chan.type === "GUILD_TEXT")
+          .size.toString(),
         true
       );
       serverEmbed.addField(
         "Voice Channels",
-        guildChannels.filter((chan) => chan.type === "voice").size,
+        guildChannels
+          .filter((chan) => chan.type === "GUILD_VOICE")
+          .size.toString(),
         true
       );
       serverEmbed.addField(
@@ -82,12 +86,12 @@ export const server: CommandInt = {
       );
       serverEmbed.addField(
         "Static Emoji",
-        guildEmojis.filter((emote) => !emote.animated).size,
+        guildEmojis.filter((emote) => !emote.animated).size.toString(),
         true
       );
       serverEmbed.addField(
         "Animated Emoji",
-        guildEmojis.filter((emote) => emote.animated).size,
+        guildEmojis.filter((emote) => !!emote.animated).size.toString(),
         true
       );
       serverEmbed.addField(

@@ -50,12 +50,13 @@ export const trivia: CommandInt = {
 
       const resultEmbed = new MessageEmbed();
 
-      await message.channel.send(triviaEmbed);
+      await message.channel.send({ embeds: [triviaEmbed] });
 
-      const answerCollector = message.channel.createMessageCollector(
-        (msg) => !msg.author.bot && letters.includes(msg.content.toUpperCase()),
-        { time: 30000 }
-      );
+      const answerCollector = message.channel.createMessageCollector({
+        time: 30000,
+        filter: (msg) =>
+          !msg.author.bot && letters.includes(msg.content.toUpperCase()),
+      });
 
       answerCollector.on("collect", (msg) => {
         if (answered.includes(msg.author.id)) {

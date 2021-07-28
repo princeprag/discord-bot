@@ -26,7 +26,7 @@ export const star: CommandInt = {
       const [, user, ...reason] = content.split(" ");
 
       const targetUser = user
-        ? await guild.members.fetch(user.replace(/\D/g, ""))
+        ? await guild.members.fetch(`${BigInt(user.replace(/\D/g, ""))}`)
         : null;
       if (!targetUser) {
         return {

@@ -46,7 +46,7 @@ export const beccaErrorHandler = async (
     "Stack Trace:",
     `\`\`\`\n${customSubstring(error.stack || "null", 1000)}\n\`\`\``
   );
-  errorEmbed.addField("Error ID", errorId);
+  errorEmbed.addField("Error ID", errorId.toHexString());
   errorEmbed.setTimestamp();
   if (message) {
     errorEmbed.addField(
@@ -54,7 +54,7 @@ export const beccaErrorHandler = async (
       customSubstring(message.content, 1000)
     );
   }
-  await Becca.debugHook.send(errorEmbed);
+  await Becca.debugHook.send({ embeds: [errorEmbed] });
 
   return errorId;
 };

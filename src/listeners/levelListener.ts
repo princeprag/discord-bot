@@ -23,7 +23,8 @@ export const levelListener: ListenerInt = {
 
       if (serverSettings.level_channel) {
         const realChannel = guild.channels.cache.find(
-          (c) => c.id === serverSettings.level_channel && c.type === "text"
+          (c) =>
+            c.id === serverSettings.level_channel && c.type === "GUILD_TEXT"
         );
         if (realChannel) {
           targetChannel = realChannel as TextChannel;

@@ -26,7 +26,7 @@ export const leave: CommandInt = {
         };
       }
 
-      const targetServer = Becca.guilds.cache.get(serverID);
+      const targetServer = Becca.guilds.cache.get(`${BigInt(serverID)}`);
 
       if (!targetServer) {
         return {

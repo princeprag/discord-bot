@@ -10,7 +10,7 @@ export const guildCreate = async (
   Becca: BeccaInt,
   guild: Guild
 ): Promise<void> => {
-  const owner = await guild.members.fetch(guild.ownerID);
+  const owner = await guild.members.fetch(guild.ownerId);
   const guildCreateEmbed = new MessageEmbed();
   guildCreateEmbed.setTitle(
     `${Becca.user?.username || "Becca Lyria"} has been enlisted in a new guild!`
@@ -33,5 +33,5 @@ export const guildCreate = async (
   guildCreateEmbed.setColor(Becca.colours.success);
   guildCreateEmbed.setTimestamp();
 
-  await Becca.debugHook.send(guildCreateEmbed);
+  await Becca.debugHook.send({ embeds: [guildCreateEmbed] });
 };

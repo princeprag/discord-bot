@@ -43,8 +43,12 @@ export const level: CommandInt = {
       levelEmbed.setDescription(
         `Here is the record I have in \`${guild.name}\``
       );
-      levelEmbed.addField("Experience Points", authorLevel.points, true);
-      levelEmbed.addField("Level", authorLevel.level, true);
+      levelEmbed.addField(
+        "Experience Points",
+        authorLevel.points.toString(),
+        true
+      );
+      levelEmbed.addField("Level", authorLevel.level.toString(), true);
       levelEmbed.addField(
         "Last Seen",
         `${new Date(authorLevel.lastSeen).toLocaleDateString()}`

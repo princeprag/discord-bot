@@ -58,7 +58,7 @@ export const viewSettings = async (
     );
     settingsEmbed.addField(
       "Level Based Roles",
-      config.level_roles.length,
+      config.level_roles.length.toString(),
       true
     );
     settingsEmbed.addField(
@@ -68,25 +68,41 @@ export const viewSettings = async (
         1000
       )
     );
-    settingsEmbed.addField("Hearts Count", config.hearts.length, true);
-    settingsEmbed.addField("Blocked User Count", config.blocked.length, true);
     settingsEmbed.addField(
-      "Self Assignable Titles",
-      config.self_roles.length,
+      "Hearts Count",
+      config.hearts.length.toString(),
       true
     );
-    settingsEmbed.addField("No links channels", config.anti_links.length, true);
+    settingsEmbed.addField(
+      "Blocked User Count",
+      config.blocked.length.toString(),
+      true
+    );
+    settingsEmbed.addField(
+      "Self Assignable Titles",
+      config.self_roles.length.toString(),
+      true
+    );
+    settingsEmbed.addField(
+      "No links channels",
+      config.anti_links.length.toString(),
+      true
+    );
     settingsEmbed.addField(
       "Allowed link channels",
-      config.permit_links.length,
+      config.permit_links.length.toString(),
       true
     );
     settingsEmbed.addField(
       "Anti-link Bypass Roles",
-      config.link_roles.length,
+      config.link_roles.length.toString(),
       true
     );
-    settingsEmbed.addField("Allowed Links", config.allowed_links.length, true);
+    settingsEmbed.addField(
+      "Allowed Links",
+      config.allowed_links.length.toString(),
+      true
+    );
     settingsEmbed.addField(
       "Link removal message",
       customSubstring(config.link_message || defaultServer.link_message, 1000)

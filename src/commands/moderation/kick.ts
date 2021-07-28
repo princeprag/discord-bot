@@ -16,7 +16,7 @@ export const kick: CommandInt = {
   run: async (Becca, message) => {
     try {
       const { author, content, guild, member } = message;
-      if (!guild || !member || !member?.hasPermission("KICK_MEMBERS")) {
+      if (!guild || !member || !member?.permissions.has("KICK_MEMBERS")) {
         return {
           success: false,
           content: "You do not have the correct skills to use this spell.",
@@ -29,7 +29,7 @@ export const kick: CommandInt = {
         "No reason was provided, and I did not ask for one.";
 
       const targetMember = target
-        ? await guild.members.fetch(target.replace(/\D/g, ""))
+        ? await guild.members.fetch(`${BigInt(target.replace(/\D/g, ""))}`)
         : null;
 
       if (!targetMember) {

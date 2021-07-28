@@ -21,7 +21,7 @@ export const suggestion: CommandInt = {
           content: "I cannot find your guild record.",
         };
       }
-      if (!member.hasPermission("MANAGE_GUILD")) {
+      if (!member.permissions.has("MANAGE_GUILD")) {
         return {
           success: false,
           content: "You do not have the correct skills to use this spell",
@@ -58,7 +58,7 @@ export const suggestion: CommandInt = {
 
       const targetSuggestion = await (
         suggestionChannel as TextChannel
-      ).messages.fetch(suggestionId);
+      ).messages.fetch(`${BigInt(suggestionId)}`);
 
       if (!targetSuggestion) {
         return {
@@ -101,7 +101,7 @@ export const suggestion: CommandInt = {
         action === "approve" ? Becca.colours.success : Becca.colours.error
       );
 
-      targetSuggestion.edit(embeddedSuggestion);
+      targetSuggestion.edit({ embeds: [embeddedSuggestion] });
 
       return {
         success: true,

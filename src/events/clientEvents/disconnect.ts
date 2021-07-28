@@ -15,5 +15,5 @@ export const disconnect = async (Becca: BeccaInt): Promise<void> => {
   );
   disconnectEmbed.setTimestamp();
   disconnectEmbed.setColor(Becca.colours.error);
-  await Becca.debugHook.send(disconnectEmbed);
+  await Becca.debugHook.send({ embeds: [disconnectEmbed] });
 };

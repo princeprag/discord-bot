@@ -16,7 +16,7 @@ import { sleep } from "../../utils/sleep";
  * @param Becca Becca's Client instance
  * @param message The message object received by the gateway event
  */
-export const messageSend = async (
+export const messageCreate = async (
   Becca: BeccaInt,
   message: Message
 ): Promise<void> => {
@@ -28,7 +28,7 @@ export const messageSend = async (
       return;
     }
 
-    if (!guild || channel.type === "dm") {
+    if (!guild || channel.type === "DM") {
       await handleDms(Becca, message);
       return;
     }
@@ -54,11 +54,14 @@ export const messageSend = async (
     for (const command of commands) {
       const [commandCall] = message.content.toLowerCase().split(" ");
       if (commandCall === prefix + command.name) {
-        message.channel.startTyping();
+        await message.channel.sendTyping();
         await sleep(3000);
-        message.channel.stopTyping();
         const response = await command.run(Becca, message, serverConfig);
-        await channel.send(response.content);
+        if (typeof response.content === "string") {
+          await message.channel.send(response.content);
+        } else {
+          await message.channel.send({ embeds: [response.content] });
+        }
         if (response.success) {
           await message.react(Becca.configs.yes);
         } else {

@@ -19,21 +19,7 @@ export const SusNames = [
 ];
 
 export const SusColours = [
-  "#f50101",
-  "#021edb",
-  "#147d2a",
-  "#ee52b9",
-  "#f07d07",
-  "#f2f254",
-  "#3d464c",
-  "#d9e2ef",
-  "#6a1bcb",
-  "#70491e",
-  "#28feee",
-  "#4def3b",
-  "#928776",
-  "#738491",
-  "#efc3cf",
-  "#d76464",
-  "#fffebe",
+  0xf50101, 0x021edb, 0x147d2a, 0xee52b9, 0xf07d07, 0xf2f254, 0x3d464c,
+  0xd9e2ef, 0x6a1bcb, 0x70491e, 0x28feee, 0x4def3b, 0x928776, 0x738491,
+  0xefc3cf, 0xd76464, 0xfffebe,
 ];

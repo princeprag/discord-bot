@@ -25,7 +25,7 @@ export const mute: CommandInt = {
         };
       }
 
-      if (!member || !member.hasPermission("KICK_MEMBERS")) {
+      if (!member || !member.permissions.has("KICK_MEMBERS")) {
         return {
           success: false,
           content: "You do not have the correct skills to use this spell.",
@@ -33,7 +33,7 @@ export const mute: CommandInt = {
       }
 
       const targetUser = user
-        ? await guild.members.fetch(user.replace(/\D/g, ""))
+        ? await guild.members.fetch(`${BigInt(user.replace(/\D/g, ""))}`)
         : null;
       if (!targetUser) {
         return { success: false, content: "Who did you want me to silence?" };
