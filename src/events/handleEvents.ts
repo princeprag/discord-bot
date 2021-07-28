@@ -11,6 +11,9 @@ import { messageUpdate } from "./messageEvents/messageUpdate";
 import { shardError } from "./shardEvents/shardError";
 import { shardReady } from "./shardEvents/shardReady";
 import { voiceStateUpdate } from "./voiceEvents/voiceStateUpdate";
+import { threadCreate } from "./threadEvents/threadCreate";
+import { threadUpdate } from "./threadEvents/threadUpdate";
+import { threadDelete } from "./threadEvents/threadDelete";
 
 /**
  * Root level function for loading all of the event listeners.
@@ -69,5 +72,18 @@ export const handleEvents = async (Becca: BeccaInt): Promise<void> => {
    */
   Becca.on("voiceStateUpdate", async (oldState, newState) => {
     await voiceStateUpdate(Becca, oldState, newState);
+  });
+
+  /**
+   * Handle Thread events
+   */
+  Becca.on("threadCreate", async (thread) => {
+    await threadCreate(Becca, thread);
+  });
+  Becca.on("threadUpdate", async (oldThread, newThread) => {
+    await threadUpdate(Becca, oldThread, newThread);
+  });
+  Becca.on("threadDelete", async (thread) => {
+    await threadDelete(Becca, thread);
   });
 };
