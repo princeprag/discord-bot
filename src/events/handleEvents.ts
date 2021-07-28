@@ -10,6 +10,7 @@ import { messageCreate } from "./messageEvents/messageCreate";
 import { messageUpdate } from "./messageEvents/messageUpdate";
 import { shardError } from "./shardEvents/shardError";
 import { shardReady } from "./shardEvents/shardReady";
+import { voiceStateUpdate } from "./voiceEvents/voiceStateUpdate";
 
 /**
  * Root level function for loading all of the event listeners.
@@ -62,4 +63,11 @@ export const handleEvents = async (Becca: BeccaInt): Promise<void> => {
    */
   Becca.on("ready", async () => ready(Becca));
   Becca.on("disconnect", async () => disconnect(Becca));
+
+  /**
+   * Handle Voice events
+   */
+  Becca.on("voiceStateUpdate", async (oldState, newState) => {
+    await voiceStateUpdate(Becca, oldState, newState);
+  });
 };
