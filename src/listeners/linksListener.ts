@@ -22,12 +22,13 @@ export const linksListener: ListenerInt = {
         return;
       }
 
+      let blockedLinks = 0;
+      let allowedLinks = 0;
+
       if (config.allowed_links.length) {
         for (const str of config.allowed_links) {
-          const regex = new RegExp(str, "i");
-          if (regex.test(message.content)) {
-            return;
-          }
+          const regex = new RegExp(str, "ig");
+          allowedLinks += (message.content.match(regex) || []).length;
         }
       }
 
@@ -43,9 +44,9 @@ export const linksListener: ListenerInt = {
       const linkRegex =
         /(([a-z]+:\/\/)?(([a-z0-9-]+\.)+([a-z]{2}|aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|local|internal))(:[0-9]{1,5})?(\/[a-z0-9_\-.~]+)*(\/([a-z0-9_\-.]*)(\?[a-z0-9+_\-.%=&amp;]*)?)?(#[a-zA-Z0-9!$&'()*+.=-_~:@/?]*)?)(\s+|$)/gi;
 
-      const hasLink = linkRegex.test(message.content);
+      blockedLinks += (message.content.match(linkRegex) || []).length;
 
-      if (hasLink) {
+      if (blockedLinks > 0 && blockedLinks !== allowedLinks) {
         message.deletable && (await message.delete());
         await message.channel.send(
           config.link_message || defaultServer.link_message
