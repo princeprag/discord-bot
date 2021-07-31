@@ -13,6 +13,10 @@ export const voiceStateUpdate = async (
     voiceEmbed.setTimestamp();
     voiceEmbed.setFooter(`ID: ${oldState.id}`);
 
+    if (oldState.channelId === newState.channelId) {
+      return;
+    }
+
     if (oldState.channelId && newState.channelId) {
       voiceEmbed.setTitle("Member switched channels!");
       voiceEmbed.setDescription(
