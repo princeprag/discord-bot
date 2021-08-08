@@ -35,7 +35,6 @@
     "discord.js": "^13.0.0-dev.30a58dc.1627387368",
     "express": "^4.17.1",
     "mongoose": "^5.13.2",
-    "mongoose-encryption": "^2.1.0",
     "spinnies": "^0.5.1",
     "winston": "^3.3.3"
   },

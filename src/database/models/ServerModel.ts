@@ -1,5 +1,4 @@
 import { Document, model, Schema } from "mongoose";
-import encrypt from "mongoose-encryption";
 import { LevelRoleInt } from "../../interfaces/settings/LevelRoleInt";
 
 export interface ServerModelInt extends Document {
@@ -49,16 +48,6 @@ export const Server = new Schema({
   allowed_links: [String],
   link_message: String,
   level_roles: [Object],
-});
-
-const encryptionKey = process.env.ENCRYPTION_KEY;
-const signingKey = process.env.SIGNING_KEY;
-
-Server.plugin(encrypt, {
-  encryptionKey,
-  signingKey,
-  excludeFromEncryption: ["serverID"],
-  requireAuthenticationCode: false,
 });
 
 export default model<ServerModelInt>("server", Server);
