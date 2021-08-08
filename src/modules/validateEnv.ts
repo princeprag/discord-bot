@@ -38,10 +38,6 @@ export const validateEnv = (
       return { valid: false, message: "Missing Discord ID for owner account" };
     }
 
-    if (!process.env.ENCRYPTION_KEY || !process.env.SIGNING_KEY) {
-      return { valid: false, message: "Missing database encryption keys." };
-    }
-
     const configs = {
       token: process.env.DISCORD_TOKEN,
       dbToken: process.env.MONGODB,
