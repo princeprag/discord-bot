@@ -15,8 +15,7 @@ export interface BeccaInt extends Client {
   configs: {
     token: string;
     dbToken: string;
-    hookId: `${bigint}`;
-    hookToken: string;
+    whUrl: string;
     nasaKey: string;
     habiticaKey: string;
     orbitKey: string;

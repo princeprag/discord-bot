@@ -18,8 +18,8 @@ export const validateEnv = (
       return { valid: false, message: "Missing database connection string" };
     }
 
-    if (!process.env.WH_ID || !process.env.WH_TOKEN) {
-      return { valid: false, message: "Missing Discord webhook credentials" };
+    if (!process.env.WH_URL) {
+      return { valid: false, message: "Missing Discord webhook URL" };
     }
 
     if (!process.env.NASA_API) {
@@ -41,8 +41,7 @@ export const validateEnv = (
     const configs = {
       token: process.env.DISCORD_TOKEN,
       dbToken: process.env.MONGODB,
-      hookId: process.env.WH_ID as `${bigint}`,
-      hookToken: process.env.WH_TOKEN,
+      whUrl: process.env.WH_URL,
       nasaKey: process.env.NASA_API,
       habiticaKey: process.env.HABITICA_KEY,
       orbitKey: process.env.ORBIT_KEY,
