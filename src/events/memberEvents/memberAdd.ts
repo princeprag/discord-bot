@@ -1,6 +1,7 @@
 import { GuildMember, MessageEmbed, PartialGuildMember } from "discord.js";
 import { defaultServer } from "../../config/database/defaultServer";
 import { BeccaInt } from "../../interfaces/BeccaInt";
+import { sendLogEmbed } from "../../modules/guild/sendLogEmbed";
 import { sendWelcomeEmbed } from "../../modules/guild/sendWelcomeEmbed";
 import { getSettings } from "../../modules/settings/getSettings";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
@@ -23,6 +24,23 @@ export const memberAdd = async (
     }
 
     const serverSettings = await getSettings(Becca, guild.id, guild.name);
+
+    if (member.pending) {
+      // logic for pending members
+      const partialJoinEmbed = new MessageEmbed();
+      partialJoinEmbed.setColor(Becca.colours.warning);
+      partialJoinEmbed.setTitle("A user is viewing the guild");
+      partialJoinEmbed.setDescription(
+        "Because we have a magical barrier, they must complete verification before they can participate in our activities. When they have done so, I will officially welcome them."
+      );
+      partialJoinEmbed.setAuthor(
+        `${user.username}#${user.discriminator}`,
+        user.displayAvatarURL()
+      );
+      await sendLogEmbed(Becca, guild, partialJoinEmbed);
+      return;
+    }
+
     const welcomeText = (
       serverSettings?.custom_welcome || defaultServer.custom_welcome
     )
