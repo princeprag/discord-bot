@@ -11,13 +11,27 @@ export const level: CommandInt = {
   category: "server",
   run: async (Becca, message) => {
     try {
-      const { author, guild } = message;
+      const { author, content, guild } = message;
       if (!guild) {
         return {
           success: false,
           content: "I cannot locate your guild record.",
         };
       }
+
+      const [, user] = content.split(" ");
+
+      const target = user
+        ? await guild.members.fetch(`${BigInt(user.replace(/\D/g, ""))}`)
+        : await guild.members.fetch(author.id);
+
+      if (!target || !target.user) {
+        return {
+          success: false,
+          content: "Strange. That user record does not exist.",
+        };
+      }
+
       const serverLevels = await LevelModel.findOne({ serverID: guild.id });
       if (!serverLevels) {
         return {
@@ -26,32 +40,32 @@ export const level: CommandInt = {
         };
       }
 
-      const authorLevel = serverLevels.users.find(
-        (u) => u.userID === author.id
+      const targetLevel = serverLevels.users.find(
+        (u) => u.userID === target.id
       );
 
-      if (!authorLevel) {
+      if (!targetLevel) {
         return {
           success: false,
-          content: "You have not earned any levels yet.",
+          content: `<@!${target.id}> has not earned any levels yet...`,
         };
       }
 
       const levelEmbed = new MessageEmbed();
       levelEmbed.setColor(Becca.colours.default);
-      levelEmbed.setTitle(`${authorLevel.userName}'s ranking`);
+      levelEmbed.setTitle(`${targetLevel.userName}'s ranking`);
       levelEmbed.setDescription(
         `Here is the record I have in \`${guild.name}\``
       );
       levelEmbed.addField(
         "Experience Points",
-        authorLevel.points.toString(),
+        targetLevel.points.toString(),
         true
       );
-      levelEmbed.addField("Level", authorLevel.level.toString(), true);
+      levelEmbed.addField("Level", targetLevel.level.toString(), true);
       levelEmbed.addField(
         "Last Seen",
-        `${new Date(authorLevel.lastSeen).toLocaleDateString()}`
+        `${new Date(targetLevel.lastSeen).toLocaleDateString()}`
       );
       levelEmbed.setTimestamp();
       return {
