@@ -1,10 +1,8 @@
 import {
-  DMChannel,
   GuildMember,
   MessageEmbed,
-  NewsChannel,
+  TextBasedChannels,
   TextChannel,
-  ThreadChannel,
 } from "discord.js";
 import { BeccaInt } from "../../../interfaces/BeccaInt";
 import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
@@ -19,7 +17,7 @@ import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 export const validateChannelPerms = async (
   Becca: BeccaInt,
   BeccaMember: GuildMember,
-  channel: TextChannel | DMChannel | NewsChannel | ThreadChannel
+  channel: TextBasedChannels
 ): Promise<boolean> => {
   try {
     const manageServer = BeccaMember.permissionsIn(channel.id).has(

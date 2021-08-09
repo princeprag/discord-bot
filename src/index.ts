@@ -61,10 +61,7 @@ const initialiseBecca = async () => {
     text: validatedEnvironment.message,
   });
 
-  Becca.debugHook = new WebhookClient(
-    Becca.configs.hookId,
-    Becca.configs.hookToken
-  );
+  Becca.debugHook = new WebhookClient({ url: Becca.configs.whUrl });
 
   spinnies.add("server", { color: "magenta", text: "Initialising server" });
   const server = await createServer(Becca);
