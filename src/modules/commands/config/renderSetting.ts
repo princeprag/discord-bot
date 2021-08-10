@@ -30,6 +30,8 @@ export const renderSetting = (
         return `<@!${value}>`;
       case "self_roles":
       case "link_roles":
+      case "muted_role":
+      case "join_role":
         return `<@&${value}>`;
       case "anti_links":
       case "permit_links":

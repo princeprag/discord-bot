@@ -22,6 +22,7 @@ export interface ServerModelInt extends Document {
   allowed_links: string[];
   link_message: string;
   level_roles: LevelRoleInt[];
+  join_role: string;
 }
 
 export const Server = new Schema({
@@ -48,6 +49,7 @@ export const Server = new Schema({
   allowed_links: [String],
   link_message: String,
   level_roles: [Object],
+  join_role: String,
 });
 
 export default model<ServerModelInt>("server", Server);

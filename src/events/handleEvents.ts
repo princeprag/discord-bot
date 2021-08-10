@@ -14,6 +14,7 @@ import { voiceStateUpdate } from "./voiceEvents/voiceStateUpdate";
 import { threadCreate } from "./threadEvents/threadCreate";
 import { threadUpdate } from "./threadEvents/threadUpdate";
 import { threadDelete } from "./threadEvents/threadDelete";
+import { memberUpdate } from "./memberEvents/memberUpdate";
 
 /**
  * Root level function for loading all of the event listeners.
@@ -60,6 +61,9 @@ export const handleEvents = async (Becca: BeccaInt): Promise<void> => {
     "guildMemberRemove",
     async (member) => await memberRemove(Becca, member)
   );
+  Becca.on("guildMemberUpdate", async (oldMember, newMember) => {
+    await memberUpdate(Becca, oldMember, newMember);
+  });
 
   /**
    * Handle Client events.

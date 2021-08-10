@@ -37,6 +37,7 @@ export const validateSetting = async (
           )
         );
       case "muted_role":
+      case "join_role":
         return !!parsedValue && !!(await guild.roles.fetch(`${parsedValue}`));
       case "self_roles":
       case "link_roles":
