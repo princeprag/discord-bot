@@ -84,6 +84,7 @@ export const validateSetting = async (
       case "prefix":
       case "custom_welcome":
       case "link_message":
+      case "leave_message":
         return true;
       default:
         return false;

@@ -26,4 +26,6 @@ export const defaultServer = {
     "{@username}, it seems you are not allowed to send links in this channel.",
   level_roles: [] as LevelRoleInt[],
   join_role: "",
+  leave_message:
+    "{@username}, thank you for your time in {@servername}. Your contributions are appreciated.",
 };

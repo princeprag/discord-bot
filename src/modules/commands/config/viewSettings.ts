@@ -78,6 +78,10 @@ export const viewSettings = async (
       )
     );
     settingsEmbed.addField(
+      "Custom Leave Message",
+      customSubstring(config.leave_message || defaultServer.leave_message, 2000)
+    );
+    settingsEmbed.addField(
       "Hearts Count",
       config.hearts.length.toString(),
       true

@@ -1,4 +1,6 @@
 import { GuildMember, MessageEmbed, PartialGuildMember } from "discord.js";
+import { defaultServer } from "../../config/database/defaultServer";
+import ServerModel from "../../database/models/ServerModel";
 import { BeccaInt } from "../../interfaces/BeccaInt";
 import { sendWelcomeEmbed } from "../../modules/guild/sendWelcomeEmbed";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
@@ -22,9 +24,16 @@ export const memberRemove = async (
 
     const roleList = roles.cache.map((el) => el);
 
+    const serverConfig = await ServerModel.findOne({ serverID: guild.id });
+
     const goodbyeEmbed = new MessageEmbed();
     goodbyeEmbed.setTitle("A member has abandoned our guild.");
     goodbyeEmbed.setColor(Becca.colours.default);
+    goodbyeEmbed.setDescription(
+      (serverConfig?.leave_message || defaultServer.leave_message)
+        .replace(/\{@username\}/g, `<@!${member.id}>`)
+        .replace(/\{@servername\}/g, guild.name)
+    );
     goodbyeEmbed.addField("Name", nickname || user.username);
     goodbyeEmbed.addField("Roles", roleList.join("\n"));
     goodbyeEmbed.setAuthor(

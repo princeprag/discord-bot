@@ -19,6 +19,7 @@ export const renderSetting = (
       case "custom_welcome":
       case "allowed_links":
       case "link_message":
+      case "leave_message":
         return value as string;
       case "welcome_channel":
       case "log_channel":
