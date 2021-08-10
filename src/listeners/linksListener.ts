@@ -1,3 +1,4 @@
+import { MessageEmbed } from "discord.js";
 import { defaultServer } from "../config/database/defaultServer";
 import { ListenerInt } from "../interfaces/listeners/ListenerInt";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
@@ -48,9 +49,20 @@ export const linksListener: ListenerInt = {
 
       if (blockedLinks > 0 && blockedLinks !== allowedLinks) {
         message.deletable && (await message.delete());
-        await message.channel.send(
-          config.link_message || defaultServer.link_message
+        const linkEmbed = new MessageEmbed();
+        linkEmbed.setTitle("Invalid Link Detected!");
+        linkEmbed.setDescription(
+          (config.link_message || defaultServer.link_message).replace(
+            /\{@username\}/g,
+            `<@!${message.author.id}>`
+          )
         );
+        linkEmbed.setColor(Becca.colours.error);
+        linkEmbed.setAuthor(
+          `${message.author.username}#${message.author.discriminator}`,
+          message.author.displayAvatarURL()
+        );
+        await message.channel.send({ embeds: [linkEmbed] });
       }
     } catch (err) {
       beccaErrorHandler(
