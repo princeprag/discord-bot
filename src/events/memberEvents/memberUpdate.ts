@@ -41,6 +41,13 @@ export const memberUpdate = async (
       welcomeEmbed.setTimestamp();
 
       await sendWelcomeEmbed(Becca, guild, welcomeEmbed);
+
+      if (serverSettings?.join_role) {
+        const joinRole = await guild.roles.fetch(serverSettings.join_role);
+        if (joinRole) {
+          await newMember.roles.add(joinRole);
+        }
+      }
     }
   } catch (err) {
     beccaErrorHandler(Becca, "member remove event", err, newMember.guild.name);
