@@ -22,7 +22,8 @@ export const defaultServer = {
   permit_links: [] as string[],
   link_roles: [] as string[],
   allowed_links: [] as string[],
-  link_message: "It seems you are not allowed to send links in this channel.",
+  link_message:
+    "{@username}, it seems you are not allowed to send links in this channel.",
   level_roles: [] as LevelRoleInt[],
   join_role: "",
 };
