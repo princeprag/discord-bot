@@ -56,6 +56,7 @@ export const config: CommandInt = {
           case "permit_links":
           case "link_roles":
           case "allowed_links":
+          case "level_roles":
             return {
               success: true,
               content:

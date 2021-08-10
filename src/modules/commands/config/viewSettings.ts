@@ -61,6 +61,11 @@ export const viewSettings = async (
       true
     );
     settingsEmbed.addField(
+      "Join Role",
+      renderSetting(Becca, "join_role", config.join_role),
+      true
+    );
+    settingsEmbed.addField(
       "Level Based Roles",
       config.level_roles.length.toString(),
       true

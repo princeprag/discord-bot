@@ -20,4 +20,5 @@ export type SettingsTypes =
   | "link_roles"
   | "allowed_links"
   | "link_message"
-  | "level_roles";
+  | "level_roles"
+  | "join_role";
