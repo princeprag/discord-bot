@@ -84,6 +84,7 @@ export const setSetting = async (
       case "levels":
       case "thanks":
       case "link_message":
+      case "leave_message":
         server[key] = value;
         break;
       case "welcome_channel":
