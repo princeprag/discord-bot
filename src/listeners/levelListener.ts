@@ -1,4 +1,4 @@
-import { TextChannel } from "discord.js";
+import { MessageEmbed, TextChannel } from "discord.js";
 import levelScale from "../config/listeners/levelScale";
 import LevelModel from "../database/models/LevelModel";
 import { ListenerInt } from "../interfaces/listeners/ListenerInt";
@@ -67,9 +67,17 @@ export const levelListener: ListenerInt = {
 
       while (user.points > levelScale[user.level + 1]) {
         user.level++;
-        await targetChannel.send(
-          `${userName} has grown stronger. They are now level ${user.level}`
+        const levelEmbed = new MessageEmbed();
+        levelEmbed.setTitle("Level Up!");
+        levelEmbed.setDescription(
+          `<@!${author.id}> has grown stronger. They are now level ${user.level}.`
         );
+        levelEmbed.setColor(Becca.colours.default);
+        levelEmbed.setAuthor(
+          `${author.username}#${author.discriminator}`,
+          author.displayAvatarURL()
+        );
+        await targetChannel.send({ embeds: [levelEmbed] });
       }
       server.markModified("users");
       await server.save();
@@ -80,9 +88,17 @@ export const levelListener: ListenerInt = {
             const role = guild.roles.cache.find((r) => r.id === setting.role);
             if (role && !member?.roles.cache.find((r) => r.id === role.id)) {
               await member?.roles.add(role);
-              await targetChannel.send(
-                `${userName} has earned the ${role.name} title!`
+              const roleEmbed = new MessageEmbed();
+              roleEmbed.setTitle("A title has been granted!");
+              roleEmbed.setDescription(
+                `<@!${author.id}> has earned the <@&${role.id}> title!`
               );
+              roleEmbed.setColor(Becca.colours.default);
+              roleEmbed.setAuthor(
+                `${author.username}#${author.discriminator}`,
+                author.displayAvatarURL()
+              );
+              await targetChannel.send({ embeds: [roleEmbed] });
             }
           }
         }
