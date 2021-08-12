@@ -59,9 +59,7 @@ export const help: CommandInt = {
       const helpEmbed = new MessageEmbed();
       helpEmbed.setTitle("Available Spells");
       helpEmbed.setDescription(
-        `These are my available spells. You can cast them with the ${
-          Becca.prefixData[guild.id]
-        } prefix, like you did with this spell. If you need further assistance, join the [support server](http://chat.nhcarrigan.com) or view [the documentation](https://www.beccalyria.com/discord-documentation).`
+        "These are my available spells. You can cast them with the becca! prefix, like you did with this spell. If you need further assistance, join the [support server](http://chat.nhcarrigan.com) or view [the documentation](https://www.beccalyria.com/discord-documentation)."
       );
       helpEmbed.setColor(Becca.colours.default);
       helpEmbed.addField("Bot Spells", botCommands.join(", "));

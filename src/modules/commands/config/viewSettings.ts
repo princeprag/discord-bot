@@ -28,11 +28,6 @@ export const viewSettings = async (
     settingsEmbed.setTitle(`${guild.name} Settings`);
     settingsEmbed.setColor(Becca.colours.default);
     settingsEmbed.setDescription("Here are your current configurations.");
-    settingsEmbed.addField(
-      "Prefix",
-      config.prefix || defaultServer.prefix,
-      true
-    );
     settingsEmbed.addField("Thanks Listener", config.thanks || "off", true);
     settingsEmbed.addField("Levels Listener", config.levels || "off", true);
     settingsEmbed.addField(

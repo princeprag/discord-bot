@@ -80,7 +80,6 @@ export const setSetting = async (
         server.markModified(key);
         break;
       case "custom_welcome":
-      case "prefix":
       case "levels":
       case "thanks":
       case "link_message":
@@ -100,10 +99,6 @@ export const setSetting = async (
     }
 
     await server.save();
-
-    if (key === "prefix") {
-      Becca.prefixData[serverID] = value;
-    }
     return server;
   } catch (err) {
     await beccaErrorHandler(Becca, "set setting module", err, serverName);

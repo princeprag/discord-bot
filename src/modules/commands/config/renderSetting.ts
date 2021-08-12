@@ -13,7 +13,6 @@ export const renderSetting = (
       return "No value set.";
     }
     switch (key) {
-      case "prefix":
       case "thanks":
       case "levels":
       case "custom_welcome":

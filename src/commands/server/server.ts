@@ -45,11 +45,6 @@ export const server: CommandInt = {
         true
       );
       serverEmbed.addField("Owner", guildOwner.toString(), true);
-      serverEmbed.addField(
-        "Spell Prefix",
-        Becca.prefixData[guild.id] || "becca!",
-        true
-      );
       serverEmbed.addField("Members", guild.memberCount.toString(), true);
       serverEmbed.addField(
         "Living Members",

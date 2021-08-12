@@ -24,10 +24,6 @@ export const resetSetting = async (
     server.set(key, defaultServer[key]);
     server.markModified(key);
     await server.save();
-
-    if (key === "prefix") {
-      Becca.prefixData[serverID] = defaultServer.prefix;
-    }
     return server;
   } catch (err) {
     beccaErrorHandler(Becca, "reset setting module", err, serverName);

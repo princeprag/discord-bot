@@ -81,7 +81,6 @@ export const validateSetting = async (
           !!(await guild.roles.fetch(role.replace(/\D/g, "") as `${bigint}`))
         );
       case "allowed_links":
-      case "prefix":
       case "custom_welcome":
       case "link_message":
       case "leave_message":
