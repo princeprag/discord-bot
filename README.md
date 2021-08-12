@@ -4,12 +4,6 @@ Welcome to the repository for `Becca Lyria`!
 
 [You can invite Becca to your own server!](http://invite.beccalyria.com) Already have her there? [Read the documentation](https://www.beccalyria.com/discord-documentation) to get her set up!
 
-![](https://img.shields.io/codeclimate/maintainability/BeccaLyria/discord-bot)
-![](https://img.shields.io/codeclimate/issues/BeccaLyria/discord-bot)
-![](https://img.shields.io/codeclimate/tech-debt/BeccaLyria/discord-bot)
-![](https://img.shields.io/lgtm/alerts/github/BeccaLyria/discord-bot)
-![](https://img.shields.io/lgtm/grade/javascript/github/BeccaLyria/discord-bot)
-
 ## Join Our Team!
 
 Are you interested in contributing to Becca's development? We welcome all who want to assist! If you would like to contribute, you are welcome to fork the repository and make your changes. Submit a pull request when you are ready for us to review your changes. You can also submit issues for various purposes. For more information, please review our [contributing guidelines](./CONTRIBUTING.md).
@@ -32,7 +26,7 @@ Copyright (C) 2020-2021 Nicholas Carrigan
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 
 The full license terms may be viewed in the [LICENSE.md file](./LICENSE.md)
 
