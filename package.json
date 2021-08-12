@@ -28,10 +28,13 @@
     "test": "echo 'No tests yet. Would you like to contribute some?'"
   },
   "dependencies": {
+    "@discordjs/builders": "^0.5.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
     "@sentry/integrations": "^6.11.0",
     "@sentry/node": "^6.11.0",
     "@sentry/tracing": "^6.11.0",
     "axios": "^0.21.1",
+    "discord-api-types": "^0.22.0",
     "discord.js": "^13.0.1",
     "express": "^4.17.1",
     "mongoose": "^5.13.5",

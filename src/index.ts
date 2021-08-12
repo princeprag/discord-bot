@@ -12,6 +12,8 @@ import { loadCommands } from "./commands/loadCommands";
 import { cachePrefixes } from "./modules/settings/cachePrefixes";
 import { createServer } from "./server/serve";
 import { IntentOptions } from "./config/IntentOptions";
+import { loadSlash } from "./slash/loadSlash";
+import { registerSlash } from "./slash/registerSlash";
 
 /**
  * This block initialises the Sentry plugin.
@@ -84,6 +86,29 @@ const initialiseBecca = async () => {
   spinnies.succeed("load-commands", {
     text: `${Becca.commands.length} commands loaded!`,
   });
+
+  spinnies.add("load-slash", {
+    color: "magenta",
+    text: "Importing slash commands",
+  });
+
+  const slash = await loadSlash(Becca);
+  Becca.slash = slash;
+  if (!slash.length) {
+    spinnies.fail("load-slash", { text: "Error loading slash commands." });
+    return;
+  }
+
+  spinnies.update("load-slash", { text: "Registering slash commands" });
+
+  const registered = await registerSlash(Becca);
+
+  if (!registered) {
+    spinnies.fail("load-slash", { text: "Failed to register slash commands" });
+    return;
+  }
+
+  spinnies.succeed("load-slash", { text: "Slash commands registered!" });
 
   spinnies.add("connect-db", {
     color: "magenta",
