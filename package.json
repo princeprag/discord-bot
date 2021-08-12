@@ -38,7 +38,6 @@
     "discord.js": "^13.0.1",
     "express": "^4.17.1",
     "mongoose": "^5.13.5",
-    "spinnies": "^0.5.1",
     "winston": "^3.3.3"
   },
   "devDependencies": {
