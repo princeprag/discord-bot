@@ -1,4 +1,4 @@
-import { Message, MessageEmbed } from "discord.js";
+import { Guild, MessageEmbed } from "discord.js";
 import { defaultServer } from "../../../config/database/defaultServer";
 import { ServerModelInt } from "../../../database/models/ServerModel";
 import { BeccaInt } from "../../../interfaces/BeccaInt";
@@ -15,15 +15,10 @@ import { renderSetting } from "./renderSetting";
  */
 export const viewSettings = async (
   Becca: BeccaInt,
-  message: Message,
+  guild: Guild,
   config: ServerModelInt
-): Promise<MessageEmbed | string> => {
+): Promise<MessageEmbed | null> => {
   try {
-    const { guild } = message;
-    if (!guild) {
-      return "";
-    }
-
     const settingsEmbed = new MessageEmbed();
     settingsEmbed.setTitle(`${guild.name} Settings`);
     settingsEmbed.setColor(Becca.colours.default);
@@ -117,13 +112,7 @@ export const viewSettings = async (
     );
     return settingsEmbed;
   } catch (err) {
-    beccaErrorHandler(
-      Becca,
-      "view settings module",
-      err,
-      message.guild?.name,
-      message
-    );
-    return "";
+    beccaErrorHandler(Becca, "view settings module", err, guild.name);
+    return null;
   }
 };
