@@ -15,6 +15,7 @@ import { threadCreate } from "./threadEvents/threadCreate";
 import { threadUpdate } from "./threadEvents/threadUpdate";
 import { threadDelete } from "./threadEvents/threadDelete";
 import { memberUpdate } from "./memberEvents/memberUpdate";
+import { interactionCreate } from "./interactionEvents/interactionCreate";
 
 /**
  * Root level function for loading all of the event listeners.
@@ -89,5 +90,9 @@ export const handleEvents = async (Becca: BeccaInt): Promise<void> => {
   });
   Becca.on("threadDelete", async (thread) => {
     await threadDelete(Becca, thread);
+  });
+
+  Becca.on("interactionCreate", async (interaction) => {
+    await interactionCreate(Becca, interaction);
   });
 };

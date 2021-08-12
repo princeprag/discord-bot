@@ -38,6 +38,14 @@ export const validateEnv = (
       return { valid: false, message: "Missing Discord ID for owner account" };
     }
 
+    if (!process.env.CLIENT_ID) {
+      return { valid: false, message: "Missing Bot's Client ID" };
+    }
+
+    if (!process.env.HOME_GUILD_ID) {
+      return { valid: false, message: "Missing Bot's Home Guild ID" };
+    }
+
     const configs = {
       token: process.env.DISCORD_TOKEN,
       dbToken: process.env.MONGODB,
@@ -51,6 +59,8 @@ export const validateEnv = (
       no: process.env.BECCA_NO || "❌",
       think: process.env.BECCA_THINK || "🤔",
       version: process.env.npm_package_version || "null",
+      id: process.env.CLIENT_ID,
+      homeGuild: process.env.HOME_GUILD_ID,
     };
 
     Becca.configs = configs;

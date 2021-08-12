@@ -1,8 +1,8 @@
 import { Guild, MessageEmbed } from "discord.js";
-import LevelModel from "../../database/models/LevelModel";
-import ServerModel from "../../database/models/ServerModel";
-import StarModel from "../../database/models/StarModel";
-import WarningModel from "../../database/models/WarningModel";
+//import LevelModel from "../../database/models/LevelModel";
+//import ServerModel from "../../database/models/ServerModel";
+//import StarModel from "../../database/models/StarModel";
+//import WarningModel from "../../database/models/WarningModel";
 import { BeccaInt } from "../../interfaces/BeccaInt";
 
 /**
@@ -43,8 +43,12 @@ export const guildDelete = async (
   /**
    * Clean up the server data.
    */
+
+  /**
+   * TODO: Turn back on later. These are temporarily disabled to allow folks to reinvite the bot with correct scopes.
   await ServerModel.findOneAndDelete({ serverID: guild.id });
   await LevelModel.findOneAndDelete({ serverID: guild.id });
   await StarModel.findOneAndDelete({ serverID: guild.id });
   await WarningModel.findOneAndDelete({ serverID: guild.id });
+  **/
 };
