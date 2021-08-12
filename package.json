@@ -2,7 +2,7 @@
   "name": "becca_lyria",
   "author": "Nicholas Carrigan",
   "main": "./prod/src/main.js",
-  "version": "15.9.0",
+  "version": "15.9.1",
   "license": "AGPL-3.0-or-later",
   "private": false,
   "engines": {
@@ -38,7 +38,6 @@
     "discord.js": "^13.0.1",
     "express": "^4.17.1",
     "mongoose": "^5.13.5",
-    "spinnies": "^0.5.1",
     "winston": "^3.3.3"
   },
   "devDependencies": {

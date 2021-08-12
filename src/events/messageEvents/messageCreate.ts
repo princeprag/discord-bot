@@ -43,7 +43,7 @@ export const messageCreate = async (
     await thanksListener.run(Becca, message, serverConfig);
     await linksListener.run(Becca, message, serverConfig);
 
-    const prefix = Becca.prefixData[guild.id] || "becca!";
+    const prefix = "becca!";
 
     if (!content.startsWith(prefix)) {
       await levelListener.run(Becca, message, serverConfig);

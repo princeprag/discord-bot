@@ -16,9 +16,7 @@ export const beccaMentionListener: ListenerInt = {
       await channel.sendTyping();
       await sleep(3000);
       await channel.send(
-        `What can I do for you? Cast \`${
-          Becca.prefixData[guild.id]
-        }help\` to see my spells.`
+        "What can I do for you? Cast `becca!help` to see my spells!"
       );
     } catch (err) {
       beccaErrorHandler(

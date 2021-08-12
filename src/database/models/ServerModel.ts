@@ -4,7 +4,6 @@ import { LevelRoleInt } from "../../interfaces/settings/LevelRoleInt";
 export interface ServerModelInt extends Document {
   serverID: string;
   serverName: string;
-  prefix: string;
   thanks: string;
   levels: string;
   welcome_channel: string;
@@ -29,7 +28,6 @@ export interface ServerModelInt extends Document {
 export const Server = new Schema({
   serverID: String,
   serverName: String,
-  prefix: String,
   thanks: String,
   levels: String,
   welcome_channel: String,

@@ -1,5 +1,6 @@
 import { MessageEmbed } from "discord.js";
 import { BeccaInt } from "../../interfaces/BeccaInt";
+import { beccaLogHandler } from "../../utils/beccaLogHandler";
 
 /**
  * Sends a notification to the debug hook when Becca has connected to
@@ -17,4 +18,5 @@ export const ready = async (Becca: BeccaInt): Promise<void> => {
   readyEmbed.setFooter(`Version ${Becca.configs.version}`);
 
   await Becca.debugHook.send({ embeds: [readyEmbed] });
+  beccaLogHandler.log("debug", "Discord ready!");
 };

@@ -5,7 +5,6 @@ import { LevelRoleInt } from "../../interfaces/settings/LevelRoleInt";
  * for the reset command as well as instantiating new server settings.
  */
 export const defaultServer = {
-  prefix: "becca!",
   thanks: "off",
   levels: "off",
   welcome_channel: "",

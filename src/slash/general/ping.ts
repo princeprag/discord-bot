@@ -10,6 +10,7 @@ export const ping: SlashInt = {
     .setDescription("Returns the uptime of the bot."),
   async run(Becca, interaction) {
     try {
+      await interaction.deferReply();
       const { createdTimestamp } = interaction;
 
       const delay = Date.now() - createdTimestamp;
@@ -25,7 +26,7 @@ export const ping: SlashInt = {
       pingEmbed.setDescription(`Response time: ${delay}ms`);
       pingEmbed.setColor(isSlow ? Becca.colours.error : Becca.colours.success);
 
-      await interaction.reply({ embeds: [pingEmbed] });
+      await interaction.editReply({ embeds: [pingEmbed] });
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
@@ -33,10 +34,16 @@ export const ping: SlashInt = {
         err,
         interaction.guild?.name
       );
-      await interaction.reply({
-        embeds: [errorEmbedGenerator(Becca, "ping", errorId)],
-        ephemeral: true,
-      });
+      await interaction
+        .reply({
+          embeds: [errorEmbedGenerator(Becca, "ping", errorId)],
+          ephemeral: true,
+        })
+        .catch(async () =>
+          interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "ping", errorId)],
+          })
+        );
     }
   },
 };

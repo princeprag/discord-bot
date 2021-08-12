@@ -1,7 +1,6 @@
 import * as Sentry from "@sentry/node";
 import { RewriteFrames } from "@sentry/integrations";
 import { beccaLogHandler } from "./utils/beccaLogHandler";
-import Spinnies from "spinnies";
 import { Client, WebhookClient } from "discord.js";
 import { BeccaInt } from "./interfaces/BeccaInt";
 import { validateEnv } from "./modules/validateEnv";
@@ -9,7 +8,6 @@ import { connectDatabase } from "./database/connectDatabase";
 import { beccaErrorHandler } from "./utils/beccaErrorHandler";
 import { handleEvents } from "./events/handleEvents";
 import { loadCommands } from "./commands/loadCommands";
-import { cachePrefixes } from "./modules/settings/cachePrefixes";
 import { createServer } from "./server/serve";
 import { IntentOptions } from "./config/IntentOptions";
 import { loadSlash } from "./slash/loadSlash";
@@ -35,7 +33,6 @@ Sentry.init({
  * @property fail(name, {text}) Set a spinner to fail state
  * @property succeed(name, {text}) Set a spinner to success state
  */
-const spinnies = new Spinnies();
 
 /**
  * Function to initialise the bot application.
@@ -48,119 +45,61 @@ const initialiseBecca = async () => {
     intents: IntentOptions,
   }) as BeccaInt;
 
-  spinnies.add("validate-env", {
-    color: "magenta",
-    text: "Validating Environment Variables",
-  });
+  beccaLogHandler.log("debug", "Validating environment variables...");
   const validatedEnvironment = validateEnv(Becca);
   if (!validatedEnvironment.valid) {
-    spinnies.fail("validate-env", {
-      text: validatedEnvironment.message,
-    });
+    beccaLogHandler.log("error", validatedEnvironment.message);
     return;
   }
-  spinnies.succeed("validate-env", {
-    text: validatedEnvironment.message,
-  });
 
   Becca.debugHook = new WebhookClient({ url: Becca.configs.whUrl });
 
-  spinnies.add("server", { color: "magenta", text: "Initialising server" });
+  beccaLogHandler.log("debug", "Initialising web server...");
   const server = await createServer(Becca);
   if (!server) {
-    spinnies.fail("server", { text: "Failed to boot the server." });
+    beccaLogHandler.log("error", "failed to launch web server.");
     return;
   }
-  spinnies.succeed("server", { text: "Server initialised." });
 
-  spinnies.add("load-commands", {
-    color: "magenta",
-    text: "Importing Commands",
-  });
+  beccaLogHandler.log("debug", "Importing commands...");
   const commands = await loadCommands(Becca);
   Becca.commands = commands;
   if (!commands.length) {
-    spinnies.fail("load-commands", { text: "Error loading commands." });
+    beccaLogHandler.log("error", "failed to import commands.");
     return;
   }
-  spinnies.succeed("load-commands", {
-    text: `${Becca.commands.length} commands loaded!`,
-  });
 
-  spinnies.add("load-slash", {
-    color: "magenta",
-    text: "Importing slash commands",
-  });
-
+  beccaLogHandler.log("debug", "importing slash commands...");
   const slash = await loadSlash(Becca);
   Becca.slash = slash;
   if (!slash.length) {
-    spinnies.fail("load-slash", { text: "Error loading slash commands." });
+    beccaLogHandler.log("error", "failed to import slash commands.");
     return;
   }
 
-  spinnies.update("load-slash", { text: "Registering slash commands" });
-
+  beccaLogHandler.log("debug", "registering slash commands...");
   const registered = await registerSlash(Becca);
 
   if (!registered) {
-    spinnies.fail("load-slash", { text: "Failed to register slash commands" });
+    beccaLogHandler.log("error", "failed to register slash commands.");
     return;
   }
 
-  spinnies.succeed("load-slash", { text: "Slash commands registered!" });
-
-  spinnies.add("connect-db", {
-    color: "magenta",
-    text: "Loading Database",
-  });
+  beccaLogHandler.log("debug", "Initialising database...");
   const databaseConnection = await connectDatabase(Becca);
   if (!databaseConnection) {
-    spinnies.fail("connect-db", {
-      text: "The database connection has failed.",
-    });
+    beccaLogHandler.log("error", "failed to connect to database.");
     return;
   }
-  spinnies.succeed("connect-db", {
-    text: "Database loaded!",
-  });
 
-  spinnies.add("fetch-prefix", {
-    color: "magenta",
-    text: "Fetching prefix data",
-  });
-  const prefixes = await cachePrefixes(Becca);
-  if (!Object.keys(prefixes).length) {
-    spinnies.fail("fetch-prefix", { text: "No prefix data found." });
-  } else {
-    spinnies.succeed("fetch-prefix", {
-      text: `Loaded prefix data for ${Object.keys(prefixes).length} servers.`,
-    });
-  }
-  Becca.prefixData = prefixes;
-
-  spinnies.add("events", {
-    color: "magenta",
-    text: "Attaching event listeners",
-  });
+  beccaLogHandler.log("debug", "Attaching event listeners...");
   await handleEvents(Becca);
-  spinnies.succeed("events", {
-    text: "Event listeners loaded!",
-  });
 
-  spinnies.add("discord", {
-    color: "magenta",
-    text: "Connecting to Discord",
-  });
+  beccaLogHandler.log("debug", "Connecting to Discord...");
   await Becca.login(Becca.configs.token);
-  spinnies.update("discord", {
-    text: "Setting activity",
-  });
-  await Becca.user?.setActivity("for people who need my help~!", {
+  beccaLogHandler.log("debug", "Setting activity...");
+  Becca.user?.setActivity("for people who need my `/help`~!", {
     type: "WATCHING",
-  });
-  spinnies.succeed("discord", {
-    text: "Discord ready!",
   });
 
   /**

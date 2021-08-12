@@ -11,7 +11,6 @@ import { SlashInt } from "./slash/SlashInt";
  * @property colours Colour mappings to use in embeds.
  */
 export interface BeccaInt extends Client {
-  prefixData: Record<string, string>;
   debugHook: WebhookClient;
   configs: {
     token: string;
