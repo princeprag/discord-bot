@@ -4,6 +4,7 @@ import {
 } from "@discordjs/builders";
 import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
+import { handleAbout } from "../../modules/slash/becca/handleAbout";
 import { handleHelp } from "../../modules/slash/becca/handleHelp";
 import { handlePing } from "../../modules/slash/becca/handlePing";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
@@ -21,6 +22,11 @@ export const becca: SlashInt = {
       new SlashCommandSubcommandBuilder()
         .setName("help")
         .setDescription("Shows information on how to use the bot.")
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("about")
+        .setDescription("Shows information about Becca.")
     ),
   async run(Becca, interaction) {
     try {
@@ -34,7 +40,14 @@ export const becca: SlashInt = {
         case "help":
           await handleHelp(Becca, interaction);
           break;
+        case "about":
+          await handleAbout(Becca, interaction);
+          break;
         default:
+          await interaction.editReply({
+            content:
+              "That is strange, but this command does not appear to do anything.",
+          });
           break;
       }
     } catch (err) {

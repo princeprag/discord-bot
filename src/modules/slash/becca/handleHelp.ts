@@ -33,18 +33,18 @@ export const handleHelp = async (
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,
-      "ping command",
+      "help command",
       err,
       interaction.guild?.name
     );
     await interaction
       .reply({
-        embeds: [errorEmbedGenerator(Becca, "ping", errorId)],
+        embeds: [errorEmbedGenerator(Becca, "help", errorId)],
         ephemeral: true,
       })
       .catch(async () =>
         interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "ping", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "help", errorId)],
         })
       );
   }

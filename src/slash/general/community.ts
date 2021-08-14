@@ -60,6 +60,10 @@ export const community: SlashInt = {
           await handleRole(Becca, interaction, config);
           break;
         default:
+          await interaction.editReply({
+            content:
+              "That is strange, but this command does not appear to do anything.",
+          });
           break;
       }
     } catch (err) {
