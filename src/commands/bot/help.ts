@@ -18,9 +18,6 @@ export const help: CommandInt = {
         return { success: false, content: "Unknown guild error." };
       }
 
-      const botCommands = Becca.commands
-        .filter((cmd) => cmd.category === "bot" && !cmd.isMigrated)
-        .map((cmd) => "`" + cmd.name + "`");
       const gameCommands = Becca.commands
         .filter((cmd) => cmd.category === "game" && !cmd.isMigrated)
         .map((cmd) => "`" + cmd.name + "`");
@@ -40,7 +37,6 @@ export const help: CommandInt = {
         "These are the spells I am still migrating to slash commands. For the time being, you can use these with `becca!` like you did this command."
       );
       helpEmbed.setColor(Becca.colours.default);
-      helpEmbed.addField("Bot Spells", botCommands.join(", "));
       helpEmbed.addField("Game Spells", gameCommands.join(", "));
       helpEmbed.addField("General Spells", generalCommands.join(", "));
       helpEmbed.addField("Moderation Spells", modCommands.join(", "));
