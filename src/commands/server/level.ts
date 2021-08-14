@@ -8,6 +8,7 @@ export const level: CommandInt = {
   description: "Get's the user's current level.",
   parameters: [],
   category: "server",
+  isMigrated: true,
   run: async (Becca, message) => {
     try {
       return {

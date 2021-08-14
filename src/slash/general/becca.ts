@@ -4,6 +4,7 @@ import {
 } from "@discordjs/builders";
 import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
+import { handleHelp } from "../../modules/slash/becca/handleHelp";
 import { handlePing } from "../../modules/slash/becca/handlePing";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
@@ -15,6 +16,11 @@ export const becca: SlashInt = {
       new SlashCommandSubcommandBuilder()
         .setName("ping")
         .setDescription("Returns the ping of the bot")
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("help")
+        .setDescription("Shows information on how to use the bot.")
     ),
   async run(Becca, interaction) {
     try {
@@ -24,6 +30,9 @@ export const becca: SlashInt = {
       switch (subCommand) {
         case "ping":
           await handlePing(Becca, interaction);
+          break;
+        case "help":
+          await handleHelp(Becca, interaction);
           break;
         default:
           break;

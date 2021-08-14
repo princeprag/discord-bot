@@ -8,6 +8,7 @@ export const leaderboard: CommandInt = {
   description: "Shows the leaderboard",
   parameters: [],
   category: "server",
+  isMigrated: true,
   run: async (Becca, message) => {
     try {
       return {

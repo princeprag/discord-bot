@@ -10,6 +10,7 @@ export const role: CommandInt = {
     "`role`: the name or ID of the role to assign. Leave blank to get a list of roles",
   ],
   category: "server",
+  isMigrated: true,
   run: async (Becca, message) => {
     try {
       return {
