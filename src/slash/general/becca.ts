@@ -5,6 +5,7 @@ import {
 import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { handleAbout } from "../../modules/slash/becca/handleAbout";
+import { handleArt } from "../../modules/slash/becca/handleArt";
 import { handleHelp } from "../../modules/slash/becca/handleHelp";
 import { handleInvite } from "../../modules/slash/becca/handleInvite";
 import { handlePing } from "../../modules/slash/becca/handlePing";
@@ -33,6 +34,11 @@ export const becca: SlashInt = {
       new SlashCommandSubcommandBuilder()
         .setName("invite")
         .setDescription("Provides a link to invite Becca to your server.")
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("art")
+        .setDescription("Returns an art of Becca!")
     ),
   async run(Becca, interaction, config) {
     try {
@@ -51,6 +57,9 @@ export const becca: SlashInt = {
           break;
         case "invite":
           await handleInvite(Becca, interaction, config);
+          break;
+        case "art":
+          await handleArt(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
