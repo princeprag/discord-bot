@@ -8,6 +8,7 @@ export const about: CommandInt = {
   description: "Returns details about Becca the bot (not Becca the person)",
   category: "bot",
   parameters: [],
+  isMigrated: true,
   run: async (Becca, message) => {
     try {
       return { success: true, content: migrationEmbedGenerator("becca about") };
