@@ -26,6 +26,10 @@ export const handleHelp = async (
       "Should you be feeling extra ambitious, you can also dive in to my [spellbook](https://github.com/BeccaLyria/discord-bot) and look at my abilities yourself."
     );
     helpEmbed.addField(
+      "Bug Report",
+      "Have I failed you in some way? You can [report an issue](https://github.com/BeccaLyria/discord-bot/issues/choose), or let us know in the support server."
+    );
+    helpEmbed.addField(
       "Migration",
       "A temporary note: We are in the process of migrating to slash commands. As we proceed, additional commands will become available. For the other commands, you can use `becca!help` to see what is available."
     );
