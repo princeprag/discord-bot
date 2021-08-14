@@ -247,7 +247,7 @@ export const config: SlashInt = {
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
-        "ping command",
+        "config command",
         err,
         interaction.guild?.name
       );
@@ -264,14 +264,3 @@ export const config: SlashInt = {
     }
   },
 };
-
-/**
-          case "hearts":
-          case "self_roles":
-          case "blocked":
-          case "anti_links":
-          case "permit_links":
-          case "link_roles":
-          case "allowed_links":
-          case "level_roles":
-*/

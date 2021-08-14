@@ -14,7 +14,7 @@ export const config: CommandInt = {
   category: "server",
   run: async (Becca, message) => {
     try {
-      return { success: false, content: migrationEmbedGenerator() };
+      return { success: false, content: migrationEmbedGenerator("config") };
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,

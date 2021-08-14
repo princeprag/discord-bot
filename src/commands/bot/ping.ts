@@ -10,7 +10,7 @@ export const ping: CommandInt = {
   category: "bot",
   run: async (Becca, message) => {
     try {
-      return { success: false, content: migrationEmbedGenerator() };
+      return { success: false, content: migrationEmbedGenerator("becca ping") };
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,

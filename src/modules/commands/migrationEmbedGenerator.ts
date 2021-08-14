@@ -1,10 +1,14 @@
 import { MessageEmbed } from "discord.js";
 
-export const migrationEmbedGenerator = (): MessageEmbed => {
+export const migrationEmbedGenerator = (commandCall: string): MessageEmbed => {
   const embed = new MessageEmbed();
   embed.setTitle("Command Migrated!");
   embed.setDescription(
     "This command has been migrated to use the new slash command interface. Try typing `/` to see the available commands!"
+  );
+  embed.addField(
+    "New Command",
+    `You can now find this command under \`/${commandCall}\``
   );
   embed.addField(
     "Migration Details",
