@@ -14,7 +14,7 @@ export const handleRole = async (
 
     if (!guild || !member) {
       await interaction.editReply({
-        content: "I cannot seem to find your guild record.",
+        content: Becca.responses.missing_guild,
       });
       return;
     }

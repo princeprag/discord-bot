@@ -45,8 +45,7 @@ export const becca: SlashInt = {
           break;
         default:
           await interaction.editReply({
-            content:
-              "That is strange, but this command does not appear to do anything.",
+            content: Becca.responses.invalid_command,
           });
           break;
       }

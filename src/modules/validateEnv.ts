@@ -1,8 +1,8 @@
-import { BeccaInt } from "../interfaces/BeccaInt";
+import { BeccaInt, ResponsesInt } from "../interfaces/BeccaInt";
 
 /**
  * Function to validate that all environment variables are present. Loads those
- * environment variables into Becca's Client instance. Also loads the colours.
+ * environment variables into Becca's Client instance. Also loads the colours and responses.
  * @param Becca Becca's Client object
  * @returns Object containing a valid property as boolean, and a message as string.
  */
@@ -73,6 +73,16 @@ export const validateEnv = (
     };
 
     Becca.colours = colours;
+
+    const phrases: ResponsesInt = {
+      missing_guild: "It seems I cannot locate your guild record.",
+      invalid_command:
+        "I am not sure how this happened, but that spell does not appear to be valid.",
+      no_permission: "You do not have the correct skills to use this spell.",
+      owner_only: "Only my owner can ask me to do this.",
+    };
+
+    Becca.responses = phrases;
 
     return { valid: true, message: "Environment variables validated!" };
   } catch (err) {
