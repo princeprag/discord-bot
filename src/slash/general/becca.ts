@@ -34,23 +34,23 @@ export const becca: SlashInt = {
         .setName("invite")
         .setDescription("Provides a link to invite Becca to your server.")
     ),
-  async run(Becca, interaction) {
+  async run(Becca, interaction, config) {
     try {
       await interaction.deferReply();
 
       const subCommand = interaction.options.getSubcommand();
       switch (subCommand) {
         case "ping":
-          await handlePing(Becca, interaction);
+          await handlePing(Becca, interaction, config);
           break;
         case "help":
-          await handleHelp(Becca, interaction);
+          await handleHelp(Becca, interaction, config);
           break;
         case "about":
-          await handleAbout(Becca, interaction);
+          await handleAbout(Becca, interaction, config);
           break;
         case "invite":
-          await handleInvite(Becca, interaction);
+          await handleInvite(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({

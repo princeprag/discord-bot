@@ -51,10 +51,10 @@ export const community: SlashInt = {
 
       switch (subcommand) {
         case "leaderboard":
-          await handleLeaderboard(Becca, interaction);
+          await handleLeaderboard(Becca, interaction, config);
           break;
         case "level":
-          await handleLevel(Becca, interaction);
+          await handleLevel(Becca, interaction, config);
           break;
         case "role":
           await handleRole(Becca, interaction, config);

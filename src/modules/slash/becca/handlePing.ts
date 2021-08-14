@@ -1,11 +1,11 @@
-import { CommandInteraction, MessageEmbed } from "discord.js";
-import { BeccaInt } from "../../../interfaces/BeccaInt";
+import { MessageEmbed } from "discord.js";
+import { SlashHandlerType } from "../../../interfaces/slash/SlashHandlerType";
 import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../commands/errorEmbedGenerator";
 
-export const handlePing = async (
-  Becca: BeccaInt,
-  interaction: CommandInteraction
+export const handlePing: SlashHandlerType = async (
+  Becca,
+  interaction
 ): Promise<void> => {
   try {
     const { createdTimestamp } = interaction;

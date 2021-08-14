@@ -1,13 +1,13 @@
-import { CommandInteraction, GuildMember, MessageEmbed } from "discord.js";
+import { GuildMember, MessageEmbed } from "discord.js";
 import LevelModel from "../../../database/models/LevelModel";
-import { BeccaInt } from "../../../interfaces/BeccaInt";
+import { SlashHandlerType } from "../../../interfaces/slash/SlashHandlerType";
 import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../commands/errorEmbedGenerator";
 
-export const handleLeaderboard = async (
-  Becca: BeccaInt,
-  interaction: CommandInteraction
-): Promise<void> => {
+export const handleLeaderboard: SlashHandlerType = async (
+  Becca,
+  interaction
+) => {
   try {
     const { guildId, guild, member, user } = interaction;
 

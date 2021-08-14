@@ -1,13 +1,12 @@
-import { CommandInteraction, MessageEmbed, Role } from "discord.js";
-import { ServerModelInt } from "../../../database/models/ServerModel";
-import { BeccaInt } from "../../../interfaces/BeccaInt";
+import { MessageEmbed, Role } from "discord.js";
+import { SlashHandlerType } from "../../../interfaces/slash/SlashHandlerType";
 import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../commands/errorEmbedGenerator";
 
-export const handleRole = async (
-  Becca: BeccaInt,
-  interaction: CommandInteraction,
-  config: ServerModelInt
+export const handleRole: SlashHandlerType = async (
+  Becca,
+  interaction,
+  config
 ): Promise<void> => {
   try {
     const { guild, member } = interaction;
