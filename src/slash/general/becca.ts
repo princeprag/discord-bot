@@ -10,6 +10,7 @@ import { handleDonate } from "../../modules/slash/becca/handleDonate";
 import { handleHelp } from "../../modules/slash/becca/handleHelp";
 import { handleInvite } from "../../modules/slash/becca/handleInvite";
 import { handlePing } from "../../modules/slash/becca/handlePing";
+import { handleUptime } from "../../modules/slash/becca/handleUptime";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const becca: SlashInt = {
@@ -47,6 +48,11 @@ export const becca: SlashInt = {
         .setDescription(
           "Gives instructions on how to support Becca's development financially."
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("uptime")
+        .setDescription("Shows how long Becca has been online.")
     ),
   async run(Becca, interaction, config) {
     try {
@@ -71,6 +77,9 @@ export const becca: SlashInt = {
           break;
         case "donate":
           await handleDonate(Becca, interaction, config);
+          break;
+        case "uptime":
+          await handleUptime(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
