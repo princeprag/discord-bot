@@ -5,6 +5,7 @@ import {
 import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { handleWarn } from "../../modules/slash/moderation/handleWarn";
+import { handleWarnCount } from "../../modules/slash/moderation/handleWarnCount";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const mod: SlashInt = {
@@ -26,6 +27,17 @@ export const mod: SlashInt = {
             .setName("reason")
             .setDescription("The reason for issuing this warning.")
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("warncount")
+        .setDescription("See the number of warnings a user has received.")
+        .addUserOption((option) =>
+          option
+            .setName("target")
+            .setDescription("The user whose warnings you want to see.")
+            .setRequired(true)
+        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -35,6 +47,9 @@ export const mod: SlashInt = {
       switch (subcommand) {
         case "warn":
           await handleWarn(Becca, interaction, config);
+          break;
+        case "warncount":
+          await handleWarnCount(Becca, interaction, config);
           break;
         default:
           await interaction.editReply(Becca.responses.invalid_command);
