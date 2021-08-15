@@ -1,21 +1,14 @@
 import { MessageEmbed } from "discord.js";
 import { ServerModelInt } from "../../../database/models/ServerModel";
 import { BeccaInt } from "../../../interfaces/BeccaInt";
+import { ArraySettingsType } from "../../../interfaces/settings/ArraySettingsType";
 import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 import { renderSetting } from "./renderSetting";
 
 export const viewSettingsArray = async (
   Becca: BeccaInt,
   config: ServerModelInt,
-  setting:
-    | "hearts"
-    | "blocked"
-    | "self_roles"
-    | "anti_links"
-    | "permit_links"
-    | "link_roles"
-    | "allowed_links"
-    | "level_roles",
+  setting: ArraySettingsType,
   page: number
 ): Promise<MessageEmbed | null> => {
   try {
@@ -28,6 +21,7 @@ export const viewSettingsArray = async (
 
     if (!data || !data.length) {
       settingEmbed.setDescription("No data found.");
+      settingEmbed.setFooter("Page 1 of 1");
       return settingEmbed;
     }
 

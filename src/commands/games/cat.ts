@@ -6,19 +6,13 @@ export const cat: CommandInt = {
   name: "cat",
   description: "A cat walked across the keyboard",
   category: "game",
+  isMigrated: true,
   parameters: [],
   run: async (Becca, message) => {
     try {
-      const length = Math.floor(Math.random() * 100);
-      let str = "";
-
-      for (let i = 0; i < length; i++) {
-        const character = Math.floor(Math.random() * 26 + 64);
-        str += String.fromCharCode(character);
-      }
       return {
-        success: true,
-        content: `${str}\nMy familiar wanted to send you a message.`,
+        success: false,
+        content: `This command has been deprecated in the slash migration.`,
       };
     } catch (err) {
       const errorId = await beccaErrorHandler(
