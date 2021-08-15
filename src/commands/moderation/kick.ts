@@ -12,6 +12,7 @@ export const kick: CommandInt = {
     "`?reason`: reason for kicking the user.",
   ],
   category: "mod",
+  isMigrated: true,
   run: async (Becca, message) => {
     try {
       return { success: false, content: migrationEmbedGenerator("mod kick") };

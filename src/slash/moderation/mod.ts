@@ -4,6 +4,7 @@ import {
 } from "@discordjs/builders";
 import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
+import { handleBan } from "../../modules/slash/moderation/handleBan";
 import { handleKick } from "../../modules/slash/moderation/handleKick";
 import { handleMute } from "../../modules/slash/moderation/handleMute";
 import { handleUnmute } from "../../modules/slash/moderation/handleUnmute";
@@ -29,6 +30,7 @@ export const mod: SlashInt = {
           option
             .setName("reason")
             .setDescription("The reason for issuing this warning.")
+            .setRequired(true)
         )
     )
     .addSubcommand(
@@ -56,6 +58,7 @@ export const mod: SlashInt = {
           option
             .setName("reason")
             .setDescription("The reason for muting the user.")
+            .setRequired(true)
         )
     )
     .addSubcommand(
@@ -72,6 +75,7 @@ export const mod: SlashInt = {
           option
             .setName("reason")
             .setDescription("The reason for unmuting the user.")
+            .setRequired(true)
         )
     )
     .addSubcommand(
@@ -88,6 +92,24 @@ export const mod: SlashInt = {
           option
             .setName("reason")
             .setDescription("The reason for kicking the user.")
+            .setRequired(true)
+        )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("ban")
+        .setDescription("Bans a user from the server.")
+        .addUserOption((option) =>
+          option
+            .setName("target")
+            .setDescription("The user to kick.")
+            .setRequired(true)
+        )
+        .addStringOption((option) =>
+          option
+            .setName("reason")
+            .setDescription("The reason for kicking the user.")
+            .setRequired(true)
         )
     ),
   run: async (Becca, interaction, config) => {
@@ -110,6 +132,9 @@ export const mod: SlashInt = {
           break;
         case "kick":
           await handleKick(Becca, interaction, config);
+          break;
+        case "ban":
+          await handleBan(Becca, interaction, config);
           break;
         default:
           await interaction.editReply(Becca.responses.invalid_command);
