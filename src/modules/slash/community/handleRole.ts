@@ -1,6 +1,13 @@
-import { MessageEmbed, Role } from "discord.js";
+import {
+  Message,
+  MessageActionRow,
+  MessageButton,
+  MessageEmbed,
+  Role,
+} from "discord.js";
 import { SlashHandlerType } from "../../../interfaces/slash/SlashHandlerType";
 import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
+import { sleep } from "../../../utils/sleep";
 import { errorEmbedGenerator } from "../../commands/errorEmbedGenerator";
 
 export const handleRole: SlashHandlerType = async (
@@ -21,14 +28,92 @@ export const handleRole: SlashHandlerType = async (
     const targetRole = interaction.options.getRole("role");
 
     if (!targetRole) {
-      const roleList = new MessageEmbed();
-      roleList.setColor(Becca.colours.default);
-      roleList.setTitle("Available Charms");
-      roleList.setDescription(
-        "These are the charms I can enchant you with: \n" +
-          config.self_roles.map((el) => `<@&${el}>`).join("\n")
+      if (!config.self_roles.length) {
+        await interaction.editReply({
+          content: "Your guild does not have any self-assignable titles.",
+        });
+        return;
+      }
+      let page = 1;
+      const roleList = config.self_roles.map((role) => `<@&${role}>`);
+      const lastPage = Math.ceil(roleList.length / 10);
+
+      const embed = new MessageEmbed();
+      embed.setTitle("Here are the titles I can grant you!");
+      embed.setDescription(
+        roleList.slice(page * 10 - 10, page * 10).join("\n")
       );
-      await interaction.editReply({ embeds: [roleList] });
+      embed.setFooter(`Page ${page} of ${lastPage}`);
+
+      const pageBack = new MessageButton()
+        .setCustomId("prev")
+        .setDisabled(true)
+        .setLabel("◀")
+        .setStyle("PRIMARY");
+      const pageForward = new MessageButton()
+        .setCustomId("next")
+        .setLabel("▶")
+        .setStyle("PRIMARY");
+
+      if (lastPage === 1) {
+        pageForward.setDisabled(true);
+      }
+
+      const sent = (await interaction.editReply({
+        embeds: [embed],
+        components: [
+          new MessageActionRow().addComponents(pageBack, pageForward),
+        ],
+      })) as Message;
+
+      const clickyClick = sent.createMessageComponentCollector({
+        time: 30000,
+        filter: (click) => click.user.id === interaction.user.id,
+      });
+
+      clickyClick.on("collect", async (click) => {
+        click.deferUpdate();
+        if (click.customId === "prev") {
+          page--;
+        }
+        if (click.customId === "next") {
+          page++;
+        }
+
+        if (page <= 1) {
+          pageBack.setDisabled(true);
+        } else {
+          pageBack.setDisabled(false);
+        }
+        if (page >= lastPage) {
+          pageForward.setDisabled(true);
+        } else {
+          pageForward.setDisabled(false);
+        }
+
+        embed.setDescription(
+          roleList.slice(page * 10 - 10, page * 10).join("\n")
+        );
+
+        await interaction.editReply({
+          embeds: [embed],
+          components: [
+            new MessageActionRow().addComponents(pageBack, pageForward),
+          ],
+        });
+      });
+
+      clickyClick.on("end", async () => {
+        pageBack.setDisabled(true);
+        pageForward.setDisabled(true);
+        await interaction.editReply({
+          components: [
+            new MessageActionRow().addComponents(pageBack, pageForward),
+          ],
+        });
+      });
+
+      await sleep(35000);
       return;
     }
 

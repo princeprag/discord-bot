@@ -25,7 +25,7 @@ export const handleReset: SlashHandlerType = async (
       setting as SettingsTypes,
       config
     );
-    await interaction.reply(
+    await interaction.editReply(
       success
         ? `I have reset your ${setting} setting.`
         : "I am having trouble updating your settings. Please try again later."
