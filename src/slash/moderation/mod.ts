@@ -4,6 +4,7 @@ import {
 } from "@discordjs/builders";
 import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
+import { handleMute } from "../../modules/slash/moderation/handleMute";
 import { handleWarn } from "../../modules/slash/moderation/handleWarn";
 import { handleWarnCount } from "../../modules/slash/moderation/handleWarnCount";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
@@ -38,6 +39,22 @@ export const mod: SlashInt = {
             .setDescription("The user whose warnings you want to see.")
             .setRequired(true)
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("mute")
+        .setDescription("Mutes a user via your configured muted role.")
+        .addUserOption((option) =>
+          option
+            .setName("target")
+            .setDescription("The user to warn.")
+            .setRequired(true)
+        )
+        .addStringOption((option) =>
+          option
+            .setName("reason")
+            .setDescription("The reason for issuing this warning.")
+        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -50,6 +67,9 @@ export const mod: SlashInt = {
           break;
         case "warncount":
           await handleWarnCount(Becca, interaction, config);
+          break;
+        case "mute":
+          await handleMute(Becca, interaction, config);
           break;
         default:
           await interaction.editReply(Becca.responses.invalid_command);
