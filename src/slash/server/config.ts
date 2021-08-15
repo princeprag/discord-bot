@@ -123,7 +123,7 @@ export const config: SlashInt = {
 
       if (!guild || !member) {
         await interaction.editReply({
-          content: "I cannot find your membership records.",
+          content: Becca.responses.missing_guild,
         });
         return;
       }
@@ -134,7 +134,7 @@ export const config: SlashInt = {
         member.user.id !== Becca.configs.ownerId
       ) {
         await interaction.editReply({
-          content: "You do not have the correct skills to use this spell.",
+          content: Becca.responses.no_permission,
         });
         return;
       }
@@ -241,13 +241,12 @@ export const config: SlashInt = {
       }
 
       await interaction.editReply({
-        content:
-          "I am not sure how you did it, but you gave an invalid option.",
+        content: Becca.responses.invalid_command,
       });
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
-        "ping command",
+        "config command",
         err,
         interaction.guild?.name
       );
@@ -264,14 +263,3 @@ export const config: SlashInt = {
     }
   },
 };
-
-/**
-          case "hearts":
-          case "self_roles":
-          case "blocked":
-          case "anti_links":
-          case "permit_links":
-          case "link_roles":
-          case "allowed_links":
-          case "level_roles":
-*/

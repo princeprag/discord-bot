@@ -36,4 +36,12 @@ export interface BeccaInt extends Client {
   };
   commands: CommandInt[];
   slash: SlashInt[];
+  responses: ResponsesInt;
+}
+
+export interface ResponsesInt {
+  missing_guild: string;
+  invalid_command: string;
+  no_permission: string;
+  owner_only: string;
 }

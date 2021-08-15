@@ -16,6 +16,7 @@ export interface CommandInt {
   description: string;
   parameters: string[];
   category: "bot" | "game" | "general" | "mod" | "server";
+  isMigrated?: boolean;
   run: (
     Becca: BeccaInt,
     message: Message,

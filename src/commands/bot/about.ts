@@ -1,6 +1,6 @@
-import { MessageEmbed } from "discord.js";
 import { CommandInt } from "../../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
+import { migrationEmbedGenerator } from "../../modules/commands/migrationEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const about: CommandInt = {
@@ -8,32 +8,10 @@ export const about: CommandInt = {
   description: "Returns details about Becca the bot (not Becca the person)",
   category: "bot",
   parameters: [],
+  isMigrated: true,
   run: async (Becca, message) => {
     try {
-      const aboutEmbed = new MessageEmbed();
-      aboutEmbed.setColor(Becca.colours.default);
-      aboutEmbed.setTitle("Becca Lyria the Discord Bot");
-      aboutEmbed.setDescription(
-        "Becca was created by [nhcarrigan](https://www.nhcarrigan.com). You can [view her source code](https://github.com/beccalyria/discord-bot) or join the [official chat server](http://chat.nhcarrigan.com)."
-      );
-      aboutEmbed.addField(
-        "Version",
-        process.env.npm_package_version || "unknown version",
-        true
-      );
-      aboutEmbed.addField("Creation date", "Sunday, 31 May 2020", true);
-      aboutEmbed.addField("Guilds", Becca.guilds.cache.size.toString(), true);
-      aboutEmbed.addField(
-        "Available spells",
-        Becca.commands.length.toString(),
-        true
-      );
-      aboutEmbed.addField("Favourite Colour", "Purple", true);
-      aboutEmbed.setFooter(
-        "Now that we have introduced ourselves, it is time for an adventure."
-      );
-
-      return { success: true, content: aboutEmbed };
+      return { success: true, content: migrationEmbedGenerator("becca about") };
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,

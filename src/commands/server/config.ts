@@ -11,10 +11,11 @@ export const config: CommandInt = {
     "`setting`: The setting to take action on.",
     "`value`: The value of that setting (only applicable for `set` action).",
   ],
+  isMigrated: true,
   category: "server",
   run: async (Becca, message) => {
     try {
-      return { success: false, content: migrationEmbedGenerator() };
+      return { success: false, content: migrationEmbedGenerator("config") };
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
