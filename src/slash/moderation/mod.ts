@@ -4,6 +4,7 @@ import {
 } from "@discordjs/builders";
 import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
+import { handleKick } from "../../modules/slash/moderation/handleKick";
 import { handleMute } from "../../modules/slash/moderation/handleMute";
 import { handleUnmute } from "../../modules/slash/moderation/handleUnmute";
 import { handleWarn } from "../../modules/slash/moderation/handleWarn";
@@ -72,6 +73,22 @@ export const mod: SlashInt = {
             .setName("reason")
             .setDescription("The reason for unmuting the user.")
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("kick")
+        .setDescription("Kicks a user from the server.")
+        .addUserOption((option) =>
+          option
+            .setName("target")
+            .setDescription("The user to kick.")
+            .setRequired(true)
+        )
+        .addStringOption((option) =>
+          option
+            .setName("reason")
+            .setDescription("The reason for kicking the user.")
+        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -90,6 +107,9 @@ export const mod: SlashInt = {
           break;
         case "unmute":
           await handleUnmute(Becca, interaction, config);
+          break;
+        case "kick":
+          await handleKick(Becca, interaction, config);
           break;
         default:
           await interaction.editReply(Becca.responses.invalid_command);
