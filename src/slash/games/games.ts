@@ -7,6 +7,7 @@ import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator"
 import { handleFact } from "../../modules/slash/games/handleFact";
 import { handleJoke } from "../../modules/slash/games/handleJoke";
 import { handleMtg } from "../../modules/slash/games/handleMtg";
+import { handleSus } from "../../modules/slash/games/handleSus";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const games: SlashInt = {
@@ -35,6 +36,11 @@ export const games: SlashInt = {
             .setDescription("The name of the card you want to search for")
             .setRequired(true)
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("sus")
+        .setDescription("Identifies the next impostor")
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -50,6 +56,9 @@ export const games: SlashInt = {
           break;
         case "mtg":
           await handleMtg(Becca, interaction, config);
+          break;
+        case "sus":
+          await handleSus(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({

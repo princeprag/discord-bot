@@ -1,7 +1,6 @@
-import { MessageEmbed } from "discord.js";
-import { SusColours, SusNames } from "../../config/commands/susList";
 import { CommandInt } from "../../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
+import { migrationEmbedGenerator } from "../../modules/commands/migrationEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const sus: CommandInt = {
@@ -9,16 +8,10 @@ export const sus: CommandInt = {
   description: "Returns which Among Us player is sus.",
   category: "game",
   parameters: [],
+  isMigrated: true,
   run: async (Becca, message) => {
     try {
-      const random = Math.floor(Math.random() * SusNames.length);
-      const susEmbed = new MessageEmbed();
-      susEmbed.setTitle("Emergency Meeting!");
-      susEmbed.setDescription(SusNames[random] + " is the new SUS!");
-      susEmbed.setColor(SusColours[random]);
-      susEmbed.setTimestamp();
-
-      return { success: true, content: susEmbed };
+      return { success: true, content: migrationEmbedGenerator("games sus") };
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
