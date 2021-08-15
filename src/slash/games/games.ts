@@ -6,6 +6,7 @@ import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { handleFact } from "../../modules/slash/games/handleFact";
 import { handleJoke } from "../../modules/slash/games/handleJoke";
+import { handleMtg } from "../../modules/slash/games/handleMtg";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const games: SlashInt = {
@@ -21,6 +22,19 @@ export const games: SlashInt = {
       new SlashCommandSubcommandBuilder()
         .setName("joke")
         .setDescription("Tells a random joke.")
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("mtg")
+        .setDescription(
+          "Searches for information on a Magic: The Gathering card."
+        )
+        .addStringOption((option) =>
+          option
+            .setName("card")
+            .setDescription("The name of the card you want to search for")
+            .setRequired(true)
+        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -33,6 +47,9 @@ export const games: SlashInt = {
           break;
         case "joke":
           await handleJoke(Becca, interaction, config);
+          break;
+        case "mtg":
+          await handleMtg(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
