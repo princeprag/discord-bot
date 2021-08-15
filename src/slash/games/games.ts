@@ -5,6 +5,7 @@ import {
 import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { handleFact } from "../../modules/slash/games/handleFact";
+import { handleJoke } from "../../modules/slash/games/handleJoke";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const games: SlashInt = {
@@ -15,6 +16,11 @@ export const games: SlashInt = {
       new SlashCommandSubcommandBuilder()
         .setName("fact")
         .setDescription("Provides a random fun fact.")
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("joke")
+        .setDescription("Tells a random joke.")
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -24,6 +30,9 @@ export const games: SlashInt = {
       switch (subCommand) {
         case "fact":
           await handleFact(Becca, interaction, config);
+          break;
+        case "joke":
+          await handleJoke(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
