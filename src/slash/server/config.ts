@@ -2,18 +2,12 @@ import {
   SlashCommandBuilder,
   SlashCommandSubcommandBuilder,
 } from "@discordjs/builders";
-import { MessageEmbed } from "discord.js";
-import { SettingsTypes } from "../../interfaces/settings/SettingsTypes";
 import { SlashInt } from "../../interfaces/slash/SlashInt";
-import { renderSetting } from "../../modules/commands/config/renderSetting";
-import { validateSetting } from "../../modules/commands/config/validateSetting";
-import { viewSettings } from "../../modules/commands/config/viewSettings";
-import { viewSettingsArray } from "../../modules/commands/config/viewSettingsArray";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
-import { resetSetting } from "../../modules/settings/resetSetting";
-import { setSetting } from "../../modules/settings/setSetting";
+import { handleReset } from "../../modules/slash/config/handleReset";
+import { handleSet } from "../../modules/slash/config/handleSet";
+import { handleView } from "../../modules/slash/config/handleView";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
-import { customSubstring } from "../../utils/customSubstring";
 
 export const config: SlashInt = {
   data: new SlashCommandBuilder()
@@ -110,11 +104,6 @@ export const config: SlashInt = {
               ["Global Settings", "global"],
             ])
         )
-        .addStringOption((option) =>
-          option
-            .setName("value")
-            .setDescription("The page to view, for multi-page settings")
-        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -140,109 +129,22 @@ export const config: SlashInt = {
       }
 
       const action = interaction.options.getSubcommand();
-      const setting = interaction.options.getString("setting");
-      const value = interaction.options.getString("value");
-      let result: MessageEmbed | null = null;
-
-      if (action === "set") {
-        if (!value) {
-          await interaction.editReply(
-            "Not sure how, but you managed to forget the value!"
-          );
-          return;
-        }
-
-        const isValid = await validateSetting(
-          Becca,
-          setting as SettingsTypes,
-          value,
-          guild,
-          config
-        );
-        if (!isValid) {
-          await interaction.editReply(
-            `${value} is not a valid option for ${setting}.`
-          );
-          return;
-        }
-
-        const isSet = await setSetting(
-          Becca,
-          guild.id,
-          guild.name,
-          setting as SettingsTypes,
-          value,
-          config
-        );
-
-        if (!isSet) {
-          await interaction.editReply(
-            "I am having trouble updating your settings. Please try again later."
-          );
-          return;
-        }
-        const newContent = isSet[setting as SettingsTypes];
-        const parsedContent = Array.isArray(newContent)
-          ? newContent
-              .map((el) => renderSetting(Becca, setting as SettingsTypes, el))
-              .join(", ")
-          : renderSetting(Becca, setting as SettingsTypes, newContent);
-        const successEmbed = new MessageEmbed();
-        successEmbed.setTitle(`${setting} Updated`);
-        successEmbed.setDescription(customSubstring(parsedContent, 2000));
-        successEmbed.setTimestamp();
-        successEmbed.setColor(Becca.colours.default);
-        await interaction.editReply({ embeds: [successEmbed] });
-        return;
+      switch (action) {
+        case "set":
+          await handleSet(Becca, interaction, config);
+          break;
+        case "reset":
+          await handleReset(Becca, interaction, config);
+          break;
+        case "view":
+          await handleView(Becca, interaction, config);
+          break;
+        default:
+          await interaction.editReply({
+            content: Becca.responses.invalid_command,
+          });
+          break;
       }
-
-      if (action === "reset") {
-        const success = await resetSetting(
-          Becca,
-          guild.id,
-          guild.name,
-          setting as SettingsTypes,
-          config
-        );
-        await interaction.reply(
-          success
-            ? `I have reset your ${setting} setting.`
-            : "I am having trouble updating your settings. Please try again later."
-        );
-        return;
-      }
-
-      if (action === "view") {
-        switch (setting) {
-          case "hearts":
-          case "self_roles":
-          case "blocked":
-          case "anti_links":
-          case "permit_links":
-          case "link_roles":
-          case "allowed_links":
-          case "level_roles":
-            result = await viewSettingsArray(
-              Becca,
-              config,
-              setting,
-              parseInt(value || "1")
-            );
-            break;
-          default:
-            result = await viewSettings(Becca, guild, config);
-        }
-        await interaction.editReply(
-          result
-            ? { embeds: [result] }
-            : { content: "I am unable to locate those settings." }
-        );
-        return;
-      }
-
-      await interaction.editReply({
-        content: Becca.responses.invalid_command,
-      });
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
