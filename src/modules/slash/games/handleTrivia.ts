@@ -118,18 +118,18 @@ export const handleTrivia: SlashHandlerType = async (Becca, interaction) => {
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,
-      "mtg command",
+      "trivia command",
       err,
       interaction.guild?.name
     );
     await interaction
       .reply({
-        embeds: [errorEmbedGenerator(Becca, "mtg", errorId)],
+        embeds: [errorEmbedGenerator(Becca, "trivia", errorId)],
         ephemeral: true,
       })
       .catch(async () =>
         interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "mtg", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "trivia", errorId)],
         })
       );
   }

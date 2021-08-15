@@ -17,18 +17,18 @@ export const handleSus: SlashHandlerType = async (Becca, interaction) => {
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,
-      "mtg command",
+      "sus command",
       err,
       interaction.guild?.name
     );
     await interaction
       .reply({
-        embeds: [errorEmbedGenerator(Becca, "mtg", errorId)],
+        embeds: [errorEmbedGenerator(Becca, "sus", errorId)],
         ephemeral: true,
       })
       .catch(async () =>
         interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "mtg", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "sus", errorId)],
         })
       );
   }
