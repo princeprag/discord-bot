@@ -21,9 +21,6 @@ export const help: CommandInt = {
       const generalCommands = Becca.commands
         .filter((cmd) => cmd.category === "general" && !cmd.isMigrated)
         .map((cmd) => "`" + cmd.name + "`");
-      const modCommands = Becca.commands
-        .filter((cmd) => cmd.category === "mod" && !cmd.isMigrated)
-        .map((cmd) => "`" + cmd.name + "`");
       const serverCommands = Becca.commands
         .filter((cmd) => cmd.category === "server" && !cmd.isMigrated)
         .map((cmd) => "`" + cmd.name + "`");
@@ -35,7 +32,6 @@ export const help: CommandInt = {
       );
       helpEmbed.setColor(Becca.colours.default);
       helpEmbed.addField("General Spells", generalCommands.join(", "));
-      helpEmbed.addField("Moderation Spells", modCommands.join(", "));
       helpEmbed.addField("Server Spells", serverCommands.join(", "));
       helpEmbed.setTimestamp();
 

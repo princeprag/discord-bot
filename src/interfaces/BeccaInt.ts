@@ -44,4 +44,8 @@ export interface ResponsesInt {
   invalid_command: string;
   no_permission: string;
   owner_only: string;
+  missing_param: string;
+  default_mod_reason: string;
+  no_mod_self: string;
+  no_mod_becca: string;
 }

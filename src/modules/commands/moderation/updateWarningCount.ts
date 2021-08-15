@@ -1,4 +1,4 @@
-import { Guild, GuildMember } from "discord.js";
+import { Guild, User } from "discord.js";
 import WarningModel from "../../../database/models/WarningModel";
 import { BeccaInt } from "../../../interfaces/BeccaInt";
 import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
@@ -6,7 +6,7 @@ import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 export const updateWarningCount = async (
   Becca: BeccaInt,
   guild: Guild,
-  member: GuildMember,
+  user: User,
   reason: string
 ): Promise<void> => {
   try {
@@ -18,12 +18,12 @@ export const updateWarningCount = async (
         users: [],
       }));
 
-    const userWarns = serverWarns.users.find((el) => el.userID === member.id);
+    const userWarns = serverWarns.users.find((el) => el.userID === user.id);
 
     if (!userWarns) {
       const newUser = {
-        userID: member.id,
-        userName: member.user.username,
+        userID: user.id,
+        userName: user.username,
         lastWarnDate: Date.now(),
         lastWarnText: reason,
         warnCount: 1,
@@ -33,7 +33,7 @@ export const updateWarningCount = async (
       userWarns.warnCount++;
       userWarns.lastWarnDate = Date.now();
       userWarns.lastWarnText = reason;
-      userWarns.userName = member.user.username;
+      userWarns.userName = user.username;
     }
 
     serverWarns.markModified("users");

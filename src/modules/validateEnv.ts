@@ -80,6 +80,13 @@ export const validateEnv = (
         "I am not sure how this happened, but that spell does not appear to be valid.",
       no_permission: "You do not have the correct skills to use this spell.",
       owner_only: "Only my owner can ask me to do this.",
+      missing_param:
+        "This is impressive. You have managed to forget a required component for this spell.",
+      default_mod_reason:
+        "Unfortunately, they could not be bothered to tell me why.",
+      no_mod_becca:
+        "Brave of you to try to make me your target. Foolish, but brave.",
+      no_mod_self: "Are... are you asking me to smite you?",
     };
 
     Becca.responses = phrases;
