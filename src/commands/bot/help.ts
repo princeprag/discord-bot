@@ -18,9 +18,6 @@ export const help: CommandInt = {
         return { success: false, content: "Unknown guild error." };
       }
 
-      const gameCommands = Becca.commands
-        .filter((cmd) => cmd.category === "game" && !cmd.isMigrated)
-        .map((cmd) => "`" + cmd.name + "`");
       const generalCommands = Becca.commands
         .filter((cmd) => cmd.category === "general" && !cmd.isMigrated)
         .map((cmd) => "`" + cmd.name + "`");
