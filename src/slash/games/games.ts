@@ -8,6 +8,7 @@ import { handleFact } from "../../modules/slash/games/handleFact";
 import { handleJoke } from "../../modules/slash/games/handleJoke";
 import { handleMtg } from "../../modules/slash/games/handleMtg";
 import { handleSus } from "../../modules/slash/games/handleSus";
+import { handleTrivia } from "../../modules/slash/games/handleTrivia";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const games: SlashInt = {
@@ -41,6 +42,11 @@ export const games: SlashInt = {
       new SlashCommandSubcommandBuilder()
         .setName("sus")
         .setDescription("Identifies the next impostor")
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("trivia")
+        .setDescription("Plays a quick trivia game with you!")
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -59,6 +65,9 @@ export const games: SlashInt = {
           break;
         case "sus":
           await handleSus(Becca, interaction, config);
+          break;
+        case "trivia":
+          await handleTrivia(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
