@@ -94,6 +94,7 @@ export const handleRole: SlashHandlerType = async (
         embed.setDescription(
           roleList.slice(page * 10 - 10, page * 10).join("\n")
         );
+        embed.setFooter(`Page ${page} of ${lastPage}`);
 
         await interaction.editReply({
           embeds: [embed],
