@@ -12,8 +12,9 @@ export const loadSlash = async (Becca: BeccaInt): Promise<SlashInt[]> => {
   try {
     const generalCommands = await readSlashDirectory(Becca, "general");
     const serverCommands = await readSlashDirectory(Becca, "server");
+    const gameCommands = await readSlashDirectory(Becca, "games");
 
-    return [...generalCommands, ...serverCommands];
+    return [...generalCommands, ...serverCommands, ...gameCommands];
   } catch (err) {
     await beccaErrorHandler(Becca, "slash command loader", err);
     return [];
