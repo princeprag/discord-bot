@@ -1,5 +1,6 @@
 import { CommandInt } from "../../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
+import { migrationEmbedGenerator } from "../../modules/commands/migrationEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const leave: CommandInt = {
@@ -10,35 +11,9 @@ export const leave: CommandInt = {
   category: "server",
   run: async (Becca, message) => {
     try {
-      const { author, content } = message;
-      if (author.id !== Becca.configs.ownerId) {
-        return {
-          success: false,
-          content: "Only my owner may cast this spell.",
-        };
-      }
-      const [, serverID] = content.split(" ");
-
-      if (!serverID || !serverID.length) {
-        return {
-          success: false,
-          content: "I need a server ID to leave.",
-        };
-      }
-
-      const targetServer = Becca.guilds.cache.get(`${BigInt(serverID)}`);
-
-      if (!targetServer) {
-        return {
-          success: false,
-          content: `${serverID} is not a guild I recognise.`,
-        };
-      }
-
-      await targetServer.leave();
       return {
-        success: true,
-        content: `Leaving ${serverID}`,
+        success: false,
+        content: migrationEmbedGenerator("nhcarrigan leave"),
       };
     } catch (err) {
       const errorId = await beccaErrorHandler(
