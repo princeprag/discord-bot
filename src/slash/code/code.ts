@@ -6,6 +6,7 @@ import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { handleCanIUse } from "../../modules/slash/code/handleCanIUse";
 import { handleColour } from "../../modules/slash/code/handleColour";
+import { handleHttp } from "../../modules/slash/code/handleHttp";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const code: SlashInt = {
@@ -35,6 +36,19 @@ export const code: SlashInt = {
             .setDescription("The six digit hex code to display.")
             .setRequired(true)
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("http")
+        .setDescription(
+          "Shows a cat demonstrating the provided http status code."
+        )
+        .addIntegerOption((option) =>
+          option
+            .setName("status")
+            .setDescription("The status code to check.")
+            .setRequired(true)
+        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -47,6 +61,9 @@ export const code: SlashInt = {
           break;
         case "colour":
           await handleColour(Becca, interaction, config);
+          break;
+        case "http":
+          await handleHttp(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({

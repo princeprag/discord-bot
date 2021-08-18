@@ -1,4 +1,3 @@
-import { MessageEmbed } from "discord.js";
 import { CommandInt } from "../../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { migrationEmbedGenerator } from "../../modules/commands/migrationEmbedGenerator";

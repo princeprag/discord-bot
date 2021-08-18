@@ -1,7 +1,6 @@
-import { MessageEmbed } from "discord.js";
-import { httpStatus } from "../../config/commands/httpStatus";
 import { CommandInt } from "../../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
+import { migrationEmbedGenerator } from "../../modules/commands/migrationEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const http: CommandInt = {
@@ -10,23 +9,10 @@ export const http: CommandInt = {
     "Returns a brief description of the status code, including a cat photo.",
   parameters: ["`status`: the HTTP status to define."],
   category: "general",
+  isMigrated: true,
   run: async (Becca, message) => {
     try {
-      const [, status] = message.content.split(" ");
-
-      if (!status || !httpStatus.includes(status)) {
-        return {
-          success: false,
-          content: "You need to give me a valid status code here.",
-        };
-      }
-      const httpEmbed = new MessageEmbed();
-      httpEmbed.setTitle(`HTTP code ${status}`);
-      httpEmbed.setImage(`https://http.cat/${status}.jpg`);
-      httpEmbed.setColor(Becca.colours.default);
-      httpEmbed.setTimestamp();
-
-      return { success: true, content: httpEmbed };
+      return { success: false, content: migrationEmbedGenerator("code http") };
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
