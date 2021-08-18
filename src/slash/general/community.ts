@@ -11,6 +11,7 @@ import { handleLevel } from "../../modules/slash/community/handleLevel";
 import { handleMotivation } from "../../modules/slash/community/handleMotivation";
 import { handleRole } from "../../modules/slash/community/handleRole";
 import { handleSchedule } from "../../modules/slash/community/handleSchedule";
+import { handleStar } from "../../modules/slash/community/handleStar";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const community: SlashInt = {
@@ -75,6 +76,23 @@ export const community: SlashInt = {
             .setDescription("The message to send.")
             .setRequired(true)
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("star")
+        .setDescription("Gives a user a gold star!")
+        .addUserOption((option) =>
+          option
+            .setName("user")
+            .setDescription("The user to give a star to.")
+            .setRequired(true)
+        )
+        .addStringOption((option) =>
+          option
+            .setName("reason")
+            .setDescription("The reason for giving the user a star.")
+            .setRequired(true)
+        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -96,6 +114,9 @@ export const community: SlashInt = {
           break;
         case "schedule":
           await handleSchedule(Becca, interaction, config);
+          break;
+        case "star":
+          await handleStar(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
