@@ -5,6 +5,7 @@ import {
 import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { handleSpace } from "../../modules/slash/misc/handleSpace";
+import { handleUsername } from "../../modules/slash/misc/handleUsername";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const misc: SlashInt = {
@@ -20,6 +21,16 @@ export const misc: SlashInt = {
             .setName("date")
             .setDescription("Date of the photo to fetch, in YYYY-MM-DD format.")
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("username")
+        .setDescription("Generates a DigitalOcean themed username.")
+        .addIntegerOption((option) =>
+          option
+            .setName("length")
+            .setDescription("Maximum length of the username to generate.")
+        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -30,6 +41,9 @@ export const misc: SlashInt = {
       switch (subCommand) {
         case "space":
           await handleSpace(Becca, interaction, config);
+          break;
+        case "username":
+          await handleUsername(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({

@@ -1,0 +1,50 @@
+import { MessageEmbed } from "discord.js";
+import { SlashHandlerType } from "../../../interfaces/slash/SlashHandlerType";
+import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
+import { errorEmbedGenerator } from "../../commands/errorEmbedGenerator";
+import { generateUsername } from "../../commands/general/generateUsername";
+
+export const handleUsername: SlashHandlerType = async (Becca, interaction) => {
+  try {
+    const { user } = interaction;
+    const length = interaction.options.getInteger("length") || 30;
+
+    const username = generateUsername(length);
+
+    const usernameEmbed = new MessageEmbed();
+    usernameEmbed.setColor(Becca.colours.default);
+    usernameEmbed.setAuthor(
+      `${user.username}#${user.discriminator}`,
+      user.displayAvatarURL()
+    );
+    usernameEmbed.setDescription(
+      "This feature brought to you by [MattIPv4](https://github.com/mattipv4)."
+    );
+    usernameEmbed.addField("Your username is...", username);
+    usernameEmbed.addField(
+      "Generated Length",
+      username.length.toString(),
+      true
+    );
+    usernameEmbed.addField("Maximum length", length.toString(), true);
+
+    await interaction.editReply({ embeds: [usernameEmbed] });
+  } catch (err) {
+    const errorId = await beccaErrorHandler(
+      Becca,
+      "topic command",
+      err,
+      interaction.guild?.name
+    );
+    await interaction
+      .reply({
+        embeds: [errorEmbedGenerator(Becca, "topic", errorId)],
+        ephemeral: true,
+      })
+      .catch(async () =>
+        interaction.editReply({
+          embeds: [errorEmbedGenerator(Becca, "topic", errorId)],
+        })
+      );
+  }
+};
