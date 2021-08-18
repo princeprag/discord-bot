@@ -13,6 +13,7 @@ import { handleRole } from "../../modules/slash/community/handleRole";
 import { handleSchedule } from "../../modules/slash/community/handleSchedule";
 import { handleStar } from "../../modules/slash/community/handleStar";
 import { handleStarCount } from "../../modules/slash/community/handleStarCount";
+import { handleTopic } from "../../modules/slash/community/handleTopic";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const community: SlashInt = {
@@ -101,6 +102,11 @@ export const community: SlashInt = {
         .setDescription(
           "Returns the leaderboard for users who have received stars."
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("topic")
+        .setDescription("Provides a conversation starter!")
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -128,6 +134,9 @@ export const community: SlashInt = {
           break;
         case "starcount":
           await handleStarCount(Becca, interaction, config);
+          break;
+        case "topic":
+          await handleTopic(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
