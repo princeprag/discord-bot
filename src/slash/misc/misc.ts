@@ -4,6 +4,7 @@ import {
 } from "@discordjs/builders";
 import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
+import { handlePermissions } from "../../modules/slash/misc/handlePermissions";
 import { handleSpace } from "../../modules/slash/misc/handleSpace";
 import { handleUsername } from "../../modules/slash/misc/handleUsername";
 import { handleXkcd } from "../../modules/slash/misc/handleXkcd";
@@ -44,6 +45,13 @@ export const misc: SlashInt = {
             .setName("number")
             .setDescription("Number of the XKCD comic to fetch.")
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("permissions")
+        .setDescription(
+          "Confirms the bot has the correct permissions in the channel and guild."
+        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -60,6 +68,9 @@ export const misc: SlashInt = {
           break;
         case "xkcd":
           await handleXkcd(Becca, interaction, config);
+          break;
+        case "permissions":
+          await handlePermissions(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
