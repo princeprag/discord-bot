@@ -26,14 +26,6 @@ export const validateEnv = (
       return { valid: false, message: "Missing NASA API key" };
     }
 
-    if (!process.env.HABITICA_KEY) {
-      return { valid: false, message: "Missing Habitica API key" };
-    }
-
-    if (!process.env.ORBIT_KEY) {
-      return { valid: false, message: "Missing Orbit API key" };
-    }
-
     if (!process.env.OWNER_ID) {
       return { valid: false, message: "Missing Discord ID for owner account" };
     }
@@ -51,8 +43,6 @@ export const validateEnv = (
       dbToken: process.env.MONGODB,
       whUrl: process.env.WH_URL,
       nasaKey: process.env.NASA_API,
-      habiticaKey: process.env.HABITICA_KEY,
-      orbitKey: process.env.ORBIT_KEY,
       ownerId: process.env.OWNER_ID,
       love: process.env.BECCA_LOVE || "💜",
       yes: process.env.BECCA_YES || "✅",
