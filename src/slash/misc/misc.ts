@@ -6,6 +6,7 @@ import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { handleSpace } from "../../modules/slash/misc/handleSpace";
 import { handleUsername } from "../../modules/slash/misc/handleUsername";
+import { handleXkcd } from "../../modules/slash/misc/handleXkcd";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const misc: SlashInt = {
@@ -31,6 +32,18 @@ export const misc: SlashInt = {
             .setName("length")
             .setDescription("Maximum length of the username to generate.")
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("xkcd")
+        .setDescription(
+          "Returns the latest XKCD comic, or the specific numbered comic."
+        )
+        .addIntegerOption((option) =>
+          option
+            .setName("number")
+            .setDescription("Number of the XKCD comic to fetch.")
+        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -44,6 +57,9 @@ export const misc: SlashInt = {
           break;
         case "username":
           await handleUsername(Becca, interaction, config);
+          break;
+        case "xkcd":
+          await handleXkcd(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
