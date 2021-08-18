@@ -1,6 +1,6 @@
-import LevelModel from "../../database/models/LevelModel";
 import { CommandInt } from "../../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
+import { migrationEmbedGenerator } from "../../modules/commands/migrationEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const resetlevel: CommandInt = {
@@ -8,40 +8,12 @@ export const resetlevel: CommandInt = {
   description: "Reset the level data for the server",
   parameters: [],
   category: "server",
+  isMigrated: true,
   run: async (Becca, message) => {
     try {
-      const { guild, member } = message;
-
-      if (!guild || !member) {
-        return {
-          success: false,
-          content: "I cannot seem to find your guild record.",
-        };
-      }
-
-      if (
-        !member.permissions.has("MANAGE_GUILD") &&
-        member.user.id !== Becca.configs.ownerId
-      ) {
-        return {
-          success: false,
-          content: "You do not have the correct skills to use this spell.",
-        };
-      }
-
-      const currentLevels = await LevelModel.findOne({ serverID: guild.id });
-
-      if (!currentLevels) {
-        return {
-          success: false,
-          content: "I cannot find any level data for this server.",
-        };
-      }
-
-      await currentLevels.delete();
       return {
-        success: true,
-        content: "I have burned all records of your guild's activities.",
+        success: false,
+        content: migrationEmbedGenerator("manage levelreset"),
       };
     } catch (err) {
       const errorId = await beccaErrorHandler(
