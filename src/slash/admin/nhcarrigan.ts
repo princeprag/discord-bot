@@ -63,7 +63,7 @@ export const nhcarrigan: SlashInt = {
           break;
         case "serverdata":
           await handleServerData(Becca, interaction, config);
-          return;
+          break;
         default:
           await interaction.editReply({
             content: Becca.responses.invalid_command,
