@@ -10,6 +10,7 @@ import { handleLeaderboard } from "../../modules/slash/community/handleLeaderboa
 import { handleLevel } from "../../modules/slash/community/handleLevel";
 import { handleMotivation } from "../../modules/slash/community/handleMotivation";
 import { handleRole } from "../../modules/slash/community/handleRole";
+import { handleSchedule } from "../../modules/slash/community/handleSchedule";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const community: SlashInt = {
@@ -49,6 +50,31 @@ export const community: SlashInt = {
       new SlashCommandSubcommandBuilder()
         .setName("motivation")
         .setDescription("Sends you a little motivational quote.")
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("schedule")
+        .setDescription("Schedules a post to be sent at a later time.")
+        .addIntegerOption((option) =>
+          option
+            .setName("time")
+            .setDescription(
+              "The time to wait before sending the post, in minutes."
+            )
+            .setRequired(true)
+        )
+        .addChannelOption((option) =>
+          option
+            .setName("channel")
+            .setDescription("The channel to send the notification in.")
+            .setRequired(true)
+        )
+        .addStringOption((option) =>
+          option
+            .setName("message")
+            .setDescription("The message to send.")
+            .setRequired(true)
+        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -67,6 +93,9 @@ export const community: SlashInt = {
           break;
         case "motivation":
           await handleMotivation(Becca, interaction, config);
+          break;
+        case "schedule":
+          await handleSchedule(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
