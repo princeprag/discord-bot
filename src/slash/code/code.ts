@@ -5,6 +5,7 @@ import {
 import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { handleCanIUse } from "../../modules/slash/code/handleCanIUse";
+import { handleColour } from "../../modules/slash/code/handleColour";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const code: SlashInt = {
@@ -23,6 +24,17 @@ export const code: SlashInt = {
             .setDescription("The HTML/CSS/JS feature to look up.")
             .setRequired(true)
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("colour")
+        .setDescription("Returns an embed showing the colour.")
+        .addStringOption((option) =>
+          option
+            .setName("hex")
+            .setDescription("The six digit hex code to display.")
+            .setRequired(true)
+        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -32,6 +44,9 @@ export const code: SlashInt = {
       switch (subCommand) {
         case "caniuse":
           await handleCanIUse(Becca, interaction, config);
+          break;
+        case "colour":
+          await handleColour(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({

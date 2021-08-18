@@ -1,6 +1,7 @@
 import { MessageEmbed } from "discord.js";
 import { CommandInt } from "../../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
+import { migrationEmbedGenerator } from "../../modules/commands/migrationEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const colour: CommandInt = {
@@ -10,35 +11,13 @@ export const colour: CommandInt = {
     "`hex`: The hex code, with or without `#`, of the colour to show",
   ],
   category: "general",
+  isMigrated: true,
   run: async (Becca, message) => {
     try {
-      const { content } = message;
-      const [, targetColour] = content.split(" ");
-
-      if (!targetColour) {
-        return {
-          success: false,
-          content: "Which colour do you want to see?",
-        };
-      }
-
-      const parsedColour = targetColour.startsWith("#")
-        ? targetColour.slice(1)
-        : targetColour;
-
-      if (!/^[0-9a-fA-F]{6}$/.test(parsedColour)) {
-        return {
-          success: false,
-          content: "This spell requires a six-character hex code.",
-        };
-      }
-
-      const colourEmbed = new MessageEmbed();
-      colourEmbed.setTitle(`Colour: ${parsedColour}`);
-      colourEmbed.setColor(parseInt(parsedColour, 16));
-      colourEmbed.setImage(`https://www.colorhexa.com/${parsedColour}.png`);
-      colourEmbed.setTimestamp();
-      return { success: true, content: colourEmbed };
+      return {
+        success: false,
+        content: migrationEmbedGenerator("code colour"),
+      };
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
