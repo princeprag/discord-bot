@@ -8,6 +8,7 @@ import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { handleLeaderboard } from "../../modules/slash/community/handleLeaderboard";
 import { handleLevel } from "../../modules/slash/community/handleLevel";
+import { handleMotivation } from "../../modules/slash/community/handleMotivation";
 import { handleRole } from "../../modules/slash/community/handleRole";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
@@ -43,6 +44,11 @@ export const community: SlashInt = {
             .setName("role")
             .setDescription("The role to assign")
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("motivation")
+        .setDescription("Sends you a little motivational quote.")
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -58,6 +64,9 @@ export const community: SlashInt = {
           break;
         case "role":
           await handleRole(Becca, interaction, config);
+          break;
+        case "motivation":
+          await handleMotivation(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({

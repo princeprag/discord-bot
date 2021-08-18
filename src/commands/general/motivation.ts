@@ -1,7 +1,6 @@
-import { MessageEmbed } from "discord.js";
-import { motivationalQuotes } from "../../config/commands/motivationalQuotes";
 import { CommandInt } from "../../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
+import { migrationEmbedGenerator } from "../../modules/commands/migrationEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const motivation: CommandInt = {
@@ -9,18 +8,13 @@ export const motivation: CommandInt = {
   description: "Show a random motivation quote",
   parameters: [],
   category: "general",
+  isMigrated: true,
   run: async (Becca, message) => {
     try {
-      const random = Math.floor(Math.random() * motivationalQuotes.length);
-      const quote = motivationalQuotes[random];
-      const quoteEmbed = new MessageEmbed();
-      quoteEmbed.setTitle("We are counting on you!");
-      quoteEmbed.setDescription(quote.quote);
-      quoteEmbed.setFooter(quote.author);
-      quoteEmbed.setTimestamp();
-      quoteEmbed.setColor(Becca.colours.default);
-
-      return { success: true, content: quoteEmbed };
+      return {
+        success: false,
+        content: migrationEmbedGenerator("community motivation"),
+      };
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
