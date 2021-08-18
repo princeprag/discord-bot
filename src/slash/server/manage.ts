@@ -5,6 +5,7 @@ import {
 import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { handleResetLevels } from "../../modules/slash/manage/handleResetLevels";
+import { handleResetStars } from "../../modules/slash/manage/handleResetStars";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const manage: SlashInt = {
@@ -15,6 +16,11 @@ export const manage: SlashInt = {
       new SlashCommandSubcommandBuilder()
         .setName("resetlevels")
         .setDescription("Reset the leaderboard for your server.")
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("resetstars")
+        .setDescription("Reset the star counts for your server.")
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -25,6 +31,9 @@ export const manage: SlashInt = {
       switch (subCommand) {
         case "resetlevels":
           await handleResetLevels(Becca, interaction, config);
+          break;
+        case "resetstars":
+          await handleResetStars(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
