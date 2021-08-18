@@ -9,6 +9,7 @@ export const leave: CommandInt = {
     "Tells Becca to leave a specific server. Restricted to the bot owner ID.",
   parameters: ["`serverID`: The Discord ID of the server to leave."],
   category: "server",
+  isMigrated: true,
   run: async (Becca, message) => {
     try {
       return {
