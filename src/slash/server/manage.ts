@@ -6,6 +6,7 @@ import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { handleResetLevels } from "../../modules/slash/manage/handleResetLevels";
 import { handleResetStars } from "../../modules/slash/manage/handleResetStars";
+import { handleSuggestion } from "../../modules/slash/manage/handleSuggestion";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const manage: SlashInt = {
@@ -21,6 +22,31 @@ export const manage: SlashInt = {
       new SlashCommandSubcommandBuilder()
         .setName("resetstars")
         .setDescription("Reset the star counts for your server.")
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("suggestion")
+        .setDescription("Approve or deny a suggestion.")
+        .addStringOption((option) =>
+          option
+            .setName("action")
+            .setDescription("The action to take on the suggestion.")
+            .addChoice("approve", "approve")
+            .addChoice("deny", "deny")
+            .setRequired(true)
+        )
+        .addStringOption((option) =>
+          option
+            .setName("id")
+            .setDescription("The message id of the suggestion to update.")
+            .setRequired(true)
+        )
+        .addStringOption((option) =>
+          option
+            .setName("reason")
+            .setDescription("The reason for approving/denying the suggestion.")
+            .setRequired(true)
+        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -34,6 +60,9 @@ export const manage: SlashInt = {
           break;
         case "resetstars":
           await handleResetStars(Becca, interaction, config);
+          break;
+        case "suggestion":
+          await handleSuggestion(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
