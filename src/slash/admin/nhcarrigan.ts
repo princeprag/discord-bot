@@ -6,6 +6,7 @@ import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { handleLeave } from "../../modules/slash/admin/handleLeave";
 import { handleList } from "../../modules/slash/admin/handleList";
+import { handleServerData } from "../../modules/slash/admin/handleServerData";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const nhcarrigan: SlashInt = {
@@ -25,6 +26,17 @@ export const nhcarrigan: SlashInt = {
           option
             .setName("server-id")
             .setDescription("Discord ID of the server to leave.")
+            .setRequired(true)
+        )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("serverdata")
+        .setDescription("Returns information on a specific server.")
+        .addStringOption((option) =>
+          option
+            .setName("server")
+            .setDescription("Discord ID of the server to look up.")
             .setRequired(true)
         )
     ),
@@ -49,6 +61,9 @@ export const nhcarrigan: SlashInt = {
         case "leave":
           await handleLeave(Becca, interaction, config);
           break;
+        case "serverdata":
+          await handleServerData(Becca, interaction, config);
+          return;
         default:
           await interaction.editReply({
             content: Becca.responses.invalid_command,
