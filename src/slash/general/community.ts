@@ -11,6 +11,7 @@ import { handleLevel } from "../../modules/slash/community/handleLevel";
 import { handleMotivation } from "../../modules/slash/community/handleMotivation";
 import { handleRole } from "../../modules/slash/community/handleRole";
 import { handleSchedule } from "../../modules/slash/community/handleSchedule";
+import { handleServer } from "../../modules/slash/community/handleServer";
 import { handleStar } from "../../modules/slash/community/handleStar";
 import { handleStarCount } from "../../modules/slash/community/handleStarCount";
 import { handleTopic } from "../../modules/slash/community/handleTopic";
@@ -116,6 +117,11 @@ export const community: SlashInt = {
         .addUserOption((option) =>
           option.setName("user").setDescription("The user to lookup.")
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("server")
+        .setDescription("Returns details on the server.")
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -149,6 +155,9 @@ export const community: SlashInt = {
           break;
         case "userinfo":
           await handleUserInfo(Becca, interaction, config);
+          break;
+        case "server":
+          await handleServer(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
