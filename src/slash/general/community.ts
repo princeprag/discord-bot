@@ -8,7 +8,13 @@ import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
 import { handleLeaderboard } from "../../modules/slash/community/handleLeaderboard";
 import { handleLevel } from "../../modules/slash/community/handleLevel";
+import { handleMotivation } from "../../modules/slash/community/handleMotivation";
 import { handleRole } from "../../modules/slash/community/handleRole";
+import { handleSchedule } from "../../modules/slash/community/handleSchedule";
+import { handleStar } from "../../modules/slash/community/handleStar";
+import { handleStarCount } from "../../modules/slash/community/handleStarCount";
+import { handleTopic } from "../../modules/slash/community/handleTopic";
+import { handleUserInfo } from "../../modules/slash/community/handleUserInfo";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const community: SlashInt = {
@@ -43,6 +49,73 @@ export const community: SlashInt = {
             .setName("role")
             .setDescription("The role to assign")
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("motivation")
+        .setDescription("Sends you a little motivational quote.")
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("schedule")
+        .setDescription("Schedules a post to be sent at a later time.")
+        .addIntegerOption((option) =>
+          option
+            .setName("time")
+            .setDescription(
+              "The time to wait before sending the post, in minutes."
+            )
+            .setRequired(true)
+        )
+        .addChannelOption((option) =>
+          option
+            .setName("channel")
+            .setDescription("The channel to send the notification in.")
+            .setRequired(true)
+        )
+        .addStringOption((option) =>
+          option
+            .setName("message")
+            .setDescription("The message to send.")
+            .setRequired(true)
+        )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("star")
+        .setDescription("Gives a user a gold star!")
+        .addUserOption((option) =>
+          option
+            .setName("user")
+            .setDescription("The user to give a star to.")
+            .setRequired(true)
+        )
+        .addStringOption((option) =>
+          option
+            .setName("reason")
+            .setDescription("The reason for giving the user a star.")
+            .setRequired(true)
+        )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("starcount")
+        .setDescription(
+          "Returns the leaderboard for users who have received stars."
+        )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("topic")
+        .setDescription("Provides a conversation starter!")
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("userinfo")
+        .setDescription("Returns information on the user, or yourself.")
+        .addUserOption((option) =>
+          option.setName("user").setDescription("The user to lookup.")
+        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -58,6 +131,24 @@ export const community: SlashInt = {
           break;
         case "role":
           await handleRole(Becca, interaction, config);
+          break;
+        case "motivation":
+          await handleMotivation(Becca, interaction, config);
+          break;
+        case "schedule":
+          await handleSchedule(Becca, interaction, config);
+          break;
+        case "star":
+          await handleStar(Becca, interaction, config);
+          break;
+        case "starcount":
+          await handleStarCount(Becca, interaction, config);
+          break;
+        case "topic":
+          await handleTopic(Becca, interaction, config);
+          break;
+        case "userinfo":
+          await handleUserInfo(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({

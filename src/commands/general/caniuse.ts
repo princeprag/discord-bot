@@ -1,6 +1,6 @@
-import { MessageEmbed } from "discord.js";
 import { CommandInt } from "../../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
+import { migrationEmbedGenerator } from "../../modules/commands/migrationEmbedGenerator";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const caniuse: CommandInt = {
@@ -8,26 +8,13 @@ export const caniuse: CommandInt = {
   description: "Get the Can I Use browser data for a given feature.",
   parameters: ["`feature`: the feature to search for"],
   category: "general",
+  isMigrated: true,
   run: async (Becca, message) => {
     try {
-      const { content } = message;
-      const [, ...featureText] = content.split(" ");
-      const feature = featureText.join("-");
-      if (!feature) {
-        return {
-          success: false,
-          content: "Which feature did you want me to search for?",
-        };
-      }
-      const caniuseEmbed = new MessageEmbed();
-      caniuseEmbed.setTitle(`Can I Use ${feature}`);
-      caniuseEmbed.setImage(
-        `https://caniuse.bitsofco.de/image/${feature}.webp`
-      );
-      caniuseEmbed.setTimestamp();
-      caniuseEmbed.setColor(Becca.colours.default);
-
-      return { success: true, content: caniuseEmbed };
+      return {
+        success: false,
+        content: migrationEmbedGenerator("code caniuse"),
+      };
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,

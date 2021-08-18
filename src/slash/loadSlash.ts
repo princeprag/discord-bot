@@ -14,12 +14,18 @@ export const loadSlash = async (Becca: BeccaInt): Promise<SlashInt[]> => {
     const serverCommands = await readSlashDirectory(Becca, "server");
     const gameCommands = await readSlashDirectory(Becca, "games");
     const modCommands = await readSlashDirectory(Becca, "moderation");
+    const adminCommands = await readSlashDirectory(Becca, "admin");
+    const codeCommands = await readSlashDirectory(Becca, "code");
+    const miscCommands = await readSlashDirectory(Becca, "misc");
 
     return [
       ...generalCommands,
       ...serverCommands,
       ...gameCommands,
       ...modCommands,
+      ...adminCommands,
+      ...codeCommands,
+      ...miscCommands,
     ];
   } catch (err) {
     await beccaErrorHandler(Becca, "slash command loader", err);

@@ -17,8 +17,6 @@ export interface BeccaInt extends Client {
     dbToken: string;
     whUrl: string;
     nasaKey: string;
-    habiticaKey: string;
-    orbitKey: string;
     ownerId: string;
     love: string;
     yes: string;
