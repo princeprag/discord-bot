@@ -14,6 +14,7 @@ import { handleSchedule } from "../../modules/slash/community/handleSchedule";
 import { handleStar } from "../../modules/slash/community/handleStar";
 import { handleStarCount } from "../../modules/slash/community/handleStarCount";
 import { handleTopic } from "../../modules/slash/community/handleTopic";
+import { handleUserInfo } from "../../modules/slash/community/handleUserInfo";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const community: SlashInt = {
@@ -107,6 +108,14 @@ export const community: SlashInt = {
       new SlashCommandSubcommandBuilder()
         .setName("topic")
         .setDescription("Provides a conversation starter!")
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("userinfo")
+        .setDescription("Returns information on the user, or yourself.")
+        .addUserOption((option) =>
+          option.setName("user").setDescription("The user to lookup.")
+        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -137,6 +146,9 @@ export const community: SlashInt = {
           break;
         case "topic":
           await handleTopic(Becca, interaction, config);
+          break;
+        case "userinfo":
+          await handleUserInfo(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
