@@ -1,30 +1,34 @@
 import { BeccaInt } from "../interfaces/BeccaInt";
-import { CommandInt } from "../interfaces/commands/CommandInt";
+import { SlashInt } from "../interfaces/slash/SlashInt";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
-import { readCommandDirectory } from "../utils/readCommandDirectory";
+import { readSlashDirectory } from "../utils/readSlashDirectory";
 
 /**
- * Reads all command directories and imports the command files within.
+ * Reads all slash command directories and imports the command files within.
  * @param Becca Becca's Client instance
  * @returns Array of CommandInt objects representing the imported commands.
  */
-export const loadCommands = async (Becca: BeccaInt): Promise<CommandInt[]> => {
+export const loadCommands = async (Becca: BeccaInt): Promise<SlashInt[]> => {
   try {
-    const botCommands = await readCommandDirectory(Becca, "bot");
-    const gameCommands = await readCommandDirectory(Becca, "games");
-    const generalCommands = await readCommandDirectory(Becca, "general");
-    const modCommands = await readCommandDirectory(Becca, "moderation");
-    const serverCommands = await readCommandDirectory(Becca, "server");
+    const generalCommands = await readSlashDirectory(Becca, "general");
+    const serverCommands = await readSlashDirectory(Becca, "server");
+    const gameCommands = await readSlashDirectory(Becca, "games");
+    const modCommands = await readSlashDirectory(Becca, "moderation");
+    const adminCommands = await readSlashDirectory(Becca, "admin");
+    const codeCommands = await readSlashDirectory(Becca, "code");
+    const miscCommands = await readSlashDirectory(Becca, "misc");
 
     return [
-      ...botCommands,
-      ...gameCommands,
       ...generalCommands,
-      ...modCommands,
       ...serverCommands,
+      ...gameCommands,
+      ...modCommands,
+      ...adminCommands,
+      ...codeCommands,
+      ...miscCommands,
     ];
   } catch (err) {
-    await beccaErrorHandler(Becca, "command loader", err);
+    await beccaErrorHandler(Becca, "slash command loader", err);
     return [];
   }
 };

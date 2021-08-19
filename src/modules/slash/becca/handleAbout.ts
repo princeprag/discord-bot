@@ -20,7 +20,7 @@ export const handleAbout: SlashHandlerType = async (Becca, interaction) => {
     aboutEmbed.addField("Guilds", Becca.guilds.cache.size.toString(), true);
     aboutEmbed.addField(
       "Available spells",
-      Becca.slash.length.toString(),
+      Becca.commands.length.toString(),
       true
     );
     aboutEmbed.addField("Favourite Colour", "Purple", true);

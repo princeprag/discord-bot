@@ -4,7 +4,7 @@ import { REST } from "@discordjs/rest";
 import { APIApplicationCommandOption, Routes } from "discord-api-types/v9";
 import { beccaLogHandler } from "../utils/beccaLogHandler";
 
-export const registerSlash = async (Becca: BeccaInt): Promise<boolean> => {
+export const registerCommands = async (Becca: BeccaInt): Promise<boolean> => {
   try {
     const rest = new REST({ version: "9" }).setToken(Becca.configs.token);
 
@@ -14,7 +14,9 @@ export const registerSlash = async (Becca: BeccaInt): Promise<boolean> => {
       options: APIApplicationCommandOption[];
     }[] = [];
 
-    Becca.slash.forEach((command) => commandData.push(command.data.toJSON()));
+    Becca.commands.forEach((command) =>
+      commandData.push(command.data.toJSON())
+    );
     if (process.env.NODE_ENV === "production") {
       beccaLogHandler.log("debug", "registering commands globally!");
       await rest.put(Routes.applicationCommands(Becca.configs.id), {

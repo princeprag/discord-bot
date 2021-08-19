@@ -1,6 +1,5 @@
 import { Message } from "discord.js";
 import { BeccaInt } from "../../interfaces/BeccaInt";
-import { beccaMentionListener } from "../../listeners/beccaMentionListener";
 import { heartsListener } from "../../listeners/heartsListener";
 import { levelListener } from "../../listeners/levelListener";
 import { linksListener } from "../../listeners/linksListener";
@@ -8,7 +7,6 @@ import { thanksListener } from "../../listeners/thanksListener";
 import { handleDms } from "../../modules/handleDms";
 import { getSettings } from "../../modules/settings/getSettings";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
-import { sleep } from "../../utils/sleep";
 
 /**
  * Handles the onMessage event. Validates that the message did not come from
@@ -21,8 +19,7 @@ export const messageCreate = async (
   message: Message
 ): Promise<void> => {
   try {
-    const { author, channel, content, guild } = message;
-    const { commands } = Becca;
+    const { author, channel, guild } = message;
 
     if (author.bot) {
       return;
@@ -42,34 +39,7 @@ export const messageCreate = async (
     await heartsListener.run(Becca, message, serverConfig);
     await thanksListener.run(Becca, message, serverConfig);
     await linksListener.run(Becca, message, serverConfig);
-
-    const prefix = "becca!";
-
-    if (!content.startsWith(prefix)) {
-      await levelListener.run(Becca, message, serverConfig);
-      await beccaMentionListener.run(Becca, message, serverConfig);
-      return;
-    }
-
-    for (const command of commands) {
-      const [commandCall] = message.content.toLowerCase().split(" ");
-      if (commandCall === prefix + command.name) {
-        await message.channel.sendTyping();
-        await sleep(3000);
-        const response = await command.run(Becca, message, serverConfig);
-        if (typeof response.content === "string") {
-          await message.channel.send(response.content);
-        } else {
-          await message.channel.send({ embeds: [response.content] });
-        }
-        if (response.success) {
-          await message.react(Becca.configs.yes);
-        } else {
-          await message.react(Becca.configs.no);
-        }
-        break;
-      }
-    }
+    await levelListener.run(Becca, message, serverConfig);
   } catch (err) {
     beccaErrorHandler(
       Becca,

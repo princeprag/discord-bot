@@ -1,5 +1,4 @@
 import { Client, ColorResolvable, WebhookClient } from "discord.js";
-import { CommandInt } from "./commands/CommandInt";
 import { SlashInt } from "./slash/SlashInt";
 
 /**
@@ -32,8 +31,7 @@ export interface BeccaInt extends Client {
     warning: ColorResolvable;
     error: ColorResolvable;
   };
-  commands: CommandInt[];
-  slash: SlashInt[];
+  commands: SlashInt[];
   responses: ResponsesInt;
 }
 
