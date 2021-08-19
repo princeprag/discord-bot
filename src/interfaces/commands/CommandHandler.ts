@@ -2,7 +2,7 @@ import { CommandInteraction } from "discord.js";
 import { ServerModelInt } from "../../database/models/ServerModel";
 import { BeccaInt } from "../BeccaInt";
 
-export type SlashHandlerType = (
+export type CommandHandler = (
   Becca: BeccaInt,
   interaction: CommandInteraction,
   config: ServerModelInt

@@ -4,11 +4,11 @@ import {
   MessageButton,
   MessageEmbed,
 } from "discord.js";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
-export const handleList: SlashHandlerType = async (Becca, interaction) => {
+export const handleList: CommandHandler = async (Becca, interaction) => {
   try {
     const serverList = Becca.guilds.cache.map((el) => el);
     const ownerIds: string[] = [];

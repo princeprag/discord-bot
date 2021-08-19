@@ -1,6 +1,6 @@
 import { MessageEmbed } from "discord.js";
 import { SettingsTypes } from "../../../../interfaces/settings/SettingsTypes";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../../utils/customSubstring";
 import { renderSetting } from "../../../commands/config/renderSetting";
@@ -8,7 +8,7 @@ import { validateSetting } from "../../../commands/config/validateSetting";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 import { setSetting } from "../../../settings/setSetting";
 
-export const handleSet: SlashHandlerType = async (
+export const handleSet: CommandHandler = async (
   Becca,
   interaction,
   config

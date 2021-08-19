@@ -1,10 +1,10 @@
 import { SettingsTypes } from "../../../../interfaces/settings/SettingsTypes";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 import { resetSetting } from "../../../settings/resetSetting";
 
-export const handleReset: SlashHandlerType = async (
+export const handleReset: CommandHandler = async (
   Becca,
   interaction,
   config

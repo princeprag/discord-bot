@@ -1,11 +1,11 @@
 import { MessageEmbed } from "discord.js";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../../utils/customSubstring";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 import { updateWarningCount } from "../../../commands/moderation/updateWarningCount";
 
-export const handleWarn: SlashHandlerType = async (Becca, interaction) => {
+export const handleWarn: CommandHandler = async (Becca, interaction) => {
   try {
     const { guild, member } = interaction;
     if (!guild) {

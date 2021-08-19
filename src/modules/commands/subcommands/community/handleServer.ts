@@ -3,11 +3,11 @@ import {
   accountVerificationMap,
   contentFilterMap,
 } from "../../../../config/commands/serverInfo";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleServer: SlashHandlerType = async (Becca, interaction) => {
+export const handleServer: CommandHandler = async (Becca, interaction) => {
   try {
     const { guild } = interaction;
 

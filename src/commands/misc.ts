@@ -2,7 +2,7 @@ import {
   SlashCommandBuilder,
   SlashCommandSubcommandBuilder,
 } from "@discordjs/builders";
-import { SlashInt } from "../interfaces/slash/SlashInt";
+import { CommandInt } from "../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
 import { handlePermissions } from "../modules/commands/subcommands/misc/handlePermissions";
 import { handleSpace } from "../modules/commands/subcommands/misc/handleSpace";
@@ -10,7 +10,7 @@ import { handleUsername } from "../modules/commands/subcommands/misc/handleUsern
 import { handleXkcd } from "../modules/commands/subcommands/misc/handleXkcd";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
-export const misc: SlashInt = {
+export const misc: CommandInt = {
   data: new SlashCommandBuilder()
     .setName("misc")
     .setDescription("Miscellaneous commands that do not fit other categories")

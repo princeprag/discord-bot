@@ -5,12 +5,12 @@ import {
   MessageEmbed,
   Role,
 } from "discord.js";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { sleep } from "../../../../utils/sleep";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleRole: SlashHandlerType = async (
+export const handleRole: CommandHandler = async (
   Becca,
   interaction,
   config

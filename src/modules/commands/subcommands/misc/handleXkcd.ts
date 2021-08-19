@@ -1,11 +1,11 @@
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 import { XkcdInt } from "../../../../interfaces/commands/general/XkcdInt";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleXkcd: SlashHandlerType = async (Becca, interaction) => {
+export const handleXkcd: CommandHandler = async (Becca, interaction) => {
   try {
     const number = interaction.options.getInteger("number");
     let url = "https://xkcd.com/";

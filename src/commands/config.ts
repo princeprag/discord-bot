@@ -2,14 +2,14 @@ import {
   SlashCommandBuilder,
   SlashCommandSubcommandBuilder,
 } from "@discordjs/builders";
-import { SlashInt } from "../interfaces/slash/SlashInt";
+import { CommandInt } from "../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
 import { handleReset } from "../modules/commands/subcommands/config/handleReset";
 import { handleSet } from "../modules/commands/subcommands/config/handleSet";
 import { handleView } from "../modules/commands/subcommands/config/handleView";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
-export const config: SlashInt = {
+export const config: CommandInt = {
   data: new SlashCommandBuilder()
     .setName("config")
     .setDescription("Modify your server settings.")

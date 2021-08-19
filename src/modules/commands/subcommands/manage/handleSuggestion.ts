@@ -1,10 +1,10 @@
 import { GuildMember, TextChannel } from "discord.js";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../../utils/customSubstring";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleSuggestion: SlashHandlerType = async (
+export const handleSuggestion: CommandHandler = async (
   Becca,
   interaction,
   config

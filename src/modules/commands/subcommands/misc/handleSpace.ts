@@ -1,12 +1,12 @@
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 import { SpaceInt } from "../../../../interfaces/commands/general/SpaceInt";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../../utils/customSubstring";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleSpace: SlashHandlerType = async (Becca, interaction) => {
+export const handleSpace: CommandHandler = async (Becca, interaction) => {
   try {
     const date = interaction.options.getString("date");
     let url = `https://api.nasa.gov/planetary/apod?api_key=${Becca.configs.nasaKey}`;

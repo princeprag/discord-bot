@@ -1,11 +1,11 @@
 import { MessageEmbed } from "discord.js";
 import { UserFlagMap } from "../../../../config/commands/userInfo";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../../utils/customSubstring";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleUserInfo: SlashHandlerType = async (Becca, interaction) => {
+export const handleUserInfo: CommandHandler = async (Becca, interaction) => {
   try {
     const { user, guild } = interaction;
     if (!guild) {

@@ -1,10 +1,10 @@
 import { MessageEmbed } from "discord.js";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 import { generateUsername } from "../../../commands/general/generateUsername";
 
-export const handleUsername: SlashHandlerType = async (Becca, interaction) => {
+export const handleUsername: CommandHandler = async (Becca, interaction) => {
   try {
     const { user } = interaction;
     const length = interaction.options.getInteger("length") || 30;

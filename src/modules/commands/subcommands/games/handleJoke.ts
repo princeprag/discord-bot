@@ -1,11 +1,11 @@
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 import { JokeInt } from "../../../../interfaces/commands/games/JokeInt";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleJoke: SlashHandlerType = async (Becca, interaction) => {
+export const handleJoke: CommandHandler = async (Becca, interaction) => {
   try {
     const joke = await axios.get<JokeInt>("https://icanhazdadjoke.com/", {
       headers: {

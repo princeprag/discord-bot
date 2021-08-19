@@ -2,14 +2,14 @@ import {
   SlashCommandBuilder,
   SlashCommandSubcommandBuilder,
 } from "@discordjs/builders";
-import { SlashInt } from "../interfaces/slash/SlashInt";
+import { CommandInt } from "../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
 import { handleLeave } from "../modules/commands/subcommands/nhcarrigan/handleLeave";
 import { handleList } from "../modules/commands/subcommands/nhcarrigan/handleList";
 import { handleServerData } from "../modules/commands/subcommands/nhcarrigan/handleServerData";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
-export const nhcarrigan: SlashInt = {
+export const nhcarrigan: CommandInt = {
   data: new SlashCommandBuilder()
     .setName("nhcarrigan")
     .setDescription("Admin Commands locked to the owner.")

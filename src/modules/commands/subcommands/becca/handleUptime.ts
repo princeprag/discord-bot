@@ -1,9 +1,9 @@
 import { MessageEmbed } from "discord.js";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleUptime: SlashHandlerType = async (Becca, interaction) => {
+export const handleUptime: CommandHandler = async (Becca, interaction) => {
   try {
     const seconds = Math.round(process.uptime());
     const days = seconds >= 86400 ? Math.floor(seconds / 86400) : 0;

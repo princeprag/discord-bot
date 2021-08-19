@@ -1,12 +1,12 @@
 import { Message, MessageActionRow, MessageButton } from "discord.js";
 import { ArraySettingsType } from "../../../../interfaces/settings/ArraySettingsType";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { viewSettings } from "../../../commands/config/viewSettings";
 import { viewSettingsArray } from "../../../commands/config/viewSettingsArray";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleView: SlashHandlerType = async (
+export const handleView: CommandHandler = async (
   Becca,
   interaction,
   config

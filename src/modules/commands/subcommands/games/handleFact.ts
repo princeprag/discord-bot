@@ -1,12 +1,12 @@
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 import { FactInt } from "../../../../interfaces/commands/games/FactInt";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../../utils/customSubstring";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleFact: SlashHandlerType = async (Becca, interaction) => {
+export const handleFact: CommandHandler = async (Becca, interaction) => {
   try {
     const fact = await axios.get<FactInt>(
       "https://uselessfacts.jsph.pl/random.json?language=en"

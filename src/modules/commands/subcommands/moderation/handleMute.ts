@@ -1,11 +1,11 @@
 import { MessageEmbed } from "discord.js";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../../utils/customSubstring";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 import { sendLogEmbed } from "../../../guild/sendLogEmbed";
 
-export const handleMute: SlashHandlerType = async (
+export const handleMute: CommandHandler = async (
   Becca,
   interaction,
   config

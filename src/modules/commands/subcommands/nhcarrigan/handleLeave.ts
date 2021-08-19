@@ -1,8 +1,8 @@
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
-export const handleLeave: SlashHandlerType = async (Becca, interaction) => {
+export const handleLeave: CommandHandler = async (Becca, interaction) => {
   try {
     const serverId = interaction.options.getString("server-id");
 

@@ -6,13 +6,13 @@ import {
   MessageEmbed,
 } from "discord.js";
 import { TriviaInt } from "../../../../interfaces/commands/games/TriviaInt";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../../utils/customSubstring";
 import { replaceHtml } from "../../../../utils/replaceHtml";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleTrivia: SlashHandlerType = async (Becca, interaction) => {
+export const handleTrivia: CommandHandler = async (Becca, interaction) => {
   try {
     const letters = ["A", "B", "C", "D"];
 

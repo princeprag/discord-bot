@@ -1,5 +1,5 @@
 import { Client, ColorResolvable, WebhookClient } from "discord.js";
-import { SlashInt } from "./slash/SlashInt";
+import { CommandInt } from "./commands/CommandInt";
 
 /**
  * Model used to pass around Becca's client instance with additional
@@ -31,7 +31,7 @@ export interface BeccaInt extends Client {
     warning: ColorResolvable;
     error: ColorResolvable;
   };
-  commands: SlashInt[];
+  commands: CommandInt[];
   responses: ResponsesInt;
 }
 
@@ -45,3 +45,4 @@ export interface ResponsesInt {
   no_mod_self: string;
   no_mod_becca: string;
 }
+

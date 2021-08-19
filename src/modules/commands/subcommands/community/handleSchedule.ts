@@ -5,11 +5,11 @@ import {
   NewsChannel,
   TextChannel,
 } from "discord.js";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleSchedule: SlashHandlerType = async (Becca, interaction) => {
+export const handleSchedule: CommandHandler = async (Becca, interaction) => {
   try {
     const { member } = interaction;
     const time = interaction.options.getInteger("time");

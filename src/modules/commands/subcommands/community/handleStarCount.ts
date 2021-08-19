@@ -1,10 +1,10 @@
 import { MessageEmbed } from "discord.js";
 import StarModel from "../../../../database/models/StarModel";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleStarCount: SlashHandlerType = async (Becca, interaction) => {
+export const handleStarCount: CommandHandler = async (Becca, interaction) => {
   try {
     const { member, guild } = interaction;
 

@@ -1,10 +1,10 @@
 import { MessageEmbed } from "discord.js";
 import { httpStatus } from "../../../../config/commands/httpStatus";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleHttp: SlashHandlerType = async (Becca, interaction) => {
+export const handleHttp: CommandHandler = async (Becca, interaction) => {
   try {
     const status = interaction.options.getInteger("status");
     if (!status) {

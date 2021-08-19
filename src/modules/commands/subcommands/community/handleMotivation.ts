@@ -1,10 +1,10 @@
 import { MessageEmbed } from "discord.js";
 import { motivationalQuotes } from "../../../../config/commands/motivationalQuotes";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleMotivation: SlashHandlerType = async (
+export const handleMotivation: CommandHandler = async (
   Becca,
   interaction
 ) => {

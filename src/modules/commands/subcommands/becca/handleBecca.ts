@@ -1,9 +1,9 @@
 import { MessageEmbed } from "discord.js";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleBecca: SlashHandlerType = async (Becca, interaction) => {
+export const handleBecca: CommandHandler = async (Becca, interaction) => {
   try {
     const beccaEmbed = new MessageEmbed();
     beccaEmbed.setColor(Becca.colours.default);

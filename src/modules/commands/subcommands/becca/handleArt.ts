@@ -1,10 +1,10 @@
 import { MessageEmbed } from "discord.js";
 import { artList } from "../../../../config/commands/artList";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleArt: SlashHandlerType = async (Becca, interaction) => {
+export const handleArt: CommandHandler = async (Becca, interaction) => {
   try {
     const random = Math.floor(Math.random() * artList.length);
     const { fileName, artName, artist, artistUrl } = artList[random];

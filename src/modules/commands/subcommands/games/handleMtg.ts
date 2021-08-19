@@ -1,11 +1,11 @@
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
 import { MtgInt } from "../../../../interfaces/commands/games/MtgInt";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleMtg: SlashHandlerType = async (Becca, interaction) => {
+export const handleMtg: CommandHandler = async (Becca, interaction) => {
   try {
     const query = interaction.options.getString("card");
 

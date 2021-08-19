@@ -1,9 +1,9 @@
 import { MessageEmbed } from "discord.js";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleInvite: SlashHandlerType = async (Becca, interaction) => {
+export const handleInvite: CommandHandler = async (Becca, interaction) => {
   try {
     const inviteEmbed = new MessageEmbed();
     inviteEmbed.setTitle("Do you require my assistance?");

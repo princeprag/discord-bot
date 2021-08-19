@@ -1,10 +1,10 @@
 import { MessageEmbed } from "discord.js";
 import { SusColours, SusNames } from "../../../../config/commands/susList";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleSus: SlashHandlerType = async (Becca, interaction) => {
+export const handleSus: CommandHandler = async (Becca, interaction) => {
   try {
     const random = Math.floor(Math.random() * SusNames.length);
     const susEmbed = new MessageEmbed();

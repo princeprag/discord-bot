@@ -1,10 +1,10 @@
 import { GuildMember } from "discord.js";
 import LevelModel from "../../../../database/models/LevelModel";
-import { SlashHandlerType } from "../../../../interfaces/slash/SlashHandlerType";
+import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleResetLevels: SlashHandlerType = async (
+export const handleResetLevels: CommandHandler = async (
   Becca,
   interaction
 ) => {
