@@ -27,4 +27,3 @@ export const loadCommands = async (Becca: BeccaInt): Promise<CommandInt[]> => {
     return [];
   }
 };
-

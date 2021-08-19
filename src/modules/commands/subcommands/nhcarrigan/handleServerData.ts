@@ -7,10 +7,7 @@ import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
-export const handleServerData: CommandHandler = async (
-  Becca,
-  interaction
-) => {
+export const handleServerData: CommandHandler = async (Becca, interaction) => {
   try {
     const serverId = interaction.options.getString("server");
 

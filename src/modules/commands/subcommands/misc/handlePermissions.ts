@@ -5,10 +5,7 @@ import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 import { validateChannelPerms } from "../../../commands/server/validateChannelPerms";
 import { validateServerPerms } from "../../../commands/server/validateServerPerms";
 
-export const handlePermissions: CommandHandler = async (
-  Becca,
-  interaction
-) => {
+export const handlePermissions: CommandHandler = async (Becca, interaction) => {
   try {
     const { channel, guild, member } = interaction;
 

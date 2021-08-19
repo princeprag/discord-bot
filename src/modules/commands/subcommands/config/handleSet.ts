@@ -8,11 +8,7 @@ import { validateSetting } from "../../../commands/config/validateSetting";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 import { setSetting } from "../../../settings/setSetting";
 
-export const handleSet: CommandHandler = async (
-  Becca,
-  interaction,
-  config
-) => {
+export const handleSet: CommandHandler = async (Becca, interaction, config) => {
   try {
     const { guild } = interaction;
 

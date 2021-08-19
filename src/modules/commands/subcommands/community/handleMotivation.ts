@@ -4,10 +4,7 @@ import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleMotivation: CommandHandler = async (
-  Becca,
-  interaction
-) => {
+export const handleMotivation: CommandHandler = async (Becca, interaction) => {
   try {
     const random = Math.floor(Math.random() * motivationalQuotes.length);
     const quote = motivationalQuotes[random];

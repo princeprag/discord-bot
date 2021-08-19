@@ -4,10 +4,7 @@ import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
-export const handleResetLevels: CommandHandler = async (
-  Becca,
-  interaction
-) => {
+export const handleResetLevels: CommandHandler = async (Becca, interaction) => {
   try {
     const { guild, member } = interaction;
 

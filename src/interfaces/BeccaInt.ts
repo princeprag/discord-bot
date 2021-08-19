@@ -45,4 +45,3 @@ export interface ResponsesInt {
   no_mod_self: string;
   no_mod_becca: string;
 }
-
