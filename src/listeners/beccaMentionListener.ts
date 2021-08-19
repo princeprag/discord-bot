@@ -1,6 +1,5 @@
 import { ListenerInt } from "../interfaces/listeners/ListenerInt";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
-import { sleep } from "../utils/sleep";
 
 export const beccaMentionListener: ListenerInt = {
   name: "Becca Mention Listener",
@@ -13,8 +12,6 @@ export const beccaMentionListener: ListenerInt = {
       }
 
       await message.react(Becca.configs.think);
-      await channel.sendTyping();
-      await sleep(3000);
       await channel.send(
         "What can I do for you? Cast `becca!help` to see my spells!"
       );

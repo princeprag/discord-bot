@@ -1,7 +1,6 @@
 import { Guild, MessageEmbed, TextChannel } from "discord.js";
 import { BeccaInt } from "../../interfaces/BeccaInt";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
-import { sleep } from "../../utils/sleep";
 import { getSettings } from "../settings/getSettings";
 
 /**
@@ -31,9 +30,6 @@ export const sendWelcomeEmbed = async (
     if (!welcomeChannel) {
       return;
     }
-
-    await welcomeChannel.sendTyping();
-    await sleep(3000);
 
     await welcomeChannel.send({ embeds: [content] });
   } catch (err) {
