@@ -2,12 +2,12 @@ import {
   SlashCommandBuilder,
   SlashCommandSubcommandBuilder,
 } from "@discordjs/builders";
-import { SlashInt } from "../../interfaces/slash/SlashInt";
-import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
-import { handleLeave } from "../../modules/commands/subcommands/nhcarrigan/handleLeave";
-import { handleList } from "../../modules/commands/subcommands/nhcarrigan/handleList";
-import { handleServerData } from "../../modules/commands/subcommands/nhcarrigan/handleServerData";
-import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { SlashInt } from "../interfaces/slash/SlashInt";
+import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
+import { handleLeave } from "../modules/commands/subcommands/nhcarrigan/handleLeave";
+import { handleList } from "../modules/commands/subcommands/nhcarrigan/handleList";
+import { handleServerData } from "../modules/commands/subcommands/nhcarrigan/handleServerData";
+import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 export const nhcarrigan: SlashInt = {
   data: new SlashCommandBuilder()

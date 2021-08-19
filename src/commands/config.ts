@@ -2,12 +2,12 @@ import {
   SlashCommandBuilder,
   SlashCommandSubcommandBuilder,
 } from "@discordjs/builders";
-import { SlashInt } from "../../interfaces/slash/SlashInt";
-import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
-import { handleReset } from "../../modules/commands/subcommands/config/handleReset";
-import { handleSet } from "../../modules/commands/subcommands/config/handleSet";
-import { handleView } from "../../modules/commands/subcommands/config/handleView";
-import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { SlashInt } from "../interfaces/slash/SlashInt";
+import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
+import { handleReset } from "../modules/commands/subcommands/config/handleReset";
+import { handleSet } from "../modules/commands/subcommands/config/handleSet";
+import { handleView } from "../modules/commands/subcommands/config/handleView";
+import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 export const config: SlashInt = {
   data: new SlashCommandBuilder()

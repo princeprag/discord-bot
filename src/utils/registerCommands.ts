@@ -1,8 +1,8 @@
 import { BeccaInt } from "../interfaces/BeccaInt";
-import { beccaErrorHandler } from "../utils/beccaErrorHandler";
+import { beccaErrorHandler } from "./beccaErrorHandler";
 import { REST } from "@discordjs/rest";
 import { APIApplicationCommandOption, Routes } from "discord-api-types/v9";
-import { beccaLogHandler } from "../utils/beccaLogHandler";
+import { beccaLogHandler } from "./beccaLogHandler";
 
 export const registerCommands = async (Becca: BeccaInt): Promise<boolean> => {
   try {

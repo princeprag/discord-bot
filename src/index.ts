@@ -7,10 +7,10 @@ import { validateEnv } from "./modules/validateEnv";
 import { connectDatabase } from "./database/connectDatabase";
 import { beccaErrorHandler } from "./utils/beccaErrorHandler";
 import { handleEvents } from "./events/handleEvents";
-import { loadCommands } from "./commands/loadCommands";
+import { loadCommands } from "./utils/loadCommands";
 import { createServer } from "./server/serve";
 import { IntentOptions } from "./config/IntentOptions";
-import { registerCommands } from "./commands/registerCommands";
+import { registerCommands } from "./utils/registerCommands";
 
 /**
  * This block initialises the Sentry plugin.

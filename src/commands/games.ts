@@ -2,14 +2,14 @@ import {
   SlashCommandBuilder,
   SlashCommandSubcommandBuilder,
 } from "@discordjs/builders";
-import { SlashInt } from "../../interfaces/slash/SlashInt";
-import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
-import { handleFact } from "../../modules/commands/subcommands/games/handleFact";
-import { handleJoke } from "../../modules/commands/subcommands/games/handleJoke";
-import { handleMtg } from "../../modules/commands/subcommands/games/handleMtg";
-import { handleSus } from "../../modules/commands/subcommands/games/handleSus";
-import { handleTrivia } from "../../modules/commands/subcommands/games/handleTrivia";
-import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { SlashInt } from "../interfaces/slash/SlashInt";
+import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
+import { handleFact } from "../modules/commands/subcommands/games/handleFact";
+import { handleJoke } from "../modules/commands/subcommands/games/handleJoke";
+import { handleMtg } from "../modules/commands/subcommands/games/handleMtg";
+import { handleSus } from "../modules/commands/subcommands/games/handleSus";
+import { handleTrivia } from "../modules/commands/subcommands/games/handleTrivia";
+import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 export const games: SlashInt = {
   data: new SlashCommandBuilder()

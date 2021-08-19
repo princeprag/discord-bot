@@ -2,15 +2,15 @@ import {
   SlashCommandBuilder,
   SlashCommandSubcommandBuilder,
 } from "@discordjs/builders";
-import { SlashInt } from "../../interfaces/slash/SlashInt";
-import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
-import { handleBan } from "../../modules/commands/subcommands/moderation/handleBan";
-import { handleKick } from "../../modules/commands/subcommands/moderation/handleKick";
-import { handleMute } from "../../modules/commands/subcommands/moderation/handleMute";
-import { handleUnmute } from "../../modules/commands/subcommands/moderation/handleUnmute";
-import { handleWarn } from "../../modules/commands/subcommands/moderation/handleWarn";
-import { handleWarnCount } from "../../modules/commands/subcommands/moderation/handleWarnCount";
-import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { SlashInt } from "../interfaces/slash/SlashInt";
+import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
+import { handleBan } from "../modules/commands/subcommands/moderation/handleBan";
+import { handleKick } from "../modules/commands/subcommands/moderation/handleKick";
+import { handleMute } from "../modules/commands/subcommands/moderation/handleMute";
+import { handleUnmute } from "../modules/commands/subcommands/moderation/handleUnmute";
+import { handleWarn } from "../modules/commands/subcommands/moderation/handleWarn";
+import { handleWarnCount } from "../modules/commands/subcommands/moderation/handleWarnCount";
+import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 export const mod: SlashInt = {
   data: new SlashCommandBuilder()

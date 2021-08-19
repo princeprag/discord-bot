@@ -2,17 +2,17 @@ import {
   SlashCommandBuilder,
   SlashCommandSubcommandBuilder,
 } from "@discordjs/builders";
-import { SlashInt } from "../../interfaces/slash/SlashInt";
-import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
-import { handleAbout } from "../../modules/commands/subcommands/becca/handleAbout";
-import { handleArt } from "../../modules/commands/subcommands/becca/handleArt";
-import { handleBecca } from "../../modules/commands/subcommands/becca/handleBecca";
-import { handleDonate } from "../../modules/commands/subcommands/becca/handleDonate";
-import { handleHelp } from "../../modules/commands/subcommands/becca/handleHelp";
-import { handleInvite } from "../../modules/commands/subcommands/becca/handleInvite";
-import { handlePing } from "../../modules/commands/subcommands/becca/handlePing";
-import { handleUptime } from "../../modules/commands/subcommands/becca/handleUptime";
-import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { SlashInt } from "../interfaces/slash/SlashInt";
+import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
+import { handleAbout } from "../modules/commands/subcommands/becca/handleAbout";
+import { handleArt } from "../modules/commands/subcommands/becca/handleArt";
+import { handleBecca } from "../modules/commands/subcommands/becca/handleBecca";
+import { handleDonate } from "../modules/commands/subcommands/becca/handleDonate";
+import { handleHelp } from "../modules/commands/subcommands/becca/handleHelp";
+import { handleInvite } from "../modules/commands/subcommands/becca/handleInvite";
+import { handlePing } from "../modules/commands/subcommands/becca/handlePing";
+import { handleUptime } from "../modules/commands/subcommands/becca/handleUptime";
+import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 export const becca: SlashInt = {
   data: new SlashCommandBuilder()

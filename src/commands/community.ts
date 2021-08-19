@@ -4,20 +4,20 @@ import {
   SlashCommandSubcommandBuilder,
   SlashCommandUserOption,
 } from "@discordjs/builders";
-import { SlashInt } from "../../interfaces/slash/SlashInt";
-import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
-import { handleLeaderboard } from "../../modules/commands/subcommands/community/handleLeaderboard";
-import { handleLevel } from "../../modules/commands/subcommands/community/handleLevel";
-import { handleMotivation } from "../../modules/commands/subcommands/community/handleMotivation";
-import { handleRole } from "../../modules/commands/subcommands/community/handleRole";
-import { handleSchedule } from "../../modules/commands/subcommands/community/handleSchedule";
-import { handleServer } from "../../modules/commands/subcommands/community/handleServer";
-import { handleStar } from "../../modules/commands/subcommands/community/handleStar";
-import { handleStarCount } from "../../modules/commands/subcommands/community/handleStarCount";
-import { handleSuggest } from "../../modules/commands/subcommands/community/handleSuggest";
-import { handleTopic } from "../../modules/commands/subcommands/community/handleTopic";
-import { handleUserInfo } from "../../modules/commands/subcommands/community/handleUserInfo";
-import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { SlashInt } from "../interfaces/slash/SlashInt";
+import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
+import { handleLeaderboard } from "../modules/commands/subcommands/community/handleLeaderboard";
+import { handleLevel } from "../modules/commands/subcommands/community/handleLevel";
+import { handleMotivation } from "../modules/commands/subcommands/community/handleMotivation";
+import { handleRole } from "../modules/commands/subcommands/community/handleRole";
+import { handleSchedule } from "../modules/commands/subcommands/community/handleSchedule";
+import { handleServer } from "../modules/commands/subcommands/community/handleServer";
+import { handleStar } from "../modules/commands/subcommands/community/handleStar";
+import { handleStarCount } from "../modules/commands/subcommands/community/handleStarCount";
+import { handleSuggest } from "../modules/commands/subcommands/community/handleSuggest";
+import { handleTopic } from "../modules/commands/subcommands/community/handleTopic";
+import { handleUserInfo } from "../modules/commands/subcommands/community/handleUserInfo";
+import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 export const community: SlashInt = {
   data: new SlashCommandBuilder()
