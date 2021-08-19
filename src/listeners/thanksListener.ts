@@ -1,6 +1,5 @@
 import { ListenerInt } from "../interfaces/listeners/ListenerInt";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
-import { sleep } from "../utils/sleep";
 
 export const thanksListener: ListenerInt = {
   name: "Thanks",
@@ -38,8 +37,6 @@ export const thanksListener: ListenerInt = {
           `Well done, ${user.username}. It seems you have done something right.`
         );
       }
-      await channel.sendTyping();
-      await sleep(3000);
       await channel.send(replies.join("\n"));
     } catch (err) {
       beccaErrorHandler(

@@ -1,7 +1,6 @@
 import { Message, MessageEmbed } from "discord.js";
 import { BeccaInt } from "../interfaces/BeccaInt";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
-import { sleep } from "../utils/sleep";
 
 /**
  * Module to handle when the guild property is missing, indicating the message
@@ -30,8 +29,6 @@ export const handleDms = async (
       "http://invite.beccalyria.com",
       true
     );
-    await message.channel.sendTyping();
-    await sleep(3000);
     await message.reply({ embeds: [dmEmbed] });
   } catch (err) {
     beccaErrorHandler(Becca, "handleDMs module", err, "no guild", message);

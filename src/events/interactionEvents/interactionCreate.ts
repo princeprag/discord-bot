@@ -9,7 +9,7 @@ export const interactionCreate = async (
 ): Promise<void> => {
   try {
     if (interaction.isCommand()) {
-      const target = Becca.slash.find(
+      const target = Becca.commands.find(
         (el) => el.data.name === interaction.commandName
       );
       if (!target) {
