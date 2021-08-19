@@ -13,7 +13,7 @@ export const beccaMentionListener: ListenerInt = {
 
       await message.react(Becca.configs.think);
       await channel.send(
-        "What can I do for you? Cast `becca!help` to see my spells!"
+        "What can I do for you? Cast `/becca help` to see my spells!"
       );
     } catch (err) {
       beccaErrorHandler(
