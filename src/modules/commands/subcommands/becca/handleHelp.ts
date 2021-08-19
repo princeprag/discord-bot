@@ -30,10 +30,6 @@ export const handleHelp: SlashHandlerType = async (Becca, interaction) => {
       "Privacy Policy",
       "As part of my services, I collect and use some specific Discord related information. This information includes, but may not be limited to, your user name, nickname, this server's name, and your Discord ID. [View my full policy](https://github.com/BeccaLyria/discord-bot/blob/main/PRIVACY.md)"
     );
-    helpEmbed.addField(
-      "Migration",
-      "A temporary note: We are in the process of migrating to slash commands. As we proceed, additional commands will become available. For the other commands, you can use `becca!help` to see what is available."
-    );
     await interaction.editReply({ embeds: [helpEmbed] });
   } catch (err) {
     const errorId = await beccaErrorHandler(
