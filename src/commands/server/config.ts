@@ -4,9 +4,9 @@ import {
 } from "@discordjs/builders";
 import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
-import { handleReset } from "../../modules/slash/config/handleReset";
-import { handleSet } from "../../modules/slash/config/handleSet";
-import { handleView } from "../../modules/slash/config/handleView";
+import { handleReset } from "../../modules/commands/subcommands/config/handleReset";
+import { handleSet } from "../../modules/commands/subcommands/config/handleSet";
+import { handleView } from "../../modules/commands/subcommands/config/handleView";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const config: SlashInt = {

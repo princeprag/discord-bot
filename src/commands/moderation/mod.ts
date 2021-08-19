@@ -4,12 +4,12 @@ import {
 } from "@discordjs/builders";
 import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
-import { handleBan } from "../../modules/slash/moderation/handleBan";
-import { handleKick } from "../../modules/slash/moderation/handleKick";
-import { handleMute } from "../../modules/slash/moderation/handleMute";
-import { handleUnmute } from "../../modules/slash/moderation/handleUnmute";
-import { handleWarn } from "../../modules/slash/moderation/handleWarn";
-import { handleWarnCount } from "../../modules/slash/moderation/handleWarnCount";
+import { handleBan } from "../../modules/commands/subcommands/moderation/handleBan";
+import { handleKick } from "../../modules/commands/subcommands/moderation/handleKick";
+import { handleMute } from "../../modules/commands/subcommands/moderation/handleMute";
+import { handleUnmute } from "../../modules/commands/subcommands/moderation/handleUnmute";
+import { handleWarn } from "../../modules/commands/subcommands/moderation/handleWarn";
+import { handleWarnCount } from "../../modules/commands/subcommands/moderation/handleWarnCount";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const mod: SlashInt = {

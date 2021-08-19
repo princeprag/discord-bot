@@ -4,11 +4,11 @@ import {
 } from "@discordjs/builders";
 import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
-import { handleFact } from "../../modules/slash/games/handleFact";
-import { handleJoke } from "../../modules/slash/games/handleJoke";
-import { handleMtg } from "../../modules/slash/games/handleMtg";
-import { handleSus } from "../../modules/slash/games/handleSus";
-import { handleTrivia } from "../../modules/slash/games/handleTrivia";
+import { handleFact } from "../../modules/commands/subcommands/games/handleFact";
+import { handleJoke } from "../../modules/commands/subcommands/games/handleJoke";
+import { handleMtg } from "../../modules/commands/subcommands/games/handleMtg";
+import { handleSus } from "../../modules/commands/subcommands/games/handleSus";
+import { handleTrivia } from "../../modules/commands/subcommands/games/handleTrivia";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const games: SlashInt = {

@@ -4,10 +4,10 @@ import {
 } from "@discordjs/builders";
 import { SlashInt } from "../../interfaces/slash/SlashInt";
 import { errorEmbedGenerator } from "../../modules/commands/errorEmbedGenerator";
-import { handlePermissions } from "../../modules/slash/misc/handlePermissions";
-import { handleSpace } from "../../modules/slash/misc/handleSpace";
-import { handleUsername } from "../../modules/slash/misc/handleUsername";
-import { handleXkcd } from "../../modules/slash/misc/handleXkcd";
+import { handlePermissions } from "../../modules/commands/subcommands/misc/handlePermissions";
+import { handleSpace } from "../../modules/commands/subcommands/misc/handleSpace";
+import { handleUsername } from "../../modules/commands/subcommands/misc/handleUsername";
+import { handleXkcd } from "../../modules/commands/subcommands/misc/handleXkcd";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 export const misc: SlashInt = {
