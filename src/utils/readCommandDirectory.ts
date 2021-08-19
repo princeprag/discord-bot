@@ -1,7 +1,7 @@
 import { readdir } from "fs/promises";
 import { join } from "path";
 import { BeccaInt } from "../interfaces/BeccaInt";
-import { CommandInt } from "../interfaces/commands/CommandInt";
+import { SlashInt } from "../interfaces/slash/SlashInt";
 import { beccaErrorHandler } from "./beccaErrorHandler";
 
 /**
@@ -13,9 +13,9 @@ import { beccaErrorHandler } from "./beccaErrorHandler";
 export const readCommandDirectory = async (
   Becca: BeccaInt,
   directory: string
-): Promise<CommandInt[]> => {
+): Promise<SlashInt[]> => {
   try {
-    const result: CommandInt[] = [];
+    const result: SlashInt[] = [];
     const files = await readdir(
       join(process.cwd() + "/prod/commands/" + directory),
       "utf-8"
@@ -25,11 +25,11 @@ export const readCommandDirectory = async (
       const mod = await import(
         join(process.cwd() + `/prod/commands/${directory}/${file}`)
       );
-      result.push(mod[name] as CommandInt);
+      result.push(mod[name] as SlashInt);
     }
     return result;
   } catch (err) {
-    beccaErrorHandler(Becca, "read command directory util", err);
+    beccaErrorHandler(Becca, "read commands directory util", err);
     return [];
   }
 };
