@@ -74,18 +74,18 @@ export const code: SlashInt = {
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
-        "code command",
+        "code group command",
         err,
         interaction.guild?.name
       );
       await interaction
         .reply({
-          embeds: [errorEmbedGenerator(Becca, "code", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "code group", errorId)],
           ephemeral: true,
         })
         .catch(async () =>
           interaction.editReply({
-            embeds: [errorEmbedGenerator(Becca, "code", errorId)],
+            embeds: [errorEmbedGenerator(Becca, "code group", errorId)],
           })
         );
     }

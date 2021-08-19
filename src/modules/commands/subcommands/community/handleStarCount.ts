@@ -51,18 +51,18 @@ export const handleStarCount: SlashHandlerType = async (Becca, interaction) => {
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,
-      "server data command",
+      "star count command",
       err,
       interaction.guild?.name
     );
     await interaction
       .reply({
-        embeds: [errorEmbedGenerator(Becca, "server data", errorId)],
+        embeds: [errorEmbedGenerator(Becca, "star count", errorId)],
         ephemeral: true,
       })
       .catch(async () =>
         interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "server data", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "star count", errorId)],
         })
       );
   }

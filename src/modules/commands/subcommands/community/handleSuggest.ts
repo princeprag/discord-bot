@@ -64,18 +64,18 @@ export const handleSuggest: SlashHandlerType = async (
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,
-      "server command",
+      "suggest command",
       err,
       interaction.guild?.name
     );
     await interaction
       .reply({
-        embeds: [errorEmbedGenerator(Becca, "server", errorId)],
+        embeds: [errorEmbedGenerator(Becca, "suggest", errorId)],
         ephemeral: true,
       })
       .catch(async () =>
         interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "server", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "suggest", errorId)],
         })
       );
   }

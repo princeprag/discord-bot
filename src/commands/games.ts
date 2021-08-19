@@ -78,18 +78,18 @@ export const games: SlashInt = {
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
-        "community command",
+        "games group command",
         err,
         interaction.guild?.name
       );
       await interaction
         .reply({
-          embeds: [errorEmbedGenerator(Becca, "community", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "games group", errorId)],
           ephemeral: true,
         })
         .catch(async () =>
           interaction.editReply({
-            embeds: [errorEmbedGenerator(Becca, "community", errorId)],
+            embeds: [errorEmbedGenerator(Becca, "games group", errorId)],
           })
         );
     }

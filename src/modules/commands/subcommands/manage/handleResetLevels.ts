@@ -41,18 +41,18 @@ export const handleResetLevels: SlashHandlerType = async (
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,
-      "misc command",
+      "reset level command",
       err,
       interaction.guild?.name
     );
     await interaction
       .reply({
-        embeds: [errorEmbedGenerator(Becca, "misc", errorId)],
+        embeds: [errorEmbedGenerator(Becca, "reset level", errorId)],
         ephemeral: true,
       })
       .catch(async () =>
         interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "misc", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "reset level", errorId)],
         })
       );
   }

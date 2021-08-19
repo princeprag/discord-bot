@@ -24,18 +24,18 @@ export const handleArt: SlashHandlerType = async (Becca, interaction) => {
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,
-      "about command",
+      "art command",
       err,
       interaction.guild?.name
     );
     await interaction
       .reply({
-        embeds: [errorEmbedGenerator(Becca, "about", errorId)],
+        embeds: [errorEmbedGenerator(Becca, "art", errorId)],
         ephemeral: true,
       })
       .catch(async () =>
         interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "about", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "art", errorId)],
         })
       );
   }

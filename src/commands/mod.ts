@@ -143,18 +143,18 @@ export const mod: SlashInt = {
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
-        "mod command",
+        "mod group command",
         err,
         interaction.guild?.name
       );
       await interaction
         .reply({
-          embeds: [errorEmbedGenerator(Becca, "mod", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "mod group", errorId)],
           ephemeral: true,
         })
         .catch(async () =>
           interaction.editReply({
-            embeds: [errorEmbedGenerator(Becca, "mod", errorId)],
+            embeds: [errorEmbedGenerator(Becca, "mod group", errorId)],
           })
         );
     }

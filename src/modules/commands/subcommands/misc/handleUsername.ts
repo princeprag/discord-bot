@@ -32,18 +32,18 @@ export const handleUsername: SlashHandlerType = async (Becca, interaction) => {
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,
-      "topic command",
+      "username command",
       err,
       interaction.guild?.name
     );
     await interaction
       .reply({
-        embeds: [errorEmbedGenerator(Becca, "topic", errorId)],
+        embeds: [errorEmbedGenerator(Becca, "username", errorId)],
         ephemeral: true,
       })
       .catch(async () =>
         interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "topic", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "username", errorId)],
         })
       );
   }

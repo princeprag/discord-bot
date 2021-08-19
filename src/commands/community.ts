@@ -183,18 +183,18 @@ export const community: SlashInt = {
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
-        "community command",
+        "community group command",
         err,
         interaction.guild?.name
       );
       await interaction
         .reply({
-          embeds: [errorEmbedGenerator(Becca, "community", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "community group", errorId)],
           ephemeral: true,
         })
         .catch(async () =>
           interaction.editReply({
-            embeds: [errorEmbedGenerator(Becca, "community", errorId)],
+            embeds: [errorEmbedGenerator(Becca, "community group", errorId)],
           })
         );
     }

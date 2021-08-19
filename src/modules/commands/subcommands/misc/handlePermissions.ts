@@ -60,18 +60,18 @@ export const handlePermissions: SlashHandlerType = async (
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,
-      "permission command",
+      "permissions command",
       err,
       interaction.guild?.name
     );
     await interaction
       .reply({
-        embeds: [errorEmbedGenerator(Becca, "permission", errorId)],
+        embeds: [errorEmbedGenerator(Becca, "permissions", errorId)],
         ephemeral: true,
       })
       .catch(async () =>
         interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "permission", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "permissions", errorId)],
         })
       );
   }

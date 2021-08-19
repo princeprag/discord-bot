@@ -148,18 +148,18 @@ export const config: SlashInt = {
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
-        "config command",
+        "config group command",
         err,
         interaction.guild?.name
       );
       await interaction
         .reply({
-          embeds: [errorEmbedGenerator(Becca, "config", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "config group", errorId)],
           ephemeral: true,
         })
         .catch(async () =>
           interaction.editReply({
-            embeds: [errorEmbedGenerator(Becca, "config", errorId)],
+            embeds: [errorEmbedGenerator(Becca, "config group", errorId)],
           })
         );
     }

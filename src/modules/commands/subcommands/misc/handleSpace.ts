@@ -45,18 +45,18 @@ export const handleSpace: SlashHandlerType = async (Becca, interaction) => {
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,
-      "misc command",
+      "space command",
       err,
       interaction.guild?.name
     );
     await interaction
       .reply({
-        embeds: [errorEmbedGenerator(Becca, "misc", errorId)],
+        embeds: [errorEmbedGenerator(Becca, "space", errorId)],
         ephemeral: true,
       })
       .catch(async () =>
         interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "misc", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "space", errorId)],
         })
       );
   }

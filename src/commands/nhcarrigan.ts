@@ -73,18 +73,18 @@ export const nhcarrigan: SlashInt = {
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
-        "nhcarrigan command",
+        "nhcarrigan group command",
         err,
         interaction.guild?.name
       );
       await interaction
         .reply({
-          embeds: [errorEmbedGenerator(Becca, "nhcarrigan", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "nhcarrigan group", errorId)],
           ephemeral: true,
         })
         .catch(async () =>
           interaction.editReply({
-            embeds: [errorEmbedGenerator(Becca, "nhcarrigan", errorId)],
+            embeds: [errorEmbedGenerator(Becca, "nhcarrigan group", errorId)],
           })
         );
     }

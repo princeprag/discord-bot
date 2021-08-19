@@ -79,18 +79,18 @@ export const handleBan: SlashHandlerType = async (Becca, interaction) => {
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,
-      "kick command",
+      "ban command",
       err,
       interaction.guild?.name
     );
     await interaction
       .reply({
-        embeds: [errorEmbedGenerator(Becca, "kick", errorId)],
+        embeds: [errorEmbedGenerator(Becca, "ban", errorId)],
         ephemeral: true,
       })
       .catch(async () =>
         interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "kick", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "ban", errorId)],
         })
       );
   }
