@@ -64,9 +64,17 @@ export const levelListener: ListenerInt = {
       user.lastSeen = new Date(Date.now());
       user.userName = userName;
       user.cooldown = Date.now();
+      let levelUp = false;
 
       while (user.points > levelScale[user.level + 1]) {
         user.level++;
+        levelUp = true;
+      }
+
+      server.markModified("users");
+      await server.save();
+
+      if (levelUp) {
         const levelEmbed = new MessageEmbed();
         levelEmbed.setTitle("Level Up!");
         levelEmbed.setDescription(
@@ -79,8 +87,6 @@ export const levelListener: ListenerInt = {
         );
         await targetChannel.send({ embeds: [levelEmbed] });
       }
-      server.markModified("users");
-      await server.save();
 
       if (serverSettings.level_roles.length) {
         for (const setting of serverSettings.level_roles) {
