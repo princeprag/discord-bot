@@ -64,11 +64,17 @@ export const levelListener: ListenerInt = {
       user.lastSeen = new Date(Date.now());
       user.userName = userName;
       user.cooldown = Date.now();
-      server.markModified("users");
-      await server.save();
+      let levelUp = false;
 
       while (user.points > levelScale[user.level + 1]) {
         user.level++;
+        levelUp = true;
+      }
+
+      server.markModified("users");
+      await server.save();
+
+      if (levelUp) {
         const levelEmbed = new MessageEmbed();
         levelEmbed.setTitle("Level Up!");
         levelEmbed.setDescription(
