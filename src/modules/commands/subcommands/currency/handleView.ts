@@ -1,0 +1,58 @@
+import { MessageEmbed } from "discord.js";
+import { CurrencyHandler } from "../../../../interfaces/commands/CurrencyHandler";
+import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
+import { parseSeconds } from "../../../../utils/parseSeconds";
+import { errorEmbedGenerator } from "../../errorEmbedGenerator";
+
+export const handleView: CurrencyHandler = async (Becca, interaction, data) => {
+  try {
+    const { user } = interaction;
+    const now = Date.now();
+    const dailyCooldown = Math.round(
+      (data.dailyClaimed - now + 86400000) / 1000
+    );
+    const weeklyCooldown = Math.round(
+      (data.weeklyClaimed - now + 604800000) / 1000
+    );
+
+    const viewEmbed = new MessageEmbed();
+    viewEmbed.setTitle("Currency Report");
+    viewEmbed.setAuthor(
+      `${user.username}#${user.discriminator}`,
+      user.displayAvatarURL()
+    );
+    viewEmbed.setColor(Becca.colours.default);
+    viewEmbed.setDescription(
+      `You currently have ${data.currencyTotal} BeccaCoin!`
+    );
+    viewEmbed.addField(
+      "Next Daily Claim",
+      dailyCooldown < 0 ? "now!" : parseSeconds(dailyCooldown),
+      true
+    );
+    viewEmbed.addField(
+      "Next Weekly Claim",
+      weeklyCooldown < 0 ? "now!" : parseSeconds(weeklyCooldown),
+      true
+    );
+
+    await interaction.editReply({ embeds: [viewEmbed] });
+  } catch (err) {
+    const errorId = await beccaErrorHandler(
+      Becca,
+      "view command",
+      err,
+      interaction.guild?.name
+    );
+    await interaction
+      .reply({
+        embeds: [errorEmbedGenerator(Becca, "view", errorId)],
+        ephemeral: true,
+      })
+      .catch(async () =>
+        interaction.editReply({
+          embeds: [errorEmbedGenerator(Becca, "view", errorId)],
+        })
+      );
+  }
+};
