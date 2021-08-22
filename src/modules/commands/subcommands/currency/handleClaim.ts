@@ -28,7 +28,7 @@ export const handleClaim: CurrencyHandler = async (
         await data.save();
         claimEmbed.addField(
           "Reward Details",
-          "You will take the monarch role from whomever has it in our server, and you will keep the role until someone else takes it from you."
+          "You will take the monarch role from whomever has it in our support server, and you will keep the role until someone else takes it from you."
         );
         break;
       case "emote":
@@ -70,7 +70,7 @@ export const handleClaim: CurrencyHandler = async (
         await data.save();
         claimEmbed.addField(
           "Reward Details",
-          "You will be given the Wealthy role in our server. You will keep this role."
+          "You will be given the Wealthy role in our support server. You will keep this role."
         );
         break;
       case "nitro":

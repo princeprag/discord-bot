@@ -40,7 +40,7 @@ export const currency: CommandInt = {
             .setDescription("The reward you want to claim.")
             .addChoices([
               [
-                "Steal the `monarch` role in our Discord server. (500 BeccaCoin)",
+                "Steal the `monarch` role in Becca's Discord server. (500 BeccaCoin)",
                 "monarch",
               ],
               [
@@ -52,7 +52,7 @@ export const currency: CommandInt = {
                 "feature",
               ],
               [
-                "Claim a special `wealthy` role in our Discord server! (5000 BeccaCoin)",
+                "Claim a special `wealthy` role in Becca's Discord server! (5000 BeccaCoin)",
                 "wealthy",
               ],
               ["Receive one month of Discord Nitro (10000 BeccaCoin)", "nitro"],
