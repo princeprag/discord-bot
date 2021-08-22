@@ -5,6 +5,7 @@ import {
 import CurrencyModel from "../database/models/CurrencyModel";
 import { CommandInt } from "../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
+import { handleView } from "../modules/commands/subcommands/currency/handleView";
 import { handleDaily } from "../modules/commands/subcommands/currency/handleDaily";
 import { handleWeekly } from "../modules/commands/subcommands/currency/handleWeekly";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
@@ -22,6 +23,11 @@ export const currency: CommandInt = {
       new SlashCommandSubcommandBuilder()
         .setName("weekly")
         .setDescription("Claim your weekly currency.")
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("view")
+        .setDescription("View your current balance and cooldowns.")
     ),
   run: async (Becca, interaction) => {
     try {
@@ -45,6 +51,9 @@ export const currency: CommandInt = {
           break;
         case "weekly":
           await handleWeekly(Becca, interaction, userData);
+          break;
+        case "view":
+          await handleView(Becca, interaction, userData);
           break;
         default:
           await interaction.editReply({
