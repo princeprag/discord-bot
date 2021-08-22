@@ -10,6 +10,7 @@ import { handleDaily } from "../modules/commands/subcommands/currency/handleDail
 import { handleWeekly } from "../modules/commands/subcommands/currency/handleWeekly";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 import { handleClaim } from "../modules/commands/subcommands/currency/handleClaim";
+import { handleAbout } from "../modules/commands/subcommands/currency/handleAbout";
 
 export const currency: CommandInt = {
   data: new SlashCommandBuilder()
@@ -40,7 +41,7 @@ export const currency: CommandInt = {
             .setDescription("The reward you want to claim.")
             .addChoices([
               [
-                "Steal the `monarch` role in our Discord server. (500 BeccaCoin)",
+                "Steal the `monarch` role in Becca's Discord server. (500 BeccaCoin)",
                 "monarch",
               ],
               [
@@ -52,13 +53,18 @@ export const currency: CommandInt = {
                 "feature",
               ],
               [
-                "Claim a special `wealthy` role in our Discord server! (5000 BeccaCoin)",
+                "Claim a special `wealthy` role in Becca's Discord server! (5000 BeccaCoin)",
                 "wealthy",
               ],
               ["Receive one month of Discord Nitro (10000 BeccaCoin)", "nitro"],
             ])
             .setRequired(true)
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("about")
+        .setDescription("Explains how the currency system works.")
     ),
   run: async (Becca, interaction) => {
     try {
@@ -88,6 +94,9 @@ export const currency: CommandInt = {
           break;
         case "claim":
           await handleClaim(Becca, interaction, userData);
+          break;
+        case "about":
+          await handleAbout(Becca, interaction, userData);
           break;
         default:
           await interaction.editReply({
