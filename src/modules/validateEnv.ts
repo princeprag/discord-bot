@@ -22,6 +22,10 @@ export const validateEnv = (
       return { valid: false, message: "Missing Discord webhook URL" };
     }
 
+    if (!process.env.CURRENCY_WH) {
+      return { valid: false, message: "Missing Discord Currency webhook URL" };
+    }
+
     if (!process.env.NASA_API) {
       return { valid: false, message: "Missing NASA API key" };
     }
@@ -42,6 +46,7 @@ export const validateEnv = (
       token: process.env.DISCORD_TOKEN,
       dbToken: process.env.MONGODB,
       whUrl: process.env.WH_URL,
+      currencyUrl: process.env.CURRENCY_WH,
       nasaKey: process.env.NASA_API,
       ownerId: process.env.OWNER_ID,
       love: process.env.BECCA_LOVE || "💜",

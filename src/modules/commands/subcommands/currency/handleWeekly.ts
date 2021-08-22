@@ -39,7 +39,7 @@ export const handleWeekly: CurrencyHandler = async (
       return;
     }
 
-    const earnedCurrency = Math.round(Math.random() * 100);
+    const earnedCurrency = Math.round(Math.random() * 75 + 25);
 
     data.currencyTotal += earnedCurrency;
     data.weeklyClaimed = now;
@@ -53,6 +53,9 @@ export const handleWeekly: CurrencyHandler = async (
     embed.setColor(Becca.colours.default);
 
     await interaction.editReply({ embeds: [embed] });
+    await Becca.currencyHook.send(
+      `**Weekly Reward Claimed!**\n\n*User*: ${interaction.user.username}\n*UserID*: ${interaction.user.id}\n*Server*: ${interaction.guild?.name}\n*ServerID*: ${interaction.guildId}\n*Earned*: ${earnedCurrency} - *Total*: ${data.currencyTotal}`
+    );
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,

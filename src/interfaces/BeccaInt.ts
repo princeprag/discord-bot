@@ -11,10 +11,12 @@ import { CommandInt } from "./commands/CommandInt";
  */
 export interface BeccaInt extends Client {
   debugHook: WebhookClient;
+  currencyHook: WebhookClient;
   configs: {
     token: string;
     dbToken: string;
     whUrl: string;
+    currencyUrl: string;
     nasaKey: string;
     ownerId: string;
     love: string;

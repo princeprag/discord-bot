@@ -96,7 +96,7 @@ export const handleClaim: CurrencyHandler = async (
 
     await interaction.editReply({ embeds: [claimEmbed] });
 
-    await Becca.debugHook.send(
+    await Becca.currencyHook.send(
       `Hey <@!${Becca.configs.ownerId}>! A reward has been claimed!\n**Reward**: ${reward}\n**Username**: ${interaction.user.username}\n**UserID**: ${interaction.user.id}\nUser in Server? <@!${interaction.user.id}>`
     );
   } catch (err) {
