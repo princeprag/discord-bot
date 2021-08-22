@@ -10,6 +10,7 @@ import { handleDaily } from "../modules/commands/subcommands/currency/handleDail
 import { handleWeekly } from "../modules/commands/subcommands/currency/handleWeekly";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 import { handleClaim } from "../modules/commands/subcommands/currency/handleClaim";
+import { handleAbout } from "../modules/commands/subcommands/currency/handleAbout";
 
 export const currency: CommandInt = {
   data: new SlashCommandBuilder()
@@ -59,6 +60,11 @@ export const currency: CommandInt = {
             ])
             .setRequired(true)
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("about")
+        .setDescription("Explains how the currency system works.")
     ),
   run: async (Becca, interaction) => {
     try {
@@ -88,6 +94,9 @@ export const currency: CommandInt = {
           break;
         case "claim":
           await handleClaim(Becca, interaction, userData);
+          break;
+        case "about":
+          await handleAbout(Becca, interaction, userData);
           break;
         default:
           await interaction.editReply({
