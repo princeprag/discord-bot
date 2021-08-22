@@ -9,6 +9,7 @@ import { handleView } from "../modules/commands/subcommands/currency/handleView"
 import { handleDaily } from "../modules/commands/subcommands/currency/handleDaily";
 import { handleWeekly } from "../modules/commands/subcommands/currency/handleWeekly";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
+import { handleClaim } from "../modules/commands/subcommands/currency/handleClaim";
 
 export const currency: CommandInt = {
   data: new SlashCommandBuilder()
@@ -28,6 +29,36 @@ export const currency: CommandInt = {
       new SlashCommandSubcommandBuilder()
         .setName("view")
         .setDescription("View your current balance and cooldowns.")
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("claim")
+        .setDescription("Claim a reward with your currency!")
+        .addStringOption((option) =>
+          option
+            .setName("reward")
+            .setDescription("The reward you want to claim.")
+            .addChoices([
+              [
+                "Steal the `monarch` role in our Discord server. (500 BeccaCoin)",
+                "monarch",
+              ],
+              [
+                "Choose the pose/design for a Becca Emote (1000 BeccaCoin)",
+                "emote",
+              ],
+              [
+                "Request a new feature for Becca that will receive priority (3000 BeccaCoin)",
+                "feature",
+              ],
+              [
+                "Claim a special `wealthy` role in our Discord server! (5000 BeccaCoin)",
+                "wealthy",
+              ],
+              ["Receive one month of Discord Nitro (10000 BeccaCoin)", "nitro"],
+            ])
+            .setRequired(true)
+        )
     ),
   run: async (Becca, interaction) => {
     try {
@@ -54,6 +85,9 @@ export const currency: CommandInt = {
           break;
         case "view":
           await handleView(Becca, interaction, userData);
+          break;
+        case "claim":
+          await handleClaim(Becca, interaction, userData);
           break;
         default:
           await interaction.editReply({
