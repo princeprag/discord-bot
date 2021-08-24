@@ -5,10 +5,7 @@ import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 export const connectDatabase = async (Becca: BeccaInt): Promise<boolean> => {
   try {
-    await connect(Becca.configs.dbToken, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await connect(Becca.configs.dbToken);
 
     const databaseEmbed = new MessageEmbed();
     databaseEmbed.setTitle("Database connected!");
