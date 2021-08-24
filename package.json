@@ -2,7 +2,7 @@
   "name": "becca_lyria",
   "author": "Nicholas Carrigan",
   "main": "./prod/src/main.js",
-  "version": "16.3.1",
+  "version": "16.4.0",
   "license": "AGPL-3.0-or-later",
   "private": false,
   "engines": {
@@ -28,7 +28,7 @@
     "test": "echo 'No tests yet. Would you like to contribute some?'"
   },
   "dependencies": {
-    "@discordjs/builders": "^0.5.0",
+    "@discordjs/builders": "^0.6.0",
     "@discordjs/rest": "^0.1.0-canary.0",
     "@sentry/integrations": "^6.11.0",
     "@sentry/node": "^6.11.0",
@@ -37,7 +37,7 @@
     "discord-api-types": "^0.22.0",
     "discord.js": "^13.0.1",
     "express": "^4.17.1",
-    "mongoose": "^5.13.5",
+    "mongoose": "^6.0.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {
