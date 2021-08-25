@@ -8,6 +8,7 @@ import { handlePermissions } from "../modules/commands/subcommands/misc/handlePe
 import { handleSpace } from "../modules/commands/subcommands/misc/handleSpace";
 import { handleUsername } from "../modules/commands/subcommands/misc/handleUsername";
 import { handleXkcd } from "../modules/commands/subcommands/misc/handleXkcd";
+import { handleLevelscale } from "../modules/commands/subcommands/misc/handleLevelscale";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 export const misc: CommandInt = {
@@ -52,6 +53,13 @@ export const misc: CommandInt = {
         .setDescription(
           "Confirms the bot has the correct permissions in the channel and guild."
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("levelscale")
+        .setDescription(
+          "Returns a map of the level scale used by Becca's levelling system"
+        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -71,6 +79,9 @@ export const misc: CommandInt = {
           break;
         case "permissions":
           await handlePermissions(Becca, interaction, config);
+          break;
+        case "levelscale":
+          await handleLevelscale(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
