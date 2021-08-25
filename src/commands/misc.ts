@@ -8,7 +8,7 @@ import { handlePermissions } from "../modules/commands/subcommands/misc/handlePe
 import { handleSpace } from "../modules/commands/subcommands/misc/handleSpace";
 import { handleUsername } from "../modules/commands/subcommands/misc/handleUsername";
 import { handleXkcd } from "../modules/commands/subcommands/misc/handleXkcd";
-import { handleLevelscale } from "../modules/commands/subcommands/misc/handleLevelscale"
+import { handleLevelscale } from "../modules/commands/subcommands/misc/handleLevelscale";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 export const misc: CommandInt = {

@@ -2,12 +2,12 @@ import {
   Message,
   MessageActionRow,
   MessageButton,
-  MessageEmbed
+  MessageEmbed,
 } from "discord.js";
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
-import levelScale from "../../../../config/listeners/levelScale"
+import levelScale from "../../../../config/listeners/levelScale";
 
 export const handleLevelscale: CommandHandler = async (Becca, interaction) => {
   try {
@@ -17,12 +17,18 @@ export const handleLevelscale: CommandHandler = async (Becca, interaction) => {
         formattedText += `\nLevel ${i} - **${levelScale[i]}** xp`;
       }
       return formattedText;
-    }
-   
+    };
+
     const embed = new MessageEmbed();
     embed.setTitle("Level Scale");
-    embed.setURL("https://www.beccalyria.com/discord-documentation/#/level-scale");
-    embed.setDescription(`This is the breakdown of experience points needed for Becca's levelling system.\n${formatLevels(1)}`);
+    embed.setURL(
+      "https://www.beccalyria.com/discord-documentation/#/level-scale"
+    );
+    embed.setDescription(
+      `This is the breakdown of experience points needed for Becca's levelling system.\n${formatLevels(
+        1
+      )}`
+    );
     embed.setColor(Becca.colours.default);
     embed.setTimestamp();
 
@@ -40,17 +46,17 @@ export const handleLevelscale: CommandHandler = async (Becca, interaction) => {
       .setLabel("▶")
       .setStyle("PRIMARY");
 
-    const sent = await interaction.editReply({
+    const sent = (await interaction.editReply({
       embeds: [embed],
-      components: [new MessageActionRow().addComponents(pageBack, pageForward)]
-    }) as Message;
+      components: [new MessageActionRow().addComponents(pageBack, pageForward)],
+    })) as Message;
 
     const componentCollector = sent.createMessageComponentCollector({
       time: 30000,
       filter: (click) => click.user.id === interaction.user.id,
-    })
+    });
 
-    componentCollector.on('collect', async (click) => {
+    componentCollector.on("collect", async (click) => {
       click.deferUpdate();
       if (click.customId === "prev") {
         page--;
@@ -71,26 +77,28 @@ export const handleLevelscale: CommandHandler = async (Becca, interaction) => {
       }
 
       embed.setDescription(
-        `This is the breakdown of experience points needed for Becca's levelling system.\n${formatLevels(page)}`
+        `This is the breakdown of experience points needed for Becca's levelling system.\n${formatLevels(
+          page
+        )}`
       );
       embed.setFooter(`Page ${page} of ${lastPage}`);
 
       await interaction.editReply({
         embeds: [embed],
         components: [
-          new MessageActionRow().addComponents(pageBack, pageForward)
-        ]
+          new MessageActionRow().addComponents(pageBack, pageForward),
+        ],
       });
     });
 
-    componentCollector.on("end", async() => {
-        pageBack.setDisabled(true);
-        pageForward.setDisabled(true);
-        await interaction.editReply({
-          components: [
-            new MessageActionRow().addComponents(pageBack, pageForward)
-          ],
-        });
+    componentCollector.on("end", async () => {
+      pageBack.setDisabled(true);
+      pageForward.setDisabled(true);
+      await interaction.editReply({
+        components: [
+          new MessageActionRow().addComponents(pageBack, pageForward),
+        ],
+      });
     });
   } catch (err) {
     const errorId = await beccaErrorHandler(
