@@ -35,7 +35,7 @@ export const beccaErrorHandler = async (
   /**
    * Send the error to Becca's webhook.
    */
-  const errorId = Types.ObjectId();
+  const errorId = new Types.ObjectId();
   const errorEmbed = new MessageEmbed();
   errorEmbed.setTitle(
     `${context} error ${guild ? "in " + guild : "from an unknown source"}.`

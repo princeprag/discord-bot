@@ -41,9 +41,8 @@ export const linksListener: ListenerInt = {
         }
       }
 
-      // Borrowed from https://gist.github.com/arbales/1654670
       const linkRegex =
-        /(([a-z]+:\/\/)?(([a-z0-9-]+\.)+([a-z]{2,3}|aero|arpa|coop|info|jobs|museum|name|nato|travel|local|internal))(:[0-9]{1,5})?(\/[a-z0-9_\-.~]+)*(\/([a-z0-9_\-.]*)(\?[a-z0-9+_\-.%=&amp;]*)?)?(#[a-zA-Z0-9!$&'()*+.=-_~:@/?]*)?)(\s+|$)/gi;
+        /(([a-z]+:\/\/)?(([a-z0-9-]+\.)+((?!txt)[a-z]{3,4}|io|me|gg)))(:[0-9]{1,5})?(\s+|\/|$)/gi;
 
       blockedLinks += (message.content.match(linkRegex) || []).length;
 
