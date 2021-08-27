@@ -6,7 +6,10 @@ import { CommandInt } from "../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
 import { handleLeave } from "../modules/commands/subcommands/nhcarrigan/handleLeave";
 import { handleList } from "../modules/commands/subcommands/nhcarrigan/handleList";
+import { handleRegister } from "../modules/commands/subcommands/nhcarrigan/handleRegister";
 import { handleServerData } from "../modules/commands/subcommands/nhcarrigan/handleServerData";
+import { handleUnregister } from "../modules/commands/subcommands/nhcarrigan/handleUnregister";
+import { handleViewSlash } from "../modules/commands/subcommands/nhcarrigan/handleViewSlash";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 export const nhcarrigan: CommandInt = {
@@ -39,6 +42,56 @@ export const nhcarrigan: CommandInt = {
             .setDescription("Discord ID of the server to look up.")
             .setRequired(true)
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("register")
+        .setDescription("Registers a slash command.")
+        .addStringOption((option) =>
+          option
+            .setName("command")
+            .setDescription("The slash command to register (add or update).")
+            .setRequired(true)
+            .addChoices([
+              ["Becca commands", "becca"],
+              ["Code commands", "code"],
+              ["Community commands", "community"],
+              ["Config commands", "config"],
+              ["Currency commands", "currency"],
+              ["Game commands", "games"],
+              ["Management commands", "manage"],
+              ["Miscellaneous commands", "misc"],
+              ["Moderation commands", "mod"],
+              ["Owner commands", "nhcarrigan"],
+            ])
+        )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("unregister")
+        .setDescription("Unregisters a slash command.")
+        .addStringOption((option) =>
+          option
+            .setName("command")
+            .setDescription("The slash command to unregister (delete).")
+            .setRequired(true)
+            .addChoices([
+              ["Becca commands", "becca"],
+              ["Code commands", "code"],
+              ["Community commands", "community"],
+              ["Config commands", "config"],
+              ["Currency commands", "currency"],
+              ["Game commands", "games"],
+              ["Management commands", "manage"],
+              ["Miscellaneous commands", "misc"],
+              ["Moderation commands", "mod"],
+            ])
+        )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("viewslash")
+        .setDescription("View the currently registered slash commands.")
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -54,6 +107,11 @@ export const nhcarrigan: CommandInt = {
       }
 
       const subcommand = interaction.options.getSubcommand();
+
+      await Becca.debugHook.send(
+        `Hey <@!${Becca.configs.ownerId}>, the ${subcommand} owner command was just used. If this was not you, please investigate!`
+      );
+
       switch (subcommand) {
         case "list":
           await handleList(Becca, interaction, config);
@@ -63,6 +121,15 @@ export const nhcarrigan: CommandInt = {
           break;
         case "serverdata":
           await handleServerData(Becca, interaction, config);
+          break;
+        case "register":
+          await handleRegister(Becca, interaction, config);
+          break;
+        case "unregister":
+          await handleUnregister(Becca, interaction, config);
+          break;
+        case "viewslash":
+          await handleViewSlash(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
