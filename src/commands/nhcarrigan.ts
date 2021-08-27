@@ -6,7 +6,10 @@ import { CommandInt } from "../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
 import { handleLeave } from "../modules/commands/subcommands/nhcarrigan/handleLeave";
 import { handleList } from "../modules/commands/subcommands/nhcarrigan/handleList";
+import { handleRegister } from "../modules/commands/subcommands/nhcarrigan/handleRegister";
 import { handleServerData } from "../modules/commands/subcommands/nhcarrigan/handleServerData";
+import { handleUnregister } from "../modules/commands/subcommands/nhcarrigan/handleUnregister";
+import { handleViewSlash } from "../modules/commands/subcommands/nhcarrigan/handleViewSlash";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 export const nhcarrigan: CommandInt = {
@@ -39,6 +42,33 @@ export const nhcarrigan: CommandInt = {
             .setDescription("Discord ID of the server to look up.")
             .setRequired(true)
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("register")
+        .setDescription("Registers a slash command.")
+        .addStringOption((option) =>
+          option
+            .setName("command")
+            .setDescription("The slash command to register (add or update).")
+            .setRequired(true)
+        )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("unregister")
+        .setDescription("Unregisters a slash command.")
+        .addStringOption((option) =>
+          option
+            .setName("command")
+            .setDescription("The slash command to unregister (delete).")
+            .setRequired(true)
+        )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("viewslash")
+        .setDescription("View the currently registered slash commands.")
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -63,6 +93,15 @@ export const nhcarrigan: CommandInt = {
           break;
         case "serverdata":
           await handleServerData(Becca, interaction, config);
+          break;
+        case "register":
+          await handleRegister(Becca, interaction, config);
+          break;
+        case "unregister":
+          await handleUnregister(Becca, interaction, config);
+          break;
+        case "viewslash":
+          await handleViewSlash(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
