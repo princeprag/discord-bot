@@ -107,6 +107,11 @@ export const nhcarrigan: CommandInt = {
       }
 
       const subcommand = interaction.options.getSubcommand();
+
+      await Becca.debugHook.send(
+        `Hey <@!${Becca.configs.ownerId}>, the ${subcommand} owner command was just used. If this was not you, please investigate!`
+      );
+
       switch (subcommand) {
         case "list":
           await handleList(Becca, interaction, config);

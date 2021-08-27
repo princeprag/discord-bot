@@ -40,6 +40,9 @@ export const handleRegister: CommandHandler = async (Becca, interaction) => {
     }
 
     await interaction.editReply({ embeds: [confirm] });
+    await Becca.debugHook.send(
+      `Hey <@!${Becca.configs.ownerId}>, the ${data.name} command was registered.`
+    );
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,

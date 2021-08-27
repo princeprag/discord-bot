@@ -50,6 +50,9 @@ export const handleUnregister: CommandHandler = async (Becca, interaction) => {
     }
 
     await interaction.editReply({ embeds: [confirm] });
+    await Becca.debugHook.send(
+      `Hey <@!${Becca.configs.ownerId}>, the ${command.name} command was unregistered.`
+    );
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,
