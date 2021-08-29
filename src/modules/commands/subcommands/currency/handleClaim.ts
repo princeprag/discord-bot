@@ -18,20 +18,6 @@ export const handleClaim: CurrencyHandler = async (
 
     switch (reward) {
       case "monarch":
-        if (data.currencyTotal < 500) {
-          await interaction.editReply(
-            `This reward costs 500 BeccaCoin. You only have ${data.currencyTotal}.`
-          );
-          return;
-        }
-        data.currencyTotal -= 500;
-        await data.save();
-        claimEmbed.addField(
-          "Reward Details",
-          "You will take the monarch role from whomever has it in our support server, and you will keep the role until someone else takes it from you."
-        );
-        break;
-      case "emote":
         if (data.currencyTotal < 1000) {
           await interaction.editReply(
             `This reward costs 1000 BeccaCoin. You only have ${data.currencyTotal}.`
@@ -42,24 +28,10 @@ export const handleClaim: CurrencyHandler = async (
         await data.save();
         claimEmbed.addField(
           "Reward Details",
-          "You will be able to work with nhcarrigan to determine the next pose for a Becca emote. The emote will be available in the support server. nhcarrigan will retain all rights to the art and the character, but we will make an announcement in the support server thanking you for the emote idea."
+          "You will take the monarch role from whomever has it in our support server, and you will keep the role until someone else takes it from you."
         );
         break;
-      case "feature":
-        if (data.currencyTotal < 3000) {
-          await interaction.editReply(
-            `This reward costs 3000 BeccaCoin. You only have ${data.currencyTotal}.`
-          );
-          return;
-        }
-        data.currencyTotal -= 3000;
-        await data.save();
-        claimEmbed.addField(
-          "Reward Details",
-          "You will be able to work with nhcarrigan and the development team to suggest a new feature for Becca. We reserve the right to refuse features that are not in line with Becca's primary purpose, but will work with you until you we reach a feature proposal everyone is happy with."
-        );
-        break;
-      case "wealthy":
+      case "emote":
         if (data.currencyTotal < 5000) {
           await interaction.editReply(
             `This reward costs 5000 BeccaCoin. You only have ${data.currencyTotal}.`
@@ -70,10 +42,10 @@ export const handleClaim: CurrencyHandler = async (
         await data.save();
         claimEmbed.addField(
           "Reward Details",
-          "You will be given the Wealthy role in our support server. You will keep this role."
+          "You will be able to work with nhcarrigan to determine the next pose for a Becca emote. The emote will be available in the support server. nhcarrigan will retain all rights to the art and the character, but we will make an announcement in the support server thanking you for the emote idea."
         );
         break;
-      case "nitro":
+      case "feature":
         if (data.currencyTotal < 10000) {
           await interaction.editReply(
             `This reward costs 10000 BeccaCoin. You only have ${data.currencyTotal}.`
@@ -84,7 +56,21 @@ export const handleClaim: CurrencyHandler = async (
         await data.save();
         claimEmbed.addField(
           "Reward Details",
-          "nhcarrigan will provide you with a one-month nitro gift code. You can redeem this on your own account or pass it to a friend, but we will only send the code directly to you."
+          "You will be able to work with nhcarrigan and the development team to suggest a new feature for Becca. We reserve the right to refuse features that are not in line with Becca's primary purpose, but will work with you until you we reach a feature proposal everyone is happy with."
+        );
+        break;
+      case "wealthy":
+        if (data.currencyTotal < 25000) {
+          await interaction.editReply(
+            `This reward costs 25000 BeccaCoin. You only have ${data.currencyTotal}.`
+          );
+          return;
+        }
+        data.currencyTotal -= 25000;
+        await data.save();
+        claimEmbed.addField(
+          "Reward Details",
+          "You will be given the Wealthy role in our support server. You will keep this role."
         );
         break;
       case "default":
