@@ -7,6 +7,7 @@ import { thanksListener } from "../../listeners/thanksListener";
 import { handleDms } from "../../modules/handleDms";
 import { getSettings } from "../../modules/settings/getSettings";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
+import { registerCommands } from "../../utils/registerCommands";
 
 /**
  * Handles the onMessage event. Validates that the message did not come from
@@ -40,6 +41,14 @@ export const messageCreate = async (
     await thanksListener.run(Becca, message, serverConfig);
     await linksListener.run(Becca, message, serverConfig);
     await levelListener.run(Becca, message, serverConfig);
+
+    if (
+      message.author.id === Becca.configs.ownerId &&
+      message.content === "emergency reload"
+    ) {
+      await registerCommands(Becca);
+      await message.reply("Reloaded all commands.");
+    }
   } catch (err) {
     beccaErrorHandler(
       Becca,
