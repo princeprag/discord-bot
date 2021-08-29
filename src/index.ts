@@ -10,7 +10,6 @@ import { handleEvents } from "./events/handleEvents";
 import { loadCommands } from "./utils/loadCommands";
 import { createServer } from "./server/serve";
 import { IntentOptions } from "./config/IntentOptions";
-import { registerCommands } from "./utils/registerCommands";
 
 /**
  * This block initialises the Sentry plugin.
@@ -66,14 +65,6 @@ const initialiseBecca = async () => {
   Becca.commands = commands;
   if (!commands.length) {
     beccaLogHandler.log("error", "failed to import commands.");
-    return;
-  }
-
-  beccaLogHandler.log("debug", "registering slash commands...");
-  const registered = await registerCommands(Becca);
-
-  if (!registered) {
-    beccaLogHandler.log("error", "failed to register slash commands.");
     return;
   }
 
