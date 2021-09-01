@@ -1,47 +1,28 @@
-import { REST } from "@discordjs/rest";
-import { Routes } from "discord-api-types/v9";
 import { MessageEmbed } from "discord.js";
-import { CommandDataInt } from "../../../../interfaces/commands/CommandDataInt";
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
+import { registerCommands } from "../../../../utils/registerCommands";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
 export const handleRegister: CommandHandler = async (Becca, interaction) => {
   try {
-    const target = interaction.options.getString("command");
+    const valid = await registerCommands(Becca);
 
-    if (!target) {
-      await interaction.editReply(Becca.responses.missing_param);
+    if (!valid) {
+      await interaction.editReply("Failed to register commands!");
       return;
     }
-
-    const targetCommand = Becca.commands.find((el) => el.data.name === target);
-
-    if (!targetCommand) {
-      await interaction.editReply("Cannot find that command.");
-      return;
-    }
-
-    const rest = new REST({ version: "9" }).setToken(Becca.configs.token);
-
-    const [data] = (await rest.put(
-      Routes.applicationCommands(Becca.configs.id),
-      {
-        body: [targetCommand.data.toJSON()],
-      }
-    )) as CommandDataInt[];
-
     const confirm = new MessageEmbed();
-    confirm.setTitle(`${data.name} Command Registered`);
-    confirm.setDescription(data.description);
+    confirm.setTitle(`Commands Registered`);
+    confirm.setDescription("The following commands have been registered.");
 
-    for (const option of data.options) {
-      confirm.addField(option.name, option.description, true);
+    for (const command of Becca.commands) {
+      confirm.addField(command.data.name, command.data.description, true);
     }
 
     await interaction.editReply({ embeds: [confirm] });
     await Becca.debugHook.send(
-      `Hey <@!${Becca.configs.ownerId}>, the ${data.name} command was registered.`
+      `Hey <@!${Becca.configs.ownerId}>, slash commands were registered.`
     );
   } catch (err) {
     const errorId = await beccaErrorHandler(
