@@ -12,6 +12,7 @@ import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 import { handleClaim } from "../modules/commands/subcommands/currency/handleClaim";
 import { handleAbout } from "../modules/commands/subcommands/currency/handleAbout";
 import { handleSlots } from "../modules/commands/subcommands/currency/handleSlots";
+import { handleTwentyOne } from "../modules/commands/subcommands/currency/handleTwentyOne";
 
 export const currency: CommandInt = {
   data: new SlashCommandBuilder()
@@ -76,6 +77,17 @@ export const currency: CommandInt = {
             .setDescription("The amount of BeccaCoin you would like to wager.")
             .setRequired(true)
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("21")
+        .setDescription("Play a round of 21 against Becca!")
+        .addIntegerOption((option) =>
+          option
+            .setName("wager")
+            .setDescription("The amount of BeccaCoin you would like to wager.")
+            .setRequired(true)
+        )
     ),
   run: async (Becca, interaction) => {
     try {
@@ -90,6 +102,7 @@ export const currency: CommandInt = {
           weeklyClaimed: 0,
           monthlyClaimed: 0,
           slotsPlayed: 0,
+          twentyOnePlayed: 0,
         }));
 
       const subcommand = interaction.options.getSubcommand();
@@ -112,6 +125,9 @@ export const currency: CommandInt = {
           break;
         case "slots":
           await handleSlots(Becca, interaction, userData);
+          break;
+        case "21":
+          await handleTwentyOne(Becca, interaction, userData);
           break;
         default:
           await interaction.editReply({

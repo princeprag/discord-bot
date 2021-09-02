@@ -7,6 +7,7 @@ export interface CurrencyInt extends Document {
   weeklyClaimed: number;
   monthlyClaimed: number;
   slotsPlayed: number;
+  twentyOnePlayed: number;
 }
 
 export const Currency = new Schema({
@@ -16,6 +17,10 @@ export const Currency = new Schema({
   weeklyClaimed: Number,
   monthlyClaimed: Number,
   slotsPlayed: {
+    type: Number,
+    default: 0,
+  },
+  twentyOnePlayed: {
     type: Number,
     default: 0,
   },
