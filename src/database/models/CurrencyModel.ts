@@ -6,6 +6,8 @@ export interface CurrencyInt extends Document {
   dailyClaimed: number;
   weeklyClaimed: number;
   monthlyClaimed: number;
+  slotsPlayed: number;
+  twentyOnePlayed: number;
 }
 
 export const Currency = new Schema({
@@ -14,6 +16,14 @@ export const Currency = new Schema({
   dailyClaimed: Number,
   weeklyClaimed: Number,
   monthlyClaimed: Number,
+  slotsPlayed: {
+    type: Number,
+    default: 0,
+  },
+  twentyOnePlayed: {
+    type: Number,
+    default: 0,
+  },
 });
 
 export default model<CurrencyInt>("currency", Currency);

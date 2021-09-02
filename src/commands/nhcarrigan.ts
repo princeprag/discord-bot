@@ -46,25 +46,7 @@ export const nhcarrigan: CommandInt = {
     .addSubcommand(
       new SlashCommandSubcommandBuilder()
         .setName("register")
-        .setDescription("Registers a slash command.")
-        .addStringOption((option) =>
-          option
-            .setName("command")
-            .setDescription("The slash command to register (add or update).")
-            .setRequired(true)
-            .addChoices([
-              ["Becca commands", "becca"],
-              ["Code commands", "code"],
-              ["Community commands", "community"],
-              ["Config commands", "config"],
-              ["Currency commands", "currency"],
-              ["Game commands", "games"],
-              ["Management commands", "manage"],
-              ["Miscellaneous commands", "misc"],
-              ["Moderation commands", "mod"],
-              ["Owner commands", "nhcarrigan"],
-            ])
-        )
+        .setDescription("Registers the current slash commands.")
     )
     .addSubcommand(
       new SlashCommandSubcommandBuilder()
