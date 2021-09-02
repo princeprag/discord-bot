@@ -50,11 +50,11 @@ export const handleTwentyOne: CurrencyHandler = async (
     const gameEmbed = new MessageEmbed();
     gameEmbed.setTitle("Twenty One!");
     gameEmbed.setDescription(
-      "Get your score higher than the dealer without going over 21! Press `hit` to increase your score, and `stand` to stop playing and let the dealer finish their turns."
+      "Get your score higher than Becca without going over 21! Press `hit` to increase your score, and `stand` to stop playing and let Becca finish her turns."
     );
     gameEmbed.setColor(Becca.colours.default);
     gameEmbed.addField("Your Score", player.toString(), true);
-    gameEmbed.addField("Dealer's Score", dealer.toString(), true);
+    gameEmbed.addField("Becca's Score", dealer.toString(), true);
 
     const hitButton = new MessageButton()
       .setCustomId("hit")
@@ -138,7 +138,7 @@ export const handleTwentyOne: CurrencyHandler = async (
           inline: true,
         },
         {
-          name: "Dealer's Score",
+          name: "Becca's Score",
           value: dealer.toString(),
           inline: true,
         }
