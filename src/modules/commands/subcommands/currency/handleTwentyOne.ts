@@ -58,12 +58,12 @@ export const handleTwentyOne: CurrencyHandler = async (
 
     const hitButton = new MessageButton()
       .setCustomId("hit")
-      .setEmoji("✅")
+      .setEmoji("<:BeccaThumbsup:875129902997860393>")
       .setLabel("Hit")
       .setStyle("SUCCESS");
     const standButton = new MessageButton()
       .setCustomId("stand")
-      .setEmoji("🛑")
+      .setEmoji("<:BeccaYikes:877278299066347632>")
       .setLabel("Stand")
       .setStyle("PRIMARY");
 
@@ -106,12 +106,12 @@ export const handleTwentyOne: CurrencyHandler = async (
       }
       const hitButton = new MessageButton()
         .setCustomId("hit")
-        .setEmoji("✅")
+        .setEmoji("<:BeccaThumbsup:875129902997860393>")
         .setLabel("Hit")
         .setStyle("SUCCESS");
       const standButton = new MessageButton()
         .setCustomId("stand")
-        .setEmoji("🛑")
+        .setEmoji("<:BeccaYikes:877278299066347632>")
         .setLabel("Stand")
         .setStyle("PRIMARY");
 
@@ -124,6 +124,12 @@ export const handleTwentyOne: CurrencyHandler = async (
           : (data.currencyTotal -= wager);
         data.twentyOnePlayed = now;
         await data.save();
+        gameEmbed.setDescription(`Your BeccaCoin: ${data.currencyTotal}`);
+        await Becca.currencyHook.send(
+          `${interaction.user.username} played 21 in ${
+            interaction.guild?.name
+          }! They ${gameState.won ? "won" : "lost"} ${wager} BeccaCoin.`
+        );
       }
 
       const row = new MessageActionRow().addComponents([
@@ -158,6 +164,9 @@ export const handleTwentyOne: CurrencyHandler = async (
         data.currencyTotal -= wager;
         data.twentyOnePlayed = now;
         await data.save();
+        await Becca.currencyHook.send(
+          `${interaction.user.username} played 21 in ${interaction.guild?.name}! They timed out and lost ${wager} BeccaCoin.`
+        );
       }
     });
   } catch (err) {
