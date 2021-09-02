@@ -58,6 +58,12 @@ export const handleSlots: CurrencyHandler = async (
       content: `${first} ${second} ${third}`,
       embeds: [slotEmbed],
     });
+
+    await Becca.currencyHook.send(
+      `${interaction.user.username} played slots in ${
+        interaction.guild?.name
+      }! They ${didWin ? "won" : "lost"} ${wager} BeccaCoin.`
+    );
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,
