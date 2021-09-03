@@ -6,6 +6,7 @@ import { CommandInt } from "../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
 import { handleLeave } from "../modules/commands/subcommands/nhcarrigan/handleLeave";
 import { handleList } from "../modules/commands/subcommands/nhcarrigan/handleList";
+import { handlePurge } from "../modules/commands/subcommands/nhcarrigan/handlePurge";
 import { handleRegister } from "../modules/commands/subcommands/nhcarrigan/handleRegister";
 import { handleServerData } from "../modules/commands/subcommands/nhcarrigan/handleServerData";
 import { handleUnregister } from "../modules/commands/subcommands/nhcarrigan/handleUnregister";
@@ -74,6 +75,29 @@ export const nhcarrigan: CommandInt = {
       new SlashCommandSubcommandBuilder()
         .setName("viewslash")
         .setDescription("View the currently registered slash commands.")
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("purge")
+        .setDescription("Purges data from the database.")
+        .addStringOption((option) =>
+          option
+            .setName("user")
+            .setDescription("ID of the user to purge.")
+            .setRequired(true)
+        )
+        .addStringOption((option) =>
+          option
+            .setName("data")
+            .setDescription("The type of data to purge.")
+            .setRequired(true)
+            .addChoices([
+              ["Level Data", "levels"],
+              ["Activity Tracking", "activity"],
+              ["Currency data", "currency"],
+              ["Star data", "stars"],
+            ])
+        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -112,6 +136,9 @@ export const nhcarrigan: CommandInt = {
           break;
         case "viewslash":
           await handleViewSlash(Becca, interaction, config);
+          break;
+        case "purge":
+          await handlePurge(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
