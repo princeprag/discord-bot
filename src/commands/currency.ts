@@ -13,6 +13,7 @@ import { handleClaim } from "../modules/commands/subcommands/currency/handleClai
 import { handleAbout } from "../modules/commands/subcommands/currency/handleAbout";
 import { handleSlots } from "../modules/commands/subcommands/currency/handleSlots";
 import { handleTwentyOne } from "../modules/commands/subcommands/currency/handleTwentyOne";
+import { CurrencyOptOut } from "../config/optout/CurrencyOptOut";
 
 export const currency: CommandInt = {
   data: new SlashCommandBuilder()
@@ -92,6 +93,13 @@ export const currency: CommandInt = {
   run: async (Becca, interaction) => {
     try {
       await interaction.deferReply();
+
+      if (CurrencyOptOut.includes(interaction.user.id)) {
+        await interaction.editReply(
+          "You have opted out of the currency system and cannot use these commands."
+        );
+        return;
+      }
 
       const userData =
         (await CurrencyModel.findOne({ userId: interaction.user.id })) ||

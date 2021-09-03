@@ -1,5 +1,6 @@
 import { MessageEmbed, TextChannel } from "discord.js";
 import levelScale from "../config/listeners/levelScale";
+import { LevelOptOut } from "../config/optout/LevelOptOut";
 import LevelModel from "../database/models/LevelModel";
 import { ListenerInt } from "../interfaces/listeners/ListenerInt";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
@@ -10,6 +11,10 @@ export const levelListener: ListenerInt = {
   run: async (Becca, message, serverSettings) => {
     try {
       const { author, content, guild, member } = message;
+
+      if (LevelOptOut.includes(member.id)) {
+        return;
+      }
 
       if (!guild) {
         return;

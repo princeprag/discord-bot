@@ -1,3 +1,4 @@
+import { ActivityOptOut } from "../../config/optout/ActivityOptOut";
 import ActivityModel from "../../database/models/ActivityModel";
 import { BeccaInt } from "../../interfaces/BeccaInt";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
@@ -8,6 +9,9 @@ export const logActivity = async (
   activity: "button" | "command" | "select" | "context"
 ): Promise<void> => {
   try {
+    if (ActivityOptOut.includes(user)) {
+      return;
+    }
     const userActivity =
       (await ActivityModel.findOne({ userId: user })) ||
       (await ActivityModel.create({
