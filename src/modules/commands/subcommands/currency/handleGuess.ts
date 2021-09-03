@@ -12,6 +12,11 @@ export const handleGuess: CurrencyHandler = async (
     const wager = interaction.options.getInteger("wager", true);
     const guess = interaction.options.getInteger("guess", true);
 
+    if (wager > data.currencyTotal) {
+      await interaction.editReply("You cannot wager more coin than you have!");
+      return;
+    }
+
     const becca = Math.ceil(Math.random() * 100);
     const won = guess === becca;
 
