@@ -1,4 +1,4 @@
-import { Interaction } from "discord.js";
+import { Interaction, Message } from "discord.js";
 import { BeccaInt } from "../../interfaces/BeccaInt";
 import { currencyListener } from "../../listeners/currencyListener";
 import { usageListener } from "../../listeners/usageListener";
@@ -60,6 +60,9 @@ export const interactionCreate = async (
 
     if (interaction.isButton()) {
       await logActivity(Becca, interaction.user.id, "button");
+      if (interaction.customId === "delete-bookmark") {
+        await (interaction.message as Message).delete();
+      }
     }
 
     if (interaction.isSelectMenu()) {
