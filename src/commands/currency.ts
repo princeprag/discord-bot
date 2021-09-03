@@ -13,6 +13,8 @@ import { handleClaim } from "../modules/commands/subcommands/currency/handleClai
 import { handleAbout } from "../modules/commands/subcommands/currency/handleAbout";
 import { handleSlots } from "../modules/commands/subcommands/currency/handleSlots";
 import { handleTwentyOne } from "../modules/commands/subcommands/currency/handleTwentyOne";
+import { CurrencyOptOut } from "../config/optout/CurrencyOptOut";
+import { handleGuess } from "../modules/commands/subcommands/currency/handleGuess";
 
 export const currency: CommandInt = {
   data: new SlashCommandBuilder()
@@ -88,10 +90,34 @@ export const currency: CommandInt = {
             .setDescription("The amount of BeccaCoin you would like to wager.")
             .setRequired(true)
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("guess")
+        .setDescription("Play a guess the number game with Becca.")
+        .addIntegerOption((option) =>
+          option
+            .setName("wager")
+            .setDescription("The amount of BeccaCoin you would like to wager.")
+            .setRequired(true)
+        )
+        .addIntegerOption((option) =>
+          option
+            .setName("guess")
+            .setDescription("Your guess (Choose between 1 and 100!)")
+            .setRequired(true)
+        )
     ),
   run: async (Becca, interaction) => {
     try {
       await interaction.deferReply();
+
+      if (CurrencyOptOut.includes(interaction.user.id)) {
+        await interaction.editReply(
+          "You have opted out of the currency system and cannot use these commands."
+        );
+        return;
+      }
 
       const userData =
         (await CurrencyModel.findOne({ userId: interaction.user.id })) ||
@@ -128,6 +154,9 @@ export const currency: CommandInt = {
           break;
         case "21":
           await handleTwentyOne(Becca, interaction, userData);
+          break;
+        case "guess":
+          await handleGuess(Becca, interaction, userData);
           break;
         default:
           await interaction.editReply({

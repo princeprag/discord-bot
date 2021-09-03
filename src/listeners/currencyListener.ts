@@ -1,4 +1,5 @@
 import { CommandInteraction } from "discord.js";
+import { CurrencyOptOut } from "../config/optout/CurrencyOptOut";
 import CurrencyModel from "../database/models/CurrencyModel";
 import { BeccaInt } from "../interfaces/BeccaInt";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
@@ -16,6 +17,10 @@ export const currencyListener = {
       }
       const { user } = interaction;
       const target = user.id;
+
+      if (CurrencyOptOut.includes(target)) {
+        return;
+      }
 
       const data =
         (await CurrencyModel.findOne({ discordId: target })) ||

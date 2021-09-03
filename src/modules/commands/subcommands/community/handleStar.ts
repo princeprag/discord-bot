@@ -1,4 +1,5 @@
 import { MessageEmbed } from "discord.js";
+import { StarOptOut } from "../../../../config/optout/StarOptOut";
 import StarModel from "../../../../database/models/StarModel";
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
@@ -19,6 +20,13 @@ export const handleStar: CommandHandler = async (Becca, interaction) => {
 
     if (!targetUser || !reason) {
       await interaction.editReply({ content: Becca.responses.missing_param });
+      return;
+    }
+
+    if (StarOptOut.includes(targetUser.id)) {
+      await interaction.editReply(
+        "I am not permitted to give stars to this user."
+      );
       return;
     }
 
