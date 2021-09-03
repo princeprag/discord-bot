@@ -10,6 +10,7 @@ import { handleEvents } from "./events/handleEvents";
 import { loadCommands } from "./utils/loadCommands";
 import { createServer } from "./server/serve";
 import { IntentOptions } from "./config/IntentOptions";
+import { loadContexts } from "./utils/loadContexts";
 
 /**
  * This block initialises the Sentry plugin.
@@ -62,8 +63,10 @@ const initialiseBecca = async () => {
 
   beccaLogHandler.log("debug", "Importing commands...");
   const commands = await loadCommands(Becca);
+  const contexts = await loadContexts(Becca);
   Becca.commands = commands;
-  if (!commands.length) {
+  Becca.contexts = contexts;
+  if (!commands.length || !contexts.length) {
     beccaLogHandler.log("error", "failed to import commands.");
     return;
   }

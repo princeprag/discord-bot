@@ -10,13 +10,15 @@ export const registerCommands = async (Becca: BeccaInt): Promise<boolean> => {
 
     const commandData: {
       name: string;
-      description: string;
-      options: APIApplicationCommandOption[];
+      description?: string;
+      type?: number;
+      options?: APIApplicationCommandOption[];
     }[] = [];
 
     Becca.commands.forEach((command) =>
       commandData.push(command.data.toJSON())
     );
+    Becca.contexts.forEach((context) => commandData.push(context.data));
     if (process.env.NODE_ENV === "production") {
       beccaLogHandler.log("debug", "registering commands globally!");
       await rest.put(Routes.applicationCommands(Becca.configs.id), {
