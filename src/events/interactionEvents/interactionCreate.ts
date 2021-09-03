@@ -1,4 +1,5 @@
 import { Interaction } from "discord.js";
+import { bookmark } from "../../contexts/bookmark";
 import { BeccaInt } from "../../interfaces/BeccaInt";
 import { currencyListener } from "../../listeners/currencyListener";
 import { usageListener } from "../../listeners/usageListener";
@@ -40,6 +41,19 @@ export const interactionCreate = async (
       await target.run(Becca, interaction, config);
       await usageListener.run(Becca, interaction);
       await currencyListener.run(Becca, interaction);
+    }
+
+    if (interaction.isContextMenu()) {
+      const target = Becca.contexts.find(
+        (el) => el.data.name === interaction.commandName
+      );
+      if (!target) {
+        interaction.reply({
+          content: `That ${interaction.commandName} interaction is not valid...`,
+        });
+        return;
+      }
+      await target.run(Becca, interaction);
     }
   } catch (err) {
     beccaErrorHandler(Becca, "interaction create event", err);

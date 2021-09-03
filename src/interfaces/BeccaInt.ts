@@ -1,5 +1,6 @@
 import { Client, ColorResolvable, WebhookClient } from "discord.js";
 import { CommandInt } from "./commands/CommandInt";
+import { ContextInt } from "./contexts/ContextInt";
 
 /**
  * Model used to pass around Becca's client instance with additional
@@ -35,6 +36,7 @@ export interface BeccaInt extends Client {
   };
   commands: CommandInt[];
   responses: ResponsesInt;
+  contexts: ContextInt[];
 }
 
 export interface ResponsesInt {
