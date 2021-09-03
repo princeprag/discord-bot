@@ -1,4 +1,11 @@
-import { Message, MessageEmbed, TextChannel, User } from "discord.js";
+import {
+  Message,
+  MessageActionRow,
+  MessageButton,
+  MessageEmbed,
+  TextChannel,
+  User,
+} from "discord.js";
 import { ContextInt } from "../interfaces/contexts/ContextInt";
 import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
@@ -37,8 +44,15 @@ export const bookmark: ContextInt = {
       bookmarkEmbed.addField("Channel", channel.name, true);
       bookmarkEmbed.addField("Link", message.url);
 
+      const deleteButton = new MessageButton()
+        .setCustomId("delete-bookmark")
+        .setLabel("Delete this bookmark.")
+        .setStyle("DANGER");
+
+      const row = new MessageActionRow().addComponents([deleteButton]);
+
       await interaction.user
-        .send({ embeds: [bookmarkEmbed] })
+        .send({ embeds: [bookmarkEmbed], components: [row] })
         .then(
           async () =>
             await interaction.editReply(

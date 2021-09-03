@@ -1,8 +1,8 @@
-import { Interaction } from "discord.js";
-import { bookmark } from "../../contexts/bookmark";
+import { Interaction, Message } from "discord.js";
 import { BeccaInt } from "../../interfaces/BeccaInt";
 import { currencyListener } from "../../listeners/currencyListener";
 import { usageListener } from "../../listeners/usageListener";
+import { logActivity } from "../../modules/commands/logActivity";
 import { getSettings } from "../../modules/settings/getSettings";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
@@ -12,6 +12,7 @@ export const interactionCreate = async (
 ): Promise<void> => {
   try {
     if (interaction.isCommand()) {
+      await logActivity(Becca, interaction.user.id, "command");
       const target = Becca.commands.find(
         (el) => el.data.name === interaction.commandName
       );
@@ -44,6 +45,7 @@ export const interactionCreate = async (
     }
 
     if (interaction.isContextMenu()) {
+      await logActivity(Becca, interaction.user.id, "context");
       const target = Becca.contexts.find(
         (el) => el.data.name === interaction.commandName
       );
@@ -54,6 +56,17 @@ export const interactionCreate = async (
         return;
       }
       await target.run(Becca, interaction);
+    }
+
+    if (interaction.isButton()) {
+      await logActivity(Becca, interaction.user.id, "button");
+      if (interaction.customId === "delete-bookmark") {
+        await (interaction.message as Message).delete();
+      }
+    }
+
+    if (interaction.isSelectMenu()) {
+      await logActivity(Becca, interaction.user.id, "select");
     }
   } catch (err) {
     beccaErrorHandler(Becca, "interaction create event", err);
