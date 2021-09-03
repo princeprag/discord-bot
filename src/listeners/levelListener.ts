@@ -12,7 +12,7 @@ export const levelListener: ListenerInt = {
     try {
       const { author, content, guild, member } = message;
 
-      if (LevelOptOut.includes(member.id)) {
+      if (LevelOptOut.includes(author.id)) {
         return;
       }
 

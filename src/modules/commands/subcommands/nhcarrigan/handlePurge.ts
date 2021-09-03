@@ -59,18 +59,18 @@ export const handlePurge: CommandHandler = async (Becca, interaction) => {
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,
-      "nhcarrigan group command",
+      "purge command",
       err,
       interaction.guild?.name
     );
     await interaction
       .reply({
-        embeds: [errorEmbedGenerator(Becca, "nhcarrigan group", errorId)],
+        embeds: [errorEmbedGenerator(Becca, "purge", errorId)],
         ephemeral: true,
       })
       .catch(async () =>
         interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "nhcarrigan group", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "purge", errorId)],
         })
       );
   }
