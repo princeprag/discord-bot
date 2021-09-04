@@ -55,7 +55,24 @@ export const interactionCreate = async (
         });
         return;
       }
-      await target.run(Becca, interaction);
+      if (!interaction.guildId || !interaction.guild) {
+        await interaction.reply({
+          content: `I prefer my privacy. Please talk to me in a guild instead.`,
+        });
+        return;
+      }
+      const config = await getSettings(
+        Becca,
+        interaction.guildId,
+        interaction.guild.name
+      );
+      if (!config) {
+        await interaction.reply({
+          content: "I could not find your guild record.",
+        });
+        return;
+      }
+      await target.run(Becca, interaction, config);
     }
 
     if (interaction.isButton()) {
