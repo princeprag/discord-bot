@@ -24,6 +24,7 @@ export const renderSetting = (
       case "log_channel":
       case "level_channel":
       case "suggestion_channel":
+      case "report_channel":
         return `<#${value}>`;
       case "hearts":
       case "blocked":

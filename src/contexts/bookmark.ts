@@ -68,18 +68,18 @@ export const bookmark: ContextInt = {
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
-        "community group command",
+        "bookmark command",
         err,
         interaction.guild?.name
       );
       await interaction
         .reply({
-          embeds: [errorEmbedGenerator(Becca, "community group", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "bookmark", errorId)],
           ephemeral: true,
         })
         .catch(async () =>
           interaction.editReply({
-            embeds: [errorEmbedGenerator(Becca, "community group", errorId)],
+            embeds: [errorEmbedGenerator(Becca, "bookmark", errorId)],
           })
         );
     }
