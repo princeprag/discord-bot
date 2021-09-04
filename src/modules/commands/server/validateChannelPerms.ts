@@ -49,6 +49,12 @@ export const validateChannelPerms = async (
     const addReactions = BeccaMember.permissionsIn(channel.id).has(
       "ADD_REACTIONS"
     );
+    const useEmotes = BeccaMember.permissionsIn(channel.id).has(
+      "USE_EXTERNAL_EMOJIS"
+    );
+    const manageNicknames = BeccaMember.permissionsIn(channel.id).has(
+      "MANAGE_NICKNAMES"
+    );
 
     const permissionEmbed = new MessageEmbed();
     permissionEmbed.setTitle("Channel Permissions");
@@ -71,6 +77,8 @@ export const validateChannelPerms = async (
         inline: true,
       },
       { name: "Add Reactions", value: `${addReactions}`, inline: true },
+      { name: "Use External Emotes", value: `${useEmotes}`, inline: true },
+      { name: "Manage Nicknames", value: `${manageNicknames}`, inline: true },
     ]);
     permissionEmbed.setColor(Becca.colours.default);
     permissionEmbed.setTimestamp();

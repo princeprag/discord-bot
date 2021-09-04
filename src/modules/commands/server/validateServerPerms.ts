@@ -28,6 +28,8 @@ export const validateServerPerms = async (
       "READ_MESSAGE_HISTORY"
     );
     const addReactions = BeccaMember.permissions.has("ADD_REACTIONS");
+    const useEmotes = BeccaMember.permissions.has("USE_EXTERNAL_EMOJIS");
+    const manageNicknames = BeccaMember.permissions.has("MANAGE_NICKNAMES");
 
     const permissionEmbed = new MessageEmbed();
     permissionEmbed.setTitle("Guild Permissions");
@@ -50,6 +52,8 @@ export const validateServerPerms = async (
         inline: true,
       },
       { name: "Add Reactions", value: `${addReactions}`, inline: true },
+      { name: "Use Emotes", value: `${useEmotes}`, inline: true },
+      { name: "Manage Nicknames", value: `${manageNicknames}`, inline: true },
     ]);
     permissionEmbed.setColor(Becca.colours.default);
     permissionEmbed.setTimestamp();
