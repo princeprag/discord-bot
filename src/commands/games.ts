@@ -7,6 +7,7 @@ import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
 import { handleFact } from "../modules/commands/subcommands/games/handleFact";
 import { handleJoke } from "../modules/commands/subcommands/games/handleJoke";
 import { handleMtg } from "../modules/commands/subcommands/games/handleMtg";
+import { handleSlime } from "../modules/commands/subcommands/games/handleSlime";
 import { handleSus } from "../modules/commands/subcommands/games/handleSus";
 import { handleTrivia } from "../modules/commands/subcommands/games/handleTrivia";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
@@ -47,6 +48,11 @@ export const games: CommandInt = {
       new SlashCommandSubcommandBuilder()
         .setName("trivia")
         .setDescription("Plays a quick trivia game with you!")
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("slime")
+        .setDescription("Gives you a slime name!")
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -68,6 +74,9 @@ export const games: CommandInt = {
           break;
         case "trivia":
           await handleTrivia(Becca, interaction, config);
+          break;
+        case "slime":
+          await handleSlime(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
