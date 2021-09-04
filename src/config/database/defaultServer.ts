@@ -27,4 +27,5 @@ export const defaultServer = {
   join_role: "",
   leave_message:
     "{@username}, thank you for your time in {@servername}. Your contributions are appreciated.",
+  report_channel: "",
 };

@@ -21,4 +21,5 @@ export type SettingsTypes =
   | "link_message"
   | "level_roles"
   | "join_role"
-  | "leave_message";
+  | "leave_message"
+  | "report_channel";

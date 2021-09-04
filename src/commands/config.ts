@@ -42,6 +42,7 @@ export const config: CommandInt = {
               ["Level-assigned Roles", "level_roles"],
               ["Role on Join", "join_role"],
               ["Custom Leave Message", "leave_message"],
+              ["Report Channel", "report_channel"],
             ])
         )
         .addStringOption((option) =>
@@ -80,6 +81,7 @@ export const config: CommandInt = {
               ["Level-assigned Roles", "level_roles"],
               ["Role on Join", "join_role"],
               ["Custom Leave Message", "leave_message"],
+              ["Report Channel", "report_channel"],
             ])
         )
     )

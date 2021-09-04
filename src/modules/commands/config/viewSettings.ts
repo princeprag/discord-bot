@@ -46,6 +46,11 @@ export const viewSettings = async (
       true
     );
     settingsEmbed.addField(
+      "Report Channel",
+      renderSetting(Becca, "report_channel", config.report_channel),
+      true
+    );
+    settingsEmbed.addField(
       "Muted Role",
       renderSetting(Becca, "muted_role", config.muted_role),
       true
