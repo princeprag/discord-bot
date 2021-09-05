@@ -48,6 +48,7 @@ export const setSetting = async (
       case "blocked":
       case "self_roles":
       case "link_roles":
+      case "level_ignore":
         if (server[key].includes(parsedValue)) {
           const index = server[key].indexOf(parsedValue);
           server[key].splice(index, 1);

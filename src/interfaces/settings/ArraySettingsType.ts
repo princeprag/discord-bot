@@ -9,4 +9,5 @@ export type ArraySettingsType =
   | "permit_links"
   | "link_roles"
   | "allowed_links"
-  | "level_roles";
+  | "level_roles"
+  | "level_ignore";
