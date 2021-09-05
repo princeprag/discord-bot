@@ -6,7 +6,7 @@
   "license": "AGPL-3.0-or-later",
   "private": false,
   "engines": {
-    "node": "^16.8.1",
+    "node": "^16.8.0",
     "npm": "^7.22.0"
   },
   "keywords": [
@@ -33,7 +33,7 @@
     "@sentry/integrations": "^6.12.0",
     "@sentry/node": "^6.12.0",
     "@sentry/tracing": "^6.12.0",
-    "axios": "^0.21.1",
+    "axios": "^0.21.3",
     "discord-api-types": "^0.22.0",
     "discord.js": "^13.1.0",
     "express": "^4.17.1",
