@@ -11,6 +11,7 @@ import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
 import { handleLeaderboard } from "../modules/commands/subcommands/community/handleLeaderboard";
 import { handleLevel } from "../modules/commands/subcommands/community/handleLevel";
 import { handleMotivation } from "../modules/commands/subcommands/community/handleMotivation";
+import { handlePoll } from "../modules/commands/subcommands/community/handlePoll";
 import { handleRole } from "../modules/commands/subcommands/community/handleRole";
 import { handleSchedule } from "../modules/commands/subcommands/community/handleSchedule";
 import { handleServer } from "../modules/commands/subcommands/community/handleServer";
@@ -136,6 +137,29 @@ export const community: CommandInt = {
             .setDescription("The suggestion you want to submit.")
             .setRequired(true)
         )
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("poll")
+        .setDescription("Create a poll.")
+        .addStringOption((option) =>
+          option
+            .setName("question")
+            .setDescription("The question to ask in the poll.")
+            .setRequired(true)
+        )
+        .addStringOption((option) =>
+          option.setName("a").setDescription("Option A").setRequired(true)
+        )
+        .addStringOption((option) =>
+          option.setName("b").setDescription("Option B").setRequired(true)
+        )
+        .addStringOption((option) =>
+          option.setName("c").setDescription("Option C").setRequired(true)
+        )
+        .addStringOption((option) =>
+          option.setName("d").setDescription("Option D").setRequired(true)
+        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -175,6 +199,9 @@ export const community: CommandInt = {
           break;
         case "suggest":
           await handleSuggest(Becca, interaction, config);
+          break;
+        case "poll":
+          await handlePoll(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
