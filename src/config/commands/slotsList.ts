@@ -1,3 +1,6 @@
+/**
+ * An array of Discord custom emote strings.
+ */
 export const slotsList = [
   "<:BeccaAngry:877278332843085824>",
   "<:BeccaCry:877278301419348032>",

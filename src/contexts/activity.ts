@@ -1,4 +1,6 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import { MessageEmbed } from "discord.js";
+
 import ActivityModel from "../database/models/ActivityModel";
 import { ContextInt } from "../interfaces/contexts/ContextInt";
 import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
@@ -15,7 +17,7 @@ export const activity: ContextInt = {
       const target = interaction.options.getUser("user");
 
       if (!target) {
-        await interaction.editReply(Becca.responses.missing_param);
+        await interaction.editReply(Becca.responses.missingParam);
         return;
       }
 
@@ -48,19 +50,20 @@ export const activity: ContextInt = {
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
-        "community group command",
+        "activity context command",
         err,
         interaction.guild?.name
       );
       await interaction
         .reply({
-          embeds: [errorEmbedGenerator(Becca, "community group", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "activity context", errorId)],
           ephemeral: true,
         })
-        .catch(async () =>
-          interaction.editReply({
-            embeds: [errorEmbedGenerator(Becca, "community group", errorId)],
-          })
+        .catch(
+          async () =>
+            await interaction.editReply({
+              embeds: [errorEmbedGenerator(Becca, "activity context", errorId)],
+            })
         );
     }
   },

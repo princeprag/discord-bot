@@ -1,15 +1,20 @@
+/* eslint-disable jsdoc/require-param */
 import { GuildMember } from "discord.js";
+
 import LevelModel from "../../../../database/models/LevelModel";
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Deletes the server's level data, resetting everyone's progress.
+ */
 export const handleResetLevels: CommandHandler = async (Becca, interaction) => {
   try {
     const { guild, member } = interaction;
 
     if (!guild || !member) {
-      await interaction.editReply({ content: Becca.responses.missing_guild });
+      await interaction.editReply({ content: Becca.responses.missingGuild });
       return;
     }
 
@@ -17,7 +22,7 @@ export const handleResetLevels: CommandHandler = async (Becca, interaction) => {
       !(member as GuildMember).permissions.has("MANAGE_GUILD") &&
       member.user.id !== Becca.configs.ownerId
     ) {
-      await interaction.editReply({ content: Becca.responses.no_permission });
+      await interaction.editReply({ content: Becca.responses.noPermission });
       return;
     }
 
@@ -47,10 +52,11 @@ export const handleResetLevels: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "reset level", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "reset level", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "reset level", errorId)],
+          })
       );
   }
 };

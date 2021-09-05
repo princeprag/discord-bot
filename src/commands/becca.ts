@@ -1,7 +1,9 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import {
   SlashCommandBuilder,
   SlashCommandSubcommandBuilder,
 } from "@discordjs/builders";
+
 import { CommandInt } from "../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
 import { handleAbout } from "../modules/commands/subcommands/becca/handleAbout";
@@ -60,7 +62,7 @@ export const becca: CommandInt = {
         .setName("becca")
         .setDescription("Tells the story of Becca's character.")
     ),
-  async run(Becca, interaction, config) {
+  run: async (Becca, interaction, config) => {
     try {
       await interaction.deferReply();
 
@@ -92,7 +94,7 @@ export const becca: CommandInt = {
           break;
         default:
           await interaction.editReply({
-            content: Becca.responses.invalid_command,
+            content: Becca.responses.invalidCommand,
           });
           break;
       }
@@ -108,10 +110,11 @@ export const becca: CommandInt = {
           embeds: [errorEmbedGenerator(Becca, "becca group", errorId)],
           ephemeral: true,
         })
-        .catch(async () =>
-          interaction.editReply({
-            embeds: [errorEmbedGenerator(Becca, "becca group", errorId)],
-          })
+        .catch(
+          async () =>
+            await interaction.editReply({
+              embeds: [errorEmbedGenerator(Becca, "becca group", errorId)],
+            })
         );
     }
   },

@@ -1,9 +1,16 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed, TextChannel } from "discord.js";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../../utils/customSubstring";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * If the server has configured a suggestion channel, this generates an embed
+ * from the given `suggestion` and sends it to that channel. Becca will then react to that
+ * suggestion to allow users to vote on it.
+ */
 export const handleSuggest: CommandHandler = async (
   Becca,
   interaction,
@@ -13,12 +20,12 @@ export const handleSuggest: CommandHandler = async (
     const { guild, user: author } = interaction;
     const suggestion = interaction.options.getString("suggestion");
     if (!guild || !author) {
-      await interaction.editReply({ content: Becca.responses.missing_guild });
+      await interaction.editReply({ content: Becca.responses.missingGuild });
       return;
     }
 
     if (!suggestion) {
-      await interaction.editReply({ content: Becca.responses.missing_param });
+      await interaction.editReply({ content: Becca.responses.missingParam });
       return;
     }
 
@@ -73,10 +80,11 @@ export const handleSuggest: CommandHandler = async (
         embeds: [errorEmbedGenerator(Becca, "suggest", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "suggest", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "suggest", errorId)],
+          })
       );
   }
 };

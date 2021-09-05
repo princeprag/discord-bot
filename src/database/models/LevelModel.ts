@@ -1,4 +1,5 @@
 import { Document, model, Schema } from "mongoose";
+
 export interface LevelInt extends Document {
   serverID: string;
   serverName: string;

@@ -1,9 +1,13 @@
-import { SettingsTypes } from "../../../../interfaces/settings/SettingsTypes";
+/* eslint-disable jsdoc/require-param */
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
+import { SettingsTypes } from "../../../../interfaces/settings/SettingsTypes";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 import { resetSetting } from "../../../settings/resetSetting";
 
+/**
+ * Resets the given `setting` to the default value.
+ */
 export const handleReset: CommandHandler = async (
   Becca,
   interaction,
@@ -13,7 +17,7 @@ export const handleReset: CommandHandler = async (
     const { guild } = interaction;
 
     if (!guild) {
-      await interaction.editReply({ content: Becca.responses.missing_guild });
+      await interaction.editReply({ content: Becca.responses.missingGuild });
       return;
     }
 
@@ -43,10 +47,11 @@ export const handleReset: CommandHandler = async (
         embeds: [errorEmbedGenerator(Becca, "reset", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "reset", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "reset", errorId)],
+          })
       );
   }
 };

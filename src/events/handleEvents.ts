@@ -1,39 +1,36 @@
 import { BeccaInt } from "../interfaces/BeccaInt";
+
 import { disconnect } from "./clientEvents/disconnect";
 import { ready } from "./clientEvents/ready";
 import { guildCreate } from "./guildEvents/guildCreate";
 import { guildDelete } from "./guildEvents/guildDelete";
+import { interactionCreate } from "./interactionEvents/interactionCreate";
 import { memberAdd } from "./memberEvents/memberAdd";
 import { memberRemove } from "./memberEvents/memberRemove";
-import { messageDelete } from "./messageEvents/messageDelete";
+import { memberUpdate } from "./memberEvents/memberUpdate";
 import { messageCreate } from "./messageEvents/messageCreate";
+import { messageDelete } from "./messageEvents/messageDelete";
 import { messageUpdate } from "./messageEvents/messageUpdate";
 import { shardError } from "./shardEvents/shardError";
 import { shardReady } from "./shardEvents/shardReady";
-import { voiceStateUpdate } from "./voiceEvents/voiceStateUpdate";
 import { threadCreate } from "./threadEvents/threadCreate";
-import { threadUpdate } from "./threadEvents/threadUpdate";
 import { threadDelete } from "./threadEvents/threadDelete";
-import { memberUpdate } from "./memberEvents/memberUpdate";
-import { interactionCreate } from "./interactionEvents/interactionCreate";
+import { threadUpdate } from "./threadEvents/threadUpdate";
+import { voiceStateUpdate } from "./voiceEvents/voiceStateUpdate";
 
 /**
- * Root level function for loading all of the event listeners.
- * @param Becca Becca's Client instance.
+ * Root level function for loading all of the event listeners. Attaches
+ * all of the Discord.js event listeners to Becca's custom handlers.
+ *
+ * @param {BeccaInt} Becca Becca's Client instance.
  */
-export const handleEvents = async (Becca: BeccaInt): Promise<void> => {
-  /**
-   * Handle shard events.
-   */
+export const handleEvents = (Becca: BeccaInt): void => {
   Becca.on("shardReady", async (shard) => await shardReady(Becca, shard));
   Becca.on(
     "shardError",
     async (error, shard) => await shardError(Becca, error, shard)
   );
 
-  /**
-   * Handle Message events.
-   */
   Becca.on(
     "messageCreate",
     async (message) => await messageCreate(Becca, message)
@@ -48,15 +45,9 @@ export const handleEvents = async (Becca: BeccaInt): Promise<void> => {
       await messageUpdate(Becca, oldMessage, newMessage)
   );
 
-  /**
-   * Handle Guild events
-   */
   Becca.on("guildCreate", async (guild) => await guildCreate(Becca, guild));
   Becca.on("guildDelete", async (guild) => await guildDelete(Becca, guild));
 
-  /**
-   * Handle Member events.
-   */
   Becca.on("guildMemberAdd", async (member) => await memberAdd(Becca, member));
   Becca.on(
     "guildMemberRemove",
@@ -66,22 +57,13 @@ export const handleEvents = async (Becca: BeccaInt): Promise<void> => {
     await memberUpdate(Becca, oldMember, newMember);
   });
 
-  /**
-   * Handle Client events.
-   */
-  Becca.on("ready", async () => ready(Becca));
-  Becca.on("disconnect", async () => disconnect(Becca));
+  Becca.on("ready", () => ready(Becca));
+  Becca.on("disconnect", () => disconnect(Becca));
 
-  /**
-   * Handle Voice events
-   */
   Becca.on("voiceStateUpdate", async (oldState, newState) => {
     await voiceStateUpdate(Becca, oldState, newState);
   });
 
-  /**
-   * Handle Thread events
-   */
   Becca.on("threadCreate", async (thread) => {
     await threadCreate(Becca, thread);
   });

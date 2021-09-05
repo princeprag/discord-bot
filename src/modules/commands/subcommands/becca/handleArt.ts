@@ -1,9 +1,15 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { artList } from "../../../../config/commands/artList";
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Using the artList config, selects a random art object and parses it
+ * into an embed. The actual images are fetched from Becca's profile site.
+ */
 export const handleArt: CommandHandler = async (Becca, interaction) => {
   try {
     const random = Math.floor(Math.random() * artList.length);
@@ -33,10 +39,11 @@ export const handleArt: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "art", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "art", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "art", errorId)],
+          })
       );
   }
 };

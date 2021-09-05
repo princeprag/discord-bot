@@ -1,7 +1,17 @@
 import { MessageEmbed } from "discord.js";
 import { Types } from "mongoose";
+
 import { BeccaInt } from "../../interfaces/BeccaInt";
 
+/**
+ * Generates an embed containing a unique ID for an error and instructions for
+ * joining the support server and requesting assistance.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @param {string} commandName The name of the command that generated the error.
+ * @param {Types.ObjectId} errorId The unique ID for the error.
+ * @returns {MessageEmbed} The Discord embed containing the information.
+ */
 export const errorEmbedGenerator = (
   Becca: BeccaInt,
   commandName: string,

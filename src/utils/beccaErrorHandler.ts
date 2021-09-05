@@ -1,17 +1,24 @@
+/* eslint-disable jsdoc/no-undefined-types */
 import * as Sentry from "@sentry/node";
 import { Message, MessageEmbed } from "discord.js";
 import { Types } from "mongoose";
+
 import { BeccaInt } from "../interfaces/BeccaInt";
+
 import { beccaLogHandler } from "./beccaLogHandler";
 import { customSubstring } from "./customSubstring";
 
 /**
- * Automated error handler to pass errors to Sentry and the logger.
- * @param Becca Becca's Client object
- * @param context The string explaining where this error was thrown.
- * @param err The standard error object (generated in a catch statement)
- * @param guild The name of the guild that triggered the issue.
- * @param message Optional message that triggered the issue.
+ * Takes the error object generated within the code, passes it to Sentry and logs the
+ * information in the console. Then, generates an error ID, builds an error embed, and sends
+ * that to the debug hook. Finally, returns the error ID to be passed to the user if applicable.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @param {string} context The string explaining where this error was thrown.
+ * @param {unknown} err The standard error object (generated in a catch statement).
+ * @param {string | undefined} guild The name of the guild that triggered the issue.
+ * @param {Message | undefined} message Optional message that triggered the issue.
+ * @returns {Types.ObjectId} A unique ID for the error.
  */
 export const beccaErrorHandler = async (
   Becca: BeccaInt,

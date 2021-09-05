@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/require-param */
 import {
   Message,
   MessageActionRow,
@@ -5,11 +6,18 @@ import {
   MessageEmbed,
   Role,
 } from "discord.js";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { sleep } from "../../../../utils/sleep";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * If the `role` parameter is passed, and if the value is a self-assignable role as
+ * defined in the server's config, will assign or remove the role for the user.
+ * If the `role` is not passed, generates a paginated embed listing the roles that can be
+ * self-assigned.
+ */
 export const handleRole: CommandHandler = async (
   Becca,
   interaction,
@@ -20,7 +28,7 @@ export const handleRole: CommandHandler = async (
 
     if (!guild || !member) {
       await interaction.editReply({
-        content: Becca.responses.missing_guild,
+        content: Becca.responses.missingGuild,
       });
       return;
     }
@@ -156,10 +164,11 @@ export const handleRole: CommandHandler = async (
         embeds: [errorEmbedGenerator(Becca, "role", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "role", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "role", errorId)],
+          })
       );
   }
 };

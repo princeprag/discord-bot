@@ -1,3 +1,9 @@
+/**
+ * An array of motivational quotes.
+ *
+ * @property {string} author The author of the quote.
+ * @property {string} quote The quote itself.
+ */
 export const motivationalQuotes = [
   {
     quote: "Whatever you are, be a good one.",

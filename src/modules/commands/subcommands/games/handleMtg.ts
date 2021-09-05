@@ -1,10 +1,16 @@
+/* eslint-disable jsdoc/require-param */
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
-import { MtgInt } from "../../../../interfaces/commands/games/MtgInt";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
+import { MtgInt } from "../../../../interfaces/commands/games/MtgInt";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Fetches data from a Magic: The Gathering API to get information on
+ * the `card`, and parses it into an embed.
+ */
 export const handleMtg: CommandHandler = async (Becca, interaction) => {
   try {
     const query = interaction.options.getString("card");
@@ -49,10 +55,11 @@ export const handleMtg: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "mtg", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "mtg", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "mtg", errorId)],
+          })
       );
   }
 };

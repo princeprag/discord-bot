@@ -1,5 +1,13 @@
 import { ArtInt } from "../../interfaces/commands/bot/ArtInt";
 
+/**
+ * This contains a list of objects to map into an art embed.
+ *
+ * @property {string} fileName The name of the file.
+ * @property {string} artName The name of the art work.
+ * @property {string} artist The name of the artist.
+ * @property {string} artistUrl The artist's url.
+ */
 export const artList: ArtInt[] = [
   {
     fileName: "Moonlight 1.png",

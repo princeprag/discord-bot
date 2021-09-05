@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 interface ResultInt {
   category: string;
   type: string;

@@ -1,3 +1,6 @@
+/**
+ * An array of nouns for the slime command.
+ */
 export const slimeList = [
   "Acid",
   "Aged",

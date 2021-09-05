@@ -1,13 +1,18 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Generates an embed containing CanIUse browser data for the given `feature` argument.
+ */
 export const handleCanIUse: CommandHandler = async (Becca, interaction) => {
   try {
     const feature = interaction.options.getString("feature");
     if (!feature) {
-      await interaction.editReply({ content: Becca.responses.missing_param });
+      await interaction.editReply({ content: Becca.responses.missingParam });
     }
     const caniuseEmbed = new MessageEmbed();
     caniuseEmbed.setTitle(`Can I Use ${feature}`);
@@ -28,10 +33,11 @@ export const handleCanIUse: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "caniuse", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "caniuse", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "caniuse", errorId)],
+          })
       );
   }
 };

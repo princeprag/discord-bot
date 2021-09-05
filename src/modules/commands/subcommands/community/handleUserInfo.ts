@@ -1,15 +1,20 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { UserFlagMap } from "../../../../config/commands/userInfo";
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../../utils/customSubstring";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Generates an embed containing information about the given `user`, or the author.
+ */
 export const handleUserInfo: CommandHandler = async (Becca, interaction) => {
   try {
     const { user, guild } = interaction;
     if (!guild) {
-      await interaction.editReply({ content: Becca.responses.missing_guild });
+      await interaction.editReply({ content: Becca.responses.missingGuild });
       return;
     }
 
@@ -76,10 +81,11 @@ export const handleUserInfo: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "user info", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "user info", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "user info", errorId)],
+          })
       );
   }
 };

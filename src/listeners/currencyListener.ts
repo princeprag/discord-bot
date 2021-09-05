@@ -1,9 +1,15 @@
+/*eslint-disable jsdoc/require-jsdoc*/
 import { CommandInteraction } from "discord.js";
+
 import { CurrencyOptOut } from "../config/optout/CurrencyOptOut";
 import CurrencyModel from "../database/models/CurrencyModel";
 import { BeccaInt } from "../interfaces/BeccaInt";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
+/**
+ * Tracks slash command interactions, awards currency for each
+ * command use.
+ */
 export const currencyListener = {
   name: "currency",
   description: "Awards currency on command usage.",

@@ -1,8 +1,15 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { CurrencyHandler } from "../../../../interfaces/commands/CurrencyHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
+/**
+ * Confirms a user has sufficient currency to claim the `reward` they selected. If so,
+ * removes the currency from their balance and sends a message to the currency webhook to
+ * notify the owner that a reward has been claimed.
+ */
 export const handleClaim: CurrencyHandler = async (
   Becca,
   interaction,
@@ -97,10 +104,11 @@ export const handleClaim: CurrencyHandler = async (
         embeds: [errorEmbedGenerator(Becca, "claim", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "claim", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "claim", errorId)],
+          })
       );
   }
 };

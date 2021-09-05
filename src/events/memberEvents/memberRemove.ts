@@ -1,4 +1,5 @@
 import { GuildMember, MessageEmbed, PartialGuildMember } from "discord.js";
+
 import { defaultServer } from "../../config/database/defaultServer";
 import ServerModel from "../../database/models/ServerModel";
 import { BeccaInt } from "../../interfaces/BeccaInt";
@@ -7,9 +8,10 @@ import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 /**
  * Handles the guildMemberRemove event. Constructs an embed and passes it to the
- * welcome channel.
- * @param Becca Becca's Client instance
- * @param member object representing the user who left the server
+ * welcome channel. Logs the roles the member had on Discord.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @param {GuildMember | PartialGuildMember} member An object representing the user who left the server.
  */
 export const memberRemove = async (
   Becca: BeccaInt,

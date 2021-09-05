@@ -1,11 +1,16 @@
+/* eslint-disable jsdoc/require-param */
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
-import { FactInt } from "../../../../interfaces/commands/games/FactInt";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
+import { FactInt } from "../../../../interfaces/commands/games/FactInt";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../../utils/customSubstring";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Generates an embed containing a random fun fact.
+ */
 export const handleFact: CommandHandler = async (Becca, interaction) => {
   try {
     const fact = await axios.get<FactInt>(
@@ -32,10 +37,11 @@ export const handleFact: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "fact", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "fact", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "fact", errorId)],
+          })
       );
   }
 };

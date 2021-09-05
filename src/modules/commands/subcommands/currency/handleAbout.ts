@@ -1,8 +1,13 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { CurrencyHandler } from "../../../../interfaces/commands/CurrencyHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
+/**
+ * Generates an embed describing the currency system.
+ */
 export const handleAbout: CurrencyHandler = async (Becca, interaction) => {
   try {
     const aboutEmbed = new MessageEmbed();
@@ -40,10 +45,11 @@ export const handleAbout: CurrencyHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "about", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "about", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "about", errorId)],
+          })
       );
   }
 };

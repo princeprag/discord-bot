@@ -1,9 +1,14 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { motivationalQuotes } from "../../../../config/commands/motivationalQuotes";
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Returns a random motivational quote, formatted in an embed.
+ */
 export const handleMotivation: CommandHandler = async (Becca, interaction) => {
   try {
     const random = Math.floor(Math.random() * motivationalQuotes.length);
@@ -28,10 +33,11 @@ export const handleMotivation: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "motivation", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "motivation", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "motivation", errorId)],
+          })
       );
   }
 };

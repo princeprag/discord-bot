@@ -1,10 +1,12 @@
 import { Guild, MessageEmbed } from "discord.js";
+
 import { BeccaInt } from "../../interfaces/BeccaInt";
 
 /**
  * Generates an embed when Becca joins a guild and sends it to the debug hook.
- * @param Becca Becca's client instance
- * @param guild The guild object for the server Becca joined.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @param {Guild} guild The guild object for the server Becca joined.
  */
 export const guildCreate = async (
   Becca: BeccaInt,

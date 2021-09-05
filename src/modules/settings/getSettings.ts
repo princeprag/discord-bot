@@ -4,11 +4,14 @@ import { BeccaInt } from "../../interfaces/BeccaInt";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 /**
- * Looks up the settings for the provided server.
- * @param Becca Becca's Client instance
- * @param serverID Discord ID of the server to get the settings for
- * @param serverName Name of the server
- * @returns The server settings object, or null on error.
+ * This utility fetches the server settings for the given ID from the
+ * database. If the server does not have a record, it creates one with the
+ * default values.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @param {string} serverID Discord ID of the server to get the settings for.
+ * @param {string} serverName Name of the server.
+ * @returns {ServerModelInt | null} The server settings object, or null on error.
  */
 export const getSettings = async (
   Becca: BeccaInt,

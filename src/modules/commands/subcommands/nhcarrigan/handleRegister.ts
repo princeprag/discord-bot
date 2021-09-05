@@ -1,9 +1,16 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { registerCommands } from "../../../../utils/registerCommands";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
+/**
+ * Loads and registers all current commands. This should be run when a change
+ * to a command's `data` property is deployed, or a command is added/deleted. This
+ * does NOT need to be run for changes to the `run` property.
+ */
 export const handleRegister: CommandHandler = async (Becca, interaction) => {
   try {
     const valid = await registerCommands(Becca);
@@ -27,19 +34,20 @@ export const handleRegister: CommandHandler = async (Becca, interaction) => {
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,
-      "list command",
+      "register command",
       err,
       interaction.guild?.name
     );
     await interaction
       .reply({
-        embeds: [errorEmbedGenerator(Becca, "list", errorId)],
+        embeds: [errorEmbedGenerator(Becca, "register", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "list", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "register", errorId)],
+          })
       );
   }
 };

@@ -1,14 +1,21 @@
+/* eslint-disable jsdoc/require-param */
 import {
   Message,
   MessageActionRow,
   MessageButton,
   MessageEmbed,
 } from "discord.js";
+
 import { CurrencyHandler } from "../../../../interfaces/commands/CurrencyHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { parseSeconds } from "../../../../utils/parseSeconds";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
+/**
+ * Allows a user to play a game of 21 with Becca, similar to Blackjack. If the user
+ * wins, increases their currency by `wager`. Otherwise decreases it.
+ * Can be used once an hour.
+ */
 export const handleTwentyOne: CurrencyHandler = async (
   Becca,
   interaction,
@@ -100,7 +107,7 @@ export const handleTwentyOne: CurrencyHandler = async (
         gameState.over = true;
         gameState.won = false;
       }
-      if (dealer > 21 || (dealer > 16 && player > dealer)) {
+      if (dealer > 21 || (dealer > 16 && player > dealer && player <= 21)) {
         gameState.over = true;
         gameState.won = true;
       }
@@ -181,10 +188,11 @@ export const handleTwentyOne: CurrencyHandler = async (
         embeds: [errorEmbedGenerator(Becca, "slots", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "slots", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "slots", errorId)],
+          })
       );
   }
 };

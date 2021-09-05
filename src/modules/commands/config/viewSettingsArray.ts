@@ -1,16 +1,28 @@
 import { MessageEmbed } from "discord.js";
+
 import { ServerModelInt } from "../../../database/models/ServerModel";
 import { BeccaInt } from "../../../interfaces/BeccaInt";
 import { ArraySettingsType } from "../../../interfaces/settings/ArraySettingsType";
 import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
+
 import { renderSetting } from "./renderSetting";
 
-export const viewSettingsArray = async (
+/**
+ * Parses a settings array into a paginated embed, with array values
+ * stored in the description separated by new lines.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @param {ServerModelInt} config The server's settings from the database.
+ * @param {ArraySettingsType} setting The setting to be parsed.
+ * @param {number} page The page number for the current embed.
+ * @returns {MessageEmbed | null} The parsed embed, or null on error.
+ */
+export const viewSettingsArray = (
   Becca: BeccaInt,
   config: ServerModelInt,
   setting: ArraySettingsType,
   page: number
-): Promise<MessageEmbed | null> => {
+): MessageEmbed | null => {
   try {
     const data = config[setting];
 

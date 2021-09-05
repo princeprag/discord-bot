@@ -112,6 +112,13 @@ const combineUsername = (
   return noun.slice(0, len);
 };
 
+/**
+ * Generates a DigitalOcean themed username, constructed from a few
+ * lists of possible words.
+ *
+ * @param {number} len The maximum length of the username to generate.
+ * @returns {string} The generated username.
+ */
 export const generateUsername = (len: number): string => {
   const noun = format(randomNoun());
   const adjective = format(randomAdjective(noun));

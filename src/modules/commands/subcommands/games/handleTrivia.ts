@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+/* eslint-disable jsdoc/require-param */
 import axios from "axios";
 import {
   Message,
@@ -5,13 +7,19 @@ import {
   MessageButton,
   MessageEmbed,
 } from "discord.js";
-import { TriviaInt } from "../../../../interfaces/commands/games/TriviaInt";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
+import { TriviaInt } from "../../../../interfaces/commands/games/TriviaInt";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../../utils/customSubstring";
 import { replaceHtml } from "../../../../utils/replaceHtml";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Fetches a trivia question from an API, generates it into an embed. Adds buttons
+ * to that embed for the four answers, then collects button responses from users.
+ * Tracks the users that answered correctly and announces the winners after 30 seconds.
+ */
 export const handleTrivia: CommandHandler = async (Becca, interaction) => {
   try {
     const letters = ["A", "B", "C", "D"];
@@ -127,10 +135,11 @@ export const handleTrivia: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "trivia", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "trivia", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "trivia", errorId)],
+          })
       );
   }
 };

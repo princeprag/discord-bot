@@ -1,13 +1,19 @@
+/* eslint-disable jsdoc/require-param */
 import {
   Message,
   MessageActionRow,
   MessageButton,
   MessageEmbed,
 } from "discord.js";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
+/**
+ * Generates a paginated embed containing the list of servers Becca is currently in.
+ * TODO: Remove this when Becca is verified.
+ */
 export const handleList: CommandHandler = async (Becca, interaction) => {
   try {
     const serverList = Becca.guilds.cache.map((el) => el);
@@ -113,10 +119,11 @@ export const handleList: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "list", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "list", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "list", errorId)],
+          })
       );
   }
 };

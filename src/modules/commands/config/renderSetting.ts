@@ -3,6 +3,15 @@ import { LevelRoleInt } from "../../../interfaces/settings/LevelRoleInt";
 import { SettingsTypes } from "../../../interfaces/settings/SettingsTypes";
 import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 
+/**
+ * Renders a server setting's value into a string in the format that Discord
+ * expects - allows for clean formatting of roles and channels.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @param {SettingsTypes} key The setting to render.
+ * @param {string | LevelRoleInt} value That setting's value.
+ * @returns {string} The parsed value.
+ */
 export const renderSetting = (
   Becca: BeccaInt,
   key: SettingsTypes,

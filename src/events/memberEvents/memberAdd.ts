@@ -1,4 +1,5 @@
 import { GuildMember, MessageEmbed, PartialGuildMember } from "discord.js";
+
 import { defaultServer } from "../../config/database/defaultServer";
 import { BeccaInt } from "../../interfaces/BeccaInt";
 import { sendLogEmbed } from "../../modules/guild/sendLogEmbed";
@@ -7,10 +8,11 @@ import { getSettings } from "../../modules/settings/getSettings";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
 /**
- * Handles the guildMemberAdd event. Builds an embed and passes it to the
- * welcome channel.
- * @param Becca Becca's Client instance
- * @param member member object that represents user who joined
+ * Handles the guildMemberAdd event. Checks if the member has passed screening,
+ * handles the role onjoin logic, and sends the welcome message or pending notice.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @param {GuildMember | PartialGuildMember} member Member object that represents user who joined.
  */
 export const memberAdd = async (
   Becca: BeccaInt,

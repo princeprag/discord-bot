@@ -1,3 +1,6 @@
+/**
+ * A string containing a list of conversation topics separated by new lines.
+ */
 export const topicList = `1. When you are old, what do you think children will ask you to tell stories about?
 2. If you could switch two movie characters, what switch would lead to the most inappropriate movies?
 3. What animal would be cutest if scaled down to the size of a cat?

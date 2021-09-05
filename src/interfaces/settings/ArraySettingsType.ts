@@ -1,3 +1,6 @@
+/**
+ * Defines the config keys that are stored as arrays.
+ */
 export type ArraySettingsType =
   | "hearts"
   | "blocked"

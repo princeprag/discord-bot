@@ -1,10 +1,20 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import { MessageEmbed, TextChannel } from "discord.js";
+
 import levelScale from "../config/listeners/levelScale";
 import { LevelOptOut } from "../config/optout/LevelOptOut";
 import LevelModel from "../database/models/LevelModel";
 import { ListenerInt } from "../interfaces/listeners/ListenerInt";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
+/**
+ * Confirms the server has enabled the level system, then awards
+ * experience points to a user on message - with bonus points based
+ * on message length. If the user has levelled up, sends a message to the
+ * channel OR the configured level channel.
+ *
+ * Also assigns configured level-specific roles.
+ */
 export const levelListener: ListenerInt = {
   name: "Level Up!",
   description: "Grants experience based on message activity in the server.",

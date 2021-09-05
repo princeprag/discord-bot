@@ -1,13 +1,17 @@
 import { readdir } from "fs/promises";
-import { join } from "path/posix";
+import { join } from "path";
+
 import { BeccaInt } from "../interfaces/BeccaInt";
 import { CommandInt } from "../interfaces/commands/CommandInt";
+
 import { beccaErrorHandler } from "./beccaErrorHandler";
 
 /**
- * Reads all slash command directories and imports the command files within.
- * @param Becca Becca's Client instance
- * @returns Array of CommandInt objects representing the imported commands.
+ * Reads the `/commands` directory and dynamically imports the files,
+ * then pushes the imported data to an array.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @returns {CommandInt[]} Array of CommandInt objects representing the imported commands.
  */
 export const loadCommands = async (Becca: BeccaInt): Promise<CommandInt[]> => {
   try {

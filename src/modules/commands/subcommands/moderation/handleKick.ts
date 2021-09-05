@@ -1,10 +1,16 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../../utils/customSubstring";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 import { sendLogEmbed } from "../../../guild/sendLogEmbed";
 
+/**
+ * Provided the caller has permission, kicks the `target` user from the guild
+ * for the given `reason`.
+ */
 export const handleKick: CommandHandler = async (Becca, interaction) => {
   try {
     const { guild, member } = interaction;
@@ -12,7 +18,7 @@ export const handleKick: CommandHandler = async (Becca, interaction) => {
     const reason = interaction.options.getString("reason");
 
     if (!guild) {
-      await interaction.editReply({ content: Becca.responses.missing_guild });
+      await interaction.editReply({ content: Becca.responses.missingGuild });
       return;
     }
 
@@ -21,20 +27,20 @@ export const handleKick: CommandHandler = async (Becca, interaction) => {
       typeof member.permissions === "string" ||
       !member.permissions.has("KICK_MEMBERS")
     ) {
-      await interaction.editReply({ content: Becca.responses.no_permission });
+      await interaction.editReply({ content: Becca.responses.noPermission });
       return;
     }
 
     if (!target) {
-      await interaction.editReply({ content: Becca.responses.missing_param });
+      await interaction.editReply({ content: Becca.responses.missingParam });
       return;
     }
     if (target.id === member.user.id) {
-      await interaction.editReply({ content: Becca.responses.no_mod_self });
+      await interaction.editReply({ content: Becca.responses.noModSelf });
       return;
     }
     if (target.id === Becca.user?.id) {
-      await interaction.editReply({ content: Becca.responses.no_mod_becca });
+      await interaction.editReply({ content: Becca.responses.noModBecca });
       return;
     }
 
@@ -48,7 +54,7 @@ export const handleKick: CommandHandler = async (Becca, interaction) => {
     }
 
     await targetMember.kick(
-      customSubstring(reason || Becca.responses.default_mod_reason, 1000)
+      customSubstring(reason || Becca.responses.defaultModReason, 1000)
     );
 
     const kickLogEmbed = new MessageEmbed();
@@ -59,7 +65,7 @@ export const handleKick: CommandHandler = async (Becca, interaction) => {
     );
     kickLogEmbed.addField(
       "Reason",
-      customSubstring(reason || Becca.responses.default_mod_reason, 1000)
+      customSubstring(reason || Becca.responses.defaultModReason, 1000)
     );
     kickLogEmbed.setTimestamp();
     kickLogEmbed.setAuthor(
@@ -82,10 +88,11 @@ export const handleKick: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "kick", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "kick", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "kick", errorId)],
+          })
       );
   }
 };

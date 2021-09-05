@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import { User } from "@sentry/types";
 import {
   Guild,
@@ -6,6 +7,7 @@ import {
   MessageEmbed,
   TextChannel,
 } from "discord.js";
+
 import { ContextInt } from "../interfaces/contexts/ContextInt";
 import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
@@ -23,7 +25,7 @@ export const report: ContextInt = {
       const message = interaction.options.getMessage("message") as Message;
 
       if (!guild || !message) {
-        await interaction.editReply(Becca.responses.missing_guild);
+        await interaction.editReply(Becca.responses.missingGuild);
         return;
       }
 
@@ -65,19 +67,20 @@ export const report: ContextInt = {
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
-        "report command",
+        "report context command",
         err,
         interaction.guild?.name
       );
       await interaction
         .reply({
-          embeds: [errorEmbedGenerator(Becca, "report", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "report context", errorId)],
           ephemeral: true,
         })
-        .catch(async () =>
-          interaction.editReply({
-            embeds: [errorEmbedGenerator(Becca, "report", errorId)],
-          })
+        .catch(
+          async () =>
+            await interaction.editReply({
+              embeds: [errorEmbedGenerator(Becca, "report context", errorId)],
+            })
         );
     }
   },

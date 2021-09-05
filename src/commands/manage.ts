@@ -1,7 +1,9 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import {
   SlashCommandBuilder,
   SlashCommandSubcommandBuilder,
 } from "@discordjs/builders";
+
 import { CommandInt } from "../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
 import { handleResetLevels } from "../modules/commands/subcommands/manage/handleResetLevels";
@@ -66,7 +68,7 @@ export const manage: CommandInt = {
           break;
         default:
           await interaction.editReply({
-            content: Becca.responses.invalid_command,
+            content: Becca.responses.invalidCommand,
           });
           break;
       }
@@ -82,10 +84,11 @@ export const manage: CommandInt = {
           embeds: [errorEmbedGenerator(Becca, "manage group", errorId)],
           ephemeral: true,
         })
-        .catch(async () =>
-          interaction.editReply({
-            embeds: [errorEmbedGenerator(Becca, "manage group", errorId)],
-          })
+        .catch(
+          async () =>
+            await interaction.editReply({
+              embeds: [errorEmbedGenerator(Becca, "manage group", errorId)],
+            })
         );
     }
   },

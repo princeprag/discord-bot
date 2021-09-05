@@ -1,8 +1,17 @@
 import { Guild, User } from "discord.js";
+
 import WarningModel from "../../../database/models/WarningModel";
 import { BeccaInt } from "../../../interfaces/BeccaInt";
 import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 
+/**
+ * Updates the guild warning count for a user, and stores the latest reason.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @param {Guild} guild The server where the warning was issued.
+ * @param {User} user The user that received the warning.
+ * @param {string} reason The reason for the warning.
+ */
 export const updateWarningCount = async (
   Becca: BeccaInt,
   guild: Guild,

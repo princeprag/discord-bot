@@ -1,10 +1,15 @@
+/* eslint-disable jsdoc/require-param */
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
-import { XkcdInt } from "../../../../interfaces/commands/general/XkcdInt";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
+import { XkcdInt } from "../../../../interfaces/commands/general/XkcdInt";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Fetches the latest XKCD comic, or the comic matching `number`.
+ */
 export const handleXkcd: CommandHandler = async (Becca, interaction) => {
   try {
     const number = interaction.options.getInteger("number");
@@ -38,10 +43,11 @@ export const handleXkcd: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "xkcd", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "xkcd", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "xkcd", errorId)],
+          })
       );
   }
 };

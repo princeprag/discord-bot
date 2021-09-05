@@ -1,8 +1,15 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Generates an embed containing a link to invite Becca. The link is handled
+ * by Becca's domain, to ensure it is up to date with permission and scope
+ * changes.
+ */
 export const handleInvite: CommandHandler = async (Becca, interaction) => {
   try {
     const inviteEmbed = new MessageEmbed();
@@ -27,10 +34,11 @@ export const handleInvite: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "invite", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "invite", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "invite", errorId)],
+          })
       );
   }
 };

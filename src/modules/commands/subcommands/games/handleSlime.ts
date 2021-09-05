@@ -1,15 +1,21 @@
+/* eslint-disable jsdoc/require-param */
 import { GuildMember } from "discord.js";
+
 import { slimeList } from "../../../../config/commands/slimeList";
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
+/**
+ * Generates a random slime-themed name from the slimeList and assigns it
+ * as the user's nickname.
+ */
 export const handleSlime: CommandHandler = async (Becca, interaction) => {
   try {
     const member = interaction.member as GuildMember;
 
     if (!member) {
-      await interaction.editReply(Becca.responses.missing_guild);
+      await interaction.editReply(Becca.responses.missingGuild);
       return;
     }
 
@@ -37,10 +43,11 @@ export const handleSlime: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "slime", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "slime", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "slime", errorId)],
+          })
       );
   }
 };

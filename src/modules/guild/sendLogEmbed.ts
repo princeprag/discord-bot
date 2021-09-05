@@ -1,14 +1,16 @@
 import { Guild, MessageEmbed, TextChannel } from "discord.js";
+
 import { BeccaInt } from "../../interfaces/BeccaInt";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 import { getSettings } from "../settings/getSettings";
 
 /**
- * Module to fetch a server's settings, confirm that the server has enabled a log
- * channel, and send the message to that channel.
- * @param Becca Becca's Client instance
- * @param guild The guild object that triggered the command
- * @param content The MessageEmbed to send to the log channel
+ * Validates that the server has set a log channel, confirms the channel still exists,
+ * and sends the provided content embed to that channel.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @param {Guild} guild The guild object.
+ * @param {MessageEmbed} content The MessageEmbed to send to the log channel.
  */
 export const sendLogEmbed = async (
   Becca: BeccaInt,

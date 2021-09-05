@@ -1,11 +1,16 @@
+/* eslint-disable jsdoc/require-param */
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
 import { MessageEmbed } from "discord.js";
+
 import { CommandDataInt } from "../../../../interfaces/commands/CommandDataInt";
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
+/**
+ * Generates a list of currently registered commands.
+ */
 export const handleViewSlash: CommandHandler = async (Becca, interaction) => {
   try {
     const rest = new REST({ version: "9" }).setToken(Becca.configs.token);
@@ -43,10 +48,11 @@ export const handleViewSlash: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "list", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "list", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "list", errorId)],
+          })
       );
   }
 };

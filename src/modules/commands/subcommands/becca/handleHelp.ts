@@ -1,8 +1,14 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Generates an embed containing information on how to interact with Becca,
+ * links to the support server, docs, and code.
+ */
 export const handleHelp: CommandHandler = async (Becca, interaction) => {
   try {
     const helpEmbed = new MessageEmbed();
@@ -43,10 +49,11 @@ export const handleHelp: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "help", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "help", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "help", errorId)],
+          })
       );
   }
 };

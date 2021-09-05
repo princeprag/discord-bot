@@ -1,4 +1,6 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import {
   accountVerificationMap,
   contentFilterMap,
@@ -7,12 +9,15 @@ import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Generates an embed listing the various Discord settings for the specific server.
+ */
 export const handleServer: CommandHandler = async (Becca, interaction) => {
   try {
     const { guild } = interaction;
 
     if (!guild) {
-      await interaction.editReply({ content: Becca.responses.missing_guild });
+      await interaction.editReply({ content: Becca.responses.missingGuild });
       return;
     }
 
@@ -122,10 +127,11 @@ export const handleServer: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "server", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "server", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "server", errorId)],
+          })
       );
   }
 };

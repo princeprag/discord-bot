@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 export interface SpaceInt {
   copyright: string;
   date: string;

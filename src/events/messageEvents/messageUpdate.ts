@@ -1,4 +1,5 @@
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
+
 import { BeccaInt } from "../../interfaces/BeccaInt";
 import { sendLogEmbed } from "../../modules/guild/sendLogEmbed";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
@@ -7,9 +8,10 @@ import { customSubstring } from "../../utils/customSubstring";
 /**
  * Handles the messageUpdate event. Validates that the content in the message
  * changed, then sends an embed with the change details to the log channel.
- * @param Becca Becca's Client instance
- * @param oldMessage Old message object
- * @param newMessage New message object
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @param {Message | PartialMessage} oldMessage Old message object.
+ * @param {Message | PartialMessage} newMessage New message object.
  */
 export const messageUpdate = async (
   Becca: BeccaInt,

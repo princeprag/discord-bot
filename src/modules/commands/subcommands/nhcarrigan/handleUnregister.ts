@@ -1,17 +1,23 @@
+/* eslint-disable jsdoc/require-param */
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
 import { MessageEmbed } from "discord.js";
+
 import { CommandDataInt } from "../../../../interfaces/commands/CommandDataInt";
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
+/**
+ * Removes the given `command` from the list of available commands.
+ * Run this if a stray command isn't getting deleted.
+ */
 export const handleUnregister: CommandHandler = async (Becca, interaction) => {
   try {
     const target = interaction.options.getString("command");
 
     if (!target) {
-      await interaction.editReply(Becca.responses.missing_param);
+      await interaction.editReply(Becca.responses.missingParam);
       return;
     }
 
@@ -56,19 +62,20 @@ export const handleUnregister: CommandHandler = async (Becca, interaction) => {
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,
-      "list command",
+      "unregister command",
       err,
       interaction.guild?.name
     );
     await interaction
       .reply({
-        embeds: [errorEmbedGenerator(Becca, "list", errorId)],
+        embeds: [errorEmbedGenerator(Becca, "unregister", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "list", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "unregister", errorId)],
+          })
       );
   }
 };

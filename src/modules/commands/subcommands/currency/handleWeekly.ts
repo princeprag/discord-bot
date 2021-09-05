@@ -1,9 +1,15 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { CurrencyHandler } from "../../../../interfaces/commands/CurrencyHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { parseSeconds } from "../../../../utils/parseSeconds";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
+/**
+ * Grants the user a bonus currency amount between 25 and 100. Can be used
+ * once every 7 days.
+ */
 export const handleWeekly: CurrencyHandler = async (
   Becca,
   interaction,
@@ -59,19 +65,20 @@ export const handleWeekly: CurrencyHandler = async (
   } catch (err) {
     const errorId = await beccaErrorHandler(
       Becca,
-      "daily command",
+      "weekly command",
       err,
       interaction.guild?.name
     );
     await interaction
       .reply({
-        embeds: [errorEmbedGenerator(Becca, "daily", errorId)],
+        embeds: [errorEmbedGenerator(Becca, "weekly", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "daily", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "weekly", errorId)],
+          })
       );
   }
 };

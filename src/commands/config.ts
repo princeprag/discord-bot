@@ -1,7 +1,9 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import {
   SlashCommandBuilder,
   SlashCommandSubcommandBuilder,
 } from "@discordjs/builders";
+
 import { CommandInt } from "../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
 import { handleReset } from "../modules/commands/subcommands/config/handleReset";
@@ -114,7 +116,7 @@ export const config: CommandInt = {
 
       if (!guild || !member) {
         await interaction.editReply({
-          content: Becca.responses.missing_guild,
+          content: Becca.responses.missingGuild,
         });
         return;
       }
@@ -125,7 +127,7 @@ export const config: CommandInt = {
         member.user.id !== Becca.configs.ownerId
       ) {
         await interaction.editReply({
-          content: Becca.responses.no_permission,
+          content: Becca.responses.noPermission,
         });
         return;
       }
@@ -143,7 +145,7 @@ export const config: CommandInt = {
           break;
         default:
           await interaction.editReply({
-            content: Becca.responses.invalid_command,
+            content: Becca.responses.invalidCommand,
           });
           break;
       }
@@ -159,10 +161,11 @@ export const config: CommandInt = {
           embeds: [errorEmbedGenerator(Becca, "config group", errorId)],
           ephemeral: true,
         })
-        .catch(async () =>
-          interaction.editReply({
-            embeds: [errorEmbedGenerator(Becca, "config group", errorId)],
-          })
+        .catch(
+          async () =>
+            await interaction.editReply({
+              embeds: [errorEmbedGenerator(Becca, "config group", errorId)],
+            })
         );
     }
   },

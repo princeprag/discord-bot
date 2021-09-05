@@ -1,4 +1,6 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import {
   accountVerificationMap,
   contentFilterMap,
@@ -7,12 +9,17 @@ import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
+/**
+ * Fetches Discord data for the given `server`. Used to identify potential bot
+ * farms that may impact verification.
+ * TODO: Can remove this when Becca is verified!
+ */
 export const handleServerData: CommandHandler = async (Becca, interaction) => {
   try {
     const serverId = interaction.options.getString("server");
 
     if (!serverId) {
-      await interaction.editReply({ content: Becca.responses.missing_param });
+      await interaction.editReply({ content: Becca.responses.missingParam });
       return;
     }
 
@@ -131,10 +138,11 @@ export const handleServerData: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "server data", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "server data", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "server data", errorId)],
+          })
       );
   }
 };

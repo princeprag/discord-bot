@@ -1,10 +1,17 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { slotsList } from "../../../../config/commands/slotsList";
 import { CurrencyHandler } from "../../../../interfaces/commands/CurrencyHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { parseSeconds } from "../../../../utils/parseSeconds";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
+/**
+ * Confirms that the user has not used this command within the last hour, then
+ * selects three random emotes from the slotsList. If the three emotes match, increases
+ * the user's currency by `wager`. Otherwise, decreases it.
+ */
 export const handleSlots: CurrencyHandler = async (
   Becca,
   interaction,
@@ -76,10 +83,11 @@ export const handleSlots: CurrencyHandler = async (
         embeds: [errorEmbedGenerator(Becca, "slots", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "slots", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "slots", errorId)],
+          })
       );
   }
 };
