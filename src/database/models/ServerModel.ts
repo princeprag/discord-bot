@@ -26,6 +26,7 @@ export interface ServerModelInt extends Document {
   join_role: string;
   leave_message: string;
   report_channel: string;
+  level_ignore: string[];
 }
 
 export const Server = new Schema({
@@ -54,6 +55,7 @@ export const Server = new Schema({
   join_role: String,
   leave_message: String,
   report_channel: String,
+  level_ignore: [String],
 });
 
 export default model<ServerModelInt>("server", Server);

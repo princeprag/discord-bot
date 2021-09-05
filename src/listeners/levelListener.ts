@@ -34,6 +34,10 @@ export const levelListener: ListenerInt = {
         return;
       }
 
+      if (serverSettings.level_ignore.includes(message.channel.id)) {
+        return;
+      }
+
       let targetChannel = message.channel as TextChannel;
 
       if (serverSettings.level_channel) {

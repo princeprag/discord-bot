@@ -22,4 +22,5 @@ export type SettingsTypes =
   | "level_roles"
   | "join_role"
   | "leave_message"
-  | "report_channel";
+  | "report_channel"
+  | "level_ignore";

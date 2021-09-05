@@ -34,6 +34,7 @@ export const renderSetting = (
       case "level_channel":
       case "suggestion_channel":
       case "report_channel":
+      case "level_ignore":
         return `<#${value}>`;
       case "hearts":
       case "blocked":

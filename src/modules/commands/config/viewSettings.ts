@@ -70,6 +70,11 @@ export const viewSettings = (
       true
     );
     settingsEmbed.addField(
+      "No Levels Channels",
+      config.level_ignore.length.toString(),
+      true
+    );
+    settingsEmbed.addField(
       "Custom Welcome Message",
       customSubstring(
         config.custom_welcome || defaultServer.custom_welcome,

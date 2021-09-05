@@ -45,6 +45,7 @@ export const config: CommandInt = {
               ["Role on Join", "join_role"],
               ["Custom Leave Message", "leave_message"],
               ["Report Channel", "report_channel"],
+              ["No Levelling Channels", "level_ignore"],
             ])
         )
         .addStringOption((option) =>
@@ -84,6 +85,7 @@ export const config: CommandInt = {
               ["Role on Join", "join_role"],
               ["Custom Leave Message", "leave_message"],
               ["Report Channel", "report_channel"],
+              ["No Levelling Channels", "level_ignore"],
             ])
         )
     )
@@ -105,6 +107,7 @@ export const config: CommandInt = {
               ["Allowed Link Roles", "link_roles"],
               ["Allowed Link Regex", "allowed_links"],
               ["Level-assigned Roles", "level_roles"],
+              ["No Levelling Channels", "level_ignore"],
               ["Global Settings", "global"],
             ])
         )
