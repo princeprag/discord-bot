@@ -31,7 +31,8 @@ export const handleViewSlash: CommandHandler = async (Becca, interaction) => {
     for (const command of commands) {
       embed.addField(
         command.name,
-        command.options.map((opt) => opt.name).join(", ")
+        command.options?.map((opt) => opt.name).join(", ") ||
+          "Command has no options."
       );
     }
 
