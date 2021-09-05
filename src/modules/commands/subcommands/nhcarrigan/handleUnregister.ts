@@ -51,8 +51,10 @@ export const handleUnregister: CommandHandler = async (Becca, interaction) => {
     confirm.setTitle(`${command.name} Command Unregistered`);
     confirm.setDescription(command.description);
 
-    for (const option of command.options) {
-      confirm.addField(option.name, option.description, true);
+    if (command.options) {
+      for (const option of command.options) {
+        confirm.addField(option.name, option.description, true);
+      }
     }
 
     await interaction.editReply({ embeds: [confirm] });

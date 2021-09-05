@@ -27,9 +27,14 @@ export const handleRegister: CommandHandler = async (Becca, interaction) => {
       confirm.addField(command.data.name, command.data.description, true);
     }
 
+    confirm.addField(
+      "Context Commands",
+      Becca.contexts.map((el) => el.data.name).join(", ")
+    );
+
     await interaction.editReply({ embeds: [confirm] });
     await Becca.debugHook.send(
-      `Hey <@!${Becca.configs.ownerId}>, slash commands were registered.`
+      `Hey <@!${Becca.configs.ownerId}>, application commands were registered.`
     );
   } catch (err) {
     const errorId = await beccaErrorHandler(

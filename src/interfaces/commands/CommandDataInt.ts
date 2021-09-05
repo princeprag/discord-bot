@@ -6,8 +6,8 @@ export interface CommandDataInt {
   description: string;
   version: string;
   default_permission: boolean;
-  type: number;
-  options: [
+  type?: number;
+  options?: [
     {
       type: number;
       name: string;
