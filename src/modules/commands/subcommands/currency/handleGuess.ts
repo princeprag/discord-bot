@@ -1,8 +1,14 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { CurrencyHandler } from "../../../../interfaces/commands/CurrencyHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
+/**
+ * Generates a random number between 1 and 100. If the user's `guess` matches that number,
+ * increases their currency by `wager`. Otherwise, decreases it.
+ */
 export const handleGuess: CurrencyHandler = async (
   Becca,
   interaction,
@@ -54,10 +60,11 @@ export const handleGuess: CurrencyHandler = async (
         embeds: [errorEmbedGenerator(Becca, "guess", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "guess", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "guess", errorId)],
+          })
       );
   }
 };

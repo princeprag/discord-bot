@@ -1,7 +1,9 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import {
   SlashCommandBuilder,
   SlashCommandSubcommandBuilder,
 } from "@discordjs/builders";
+
 import { CommandInt } from "../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
 import { handleBan } from "../modules/commands/subcommands/moderation/handleBan";
@@ -137,7 +139,7 @@ export const mod: CommandInt = {
           await handleBan(Becca, interaction, config);
           break;
         default:
-          await interaction.editReply(Becca.responses.invalid_command);
+          await interaction.editReply(Becca.responses.invalidCommand);
           break;
       }
     } catch (err) {
@@ -152,10 +154,11 @@ export const mod: CommandInt = {
           embeds: [errorEmbedGenerator(Becca, "mod group", errorId)],
           ephemeral: true,
         })
-        .catch(async () =>
-          interaction.editReply({
-            embeds: [errorEmbedGenerator(Becca, "mod group", errorId)],
-          })
+        .catch(
+          async () =>
+            await interaction.editReply({
+              embeds: [errorEmbedGenerator(Becca, "mod group", errorId)],
+            })
         );
     }
   },

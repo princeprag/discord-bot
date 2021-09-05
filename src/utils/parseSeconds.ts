@@ -1,3 +1,10 @@
+/**
+ * Takes a number of seconds and parses it into a human readable
+ * string, with the maximum unit being days.
+ *
+ * @param {number} seconds The number of seconds to parse.
+ * @returns {string} A human-readable format of the number of seconds.
+ */
 export const parseSeconds = (seconds: number): string => {
   const days = seconds >= 86400 ? Math.floor(seconds / 86400) : 0;
   const hours =

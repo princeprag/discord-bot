@@ -1,8 +1,10 @@
 /**
  * Helper function to pause the operation of an async function for a
  * given amount of time.
- * @param milliseconds Time, in milliseconds, to pause.
+ *
+ * @param {number} milliseconds Time, in milliseconds, to pause.
+ * @returns {Promise<void>} Promise that resolves after the given time.
  */
 export const sleep = async (milliseconds: number): Promise<void> => {
-  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+  return await new Promise((resolve) => setTimeout(resolve, milliseconds));
 };

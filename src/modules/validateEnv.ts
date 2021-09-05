@@ -1,10 +1,13 @@
 import { BeccaInt, ResponsesInt } from "../interfaces/BeccaInt";
 
 /**
- * Function to validate that all environment variables are present. Loads those
- * environment variables into Becca's Client instance. Also loads the colours and responses.
- * @param Becca Becca's Client object
- * @returns Object containing a valid property as boolean, and a message as string.
+ * Validates that all expected environment variables are set with *some* value.
+ * Does not validate that the values are valid. Constructs a config object and
+ * attaches it to Becca's instance. Also constructs the colours and responses objects
+ * and attaches them.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @returns {Object} Object containing a valid property as boolean, and a message as string.
  */
 export const validateEnv = (
   Becca: BeccaInt
@@ -70,18 +73,18 @@ export const validateEnv = (
     Becca.colours = colours;
 
     const phrases: ResponsesInt = {
-      missing_guild: "It seems I cannot locate your guild record.",
-      invalid_command:
+      missingGuild: "It seems I cannot locate your guild record.",
+      invalidCommand:
         "I am not sure how this happened, but that spell does not appear to be valid.",
-      no_permission: "You do not have the correct skills to use this spell.",
-      owner_only: "Only my owner can ask me to do this.",
-      missing_param:
+      noPermission: "You do not have the correct skills to use this spell.",
+      ownerOnly: "Only my owner can ask me to do this.",
+      missingParam:
         "This is impressive. You have managed to forget a required component for this spell.",
-      default_mod_reason:
+      defaultModReason:
         "Unfortunately, they could not be bothered to tell me why.",
-      no_mod_becca:
+      noModBecca:
         "Brave of you to try to make me your target. Foolish, but brave.",
-      no_mod_self: "Are... are you asking me to smite you?",
+      noModSelf: "Are... are you asking me to smite you?",
     };
 
     Becca.responses = phrases;

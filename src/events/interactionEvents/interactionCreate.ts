@@ -1,4 +1,5 @@
 import { Interaction, Message } from "discord.js";
+
 import { BeccaInt } from "../../interfaces/BeccaInt";
 import { currencyListener } from "../../listeners/currencyListener";
 import { usageListener } from "../../listeners/usageListener";
@@ -6,6 +7,13 @@ import { logActivity } from "../../modules/commands/logActivity";
 import { getSettings } from "../../modules/settings/getSettings";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
+/**
+ * Processes logic when a new interaction is created. Interactions come in various
+ * forms, and represent some sort of user engagement with Becca on Discord.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @param {Interaction} interaction The interaction payload received from Discord.
+ */
 export const interactionCreate = async (
   Becca: BeccaInt,
   interaction: Interaction

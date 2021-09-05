@@ -1,4 +1,5 @@
 import { GuildMember, MessageEmbed, PartialGuildMember } from "discord.js";
+
 import { defaultServer } from "../../config/database/defaultServer";
 import { BeccaInt } from "../../interfaces/BeccaInt";
 import { sendWelcomeEmbed } from "../../modules/guild/sendWelcomeEmbed";
@@ -8,9 +9,10 @@ import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 /**
  * Handles the memberUpdate event. Currently checks to see if
  * member has passed screening event, and if so, sends welcome embed.
- * @param {BeccaInt} Becca Becca's client instance
- * @param {GuildMember} oldMember The member's state before the update
- * @param {GuildMember} newMember The member's state after the update
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @param {GuildMember | PartialGuildMember} oldMember The member's state before the update.
+ * @param {GuildMember} newMember The member's state after the update.
  */
 export const memberUpdate = async (
   Becca: BeccaInt,

@@ -1,8 +1,17 @@
 import { MessageEmbed, VoiceState } from "discord.js";
+
 import { BeccaInt } from "../../interfaces/BeccaInt";
 import { sendLogEmbed } from "../../modules/guild/sendLogEmbed";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
+/**
+ * Logs when a member's voice state changes (such as they enter a voice channel,
+ * leave a voice channel, or move between voice channels).
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @param {VoiceState} oldState The member's voice state before the update.
+ * @param {VoiceState} newState The member's voice state after the update.
+ */
 export const voiceStateUpdate = async (
   Becca: BeccaInt,
   oldState: VoiceState,

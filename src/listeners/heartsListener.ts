@@ -1,7 +1,14 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import { defaultHearts } from "../config/listeners/defaultHearts";
 import { ListenerInt } from "../interfaces/listeners/ListenerInt";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
+/**
+ * Checks the server settings to see if the user that sent the message
+ * is configured to receive a heart reaction. If so, reacts.
+ *
+ * Also validates against the defaultHearts config.
+ */
 export const heartsListener: ListenerInt = {
   name: "Hearts Listener",
   description: "Adds heart reactions to specified users.",

@@ -1,3 +1,7 @@
+/**
+ * An object to map Discord API values for user badges into
+ * human readable strings.
+ */
 export const UserFlagMap = {
   DISCORD_EMPLOYEE: "Staff",
   PARTNERED_SERVER_OWNER: "Discord Partner",

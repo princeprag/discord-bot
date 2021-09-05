@@ -1,10 +1,15 @@
+/* eslint-disable jsdoc/require-param */
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
-import { JokeInt } from "../../../../interfaces/commands/games/JokeInt";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
+import { JokeInt } from "../../../../interfaces/commands/games/JokeInt";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Generates an embed containing a random joke.
+ */
 export const handleJoke: CommandHandler = async (Becca, interaction) => {
   try {
     const joke = await axios.get<JokeInt>("https://icanhazdadjoke.com/", {
@@ -39,10 +44,11 @@ export const handleJoke: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "joke", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "joke", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "joke", errorId)],
+          })
       );
   }
 };

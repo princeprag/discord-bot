@@ -1,6 +1,11 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import { ListenerInt } from "../interfaces/listeners/ListenerInt";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
+/**
+ * Checks if the message mentions someone and matches the thanks regex. If so,
+ * congratulates the user for being thanked.
+ */
 export const thanksListener: ListenerInt = {
   name: "Thanks",
   description: "Recognise users who are thanked.",

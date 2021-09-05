@@ -1,14 +1,16 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import {
   SlashCommandBuilder,
   SlashCommandSubcommandBuilder,
 } from "@discordjs/builders";
+
 import { CommandInt } from "../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
+import { handleLevelscale } from "../modules/commands/subcommands/misc/handleLevelscale";
 import { handlePermissions } from "../modules/commands/subcommands/misc/handlePermissions";
 import { handleSpace } from "../modules/commands/subcommands/misc/handleSpace";
 import { handleUsername } from "../modules/commands/subcommands/misc/handleUsername";
 import { handleXkcd } from "../modules/commands/subcommands/misc/handleXkcd";
-import { handleLevelscale } from "../modules/commands/subcommands/misc/handleLevelscale";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 export const misc: CommandInt = {
@@ -85,7 +87,7 @@ export const misc: CommandInt = {
           break;
         default:
           await interaction.editReply({
-            content: Becca.responses.invalid_command,
+            content: Becca.responses.invalidCommand,
           });
           break;
       }
@@ -101,10 +103,11 @@ export const misc: CommandInt = {
           embeds: [errorEmbedGenerator(Becca, "misc group", errorId)],
           ephemeral: true,
         })
-        .catch(async () =>
-          interaction.editReply({
-            embeds: [errorEmbedGenerator(Becca, "misc group", errorId)],
-          })
+        .catch(
+          async () =>
+            await interaction.editReply({
+              embeds: [errorEmbedGenerator(Becca, "misc group", errorId)],
+            })
         );
     }
   },

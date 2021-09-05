@@ -1,16 +1,22 @@
+/* eslint-disable jsdoc/require-param */
 import { GuildMember, MessageEmbed } from "discord.js";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 import { validateChannelPerms } from "../../../commands/server/validateChannelPerms";
 import { validateServerPerms } from "../../../commands/server/validateServerPerms";
 
+/**
+ * Validates that Becca has the correct permissions in the server and the
+ * specific channel.
+ */
 export const handlePermissions: CommandHandler = async (Becca, interaction) => {
   try {
     const { channel, guild, member } = interaction;
 
     if (!guild || !member || !channel) {
-      await interaction.editReply(Becca.responses.missing_guild);
+      await interaction.editReply(Becca.responses.missingGuild);
       return;
     }
 
@@ -18,7 +24,7 @@ export const handlePermissions: CommandHandler = async (Becca, interaction) => {
       !(member as GuildMember).permissions.has("MANAGE_GUILD") &&
       (member as GuildMember).id !== Becca.configs.ownerId
     ) {
-      await interaction.reply({ content: Becca.responses.no_permission });
+      await interaction.reply({ content: Becca.responses.noPermission });
       return;
     }
 
@@ -66,10 +72,11 @@ export const handlePermissions: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "permissions", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "permissions", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "permissions", errorId)],
+          })
       );
   }
 };

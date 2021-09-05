@@ -1,11 +1,17 @@
+/* eslint-disable jsdoc/require-param */
 import { Message, MessageActionRow, MessageButton } from "discord.js";
-import { ArraySettingsType } from "../../../../interfaces/settings/ArraySettingsType";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
+import { ArraySettingsType } from "../../../../interfaces/settings/ArraySettingsType";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { viewSettings } from "../../../commands/config/viewSettings";
 import { viewSettingsArray } from "../../../commands/config/viewSettingsArray";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Generates an embed showing the current server `setting` values. If `setting` is global,
+ * shows the top-level overview.
+ */
 export const handleView: CommandHandler = async (
   Becca,
   interaction,
@@ -15,7 +21,7 @@ export const handleView: CommandHandler = async (
     const { guild } = interaction;
 
     if (!guild) {
-      await interaction.editReply({ content: Becca.responses.missing_guild });
+      await interaction.editReply({ content: Becca.responses.missingGuild });
       return;
     }
 
@@ -140,10 +146,11 @@ export const handleView: CommandHandler = async (
         embeds: [errorEmbedGenerator(Becca, "view", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "view", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "view", errorId)],
+          })
       );
   }
 };

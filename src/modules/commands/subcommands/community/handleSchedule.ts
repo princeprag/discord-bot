@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/require-param */
 import {
   GuildChannel,
   GuildMember,
@@ -5,10 +6,17 @@ import {
   NewsChannel,
   TextChannel,
 } from "discord.js";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Allows a user to schedule a post to be sent to a specific channel, up to
+ * 24 hours in advance. Does not allow for a post to be sent to a channel
+ * where the user does not have permission to send messages themselves.
+ * Scheduled posts are stored in memory, so are lost in a reboot.
+ */
 export const handleSchedule: CommandHandler = async (Becca, interaction) => {
   try {
     const { member } = interaction;
@@ -17,7 +25,7 @@ export const handleSchedule: CommandHandler = async (Becca, interaction) => {
     const message = interaction.options.getString("message");
 
     if (!time || !targetChannel || !message) {
-      await interaction.editReply(Becca.responses.missing_param);
+      await interaction.editReply(Becca.responses.missingParam);
       return;
     }
 
@@ -82,10 +90,11 @@ export const handleSchedule: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "schedule", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "schedule", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "schedule", errorId)],
+          })
       );
   }
 };

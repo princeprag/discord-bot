@@ -1,4 +1,6 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { StarOptOut } from "../../../../config/optout/StarOptOut";
 import StarModel from "../../../../database/models/StarModel";
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
@@ -6,12 +8,16 @@ import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../../utils/customSubstring";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Generates an embed to give the `user` a gold star for the given `reason`. If the user
+ * has not opted out from the tracking, also increments that user's starcount in the database.
+ */
 export const handleStar: CommandHandler = async (Becca, interaction) => {
   try {
     const { member, guild } = interaction;
 
     if (!guild || !member) {
-      await interaction.editReply({ content: Becca.responses.missing_guild });
+      await interaction.editReply({ content: Becca.responses.missingGuild });
       return;
     }
 
@@ -19,7 +25,7 @@ export const handleStar: CommandHandler = async (Becca, interaction) => {
     const reason = interaction.options.getString("reason");
 
     if (!targetUser || !reason) {
-      await interaction.editReply({ content: Becca.responses.missing_param });
+      await interaction.editReply({ content: Becca.responses.missingParam });
       return;
     }
 
@@ -81,10 +87,11 @@ export const handleStar: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "star", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "star", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "star", errorId)],
+          })
       );
   }
 };

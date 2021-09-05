@@ -1,16 +1,22 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import LevelModel from "../../../../database/models/LevelModel";
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Returns the current level ranking information for the given `user-level` or the author.
+ * Does not work if levels are disabled.
+ */
 export const handleLevel: CommandHandler = async (Becca, interaction) => {
   try {
     const { guildId, guild, user } = interaction;
 
     if (!guildId || !guild) {
       await interaction.editReply({
-        content: Becca.responses.missing_guild,
+        content: Becca.responses.missingGuild,
       });
       return;
     }
@@ -64,10 +70,11 @@ export const handleLevel: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "level", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "level", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "level", errorId)],
+          })
       );
   }
 };

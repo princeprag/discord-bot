@@ -1,8 +1,13 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Generates an embed with Becca's response time.
+ */
 export const handlePing: CommandHandler = async (
   Becca,
   interaction
@@ -36,10 +41,11 @@ export const handlePing: CommandHandler = async (
         embeds: [errorEmbedGenerator(Becca, "ping", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "ping", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "ping", errorId)],
+          })
       );
   }
 };

@@ -1,4 +1,6 @@
+/* eslint-disable camelcase */
 import { Document, model, Schema } from "mongoose";
+
 import { LevelRoleInt } from "../../interfaces/settings/LevelRoleInt";
 
 export interface ServerModelInt extends Document {

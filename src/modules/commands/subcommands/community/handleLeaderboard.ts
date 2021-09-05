@@ -1,16 +1,23 @@
+/* eslint-disable jsdoc/require-param */
 import { GuildMember, MessageEmbed } from "discord.js";
+
 import LevelModel from "../../../../database/models/LevelModel";
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * If the server has enabled the level system, this generates an embed
+ * containing the top ten users by experience points, their total XP and level,
+ * and the rank of the user who called the command.
+ */
 export const handleLeaderboard: CommandHandler = async (Becca, interaction) => {
   try {
     const { guildId, guild, member, user } = interaction;
 
     if (!guildId || !guild) {
       await interaction.editReply({
-        content: Becca.responses.missing_guild,
+        content: Becca.responses.missingGuild,
       });
       return;
     }
@@ -66,10 +73,11 @@ export const handleLeaderboard: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "leaderboard", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "leaderboard", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "leaderboard", errorId)],
+          })
       );
   }
 };

@@ -1,8 +1,14 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Generates an embed with a link to Becca's profile site, where users
+ * can read about her adventures.
+ */
 export const handleBecca: CommandHandler = async (Becca, interaction) => {
   try {
     const beccaEmbed = new MessageEmbed();
@@ -25,10 +31,11 @@ export const handleBecca: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "becca", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "becca", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "becca", errorId)],
+          })
       );
   }
 };

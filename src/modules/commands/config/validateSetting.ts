@@ -1,18 +1,21 @@
 /* eslint-disable no-case-declarations */
 import { Guild } from "discord.js";
+
 import { ServerModelInt } from "../../../database/models/ServerModel";
 import { BeccaInt } from "../../../interfaces/BeccaInt";
 import { SettingsTypes } from "../../../interfaces/settings/SettingsTypes";
 import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 
 /**
- * Confirms a setting value is correct.
- * @param Becca Becca's client instance
- * @param setting The name of the setting to validate
- * @param value The value to confirm is valid
- * @param guild The guild object where this command originated
- * @param config The server config object from the database
- * @returns boolean confirming setting is valid
+ * Validates that a setting is in the correct format. Confirms that channels exist,
+ * members are in the server, etc.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @param {SettingsTypes} setting The name of the setting to validate.
+ * @param {string} value The value to confirm is valid.
+ * @param {Guild} guild The guild object to modify the settings for.
+ * @param {ServerModelInt} config The server config object from the database.
+ * @returns {boolean} True if the setting is valid, false if not.
  */
 export const validateSetting = async (
   Becca: BeccaInt,

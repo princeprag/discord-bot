@@ -1,7 +1,11 @@
+/* eslint-disable jsdoc/require-param */
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
+/**
+ * Becca will leave the server matching the provided `server-id`.
+ */
 export const handleLeave: CommandHandler = async (Becca, interaction) => {
   try {
     const serverId = interaction.options.getString("server-id");
@@ -37,10 +41,11 @@ export const handleLeave: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "leave", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "leaves", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "leaves", errorId)],
+          })
       );
   }
 };

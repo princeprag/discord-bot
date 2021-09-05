@@ -1,15 +1,21 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../../utils/customSubstring";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 import { updateWarningCount } from "../../../commands/moderation/updateWarningCount";
 
+/**
+ * Issues a warning to the `target` user, and adds it to the server's warning count.
+ * Logs the `reason`.
+ */
 export const handleWarn: CommandHandler = async (Becca, interaction) => {
   try {
     const { guild, member } = interaction;
     if (!guild) {
-      await interaction.editReply({ content: Becca.responses.missing_guild });
+      await interaction.editReply({ content: Becca.responses.missingGuild });
       return;
     }
 
@@ -18,7 +24,7 @@ export const handleWarn: CommandHandler = async (Becca, interaction) => {
       typeof member.permissions === "string" ||
       !member.permissions.has("KICK_MEMBERS")
     ) {
-      await interaction.editReply({ content: Becca.responses.no_permission });
+      await interaction.editReply({ content: Becca.responses.noPermission });
       return;
     }
 
@@ -26,17 +32,17 @@ export const handleWarn: CommandHandler = async (Becca, interaction) => {
     const reason = interaction.options.getString("reason");
 
     if (!target) {
-      await interaction.editReply({ content: Becca.responses.missing_param });
+      await interaction.editReply({ content: Becca.responses.missingParam });
       return;
     }
 
     if (target.id === member.user.id) {
-      await interaction.editReply({ content: Becca.responses.no_mod_self });
+      await interaction.editReply({ content: Becca.responses.noModSelf });
       return;
     }
 
     if (target.id === Becca.user?.id) {
-      await interaction.editReply({ content: Becca.responses.no_mod_becca });
+      await interaction.editReply({ content: Becca.responses.noModBecca });
       return;
     }
 
@@ -46,7 +52,7 @@ export const handleWarn: CommandHandler = async (Becca, interaction) => {
     warnEmbed.setColor(Becca.colours.warning);
     warnEmbed.addField(
       "Reason",
-      customSubstring(reason || Becca.responses.default_mod_reason, 1000)
+      customSubstring(reason || Becca.responses.defaultModReason, 1000)
     );
     warnEmbed.setTimestamp();
     warnEmbed.setAuthor(
@@ -58,7 +64,7 @@ export const handleWarn: CommandHandler = async (Becca, interaction) => {
       Becca,
       guild,
       target,
-      reason || Becca.responses.default_mod_reason
+      reason || Becca.responses.defaultModReason
     );
 
     await interaction.editReply({
@@ -77,10 +83,11 @@ export const handleWarn: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "warn", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "warn", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "warn", errorId)],
+          })
       );
   }
 };

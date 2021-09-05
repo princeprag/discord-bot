@@ -1,8 +1,17 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import { MessageEmbed } from "discord.js";
+
 import { defaultServer } from "../config/database/defaultServer";
 import { ListenerInt } from "../interfaces/listeners/ListenerInt";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
+/**
+ * Checks if the message content includes a link, and confirms that link
+ * has not been set as allowed and the user does not have a link-permitted role.
+ *
+ * If the message fails these conditions, Becca deletes it. Requires that this listener
+ * be enabled in the server AND channel.
+ */
 export const linksListener: ListenerInt = {
   name: "links",
   description: "Listens for links in messages where they are not allowed.",

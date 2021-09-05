@@ -1,11 +1,19 @@
-import express from "express";
+import { readFile } from "fs/promises";
 import http from "http";
 import https from "https";
-import { readFile } from "fs/promises";
-import { beccaLogHandler } from "../utils/beccaLogHandler";
-import { beccaErrorHandler } from "../utils/beccaErrorHandler";
-import { BeccaInt } from "../interfaces/BeccaInt";
 
+import express from "express";
+
+import { BeccaInt } from "../interfaces/BeccaInt";
+import { beccaErrorHandler } from "../utils/beccaErrorHandler";
+import { beccaLogHandler } from "../utils/beccaLogHandler";
+
+/**
+ * Spins up a basic web server for uptime monitoring.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @returns {boolean} True if the server was started, false if it crashed.
+ */
 export const createServer = async (Becca: BeccaInt): Promise<boolean> => {
   try {
     const HTTPEndpoint = express();

@@ -1,10 +1,16 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../../utils/customSubstring";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 import { sendLogEmbed } from "../../../guild/sendLogEmbed";
 
+/**
+ * If the server has configured a muted role, removes it from the `target` for the
+ * given `reason`.
+ */
 export const handleUnmute: CommandHandler = async (
   Becca,
   interaction,
@@ -16,7 +22,7 @@ export const handleUnmute: CommandHandler = async (
     const reason = interaction.options.getString("reason");
 
     if (!guild) {
-      await interaction.editReply({ content: Becca.responses.missing_guild });
+      await interaction.editReply({ content: Becca.responses.missingGuild });
       return;
     }
 
@@ -25,20 +31,20 @@ export const handleUnmute: CommandHandler = async (
       typeof member.permissions === "string" ||
       !member.permissions.has("KICK_MEMBERS")
     ) {
-      await interaction.editReply({ content: Becca.responses.no_permission });
+      await interaction.editReply({ content: Becca.responses.noPermission });
       return;
     }
 
     if (!target) {
-      await interaction.editReply({ content: Becca.responses.missing_param });
+      await interaction.editReply({ content: Becca.responses.missingParam });
       return;
     }
     if (target.id === member.user.id) {
-      await interaction.editReply({ content: Becca.responses.no_mod_self });
+      await interaction.editReply({ content: Becca.responses.noModSelf });
       return;
     }
     if (target.id === Becca.user?.id) {
-      await interaction.editReply({ content: Becca.responses.no_mod_becca });
+      await interaction.editReply({ content: Becca.responses.noModBecca });
       return;
     }
 
@@ -70,7 +76,7 @@ export const handleUnmute: CommandHandler = async (
     muteEmbed.setColor(Becca.colours.success);
     muteEmbed.addField(
       "Reason",
-      customSubstring(reason || Becca.responses.default_mod_reason, 1000)
+      customSubstring(reason || Becca.responses.defaultModReason, 1000)
     );
     muteEmbed.setFooter(`ID: ${targetUser.id}`);
     muteEmbed.setTimestamp();
@@ -96,10 +102,11 @@ export const handleUnmute: CommandHandler = async (
         embeds: [errorEmbedGenerator(Becca, "unmute", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "unmute", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "unmute", errorId)],
+          })
       );
   }
 };

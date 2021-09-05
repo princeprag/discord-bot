@@ -1,8 +1,14 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import { CommandInteraction } from "discord.js";
+
 import UsageModel from "../database/models/UsageModel";
 import { BeccaInt } from "../interfaces/BeccaInt";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
+/**
+ * Tracks anonymous slash command usage to see which are popular
+ * and which are unused.
+ */
 export const usageListener = {
   name: "usage",
   description: "Tracks command usage.",

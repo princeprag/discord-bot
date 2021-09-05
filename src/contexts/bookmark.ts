@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import {
   Message,
   MessageActionRow,
@@ -6,6 +7,7 @@ import {
   TextChannel,
   User,
 } from "discord.js";
+
 import { ContextInt } from "../interfaces/contexts/ContextInt";
 import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
@@ -68,19 +70,20 @@ export const bookmark: ContextInt = {
     } catch (err) {
       const errorId = await beccaErrorHandler(
         Becca,
-        "bookmark command",
+        "bookmark context command",
         err,
         interaction.guild?.name
       );
       await interaction
         .reply({
-          embeds: [errorEmbedGenerator(Becca, "bookmark", errorId)],
+          embeds: [errorEmbedGenerator(Becca, "bookmark context", errorId)],
           ephemeral: true,
         })
-        .catch(async () =>
-          interaction.editReply({
-            embeds: [errorEmbedGenerator(Becca, "bookmark", errorId)],
-          })
+        .catch(
+          async () =>
+            await interaction.editReply({
+              embeds: [errorEmbedGenerator(Becca, "bookmark context", errorId)],
+            })
         );
     }
   },

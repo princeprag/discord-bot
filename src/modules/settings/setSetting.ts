@@ -6,14 +6,17 @@ import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 import { beccaLogHandler } from "../../utils/beccaLogHandler";
 
 /**
- * Function to update a server's custom settings.
- * @param Becca Becca's Client instance
- * @param serverID The ID of the server to modify settings for
- * @param serverName The current name of the server
- * @param key The name of the setting to modify
- * @param value The value to change the setting to
- * @param server The server config entry in the database
- * @returns ServerModel on success and null on error
+ * This handles all of the logic for setting a server's config. Depending on
+ * the type of the data stored, it will handle the array or string logic
+ * as necessary.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @param {string} serverID The ID of the server to modify settings for.
+ * @param {string} serverName The current name of the server.
+ * @param {SettingsTypes} key The name of the setting to modify.
+ * @param {string} value The value to change the setting to.
+ * @param {ServerModelInt} server The server config entry in the database.
+ * @returns {ServerModelInt | null} ServerModel on success and null on error.
  */
 export const setSetting = async (
   Becca: BeccaInt,

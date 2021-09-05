@@ -1,9 +1,14 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { topicList } from "../../../../config/commands/topicList";
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Generates an embed containing a random conversation starter from the topicList.
+ */
 export const handleTopic: CommandHandler = async (Becca, interaction) => {
   try {
     const { user } = interaction;
@@ -37,10 +42,11 @@ export const handleTopic: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "topic", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "topic", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "topic", errorId)],
+          })
       );
   }
 };

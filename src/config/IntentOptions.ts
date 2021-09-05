@@ -1,5 +1,8 @@
 import { IntentsString } from "discord.js";
 
+/**
+ * This contains the list of Intent options Becca requests on identify.
+ */
 export const IntentOptions: IntentsString[] = [
   "GUILDS",
   "GUILD_MEMBERS",

@@ -1,9 +1,15 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { CurrencyHandler } from "../../../../interfaces/commands/CurrencyHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { parseSeconds } from "../../../../utils/parseSeconds";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
+/**
+ * Generates an embed with the user's current balance, and the cooldowns for
+ * the daily and weekly bonuses.
+ */
 export const handleView: CurrencyHandler = async (Becca, interaction, data) => {
   try {
     const { user } = interaction;
@@ -49,10 +55,11 @@ export const handleView: CurrencyHandler = async (Becca, interaction, data) => {
         embeds: [errorEmbedGenerator(Becca, "view", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "view", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "view", errorId)],
+          })
       );
   }
 };

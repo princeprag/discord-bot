@@ -1,13 +1,19 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Constructs an embed with a visual representation of the colour passed to
+ * the `hex` argument.
+ */
 export const handleColour: CommandHandler = async (Becca, interaction) => {
   try {
     const targetColour = interaction.options.getString("hex");
     if (!targetColour) {
-      await interaction.editReply({ content: Becca.responses.missing_param });
+      await interaction.editReply({ content: Becca.responses.missingParam });
       return;
     }
 
@@ -41,10 +47,11 @@ export const handleColour: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "colour", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "colour", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "colour", errorId)],
+          })
       );
   }
 };

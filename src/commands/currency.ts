@@ -1,20 +1,22 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import {
   SlashCommandBuilder,
   SlashCommandSubcommandBuilder,
 } from "@discordjs/builders";
+
+import { CurrencyOptOut } from "../config/optout/CurrencyOptOut";
 import CurrencyModel from "../database/models/CurrencyModel";
 import { CommandInt } from "../interfaces/commands/CommandInt";
 import { errorEmbedGenerator } from "../modules/commands/errorEmbedGenerator";
-import { handleView } from "../modules/commands/subcommands/currency/handleView";
-import { handleDaily } from "../modules/commands/subcommands/currency/handleDaily";
-import { handleWeekly } from "../modules/commands/subcommands/currency/handleWeekly";
-import { beccaErrorHandler } from "../utils/beccaErrorHandler";
-import { handleClaim } from "../modules/commands/subcommands/currency/handleClaim";
 import { handleAbout } from "../modules/commands/subcommands/currency/handleAbout";
+import { handleClaim } from "../modules/commands/subcommands/currency/handleClaim";
+import { handleDaily } from "../modules/commands/subcommands/currency/handleDaily";
+import { handleGuess } from "../modules/commands/subcommands/currency/handleGuess";
 import { handleSlots } from "../modules/commands/subcommands/currency/handleSlots";
 import { handleTwentyOne } from "../modules/commands/subcommands/currency/handleTwentyOne";
-import { CurrencyOptOut } from "../config/optout/CurrencyOptOut";
-import { handleGuess } from "../modules/commands/subcommands/currency/handleGuess";
+import { handleView } from "../modules/commands/subcommands/currency/handleView";
+import { handleWeekly } from "../modules/commands/subcommands/currency/handleWeekly";
+import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
 export const currency: CommandInt = {
   data: new SlashCommandBuilder()
@@ -160,7 +162,7 @@ export const currency: CommandInt = {
           break;
         default:
           await interaction.editReply({
-            content: Becca.responses.invalid_command,
+            content: Becca.responses.invalidCommand,
           });
           break;
       }
@@ -176,10 +178,11 @@ export const currency: CommandInt = {
           embeds: [errorEmbedGenerator(Becca, "currency group", errorId)],
           ephemeral: true,
         })
-        .catch(async () =>
-          interaction.editReply({
-            embeds: [errorEmbedGenerator(Becca, "currency group", errorId)],
-          })
+        .catch(
+          async () =>
+            await interaction.editReply({
+              embeds: [errorEmbedGenerator(Becca, "currency group", errorId)],
+            })
         );
     }
   },

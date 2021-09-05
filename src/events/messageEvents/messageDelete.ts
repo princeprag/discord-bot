@@ -1,4 +1,5 @@
 import { Message, MessageEmbed, PartialMessage } from "discord.js";
+
 import { BeccaInt } from "../../interfaces/BeccaInt";
 import { sendLogEmbed } from "../../modules/guild/sendLogEmbed";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
@@ -7,8 +8,9 @@ import { customSubstring } from "../../utils/customSubstring";
 /**
  * Handles the messageDelete event. Passes the deleted message information
  * to the log channel.
- * @param Becca Becca's Client instance
- * @param message The deleted message object
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @param {Message | PartialMessage} message The deleted message object.
  */
 export const messageDelete = async (
   Becca: BeccaInt,

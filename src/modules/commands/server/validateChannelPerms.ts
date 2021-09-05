@@ -4,15 +4,17 @@ import {
   TextBasedChannels,
   TextChannel,
 } from "discord.js";
+
 import { BeccaInt } from "../../../interfaces/BeccaInt";
 import { beccaErrorHandler } from "../../../utils/beccaErrorHandler";
 
 /**
  * Validates that Becca has the expected channel-level permissions.
- * @param {BeccaInt} Becca The Becca instance.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
  * @param {GuildMember} BeccaMember Becca's guild member object for that server.
- * @param {TextChannel | DMChannel | NewsChannel} channel The channel to check permissions on.
- * @returns boolean Whether Becca has the expected permissions.
+ * @param {TextBasedChannels} channel The channel to check permissions on.
+ * @returns {boolean} True if Becca has ALL required permissions, false otherwise.
  */
 export const validateChannelPerms = async (
   Becca: BeccaInt,

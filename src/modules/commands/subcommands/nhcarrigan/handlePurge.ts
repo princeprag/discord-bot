@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/require-param */
 import ActivityModel from "../../../../database/models/ActivityModel";
 import CurrencyModel from "../../../../database/models/CurrencyModel";
 import LevelModel from "../../../../database/models/LevelModel";
@@ -6,6 +7,10 @@ import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
+/**
+ * Purges the given `data` type for the provided `user`. Use this when a user
+ * has requested data deletion or opt out.
+ */
 export const handlePurge: CommandHandler = async (Becca, interaction) => {
   try {
     const user = interaction.options.getString("user", true);
@@ -68,10 +73,11 @@ export const handlePurge: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "purge", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "purge", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "purge", errorId)],
+          })
       );
   }
 };

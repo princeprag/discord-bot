@@ -1,13 +1,17 @@
 import { readdir } from "fs/promises";
-import { join } from "path/posix";
+import { join } from "path";
+
 import { BeccaInt } from "../interfaces/BeccaInt";
 import { ContextInt } from "../interfaces/contexts/ContextInt";
+
 import { beccaErrorHandler } from "./beccaErrorHandler";
 
 /**
- * Reads all context menu directories and imports the command files within.
- * @param Becca Becca's Client instance
- * @returns Array of ContextInt objects representing the imported commands.
+ * Reads the `/contexts` directory and dynamically imports the files,
+ * then pushes the imported data to an array.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @returns {ContextInt[]} Array of ContextInt objects representing the imported commands.
  */
 export const loadContexts = async (Becca: BeccaInt): Promise<ContextInt[]> => {
   try {

@@ -1,9 +1,15 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { CurrencyHandler } from "../../../../interfaces/commands/CurrencyHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { parseSeconds } from "../../../../utils/parseSeconds";
 import { errorEmbedGenerator } from "../../errorEmbedGenerator";
 
+/**
+ * Confirms that a user has not used the command within the last 24 hours, then
+ * grants them a random currency bonus between 0 and 24.
+ */
 export const handleDaily: CurrencyHandler = async (
   Becca,
   interaction,
@@ -53,10 +59,11 @@ export const handleDaily: CurrencyHandler = async (
         embeds: [errorEmbedGenerator(Becca, "daily", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "daily", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "daily", errorId)],
+          })
       );
   }
 };

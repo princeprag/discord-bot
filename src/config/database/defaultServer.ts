@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { LevelRoleInt } from "../../interfaces/settings/LevelRoleInt";
 
 /**

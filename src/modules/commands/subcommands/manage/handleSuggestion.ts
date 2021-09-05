@@ -1,9 +1,16 @@
+/* eslint-disable jsdoc/require-param */
 import { GuildMember, TextChannel } from "discord.js";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../../utils/customSubstring";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Allows the suggestion embed with the given `id` to be marked as approved or
+ * denied (determined by the `action`). Appends the `action` and the `reason` to the
+ * suggestion embed.
+ */
 export const handleSuggestion: CommandHandler = async (
   Becca,
   interaction,
@@ -13,12 +20,12 @@ export const handleSuggestion: CommandHandler = async (
     const { user: author, guild, member } = interaction;
 
     if (!guild || !member) {
-      await interaction.editReply({ content: Becca.responses.missing_guild });
+      await interaction.editReply({ content: Becca.responses.missingGuild });
       return;
     }
 
     if (!(member as GuildMember).permissions.has("MANAGE_GUILD")) {
-      await interaction.editReply({ content: Becca.responses.no_permission });
+      await interaction.editReply({ content: Becca.responses.noPermission });
       return;
     }
 
@@ -32,7 +39,7 @@ export const handleSuggestion: CommandHandler = async (
       !suggestionId ||
       !reason
     ) {
-      await interaction.editReply({ content: Becca.responses.missing_param });
+      await interaction.editReply({ content: Becca.responses.missingParam });
       return;
     }
 
@@ -101,10 +108,11 @@ export const handleSuggestion: CommandHandler = async (
         embeds: [errorEmbedGenerator(Becca, "suggestion", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "suggestion", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "suggestion", errorId)],
+          })
       );
   }
 };

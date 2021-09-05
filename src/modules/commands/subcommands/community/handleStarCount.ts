@@ -1,15 +1,21 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import StarModel from "../../../../database/models/StarModel";
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Generates an embed listing the top ten users with the most stars received in the
+ * server, and includes the user's rank.
+ */
 export const handleStarCount: CommandHandler = async (Becca, interaction) => {
   try {
     const { member, guild } = interaction;
 
     if (!guild || !member) {
-      await interaction.editReply({ content: Becca.responses.missing_guild });
+      await interaction.editReply({ content: Becca.responses.missingGuild });
       return;
     }
 
@@ -60,10 +66,11 @@ export const handleStarCount: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "star count", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "star count", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "star count", errorId)],
+          })
       );
   }
 };

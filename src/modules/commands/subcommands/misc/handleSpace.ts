@@ -1,11 +1,17 @@
+/* eslint-disable jsdoc/require-param */
 import axios from "axios";
 import { MessageEmbed } from "discord.js";
-import { SpaceInt } from "../../../../interfaces/commands/general/SpaceInt";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
+import { SpaceInt } from "../../../../interfaces/commands/general/SpaceInt";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { customSubstring } from "../../../../utils/customSubstring";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
+/**
+ * Fetches the latest Astronomy Photo of the Day from NASA, or the photo from
+ * the given `date`.
+ */
 export const handleSpace: CommandHandler = async (Becca, interaction) => {
   try {
     const date = interaction.options.getString("date");
@@ -54,10 +60,11 @@ export const handleSpace: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "space", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "space", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "space", errorId)],
+          })
       );
   }
 };

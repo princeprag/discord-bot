@@ -1,5 +1,6 @@
 /**
  * A small helper to replace some HTML entities within a string.
+ *
  * @param {string} text The text to sanitize.
  * @returns {string} The sanitized text.
  */

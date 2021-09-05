@@ -1,24 +1,29 @@
+/* eslint-disable jsdoc/require-param */
 import {
   Message,
   MessageActionRow,
   MessageButton,
   MessageEmbed,
 } from "discord.js";
+
+import levelScale from "../../../../config/listeners/levelScale";
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
-import levelScale from "../../../../config/listeners/levelScale";
 
+const formatLevels = (page: number) => {
+  let formattedText = "";
+  for (let i = page * 10 - 9; i <= page * 10; i++) {
+    formattedText += `\nLevel ${i} - **${levelScale[i]}** xp`;
+  }
+  return formattedText;
+};
+
+/**
+ * Generates a paginated embed containing the level scale.
+ */
 export const handleLevelscale: CommandHandler = async (Becca, interaction) => {
   try {
-    const formatLevels = (page: number) => {
-      let formattedText = "";
-      for (let i = page * 10 - 9; i <= page * 10; i++) {
-        formattedText += `\nLevel ${i} - **${levelScale[i]}** xp`;
-      }
-      return formattedText;
-    };
-
     const embed = new MessageEmbed();
     embed.setTitle("Level Scale");
     embed.setURL(
@@ -112,10 +117,11 @@ export const handleLevelscale: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "levelscale", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "levelscale", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "levelscale", errorId)],
+          })
       );
   }
 };

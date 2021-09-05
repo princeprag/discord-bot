@@ -1,20 +1,19 @@
-import * as Sentry from "@sentry/node";
+/* eslint-disable require-atomic-updates */
 import { RewriteFrames } from "@sentry/integrations";
-import { beccaLogHandler } from "./utils/beccaLogHandler";
+import * as Sentry from "@sentry/node";
 import { Client, WebhookClient } from "discord.js";
+
+import { IntentOptions } from "./config/IntentOptions";
+import { connectDatabase } from "./database/connectDatabase";
+import { handleEvents } from "./events/handleEvents";
 import { BeccaInt } from "./interfaces/BeccaInt";
 import { validateEnv } from "./modules/validateEnv";
-import { connectDatabase } from "./database/connectDatabase";
-import { beccaErrorHandler } from "./utils/beccaErrorHandler";
-import { handleEvents } from "./events/handleEvents";
-import { loadCommands } from "./utils/loadCommands";
 import { createServer } from "./server/serve";
-import { IntentOptions } from "./config/IntentOptions";
+import { beccaErrorHandler } from "./utils/beccaErrorHandler";
+import { beccaLogHandler } from "./utils/beccaLogHandler";
+import { loadCommands } from "./utils/loadCommands";
 import { loadContexts } from "./utils/loadContexts";
 
-/**
- * This block initialises the Sentry plugin.
- */
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
   tracesSampleRate: 1.0,
@@ -26,15 +25,8 @@ Sentry.init({
 });
 
 /**
- * Initialise spinner for logging
- * @property add(name, {color, text}) Add a new spinner
- * @property update(name, {color, text}) Update an existing spinner
- * @property fail(name, {text}) Set a spinner to fail state
- * @property succeed(name, {text}) Set a spinner to success state
- */
-
-/**
- * Function to initialise the bot application.
+ * This is the entry point for Becca's process. This will log the boot process,
+ * call the necessary helpers to prepare Becca, and then log in to Discord.
  */
 const initialiseBecca = async () => {
   beccaLogHandler.log("debug", "Starting process...");

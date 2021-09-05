@@ -1,8 +1,16 @@
 import { MessageEmbed, ThreadChannel } from "discord.js";
+
 import { BeccaInt } from "../../interfaces/BeccaInt";
 import { sendLogEmbed } from "../../modules/guild/sendLogEmbed";
 import { beccaErrorHandler } from "../../utils/beccaErrorHandler";
 
+/**
+ * When a new thread is created, logs it to the log channel and joins
+ * the thread automatically, to ensure Becca is available for all needs.
+ *
+ * @param {BeccaInt} Becca Becca's Discord instance.
+ * @param {ThreadChannel} thread The channel object representing the new thread.
+ */
 export const threadCreate = async (
   Becca: BeccaInt,
   thread: ThreadChannel

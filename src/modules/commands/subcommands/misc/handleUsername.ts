@@ -1,9 +1,15 @@
+/* eslint-disable jsdoc/require-param */
 import { MessageEmbed } from "discord.js";
+
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 import { generateUsername } from "../../../commands/general/generateUsername";
 
+/**
+ * Generates a random DigitalOcean themed username and sends it in an embed.
+ * Limits the length of the username to `length`, or 30.
+ */
 export const handleUsername: CommandHandler = async (Becca, interaction) => {
   try {
     const { user } = interaction;
@@ -41,10 +47,11 @@ export const handleUsername: CommandHandler = async (Becca, interaction) => {
         embeds: [errorEmbedGenerator(Becca, "username", errorId)],
         ephemeral: true,
       })
-      .catch(async () =>
-        interaction.editReply({
-          embeds: [errorEmbedGenerator(Becca, "username", errorId)],
-        })
+      .catch(
+        async () =>
+          await interaction.editReply({
+            embeds: [errorEmbedGenerator(Becca, "username", errorId)],
+          })
       );
   }
 };
