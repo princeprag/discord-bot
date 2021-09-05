@@ -6,8 +6,8 @@
   "license": "AGPL-3.0-or-later",
   "private": false,
   "engines": {
-    "node": "^16.2.1",
-    "npm": "^7.13.0"
+    "node": "^16.8.1",
+    "npm": "^7.22.0"
   },
   "keywords": [
     "DiscordJS",
