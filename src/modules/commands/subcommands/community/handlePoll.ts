@@ -66,7 +66,9 @@ export const handlePoll: CommandHandler = async (Becca, interaction) => {
       components: [row],
     })) as Message;
 
-    const collector = message.createMessageComponentCollector({ time: 60000 });
+    const collector = message.createMessageComponentCollector({
+      time: 1800000,
+    });
 
     collector.on("collect", async (click) => {
       await click.deferReply({ ephemeral: true });
