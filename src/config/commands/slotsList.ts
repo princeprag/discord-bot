@@ -3,6 +3,7 @@
  */
 export const slotsList = [
   "<:BeccaAngry:877278332843085824>",
+  "<:BeccaBlush:883854701165174824>",
   "<:BeccaCry:877278301419348032>",
   "<:BeccaDrunk:877278301402583110>",
   "<:BeccaFacepalm:872577686541840514>",
@@ -11,6 +12,7 @@ export const slotsList = [
   "<:BeccaLaugh:877278301830414396>",
   "<:BeccaHuh:877278300739887134>",
   "<:BeccaNom:872577687779164210>",
+  "<:BeccaNotes:883854700762505287>",
   "<:BeccaPeek:867102878588862514>",
   "<:BeccaPout:867102882791424070>",
   "<:BeccaSalute:872577687590420501>",
@@ -28,6 +30,7 @@ export const slotsList = [
   "<:BeccaUWU:872577689037459466>",
   "<:BeccaWink:867102883635789844>",
   "<:BeccaWoah:877278300949585980>",
+  "<:BeccaWork:883854701416833024>",
   "<:BeccaYawn:867102883823353937>",
   "<:BeccaYikes:877278299066347632>",
 ];
