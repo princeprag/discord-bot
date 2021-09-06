@@ -11,6 +11,7 @@ import UsageModel from "../database/models/UsageModel";
 import { BeccaInt } from "../interfaces/BeccaInt";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 import { beccaLogHandler } from "../utils/beccaLogHandler";
+import { getCounts } from "../modules/becca/getCounts";
 
 /**
  * Spins up a basic web server for uptime monitoring.
@@ -65,8 +66,13 @@ export const createServer = async (Becca: BeccaInt): Promise<boolean> => {
       res.json(data);
     });
 
-    HTTPEndpoint.use("/commands", async (req, res) => {
+    HTTPEndpoint.use("/commands", async (_, res) => {
       const data = await UsageModel.find();
+      res.json(data);
+    });
+
+    HTTPEndpoint.use("/about", (_, res) => {
+      const data = getCounts(Becca);
       res.json(data);
     });
 
