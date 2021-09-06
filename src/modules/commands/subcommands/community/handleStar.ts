@@ -50,12 +50,14 @@ export const handleStar: CommandHandler = async (Becca, interaction) => {
     if (!targetUserStars) {
       starData.users.push({
         userID: targetUser.id,
-        userName: targetUser.username,
+        userTag: targetUser.tag,
+        avatar: targetUser.displayAvatarURL(),
         stars: 1,
       });
     } else {
       targetUserStars.stars++;
-      targetUserStars.userName = targetUser.username;
+      targetUserStars.userTag = targetUser.tag;
+      targetUserStars.avatar = targetUser.displayAvatarURL();
     }
 
     starData.markModified("users");

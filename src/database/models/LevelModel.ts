@@ -5,7 +5,8 @@ export interface LevelInt extends Document {
   serverName: string;
   users: {
     userID: string;
-    userName: string;
+    userTag: string;
+    avatar: string;
     points: number;
     level: number;
     lastSeen: Date;

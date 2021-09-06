@@ -44,7 +44,7 @@ export const handleLevel: CommandHandler = async (Becca, interaction) => {
 
     const levelEmbed = new MessageEmbed();
     levelEmbed.setColor(Becca.colours.default);
-    levelEmbed.setTitle(`${targetLevel.userName}'s ranking`);
+    levelEmbed.setTitle(`${targetLevel.userTag}'s ranking`);
     levelEmbed.setDescription(`Here is the record I have in \`${guild.name}\``);
     levelEmbed.addField(
       "Experience Points",

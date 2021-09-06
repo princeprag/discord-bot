@@ -52,7 +52,6 @@ export const levelListener: ListenerInt = {
 
       const bonus = Math.floor(content.length / 10);
       const pointsEarned = Math.floor(Math.random() * (20 + bonus)) + 5;
-      const userName = member?.nickname || author.username;
       const server =
         (await LevelModel.findOne({ serverID: guild.id })) ||
         (await LevelModel.create({
@@ -66,7 +65,8 @@ export const levelListener: ListenerInt = {
       if (!user) {
         user = {
           userID: author.id,
-          userName: userName,
+          userTag: author.tag,
+          avatar: author.displayAvatarURL(),
           level: 0,
           points: 0,
           lastSeen: new Date(Date.now()),
@@ -81,7 +81,8 @@ export const levelListener: ListenerInt = {
 
       user.points += pointsEarned;
       user.lastSeen = new Date(Date.now());
-      user.userName = userName;
+      user.userTag = author.tag;
+      user.avatar = author.displayAvatarURL();
       user.cooldown = Date.now();
       let levelUp = false;
 

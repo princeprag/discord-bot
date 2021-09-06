@@ -49,7 +49,7 @@ export const handleStarCount: CommandHandler = async (Becca, interaction) => {
     starEmbed.setColor(Becca.colours.default);
     starEmbed.setDescription(userRankString);
     topTen.forEach((u, i) => {
-      starEmbed.addField(`#${i + 1}. ${u.userName}`, `${u.stars} stars.`);
+      starEmbed.addField(`#${i + 1}. ${u.userTag}`, `${u.stars} stars.`);
     });
     starEmbed.setTimestamp();
 
