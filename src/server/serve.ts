@@ -2,6 +2,7 @@ import { readFile } from "fs/promises";
 import http from "http";
 import https from "https";
 
+import cors from "cors";
 import express from "express";
 
 import LevelModel from "../database/models/LevelModel";
@@ -20,6 +21,23 @@ import { beccaLogHandler } from "../utils/beccaLogHandler";
 export const createServer = async (Becca: BeccaInt): Promise<boolean> => {
   try {
     const HTTPEndpoint = express();
+
+    const allowedOrigins = [
+      "https://dash.beccalyria.com",
+      "http://localhost:4200",
+    ];
+
+    HTTPEndpoint.use(
+      cors({
+        origin: (origin, callback) => {
+          if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+          } else {
+            callback(new Error("Not allowed by CORS"));
+          }
+        },
+      })
+    );
 
     HTTPEndpoint.use("/leaderboard/:serverId", async (req, res) => {
       const data = await LevelModel.findOne(
