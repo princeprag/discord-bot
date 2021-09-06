@@ -38,7 +38,7 @@ export const handleSlots: CurrencyHandler = async (
     if (!canPlay) {
       const cooldown = data.slotsPlayed - now + 3600000;
       await interaction.editReply({
-        content: `You have already claimed your daily!\nCome back in: ${parseSeconds(
+        content: `You cannot play slots that often!\nCome back in: ${parseSeconds(
           Math.ceil(cooldown / 1000)
         )}`,
       });
