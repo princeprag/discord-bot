@@ -5,7 +5,8 @@ export interface StarCountInt extends Document {
   serverName: string;
   users: {
     userID: string;
-    userName: string;
+    userTag: string;
+    avatar: string;
     stars: number;
   }[];
 }

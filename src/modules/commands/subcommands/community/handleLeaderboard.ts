@@ -1,5 +1,5 @@
 /* eslint-disable jsdoc/require-param */
-import { GuildMember, MessageEmbed } from "discord.js";
+import { MessageEmbed } from "discord.js";
 
 import LevelModel from "../../../../database/models/LevelModel";
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
@@ -13,7 +13,7 @@ import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
  */
 export const handleLeaderboard: CommandHandler = async (Becca, interaction) => {
   try {
-    const { guildId, guild, member, user } = interaction;
+    const { guildId, guild, user } = interaction;
 
     if (!guildId || !guild) {
       await interaction.editReply({
@@ -33,21 +33,20 @@ export const handleLeaderboard: CommandHandler = async (Becca, interaction) => {
     }
 
     const authorLevel = serverLevels.users.find((u) => u.userID === user.id);
-    const authorName = (member as GuildMember)?.nickname || user.username;
 
     const sortedLevels = serverLevels.users.sort((a, b) => b.points - a.points);
 
     const authorRank = authorLevel
-      ? `${authorName} is rank ${
+      ? `${user.tag} is rank ${
           sortedLevels.findIndex((u) => u.userID === user.id) + 1
         }`
-      : `${authorName} is not ranked yet...`;
+      : `${user.tag} is not ranked yet...`;
 
     const topTen = sortedLevels
       .slice(0, 10)
       .map(
         (user, index) =>
-          `#${index + 1}: ${user.userName} at level ${user.level} with ${
+          `#${index + 1}: ${user.userTag} at level ${user.level} with ${
             user.points
           } experience points.`
       );
