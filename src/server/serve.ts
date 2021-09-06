@@ -9,9 +9,9 @@ import LevelModel from "../database/models/LevelModel";
 import StarModel from "../database/models/StarModel";
 import UsageModel from "../database/models/UsageModel";
 import { BeccaInt } from "../interfaces/BeccaInt";
+import { getCounts } from "../modules/becca/getCounts";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 import { beccaLogHandler } from "../utils/beccaLogHandler";
-import { getCounts } from "../modules/becca/getCounts";
 
 /**
  * Spins up a basic web server for uptime monitoring.
