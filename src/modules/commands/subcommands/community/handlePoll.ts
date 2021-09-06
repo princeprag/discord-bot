@@ -71,8 +71,9 @@ export const handlePoll: CommandHandler = async (Becca, interaction) => {
     });
 
     collector.on("collect", async (click) => {
+      console.log(click.user.id);
       await click.deferReply({ ephemeral: true });
-      if (responses.find((el) => (el.userId = click.user.id))) {
+      if (responses.find((el) => el.userId === click.user.id)) {
         await click.editReply("You have already made a choice for this poll!");
         return;
       }
