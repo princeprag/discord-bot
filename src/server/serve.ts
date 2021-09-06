@@ -4,9 +4,12 @@ import https from "https";
 
 import express from "express";
 
+import LevelModel from "../database/models/LevelModel";
+import StarModel from "../database/models/StarModel";
 import { BeccaInt } from "../interfaces/BeccaInt";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 import { beccaLogHandler } from "../utils/beccaLogHandler";
+import UsageModel from "../database/models/UsageModel";
 
 /**
  * Spins up a basic web server for uptime monitoring.
@@ -17,6 +20,37 @@ import { beccaLogHandler } from "../utils/beccaLogHandler";
 export const createServer = async (Becca: BeccaInt): Promise<boolean> => {
   try {
     const HTTPEndpoint = express();
+
+    HTTPEndpoint.use("/leaderboard/:serverId", async (req, res) => {
+      const data = await LevelModel.findOne(
+        { serverID: req.params.serverId },
+        { _id: 0, __v: 0 }
+      );
+
+      if (!data) {
+        res.status(404).send("IDK what to put here yet.");
+        return;
+      }
+      res.json(data);
+    });
+
+    HTTPEndpoint.use("/stars/:serverId", async (req, res) => {
+      const data = await StarModel.findOne(
+        { serverID: req.params.serverId },
+        { _id: 0, __v: 0 }
+      );
+
+      if (!data) {
+        res.status(404).send("IDK what to put here yet.");
+        return;
+      }
+      res.json(data);
+    });
+
+    HTTPEndpoint.use("/commands", async (req, res) => {
+      const data = await UsageModel.find();
+      res.json(data);
+    });
 
     HTTPEndpoint.use("/", (_, res) => {
       res.status(200).send("Ping!");
