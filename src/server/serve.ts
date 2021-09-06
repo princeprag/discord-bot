@@ -6,10 +6,10 @@ import express from "express";
 
 import LevelModel from "../database/models/LevelModel";
 import StarModel from "../database/models/StarModel";
+import UsageModel from "../database/models/UsageModel";
 import { BeccaInt } from "../interfaces/BeccaInt";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 import { beccaLogHandler } from "../utils/beccaLogHandler";
-import UsageModel from "../database/models/UsageModel";
 
 /**
  * Spins up a basic web server for uptime monitoring.
