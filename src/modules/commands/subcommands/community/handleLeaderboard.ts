@@ -57,6 +57,7 @@ export const handleLeaderboard: CommandHandler = async (Becca, interaction) => {
     levelEmbed.addField("Top ten members", topTen.join("\n"));
     levelEmbed.addField("Your rank", authorRank);
     levelEmbed.setTimestamp();
+    levelEmbed.setURL(`https://dash.beccalyria.com/leaderboard/${guildId}`);
     await interaction.editReply({
       embeds: [levelEmbed],
     });

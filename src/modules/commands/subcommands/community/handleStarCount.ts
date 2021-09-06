@@ -12,7 +12,7 @@ import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
  */
 export const handleStarCount: CommandHandler = async (Becca, interaction) => {
   try {
-    const { member, guild } = interaction;
+    const { member, guild, guildId } = interaction;
 
     if (!guild || !member) {
       await interaction.editReply({ content: Becca.responses.missingGuild });
@@ -52,6 +52,7 @@ export const handleStarCount: CommandHandler = async (Becca, interaction) => {
       starEmbed.addField(`#${i + 1}. ${u.userTag}`, `${u.stars} stars.`);
     });
     starEmbed.setTimestamp();
+    starEmbed.setURL(`https://dash.beccalyria.com/stars/${guildId}`);
 
     await interaction.editReply({ embeds: [starEmbed] });
   } catch (err) {

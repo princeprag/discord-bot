@@ -3,6 +3,7 @@ import { MessageEmbed } from "discord.js";
 
 import { CommandHandler } from "../../../../interfaces/commands/CommandHandler";
 import { beccaErrorHandler } from "../../../../utils/beccaErrorHandler";
+import { getCounts } from "../../../becca/getCounts";
 import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
 
 /**
@@ -10,6 +11,7 @@ import { errorEmbedGenerator } from "../../../commands/errorEmbedGenerator";
  */
 export const handleAbout: CommandHandler = async (Becca, interaction) => {
   try {
+    const { guilds, members, commands } = getCounts(Becca);
     const aboutEmbed = new MessageEmbed();
     aboutEmbed.setColor(Becca.colours.default);
     aboutEmbed.setTitle("Becca Lyria the Discord Bot");
@@ -22,12 +24,9 @@ export const handleAbout: CommandHandler = async (Becca, interaction) => {
       true
     );
     aboutEmbed.addField("Creation date", "Sunday, 31 May 2020", true);
-    aboutEmbed.addField("Guilds", Becca.guilds.cache.size.toString(), true);
-    aboutEmbed.addField(
-      "Available spells",
-      Becca.commands.length.toString(),
-      true
-    );
+    aboutEmbed.addField("Guilds", guilds.toString(), true);
+    aboutEmbed.addField("Members", members.toString(), true);
+    aboutEmbed.addField("Available spells", commands.toString(), true);
     aboutEmbed.addField("Favourite Colour", "Purple", true);
     aboutEmbed.setFooter(
       "Now that we have introduced ourselves, it is time for an adventure."

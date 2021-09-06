@@ -9,6 +9,7 @@ import LevelModel from "../database/models/LevelModel";
 import StarModel from "../database/models/StarModel";
 import UsageModel from "../database/models/UsageModel";
 import { BeccaInt } from "../interfaces/BeccaInt";
+import { getCounts } from "../modules/becca/getCounts";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 import { beccaLogHandler } from "../utils/beccaLogHandler";
 
@@ -65,8 +66,13 @@ export const createServer = async (Becca: BeccaInt): Promise<boolean> => {
       res.json(data);
     });
 
-    HTTPEndpoint.use("/commands", async (req, res) => {
+    HTTPEndpoint.use("/commands", async (_, res) => {
       const data = await UsageModel.find();
+      res.json(data);
+    });
+
+    HTTPEndpoint.use("/about", (_, res) => {
+      const data = getCounts(Becca);
       res.json(data);
     });
 
