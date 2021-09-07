@@ -51,7 +51,7 @@ export const linksListener: ListenerInt = {
       }
 
       const linkRegex =
-        /(^|\s+)(([a-z]+:\/\/)?(([a-z0-9-]+\.)+((?!txt|json|css|jsx|html|rss|csh|act|ash|rby|pyc|java|vue|php|ashx|xml|rss|cpp|scss|vue|class|ogg|wav|wpp|pkg|deb|rpm|tar.gz|zip|dmg|iso|toast|db.sqlite3|csv|mdb|sql|tar|msg|emlx|vcf|bat|apk|exe|gadget|wsf|fnt|font|gif|bmp|icon|jpeg|tiff|asp|aspx|cer|htm|jsp|rss|xhtml|key|pps|ppt|pptx|odp|swift|xlsx|dll|bak|cab|cfg|ini|drv|icns|tmp|cur|avi|flv|mpg|mpeg|swf|mov|doc|docx|pdf|rtx|tex|wpd|)[a-z]{3,4}|io|me|gg|to|uk|be|in|eu|ru|us|za|py|cs|tn|ll|mk|pl|rc|rb|so|sh)))(:[0-9]{1,5})?(.*\s+|\/|$)/gi;
+        /(^|\s+)(([a-z]+:\/\/)?(([a-z0-9-]+\.)+((?!txt|json|css|jsx|html|rss|csh|act|ash|rby|pyc|java|vue|php|ashx|xml|rss|cpp|scss|vue|class|ogg|wav|wpp|pkg|deb|rpm|tar.gz|zip|dmg|iso|toast|db.sqlite3|csv|mdb|sql|tar|msg|emlx|vcf|bat|apk|exe|gadget|wsf|fnt|font|gif|bmp|icon|jpeg|tiff|asp|aspx|cer|htm|jsp|rss|xhtml|key|pps|ppt|pptx|odp|swift|xlsx|dll|bak|cab|cfg|ini|drv|icns|tmp|cur|avi|flv|mpg|mpeg|swf|mov|doc|docx|pdf|rtx|tex|wpd|)[a-z]{3,4}|io|me|gg|to|uk|be|in|eu|ru|us|za|py|cs|tn|ll|mk|pl|rc|rb|js|so|sh)))(:[0-9]{1,5})?(.*\s+|\/|$)/gi;
 
       blockedLinks += (message.content.match(linkRegex) || []).length;
 
