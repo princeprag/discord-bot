@@ -12,15 +12,6 @@
 
 Closes #XXXXX
 
-## Scope
-
-Did you remember to update the `package.json` version number?
-
-- [ ] Major Version Update: X.\_.\_ (for complete code refactors, or large PRs that adjust most of the codebase)
-- [ ] Minor Version Update: \_.X.\_ (for the addition of new commands)
-- [ ] Patch Version Update: \_.\_.X (for bug fixes _in the code_.)
-- [ ] No Version Update: \_.\_.\_ (no version update for additions to tests, documentation, or anything that isn't end-user facing.)
-
 ## Documentation
 
 For _any_ version updates, please verify if the [documentation page](https://www.beccalyria.com/discord-documentation) needs an update. If it does, please [create an issue there](https://github.com/BeccaLyria/discord-documentation/issues/new?assignees=nhcarrigan&labels=%F0%9F%9A%A6+status%3A+awaiting+triage&template=update.md&title=%5BUPDATE%5D) to ensure it is not forgotten.
