@@ -13,6 +13,7 @@ import { handleDonate } from "../modules/commands/subcommands/becca/handleDonate
 import { handleHelp } from "../modules/commands/subcommands/becca/handleHelp";
 import { handleInvite } from "../modules/commands/subcommands/becca/handleInvite";
 import { handlePing } from "../modules/commands/subcommands/becca/handlePing";
+import { handleUpdates } from "../modules/commands/subcommands/becca/handleUpdates";
 import { handleUptime } from "../modules/commands/subcommands/becca/handleUptime";
 import { beccaErrorHandler } from "../utils/beccaErrorHandler";
 
@@ -61,6 +62,13 @@ export const becca: CommandInt = {
       new SlashCommandSubcommandBuilder()
         .setName("becca")
         .setDescription("Tells the story of Becca's character.")
+    )
+    .addSubcommand(
+      new SlashCommandSubcommandBuilder()
+        .setName("updates")
+        .setDescription(
+          "Shows the latest updates to Becca, the next scheduled update, and additional details."
+        )
     ),
   run: async (Becca, interaction, config) => {
     try {
@@ -91,6 +99,9 @@ export const becca: CommandInt = {
           break;
         case "becca":
           await handleBecca(Becca, interaction, config);
+          break;
+        case "updates":
+          await handleUpdates(Becca, interaction, config);
           break;
         default:
           await interaction.editReply({
