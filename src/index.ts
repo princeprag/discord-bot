@@ -13,6 +13,7 @@ import { beccaErrorHandler } from "./utils/beccaErrorHandler";
 import { beccaLogHandler } from "./utils/beccaLogHandler";
 import { loadCommands } from "./utils/loadCommands";
 import { loadContexts } from "./utils/loadContexts";
+import { registerCommands } from "./utils/registerCommands";
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
@@ -61,6 +62,15 @@ const initialiseBecca = async () => {
   if (!commands.length || !contexts.length) {
     beccaLogHandler.log("error", "failed to import commands.");
     return;
+  }
+
+  if (process.env.NODE_ENV !== "production") {
+    beccaLogHandler.log("debug", "Registering commands in development...");
+    const success = await registerCommands(Becca);
+    if (!success) {
+      beccaLogHandler.log("error", "failed to register commands.");
+      return;
+    }
   }
 
   beccaLogHandler.log("debug", "Initialising database...");
