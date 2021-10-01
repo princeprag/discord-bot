@@ -3,6 +3,6 @@
 config.json
 /prod/
 /.nyc_output/
-.idea
+
 # Local eval command for debugging, should NEVER make it to production
 src/commands/bot/exec.ts
